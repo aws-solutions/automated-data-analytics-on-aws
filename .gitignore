@@ -1,0 +1,97 @@
+!deployment/.typescript/cdk-solution-helper/index.js
+package-lock.json
+!pipeline/package-lock.json
+!jest.config.js
+*.d.ts
+!globals.d.ts
+node_modules
+!source/.typescript/lambda/**/*.js
+!source/lambda/**/*.js
+.eslintcache
+.local
+.scannerwork
+
+**/.jest.test-cdk-environment.js*
+
+# coverage
+.coverage
+coverage/
+.nyc_output
+.jacoco
+
+# Built typescript
+dist
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+cdk.out*
+
+!**/cdk-solution-helper/index.js
+
+# Coverage
+**/coverage/*
+
+## Pact
+
+**/pacts-logs/*
+
+deployment/global-s3-assets
+deployment/regional-s3-assets
+deployment/staging
+open-source/
+
+# Temporary folders
+tmp/
+temp/
+
+# Intellij
+*.iml
+
+### VisualStudioCode ###
+.vscode/*
+
+### macOS ###
+.DS_Store
+
+## IntelliJ
+
+**/.idea/*
+
+# yarn
+**/yarn-error.log
+
+# env file
+.env
+.env.*
+!.env.example
+
+# cfn nag output
+cfn_nag_suppressions.log
+
+# java lambdas
+**/target
+**/dependency-reduced-pom.xml
+**/*.iml
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings/
+
+# cypress testing
+source/cypress/results/*
+source/cypress/screenshots/*
+source/cypress/videos/*
+
+# Python
+.python-version
+
+# tern docker scan generated files
+**/Dockerfile_*
+
+# Cached dependencies directory
+source/packages/@ada/infra/src/services/data-product/components/schema-preview/docker-image/dependencies
+
+# temporary files
+source/packages/@ada/infra/src/common/constructs/api/lambda-layer/code/nodejs/api-client-lambda/jwt-signer/index.ts
+source/packages/@ada/infra/src/common/constructs/api/lambda-layer/code/nodejs/api-client-lambda/jwt-signer/version.json

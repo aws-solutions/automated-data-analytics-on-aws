@@ -1,0 +1,2110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stack snapshots 1`] = `
+Object {
+  "Description": "(SO0190-NotificationService) - Automated Data Analytics on AWS. Version v1.0.0",
+  "Outputs": Object {
+    "AdaNotificationServiceNotificationListenerLambda7FAAC5B2Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "NotificationListenerLambdaFFE5F633",
+          "Arn",
+        ],
+      },
+    },
+    "ApiNotificationUrlC4350C22": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            },
+            ".execute-api.ap-southeast-1.amazonaws.com/prod/notification",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableNotificationTable1AF7D32EArn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaSharedEvntBus3C45F515Arn": Object {
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "AWS679F53Fac002430Cb0Da5B7982Bd22872D164C4C": Object {
+      "DependsOn": Array [
+        "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 120,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiLambdaActionNotificationB207C2AB": Object {
+      "DependsOn": Array [
+        "ApiLambdaActionNotificationServiceRoleDefaultPolicy53273B9C",
+        "ApiLambdaActionNotificationServiceRoleEFD62715",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "TypescriptFunction Ada/NotificationService/Api/LambdaActionNotification of action-notification.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "COUNTER_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+            },
+            "LOCK_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            },
+            "NOTIFICATION_TABLE_NAME": Object {
+              "Ref": "NotificationTable",
+            },
+            "NOTIFICATION_TARGET_AND_STATUS_INDEX_NAME": "Notification-TargetAndStatus2852ghashx",
+            "RELATIONSHIP_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaActionNotificationServiceRoleEFD62715",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 30,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiLambdaActionNotificationServiceRoleDefaultPolicy53273B9C": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "NotificationTable",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "NotificationTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableNotificationTable1AF7D32EArn",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiLambdaActionNotificationServiceRoleDefaultPolicy53273B9C",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiLambdaActionNotificationServiceRoleEFD62715",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiLambdaActionNotificationServiceRoleEFD62715": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiLambdaListNotificationsD5E98558": Object {
+      "DependsOn": Array [
+        "ApiLambdaListNotificationsServiceRoleDefaultPolicy742A33BB",
+        "ApiLambdaListNotificationsServiceRole61209FA4",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "TypescriptFunction Ada/NotificationService/Api/LambdaListNotifications of list-notifications.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "COUNTER_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+            },
+            "LOCK_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            },
+            "NOTIFICATION_TABLE_NAME": Object {
+              "Ref": "NotificationTable",
+            },
+            "NOTIFICATION_TARGET_AND_STATUS_INDEX_NAME": "Notification-TargetAndStatus2852ghashx",
+            "RELATIONSHIP_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaListNotificationsServiceRole61209FA4",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 30,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiLambdaListNotificationsServiceRole61209FA4": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiLambdaListNotificationsServiceRoleDefaultPolicy742A33BB": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "NotificationTable",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "NotificationTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableNotificationTable1AF7D32EArn",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiLambdaListNotificationsServiceRoleDefaultPolicy742A33BB",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiLambdaListNotificationsServiceRole61209FA4",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiRestApiRefNotification6551CEE0": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+        },
+        "PathPart": "notification",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefnotificationGET527D4A9C": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefnotificationOPTIONS3E3D0A7A",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ApiLambdaListNotificationsD5E98558",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "ApiRestApiRefnotificationListNotificationsResponseEF54BE37",
+              },
+            },
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "404",
+          },
+        ],
+        "OperationName": "ListNotifications",
+        "RequestParameters": Object {
+          "method.request.querystring.limit": false,
+          "method.request.querystring.nextToken": false,
+          "method.request.querystring.pageSize": false,
+          "method.request.querystring.status": false,
+        },
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefNotification6551CEE0",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefnotificationGETApiPermissionAdaNotificationServiceApiRestApiRefD60EDD67GETNotificationD40FE5DF": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaListNotificationsD5E98558",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/GET/notification",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefnotificationGETApiPermissionTestAdaNotificationServiceApiRestApiRefD60EDD67GETNotification522842D2": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaListNotificationsD5E98558",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/GET/notification",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefnotificationListNotificationsResponseEF54BE37": Object {
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "The notifications for the calling user (optionally filtered by status)",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "definitions": Object {
+            "CreateAndUpdateDetails": Object {
+              "properties": Object {
+                "createdBy": Object {
+                  "maxLength": 256,
+                  "pattern": "[\\\\w\\\\s+=.@-]+",
+                  "type": "string",
+                },
+                "createdTimestamp": Object {
+                  "maxLength": 64,
+                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+                  "type": "string",
+                },
+                "updatedBy": Object {
+                  "maxLength": 256,
+                  "pattern": "[\\\\w\\\\s+=.@-]+",
+                  "type": "string",
+                },
+                "updatedTimestamp": Object {
+                  "maxLength": 64,
+                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+                  "type": "string",
+                },
+              },
+              "type": "object",
+            },
+            "Notification": Object {
+              "description": "A notification as sent throughout the system",
+              "properties": Object {
+                "payload": Object {
+                  "description": "Payload to send in the notification, can be any object",
+                },
+                "source": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "target": Object {
+                  "description": "Specified if the notification should target a particular recipient, for example a user id.",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "type": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "source",
+                "type",
+                "payload",
+              ],
+              "type": "object",
+            },
+            "PaginatedResponse": Object {
+              "properties": Object {
+                "nextToken": Object {
+                  "type": "string",
+                },
+                "totalItems": Object {
+                  "type": "number",
+                },
+              },
+              "type": "object",
+            },
+            "PersistedNotification": Object {
+              "description": "An object containing a persisted notification status",
+              "properties": Object {
+                "notificationId": Object {
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "payload": Object {
+                  "description": "Payload to send in the notification, can be any object",
+                },
+                "source": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "status": Object {
+                  "enum": Array [
+                    "PENDING",
+                    "ACKNOWLEDGED",
+                    "DISMISSED",
+                  ],
+                  "type": "string",
+                },
+                "target": Object {
+                  "description": "The target of the notification, for example the userId",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "targetAndStatus": Object {
+                  "description": "Composite key for index of notification by target and status. Delimited by .",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "type": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "notificationId",
+                "payload",
+                "source",
+                "status",
+                "target",
+                "targetAndStatus",
+                "type",
+              ],
+              "type": "object",
+            },
+            "PersistedNotificationEntity": Object {
+              "description": "An object containing a persisted notification status",
+              "properties": Object {
+                "createdBy": Object {
+                  "maxLength": 256,
+                  "pattern": "[\\\\w\\\\s+=.@-]+",
+                  "type": "string",
+                },
+                "createdTimestamp": Object {
+                  "maxLength": 64,
+                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+                  "type": "string",
+                },
+                "notificationId": Object {
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "payload": Object {
+                  "description": "Payload to send in the notification, can be any object",
+                },
+                "source": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "status": Object {
+                  "enum": Array [
+                    "PENDING",
+                    "ACKNOWLEDGED",
+                    "DISMISSED",
+                  ],
+                  "type": "string",
+                },
+                "target": Object {
+                  "description": "The target of the notification, for example the userId",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "targetAndStatus": Object {
+                  "description": "Composite key for index of notification by target and status. Delimited by .",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "type": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "updatedBy": Object {
+                  "maxLength": 256,
+                  "pattern": "[\\\\w\\\\s+=.@-]+",
+                  "type": "string",
+                },
+                "updatedTimestamp": Object {
+                  "maxLength": 64,
+                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "notificationId",
+                "payload",
+                "source",
+                "status",
+                "target",
+                "targetAndStatus",
+                "type",
+              ],
+              "type": "object",
+            },
+            "PersistedNotificationIdentifier": Object {
+              "properties": Object {
+                "notificationId": Object {
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "target": Object {
+                  "description": "The target of the notification, for example the userId",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "notificationId",
+                "target",
+              ],
+              "type": "object",
+            },
+            "PersistedNotificationStatus": Object {
+              "description": "An object containing a persisted notification status",
+              "properties": Object {
+                "status": Object {
+                  "enum": Array [
+                    "PENDING",
+                    "ACKNOWLEDGED",
+                    "DISMISSED",
+                  ],
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "status",
+              ],
+              "type": "object",
+            },
+          },
+          "properties": Object {
+            "nextToken": Object {
+              "type": "string",
+            },
+            "notifications": Object {
+              "items": Object {
+                "$ref": "#/definitions/PersistedNotificationEntity",
+                "description": "An object containing a persisted notification status",
+              },
+              "type": "array",
+            },
+            "totalItems": Object {
+              "type": "number",
+            },
+          },
+          "required": Array [
+            "notifications",
+          ],
+          "title": "ListNotificationsResponse",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefnotificationNotificationIdC10C01FD": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefNotification6551CEE0",
+        },
+        "PathPart": "{notificationId}",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefnotificationOPTIONS3E3D0A7A": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefNotification6551CEE0",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefnotificationnotificationIdAction2B1DFCE1": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefnotificationNotificationIdC10C01FD",
+        },
+        "PathPart": "action",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefnotificationnotificationIdOPTIONS31868CA5": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefnotificationNotificationIdC10C01FD",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefnotificationnotificationIdactionOPTIONSE9AB6D81": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefnotificationnotificationIdAction2B1DFCE1",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefnotificationnotificationIdactionPUTApiPermissionAdaNotificationServiceApiRestApiRefD60EDD67PUTNotificationNotificationIdAction634FA853": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaActionNotificationB207C2AB",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/PUT/notification/*/action",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefnotificationnotificationIdactionPUTApiPermissionTestAdaNotificationServiceApiRestApiRefD60EDD67PUTNotificationNotificationIdAction86C4DF66": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaActionNotificationB207C2AB",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/PUT/notification/*/action",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefnotificationnotificationIdactionPUTCEC587D1": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefnotificationnotificationIdactionOPTIONSE9AB6D81",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "PUT",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ApiLambdaActionNotificationB207C2AB",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "ApiRestApiRefnotificationnotificationIdactionPutNotificationActionResponse359A8F63",
+              },
+            },
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "404",
+          },
+        ],
+        "OperationName": "PutNotificationAction",
+        "RequestModels": Object {
+          "application/json": Object {
+            "Ref": "ApiRestApiRefnotificationnotificationIdactionPutNotificationActionRequest1D2713B5",
+          },
+        },
+        "RequestParameters": Object {
+          "method.request.path.notificationId": true,
+        },
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefnotificationnotificationIdAction2B1DFCE1",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefnotificationnotificationIdactionPutNotificationActionRequest1D2713B5": Object {
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "The new status to update the notification to",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "description": "An object containing a persisted notification status",
+          "properties": Object {
+            "status": Object {
+              "enum": Array [
+                "PENDING",
+                "ACKNOWLEDGED",
+                "DISMISSED",
+              ],
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "status",
+          ],
+          "title": "PutNotificationActionRequest",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefnotificationnotificationIdactionPutNotificationActionResponse359A8F63": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefnotificationnotificationIdactionPutNotificationActionRequest1D2713B5",
+      ],
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "The notification that was actioned",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "definitions": Object {
+            "CreateAndUpdateDetails": Object {
+              "properties": Object {
+                "createdBy": Object {
+                  "maxLength": 256,
+                  "pattern": "[\\\\w\\\\s+=.@-]+",
+                  "type": "string",
+                },
+                "createdTimestamp": Object {
+                  "maxLength": 64,
+                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+                  "type": "string",
+                },
+                "updatedBy": Object {
+                  "maxLength": 256,
+                  "pattern": "[\\\\w\\\\s+=.@-]+",
+                  "type": "string",
+                },
+                "updatedTimestamp": Object {
+                  "maxLength": 64,
+                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+                  "type": "string",
+                },
+              },
+              "type": "object",
+            },
+            "Notification": Object {
+              "description": "A notification as sent throughout the system",
+              "properties": Object {
+                "payload": Object {
+                  "description": "Payload to send in the notification, can be any object",
+                },
+                "source": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "target": Object {
+                  "description": "Specified if the notification should target a particular recipient, for example a user id.",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "type": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "source",
+                "type",
+                "payload",
+              ],
+              "type": "object",
+            },
+            "PersistedNotification": Object {
+              "description": "An object containing a persisted notification status",
+              "properties": Object {
+                "notificationId": Object {
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "payload": Object {
+                  "description": "Payload to send in the notification, can be any object",
+                },
+                "source": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "status": Object {
+                  "enum": Array [
+                    "PENDING",
+                    "ACKNOWLEDGED",
+                    "DISMISSED",
+                  ],
+                  "type": "string",
+                },
+                "target": Object {
+                  "description": "The target of the notification, for example the userId",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "targetAndStatus": Object {
+                  "description": "Composite key for index of notification by target and status. Delimited by .",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "type": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "notificationId",
+                "payload",
+                "source",
+                "status",
+                "target",
+                "targetAndStatus",
+                "type",
+              ],
+              "type": "object",
+            },
+            "PersistedNotificationIdentifier": Object {
+              "properties": Object {
+                "notificationId": Object {
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "target": Object {
+                  "description": "The target of the notification, for example the userId",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "notificationId",
+                "target",
+              ],
+              "type": "object",
+            },
+            "PersistedNotificationStatus": Object {
+              "description": "An object containing a persisted notification status",
+              "properties": Object {
+                "status": Object {
+                  "enum": Array [
+                    "PENDING",
+                    "ACKNOWLEDGED",
+                    "DISMISSED",
+                  ],
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "status",
+              ],
+              "type": "object",
+            },
+          },
+          "description": "An object containing a persisted notification status",
+          "properties": Object {
+            "createdBy": Object {
+              "maxLength": 256,
+              "pattern": "[\\\\w\\\\s+=.@-]+",
+              "type": "string",
+            },
+            "createdTimestamp": Object {
+              "maxLength": 64,
+              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+              "type": "string",
+            },
+            "notificationId": Object {
+              "maxLength": 256,
+              "minLength": 2,
+              "pattern": "^[a-z][a-z_0-9]*$",
+              "type": "string",
+            },
+            "payload": Object {
+              "description": "Payload to send in the notification, can be any object",
+            },
+            "source": Object {
+              "maxLength": 2048,
+              "minLength": 2,
+              "pattern": "^[\\\\w _-]*$",
+              "type": "string",
+            },
+            "status": Object {
+              "enum": Array [
+                "PENDING",
+                "ACKNOWLEDGED",
+                "DISMISSED",
+              ],
+              "type": "string",
+            },
+            "target": Object {
+              "description": "The target of the notification, for example the userId",
+              "maxLength": 2048,
+              "minLength": 2,
+              "pattern": "^[\\\\w _-]*$",
+              "type": "string",
+            },
+            "targetAndStatus": Object {
+              "description": "Composite key for index of notification by target and status. Delimited by .",
+              "maxLength": 2048,
+              "minLength": 2,
+              "pattern": "^[\\\\w _-]*$",
+              "type": "string",
+            },
+            "type": Object {
+              "maxLength": 2048,
+              "minLength": 2,
+              "pattern": "^[\\\\w _-]*$",
+              "type": "string",
+            },
+            "updatedBy": Object {
+              "maxLength": 256,
+              "pattern": "[\\\\w\\\\s+=.@-]+",
+              "type": "string",
+            },
+            "updatedTimestamp": Object {
+              "maxLength": 64,
+              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "notificationId",
+            "payload",
+            "source",
+            "status",
+            "target",
+            "targetAndStatus",
+            "type",
+          ],
+          "title": "PutNotificationActionResponse",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "NotificationListenerLambdaFFE5F633": Object {
+      "DependsOn": Array [
+        "NotificationListenerLambdaServiceRoleDefaultPolicy98231101",
+        "NotificationListenerLambdaServiceRoleEECD4C5B",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "TypescriptFunction Ada/NotificationService/NotificationListenerLambda of notification-listener.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "COUNTER_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+            },
+            "INTERNAL_TOKEN_KMS_KEY": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef",
+            },
+            "INTERNAL_TOKEN_SECRET_NAME": "sign-internal-token2855ghashx",
+            "LOCK_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            },
+            "NOTIFICATION_BUS_EVENT_BUS_ARN": Object {
+              "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+            },
+            "NOTIFICATION_TABLE_NAME": Object {
+              "Ref": "NotificationTable",
+            },
+            "NOTIFICATION_TARGET_AND_STATUS_INDEX_NAME": "Notification-TargetAndStatus2852ghashx",
+            "RELATIONSHIP_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "NotificationListenerLambdaServiceRoleEECD4C5B",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 30,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "NotificationListenerLambdaServiceRoleDefaultPolicy98231101": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "events:PutEvents",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn",
+              },
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:ap-southeast-1:1111111111:secret:sign-internal-token2855ghashx*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "NotificationTable",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "NotificationTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableNotificationTable1AF7D32EArn",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "NotificationListenerLambdaServiceRoleDefaultPolicy98231101",
+        "Roles": Array [
+          Object {
+            "Ref": "NotificationListenerLambdaServiceRoleEECD4C5B",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "NotificationListenerLambdaServiceRoleEECD4C5B": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "NotificationTable": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "AttributeDefinitions": Array [
+          Object {
+            "AttributeName": "target",
+            "AttributeType": "S",
+          },
+          Object {
+            "AttributeName": "notificationId",
+            "AttributeType": "S",
+          },
+          Object {
+            "AttributeName": "targetAndStatus",
+            "AttributeType": "S",
+          },
+          Object {
+            "AttributeName": "createdTimestamp",
+            "AttributeType": "S",
+          },
+        ],
+        "BillingMode": "PAY_PER_REQUEST",
+        "GlobalSecondaryIndexes": Array [
+          Object {
+            "IndexName": "Notification-TargetAndStatus2852ghashx",
+            "KeySchema": Array [
+              Object {
+                "AttributeName": "targetAndStatus",
+                "KeyType": "HASH",
+              },
+              Object {
+                "AttributeName": "createdTimestamp",
+                "KeyType": "RANGE",
+              },
+            ],
+            "Projection": Object {
+              "ProjectionType": "ALL",
+            },
+          },
+        ],
+        "KeySchema": Array [
+          Object {
+            "AttributeName": "target",
+            "KeyType": "HASH",
+          },
+          Object {
+            "AttributeName": "notificationId",
+            "KeyType": "RANGE",
+          },
+        ],
+        "PointInTimeRecoverySpecification": Object {
+          "PointInTimeRecoveryEnabled": true,
+        },
+        "SSESpecification": Object {
+          "KMSMasterKeyId": Object {
+            "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableNotificationTable1AF7D32EArn",
+          },
+          "SSEEnabled": true,
+          "SSEType": "KMS",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::DynamoDB::Table",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "NotificationTableCounterInitialization7174FD62": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "NotificationTableCounterInitializationCustomResourcePolicyACBDE0AC",
+      ],
+      "Properties": Object {
+        "Create": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"DynamoDB\\",\\"action\\":\\"putItem\\",\\"parameters\\":{\\"TableName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+              },
+              "\\",\\"Item\\":{\\"tableName\\":{\\"S\\":\\"",
+              Object {
+                "Ref": "NotificationTable",
+              },
+              "\\"},\\"count\\":{\\"N\\":\\"0\\"}}},\\"physicalResourceId\\":{\\"id\\":\\"NotificationTable-6594\\"}}",
+            ],
+          ],
+        },
+        "InstallLatestAwsSdk": true,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "AWS679F53Fac002430Cb0Da5B7982Bd22872D164C4C",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::AWS",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "NotificationTableCounterInitializationCustomResourcePolicyACBDE0AC": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "dynamodb:PutItem",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "NotificationTableCounterInitializationCustomResourcePolicyACBDE0AC",
+        "Roles": Array [
+          Object {
+            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+}
+`;

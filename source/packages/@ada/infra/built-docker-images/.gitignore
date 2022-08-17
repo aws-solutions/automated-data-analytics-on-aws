@@ -1,0 +1,4 @@
+*.tar
+*.fingerprint
+*
+!.gitignore

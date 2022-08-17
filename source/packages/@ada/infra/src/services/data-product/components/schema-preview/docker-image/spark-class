@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# HACK!
+# The spark-class script shipped with spark calls a java cli tool to generate the command to launch spark, before running
+# that command.
+# Unfortunately on a lambda, spark-class struggles to read the output of the cli tool and therefore fails to launch spark.
+# Since the only command type needed for this lambda is pyspark-shell, we can safely hardcode the spark command to run
+# and bypass the command generation.
+${JAVA_HOME}/bin/java -cp $GLUE_JARS_DIR/*:$SPARK_CONF_DIR/:$SPARK_HOME/jars/* -Xmx1g org.apache.spark.deploy.SparkSubmit --name PySparkShell pyspark-shell

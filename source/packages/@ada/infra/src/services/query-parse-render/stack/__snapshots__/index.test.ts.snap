@@ -1,0 +1,1622 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stack snapshots 1`] = `
+Object {
+  "Description": "(SO0190-QueryParseRenderService) - Automated Data Analytics on AWS. Version v1.0.0",
+  "Outputs": Object {
+    "ApiQueryParseRenderUrl1E1F836E": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            },
+            ".execute-api.ap-southeast-1.amazonaws.com/prod/query-parse-render",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn": Object {
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "ApiGovernanceAthenaLensLambda32622B96": Object {
+      "DependsOn": Array [
+        "ApiGovernanceAthenaLensLambdaServiceRoleDefaultPolicy4FB1830B",
+        "ApiGovernanceAthenaLensLambdaServiceRoleCD594CB7",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "Java function for athena-lens (GovernanceAthenaLensLambda:###hash64###)",
+        "Environment": Object {
+          "Variables": Object {
+            "SALT_ARN": Object {
+              "Ref": "ApiSecretSalt41559FAD",
+            },
+          },
+        },
+        "Handler": "com.ada.query.parserender.lens.AthenaLensHandler",
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiGovernanceAthenaLensLambdaServiceRoleCD594CB7",
+            "Arn",
+          ],
+        },
+        "Runtime": "java8",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 60,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiGovernanceAthenaLensLambdaAliasprodC9DB69D5": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "ApiGovernanceAthenaLensLambda32622B96",
+        },
+        "FunctionVersion": Object {
+          "Fn::GetAtt": Array [
+            "ApiGovernanceAthenaLensLambdaCurrentVersion###",
+            "Version",
+          ],
+        },
+        "Name": "prod",
+      },
+      "Type": "AWS::Lambda::Alias",
+    },
+    "ApiGovernanceAthenaLensLambdaAliasprodInvoke0EkbWdmt0KPsJPLxvA8BZ39AgsDsKBrHouCJjHcKDQ08564CBB": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Ref": "ApiGovernanceAthenaLensLambdaAliasprodC9DB69D5",
+        },
+        "Principal": Object {
+          "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn",
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiGovernanceAthenaLensLambdaCurrentVersion###": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "ApiGovernanceAthenaLensLambda32622B96",
+        },
+      },
+      "Type": "AWS::Lambda::Version",
+    },
+    "ApiGovernanceAthenaLensLambdaServiceRoleCD594CB7": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiGovernanceAthenaLensLambdaServiceRoleDefaultPolicy4FB1830B": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "ApiKmsSaltKeyB647F2D0",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "ApiSecretSalt41559FAD",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiGovernanceAthenaLensLambdaServiceRoleDefaultPolicy4FB1830B",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiGovernanceAthenaLensLambdaServiceRoleCD594CB7",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiKmsSaltKeyAliasE1DA1734": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/lens-salt/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "ApiKmsSaltKeyB647F2D0",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "ApiKmsSaltKeyB647F2D0": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Condition": Object {
+                "StringEquals": Object {
+                  "kms:ViaService": "secretsmanager.ap-southeast-1.amazonaws.com",
+                },
+              },
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "kms:CreateGrant",
+                "kms:DescribeKey",
+              ],
+              "Condition": Object {
+                "StringEquals": Object {
+                  "kms:ViaService": "secretsmanager.ap-southeast-1.amazonaws.com",
+                },
+              },
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Condition": Object {
+                "StringEquals": Object {
+                  "kms:ViaService": "secretsmanager.ap-southeast-1.amazonaws.com",
+                },
+              },
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::GetAtt": Array [
+                    "ApiGovernanceAthenaLensLambdaServiceRoleCD594CB7",
+                    "Arn",
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ApiQueryExecuteRolePolicyD3534E3F": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "ApiGovernanceAthenaLensLambdaAliasprodC9DB69D5",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiQueryExecuteRolePolicyD3534E3F",
+        "Roles": Array [
+          Object {
+            "Fn::Select": Array [
+              1,
+              Object {
+                "Fn::Split": Array [
+                  "/",
+                  Object {
+                    "Fn::Select": Array [
+                      5,
+                      Object {
+                        "Fn::Split": Array [
+                          ":",
+                          Object {
+                            "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiQueryParseRenderDiscoverLambda3E60C0CD": Object {
+      "DependsOn": Array [
+        "ApiQueryParseRenderDiscoverLambdaServiceRoleDefaultPolicyFC2DADFF",
+        "ApiQueryParseRenderDiscoverLambdaServiceRoleB2A13EA1",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "Java function for query-parse-render-lambdas (QueryParseRenderDiscoverLambda:###hash64###)",
+        "Handler": "com.ada.query.parserender.handlers.DiscoverHandler",
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiQueryParseRenderDiscoverLambdaServiceRoleB2A13EA1",
+            "Arn",
+          ],
+        },
+        "Runtime": "java8",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 60,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiQueryParseRenderDiscoverLambdaAliasprodA52A99DF": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "ApiQueryParseRenderDiscoverLambda3E60C0CD",
+        },
+        "FunctionVersion": Object {
+          "Fn::GetAtt": Array [
+            "ApiQueryParseRenderDiscoverLambdaCurrentVersion###",
+            "Version",
+          ],
+        },
+        "Name": "prod",
+      },
+      "Type": "AWS::Lambda::Alias",
+    },
+    "ApiQueryParseRenderDiscoverLambdaCurrentVersion###": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "ApiQueryParseRenderDiscoverLambda3E60C0CD",
+        },
+      },
+      "Type": "AWS::Lambda::Version",
+    },
+    "ApiQueryParseRenderDiscoverLambdaServiceRoleB2A13EA1": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiQueryParseRenderDiscoverLambdaServiceRoleDefaultPolicyFC2DADFF": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiQueryParseRenderDiscoverLambdaServiceRoleDefaultPolicyFC2DADFF",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiQueryParseRenderDiscoverLambdaServiceRoleB2A13EA1",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiQueryParseRenderRewriteLambda403C0228": Object {
+      "DependsOn": Array [
+        "ApiQueryParseRenderRewriteLambdaServiceRoleDefaultPolicyFEE37E34",
+        "ApiQueryParseRenderRewriteLambdaServiceRole562DF073",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "Java function for query-parse-render-lambdas (QueryParseRenderRewriteLambda:###hash64###)",
+        "Environment": Object {
+          "Variables": Object {
+            "ATHENA_LENS_LAMBDA": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  Object {
+                    "Fn::Select": Array [
+                      6,
+                      Object {
+                        "Fn::Split": Array [
+                          ":",
+                          Object {
+                            "Ref": "ApiGovernanceAthenaLensLambdaAliasprodC9DB69D5",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  ":prod",
+                ],
+              ],
+            },
+          },
+        },
+        "Handler": "com.ada.query.parserender.handlers.RewriteHandler",
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiQueryParseRenderRewriteLambdaServiceRole562DF073",
+            "Arn",
+          ],
+        },
+        "Runtime": "java8",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 60,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiQueryParseRenderRewriteLambdaAliasprod73A5D2EF": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "ApiQueryParseRenderRewriteLambda403C0228",
+        },
+        "FunctionVersion": Object {
+          "Fn::GetAtt": Array [
+            "ApiQueryParseRenderRewriteLambdaCurrentVersion###",
+            "Version",
+          ],
+        },
+        "Name": "prod",
+      },
+      "Type": "AWS::Lambda::Alias",
+    },
+    "ApiQueryParseRenderRewriteLambdaCurrentVersion###": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "ApiQueryParseRenderRewriteLambda403C0228",
+        },
+      },
+      "Type": "AWS::Lambda::Version",
+    },
+    "ApiQueryParseRenderRewriteLambdaServiceRole562DF073": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiQueryParseRenderRewriteLambdaServiceRoleDefaultPolicyFEE37E34": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiQueryParseRenderRewriteLambdaServiceRoleDefaultPolicyFEE37E34",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiQueryParseRenderRewriteLambdaServiceRole562DF073",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiRestApiRefQueryParseRenderA4AFA8DE": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+        },
+        "PathPart": "query-parse-render",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefqueryparserenderDiscover22453C35": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefQueryParseRenderA4AFA8DE",
+        },
+        "PathPart": "discover",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefqueryparserenderOPTIONSE9866B73": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefQueryParseRenderA4AFA8DE",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefqueryparserenderRewrite34988E29": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefQueryParseRenderA4AFA8DE",
+        },
+        "PathPart": "rewrite",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefqueryparserenderValidateAttributeValuePolicyA44BA9F5": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefQueryParseRenderA4AFA8DE",
+        },
+        "PathPart": "validate-attribute-value-policy",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefqueryparserenderdiscoverOPTIONSDF9F17EA": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefqueryparserenderDiscover22453C35",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefqueryparserenderdiscoverPOSTApiPermissionAdaQueryParseRenderServiceApiRestApiRefB8EE7476POSTQueryParseRenderDiscover27276757": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Ref": "ApiQueryParseRenderDiscoverLambdaAliasprodA52A99DF",
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/POST/query-parse-render/discover",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefqueryparserenderdiscoverPOSTApiPermissionTestAdaQueryParseRenderServiceApiRestApiRefB8EE7476POSTQueryParseRenderDiscover54BB8D35": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Ref": "ApiQueryParseRenderDiscoverLambdaAliasprodA52A99DF",
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/POST/query-parse-render/discover",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefqueryparserenderdiscoverPOSTB4272A2B": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefqueryparserenderdiscoverOPTIONSDF9F17EA",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Ref": "ApiQueryParseRenderDiscoverLambdaAliasprodA52A99DF",
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "ApiRestApiRefqueryparserenderdiscoverPostQueryParseRenderDiscoverResponse690C3A31",
+              },
+            },
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+        ],
+        "OperationName": "PostQueryParseRenderDiscover",
+        "RequestModels": Object {
+          "application/json": Object {
+            "Ref": "ApiRestApiRefqueryparserenderdiscoverPostQueryParseRenderDiscoverRequest91C73DE0",
+          },
+        },
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefqueryparserenderDiscover22453C35",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefqueryparserenderdiscoverPostQueryParseRenderDiscoverRequest91C73DE0": Object {
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "The query for which to discover involved data products",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "properties": Object {
+            "query": Object {
+              "description": "An SQL query",
+              "maxLength": 262144,
+              "pattern": "^([\\\\s\\\\S]+)$",
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "query",
+          ],
+          "title": "PostQueryParseRenderDiscoverRequest",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefqueryparserenderdiscoverPostQueryParseRenderDiscoverResponse690C3A31": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefqueryparserenderdiscoverPostQueryParseRenderDiscoverRequest91C73DE0",
+      ],
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "The data products discovered from the query",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "properties": Object {
+            "tables": Object {
+              "items": Object {
+                "properties": Object {
+                  "identifierParts": Object {
+                    "description": "Each identifier part as referenced in the query",
+                    "items": Object {
+                      "type": "string",
+                    },
+                    "type": "array",
+                  },
+                },
+                "required": Array [
+                  "identifierParts",
+                ],
+                "type": "object",
+              },
+              "type": "array",
+            },
+          },
+          "required": Array [
+            "tables",
+          ],
+          "title": "PostQueryParseRenderDiscoverResponse",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefqueryparserenderrewriteOPTIONS773ACF1C": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefqueryparserenderRewrite34988E29",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefqueryparserenderrewritePOSTApiPermissionAdaQueryParseRenderServiceApiRestApiRefB8EE7476POSTQueryParseRenderRewriteBEC7BC36": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Ref": "ApiQueryParseRenderRewriteLambdaAliasprod73A5D2EF",
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/POST/query-parse-render/rewrite",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefqueryparserenderrewritePOSTApiPermissionTestAdaQueryParseRenderServiceApiRestApiRefB8EE7476POSTQueryParseRenderRewrite95F41BF2": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Ref": "ApiQueryParseRenderRewriteLambdaAliasprod73A5D2EF",
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/POST/query-parse-render/rewrite",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefqueryparserenderrewritePOSTF03AD553": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefqueryparserenderrewriteOPTIONS773ACF1C",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Ref": "ApiQueryParseRenderRewriteLambdaAliasprod73A5D2EF",
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "ApiRestApiRefqueryparserenderrewritePostQueryParseRenderRewriteResponseB5921FE4",
+              },
+            },
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+        ],
+        "OperationName": "PostQueryParseRenderRewrite",
+        "RequestModels": Object {
+          "application/json": Object {
+            "Ref": "ApiRestApiRefqueryparserenderrewritePostQueryParseRenderRewriteRequest6C18D652",
+          },
+        },
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefqueryparserenderRewrite34988E29",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefqueryparserenderrewritePostQueryParseRenderRewriteRequest6C18D652": Object {
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "The input required to rewrite a query with governance applied",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "definitions": Object {
+            "Query": Object {
+              "properties": Object {
+                "query": Object {
+                  "description": "An SQL query",
+                  "maxLength": 262144,
+                  "pattern": "^([\\\\s\\\\S]+)$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "query",
+              ],
+              "type": "object",
+            },
+            "UDF": Object {
+              "properties": Object {
+                "inputType": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "name": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "outputType": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "name",
+                "inputType",
+                "outputType",
+              ],
+              "type": "object",
+            },
+          },
+          "description": "Input for a query rewrite request",
+          "properties": Object {
+            "dataProducts": Object {
+              "additionalProperties": Object {
+                "properties": Object {
+                  "columns": Object {
+                    "items": Object {
+                      "properties": Object {
+                        "attribute": Object {
+                          "description": "Optional ontology attribute associated with this column",
+                          "type": "string",
+                        },
+                        "clauses": Object {
+                          "description": "Additional SQL where clauses to apply for this column (written in terms of the ontology attribute)",
+                          "items": Object {
+                            "type": "string",
+                          },
+                          "type": "array",
+                        },
+                        "name": Object {
+                          "description": "Column name",
+                          "type": "string",
+                        },
+                        "udfs": Object {
+                          "description": "User-defined functions to apply to this column for governance",
+                          "items": Object {
+                            "$ref": "#/definitions/UDF",
+                          },
+                          "type": "array",
+                        },
+                      },
+                      "required": Array [
+                        "name",
+                        "udfs",
+                        "clauses",
+                      ],
+                      "type": "object",
+                    },
+                    "type": "array",
+                  },
+                  "tableName": Object {
+                    "description": "The qualified table name referencable in Athena",
+                    "type": "string",
+                  },
+                },
+                "required": Array [
+                  "tableName",
+                  "columns",
+                ],
+                "type": "object",
+              },
+              "description": "Map of data product (as referenced in the query) to details about the data product for governance",
+              "type": "object",
+            },
+            "query": Object {
+              "description": "An SQL query",
+              "maxLength": 262144,
+              "pattern": "^([\\\\s\\\\S]+)$",
+              "type": "string",
+            },
+            "querySubstitutions": Object {
+              "additionalProperties": Object {
+                "properties": Object {
+                  "query": Object {
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+              "description": "A map of query name (as referenced in the input query) to the query to be substituted. Recursive references are allowed so long as they are not circular.",
+              "type": "object",
+            },
+          },
+          "required": Array [
+            "dataProducts",
+            "query",
+          ],
+          "title": "PostQueryParseRenderRewriteRequest",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefqueryparserenderrewritePostQueryParseRenderRewriteResponseB5921FE4": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefqueryparserenderrewritePostQueryParseRenderRewriteRequest6C18D652",
+      ],
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "A query ready to execute in Athena",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "properties": Object {
+            "query": Object {
+              "description": "An SQL query",
+              "maxLength": 262144,
+              "pattern": "^([\\\\s\\\\S]+)$",
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "query",
+          ],
+          "title": "PostQueryParseRenderRewriteResponse",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefqueryparserendervalidateattributevaluepolicyOPTIONS77AF9B90": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefqueryparserenderValidateAttributeValuePolicyA44BA9F5",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefqueryparserendervalidateattributevaluepolicyPOSTApiPermissionAdaQueryParseRenderServiceApiRestApiRefB8EE7476POSTQueryParseRenderValidateAttributeValuePolicy81557527": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Ref": "ApiValidateAttributePolicyLambdaAliasprod70F17F52",
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/POST/query-parse-render/validate-attribute-value-policy",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefqueryparserendervalidateattributevaluepolicyPOSTApiPermissionTestAdaQueryParseRenderServiceApiRestApiRefB8EE7476POSTQueryParseRenderValidateAttributeValuePolicyAFDA8114": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Ref": "ApiValidateAttributePolicyLambdaAliasprod70F17F52",
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/POST/query-parse-render/validate-attribute-value-policy",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefqueryparserendervalidateattributevaluepolicyPOSTD918DAE9": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefqueryparserendervalidateattributevaluepolicyOPTIONS77AF9B90",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Ref": "ApiValidateAttributePolicyLambdaAliasprod70F17F52",
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "ApiRestApiRefqueryparserendervalidateattributevaluepolicyPostQueryParseRenderValidateAttributeValuePolicyResponseFF680594",
+              },
+            },
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+        ],
+        "OperationName": "PostQueryParseRenderValidateAttributeValuePolicy",
+        "RequestModels": Object {
+          "application/json": Object {
+            "Ref": "ApiRestApiRefqueryparserendervalidateattributevaluepolicyPostQueryParseRenderValidateAttributeValuePolicyRequestE347C01A",
+          },
+        },
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefqueryparserenderValidateAttributeValuePolicyA44BA9F5",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefqueryparserendervalidateattributevaluepolicyPostQueryParseRenderValidateAttributeValuePolicyRequestE347C01A": Object {
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "The attribute value policy to validate",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "properties": Object {
+            "attribute": Object {
+              "description": "The attribute to be replaced in the sql clause",
+              "type": "string",
+            },
+            "clause": Object {
+              "description": "The SQL clause to validate",
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "attribute",
+            "clause",
+          ],
+          "title": "PostQueryParseRenderValidateAttributeValuePolicyRequest",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefqueryparserendervalidateattributevaluepolicyPostQueryParseRenderValidateAttributeValuePolicyResponseFF680594": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefqueryparserendervalidateattributevaluepolicyPostQueryParseRenderValidateAttributeValuePolicyRequestE347C01A",
+      ],
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "An empty response if validation is successful",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "properties": Object {},
+          "title": "PostQueryParseRenderValidateAttributeValuePolicyResponse",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiSecretSalt41559FAD": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "GenerateSecretString": Object {},
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "ApiKmsSaltKeyB647F2D0",
+            "Arn",
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::SecretsManager::Secret",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ApiValidateAttributePolicyLambdaAliasprod70F17F52": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "ApiValidateAttributePolicyLambdaEA7BDF0F",
+        },
+        "FunctionVersion": Object {
+          "Fn::GetAtt": Array [
+            "ApiValidateAttributePolicyLambdaCurrentVersion###",
+            "Version",
+          ],
+        },
+        "Name": "prod",
+      },
+      "Type": "AWS::Lambda::Alias",
+    },
+    "ApiValidateAttributePolicyLambdaCurrentVersion###": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "ApiValidateAttributePolicyLambdaEA7BDF0F",
+        },
+      },
+      "Type": "AWS::Lambda::Version",
+    },
+    "ApiValidateAttributePolicyLambdaEA7BDF0F": Object {
+      "DependsOn": Array [
+        "ApiValidateAttributePolicyLambdaServiceRoleDefaultPolicyC053C240",
+        "ApiValidateAttributePolicyLambdaServiceRoleEDA606BF",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "Java function for query-parse-render-lambdas (ValidateAttributePolicyLambda:###hash64###)",
+        "Handler": "com.ada.query.parserender.handlers.ValidateAttributePolicyHandler",
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiValidateAttributePolicyLambdaServiceRoleEDA606BF",
+            "Arn",
+          ],
+        },
+        "Runtime": "java8",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 60,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiValidateAttributePolicyLambdaServiceRoleDefaultPolicyC053C240": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiValidateAttributePolicyLambdaServiceRoleDefaultPolicyC053C240",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiValidateAttributePolicyLambdaServiceRoleEDA606BF",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiValidateAttributePolicyLambdaServiceRoleEDA606BF": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+}
+`;

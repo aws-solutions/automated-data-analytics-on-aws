@@ -1,0 +1,40 @@
+{
+  "consumer": {
+    "name": "microserviceApp"
+  },
+  "provider": {
+    "name": "microserviceTwo"
+  },
+  "interactions": [
+    {
+      "description": "a POST request from the proxy service",
+      "providerState": "mock POST response",
+      "request": {
+        "method": "POST",
+        "path": "/prod/micro2/query",
+        "query": "myParam=test",
+        "headers": {
+          "Accept": "*/*",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "hello": "world"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "mocked": "response"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

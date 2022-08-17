@@ -1,0 +1,57 @@
+{
+  // https://www.npmjs.com/package/typescript-transform-paths
+  "ts-node": {
+    "transpileOnly": true,
+    "require": ["typescript-transform-paths/register"]
+  },
+  "compilerOptions": {
+    "target": "ES2018",
+    "skipLibCheck": true,
+    "module": "commonjs",
+    "lib": ["es2019"],
+    "declaration": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": false,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "esModuleInterop": true,
+    "types": ["node", "jest"],
+    "baseUrl": "./",
+
+    "moduleResolution": "Node",
+
+    "paths": {
+      "@ada/infra-common": ["./src/common/index.ts"],
+      "@ada/infra-common/*": ["./src/common/*"],
+      "@ada/aws-sdk": ["./src/common/aws-sdk/index.ts"],
+      "@ada/aws-sdk/*": ["./src/common/aws-sdk/*"],
+      "@ada/jwt-signer": ["./src/common/jwt-signer/index.ts"],
+      "@ada/jwt-signer/*": ["./src/common/jwt-signer/*"],
+      "@ada/microservice-common": ["./src/common/services/index.ts"],
+      "@ada/microservice-common/*": ["./src/common/services/*"],
+      "@ada/api-gateway": ["./src/services/api/api-gateway/index.ts"],
+      "@ada/api-gateway/*": ["./src/services/api/api-gateway/*"],
+      "@ada/microservice-test-common": ["./src/common/services/testing/index.ts"],
+      "@ada/microservice-test-common/*": ["./src/common/services/testing/*"],
+    },
+    "plugins": [
+      // https://www.npmjs.com/package/typescript-transform-paths
+      // Note: To transform paths for both the output .js and .d.ts files, you need both of the below entries
+      { "transform": "typescript-transform-paths" },
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ]
+  },
+  "include": ["src"],
+  "exclude": ["cdk.out", "dist", "node_modules", "tst", "**/jest.config.*"]
+}

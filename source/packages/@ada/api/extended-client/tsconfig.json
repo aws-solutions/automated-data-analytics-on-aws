@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig-base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "module": "commonjs",
+    "outDir": "../client",
+    "rootDir": ".",
+    "composite": true,
+    "lib": ["ES2019", "DOM"],
+    "tsBuildInfoFile": "../build/extendedClientBuildInfoFile",
+    "rootDirs": [".", "../client"]
+  }
+}

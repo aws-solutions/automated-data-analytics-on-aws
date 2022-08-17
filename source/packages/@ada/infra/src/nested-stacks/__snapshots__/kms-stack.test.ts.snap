@@ -1,0 +1,1943 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stack snapshots 1`] = `
+Object {
+  "Description": "(SO0190-KMSStack) - Automated Data Analytics on AWS. Version v1.0.0",
+  "Outputs": Object {
+    "AdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyBucketKeyAccessLogBucket3FE8CB58",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyBucketKeyAthenaOutputBucket0D9D1563Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyBucketKeyAthenaOutputBucket3E0B1956",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyBucketKeyDataBucket51FCC54DArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyBucketKeyDataBucket924A0C93",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyBucketKeyScriptsBucketF812149F",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyBucketKeyTempBucketAFE3DAB9Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyBucketKeyTempBucket6AF1B5EC",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyBucketKeyWafLogBucketBCD39C55Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyBucketKeyWafLogBucket95887C8D",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableAccessRequestTable3CBA9695Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableAccessRequestTableE1A7BAB5",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableAliasToOntologyAttributeTable797CB698Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableAliasToOntologyAttributeTable3D106FC5",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableApiAccessPolicyTable0958670AArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableApiAccessPolicyTable6CE1D0EC",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableAttributesPolicyTable2BE20275Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableAttributesPolicyTable99266C23",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableAttributesValuePolicyTable0A88FC7CArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableAttributesValuePolicyTableE864D892",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableCachedQueryTableFD9290A0Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableCachedQueryTableC1248334",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableDataProductPolicyTableD600EA3AArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableDataProductPolicyTable7EF72DD0",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableDataProductTableCFB5877CArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableDataProductTable4037FE48",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableDefaultLensPolicyTable4B30BF12Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableDefaultLensPolicyTableBDA1038A",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableDomainTable333E1957Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableDomainTableABF0C09C",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableGroupsTable715E88D9Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableGroupsTable6EB5935C",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableIdentityMachineTableD776DA41Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableIdentityMachineTable89EF978E",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableIdentityMachineTokenTableC84EAEE4Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableIdentityMachineTokenTable037189BE",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableIdentityProviderTable02CF28ECArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableIdentityProviderTable2BBD9725",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableLocks696688D7Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableLocks584A79CF",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableNotificationTable1AF7D32EArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableNotificationTable12427275",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableOntologyAttributesTable18EF31EFArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableOntologyAttributesTable8FD9EFFC",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableQueryHistoryTable27AED216Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableQueryHistoryTableE41AD69A",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableRelationships876C7C40",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableSavedPrivateQueryTable093AF194Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableSavedPrivateQueryTable2247CA36",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableSavedPublicQueryTable01036984Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableSavedPublicQueryTable9526092B",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyTableScriptsTableF746BDE4Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyTableScriptsTable2C3F0490",
+          "Arn",
+        ],
+      },
+    },
+  },
+  "Resources": Object {
+    "KeyBucketKeyAccessLogBucket3FE8CB58": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for bucket AccessLogBucket",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyBucketKeyAccessLogBucketAliasFDA113C7": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/BucketKey-AccessLogBucket/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyBucketKeyAccessLogBucket3FE8CB58",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyBucketKeyAthenaOutputBucket3E0B1956": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for bucket AthenaOutputBucket",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyBucketKeyAthenaOutputBucketAliasA87D9D06": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/BucketKey-AthenaOutputBucket/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyBucketKeyAthenaOutputBucket3E0B1956",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyBucketKeyDataBucket924A0C93": Object {
+      "DeletionPolicy": "Retain",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for bucket DataBucket",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "KeyBucketKeyDataBucketAliasFAEBC729": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/BucketKey-DataBucket/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyBucketKeyDataBucket924A0C93",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyBucketKeyScriptsBucketAlias12B17B18": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/BucketKey-ScriptsBucket/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyBucketKeyScriptsBucketF812149F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyBucketKeyScriptsBucketF812149F": Object {
+      "DeletionPolicy": "Retain",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for bucket ScriptsBucket",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "KeyBucketKeyTempBucket6AF1B5EC": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for bucket TempBucket",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyBucketKeyTempBucketAliasDD7CC665": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/BucketKey-TempBucket/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyBucketKeyTempBucket6AF1B5EC",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyBucketKeyWafLogBucket95887C8D": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for bucket WafLogBucket",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyBucketKeyWafLogBucketAliasB033C48C": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/BucketKey-WafLogBucket/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyBucketKeyWafLogBucket95887C8D",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableAccessRequestTableAliasEB1C39D2": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-AccessRequestTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableAccessRequestTableE1A7BAB5",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableAccessRequestTableE1A7BAB5": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table AccessRequestTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableAliasToOntologyAttributeTable3D106FC5": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table AliasToOntologyAttributeTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableAliasToOntologyAttributeTableAliasBA5540B9": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-AliasToOntologyAttributeTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableAliasToOntologyAttributeTable3D106FC5",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableApiAccessPolicyTable6CE1D0EC": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table ApiAccessPolicyTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableApiAccessPolicyTableAlias27320565": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-ApiAccessPolicyTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableApiAccessPolicyTable6CE1D0EC",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableAttributesPolicyTable99266C23": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table AttributesPolicyTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableAttributesPolicyTableAliasF23E8CDD": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-AttributesPolicyTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableAttributesPolicyTable99266C23",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableAttributesValuePolicyTableAlias6A708040": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-AttributesValuePolicyTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableAttributesValuePolicyTableE864D892",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableAttributesValuePolicyTableE864D892": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table AttributesValuePolicyTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableCachedQueryTableAliasB80783E0": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-CachedQueryTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableCachedQueryTableC1248334",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableCachedQueryTableC1248334": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table CachedQueryTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableDataProductPolicyTable7EF72DD0": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table DataProductPolicyTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableDataProductPolicyTableAlias2BA8CCE3": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-DataProductPolicyTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableDataProductPolicyTable7EF72DD0",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableDataProductTable4037FE48": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table DataProductTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableDataProductTableAlias29C79CF3": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-DataProductTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableDataProductTable4037FE48",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableDefaultLensPolicyTableAliasBBB2E097": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-DefaultLensPolicyTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableDefaultLensPolicyTableBDA1038A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableDefaultLensPolicyTableBDA1038A": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table DefaultLensPolicyTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableDomainTableABF0C09C": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table DomainTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableDomainTableAlias2C46B480": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-DomainTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableDomainTableABF0C09C",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableGroupsTable6EB5935C": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table GroupsTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableGroupsTableAliasE31BF7D6": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-GroupsTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableGroupsTable6EB5935C",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableIdentityMachineTable89EF978E": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table IdentityMachineTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableIdentityMachineTableAlias81441AFC": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-IdentityMachineTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableIdentityMachineTable89EF978E",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableIdentityMachineTokenTable037189BE": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table IdentityMachineTokenTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableIdentityMachineTokenTableAliasFAC5418D": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-IdentityMachineTokenTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableIdentityMachineTokenTable037189BE",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableIdentityProviderTable2BBD9725": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table IdentityProviderTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableIdentityProviderTableAlias49768AD2": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-IdentityProviderTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableIdentityProviderTable2BBD9725",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableLocks584A79CF": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table Locks",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableLocksAlias1C0EB0DF": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-Locks/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableLocks584A79CF",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableNotificationTable12427275": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table NotificationTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableNotificationTableAliasEF01473A": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-NotificationTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableNotificationTable12427275",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableOntologyAttributesTable8FD9EFFC": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table OntologyAttributesTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableOntologyAttributesTableAliasA9DB6925": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-OntologyAttributesTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableOntologyAttributesTable8FD9EFFC",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableQueryHistoryTableAlias0560B180": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-QueryHistoryTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableQueryHistoryTableE41AD69A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableQueryHistoryTableE41AD69A": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table QueryHistoryTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableRelationships876C7C40": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table Relationships",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableRelationshipsAlias6F9FAFFA": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-Relationships/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableRelationships876C7C40",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableSavedPrivateQueryTable2247CA36": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table SavedPrivateQueryTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableSavedPrivateQueryTableAlias63C1C3C3": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-SavedPrivateQueryTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableSavedPrivateQueryTable2247CA36",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableSavedPublicQueryTable9526092B": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table SavedPublicQueryTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableSavedPublicQueryTableAliasE48E59F0": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-SavedPublicQueryTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableSavedPublicQueryTable9526092B",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyTableScriptsTable2C3F0490": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for DynamoDB table ScriptsTable",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyTableScriptsTableAliasC1E7EA46": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/Table-ScriptsTable/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyTableScriptsTable2C3F0490",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+  },
+}
+`;

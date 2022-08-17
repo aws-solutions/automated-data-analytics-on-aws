@@ -1,0 +1,43 @@
+{
+  "name": "@ada/api",
+  "description": "Auto generated api schema, clients, and docs for project",
+  "version": "0.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "main": "./client/index.js",
+  "types": "./client/index.d.ts",
+  "scripts": {
+    "prebuild": "yarn clean && yarn generate",
+    "build": "yarn run compile",
+    "compile": "tsc -b -v",
+    "test": "jest --coverage",
+    "test:snapshots:update": "jest -u",
+    "clean": "rm -rf build client docs",
+    "generate": "yarn generate:openapi",
+    "generate:openapi": "ts-node -C ttypescript ./generators/openapi/generate.ts",
+    "generate:openapi:spec": "ts-node -C ttypescript ./generators/openapi/generate-spec.ts",
+    "generate:openapi:client": "ts-node -C ttypescript ./generators/openapi/generate-clients.ts",
+    "postgenerate:openapi:client": "yarn compile",
+    "generate:openapi:docs": "ts-node -C ttypescript ./generators/openapi/generate-docs.ts"
+  },
+  "devDependencies": {
+    "@ada/cdk-core": "*",
+    "@openapitools/openapi-generator-cli": "^2.4.1",
+    "@types/folder-hash": "^4.0.1",
+    "@types/jest": "^26.0.24",
+    "@types/node": "*",
+    "@types/node-fetch": "^2.5.7",
+    "@types/pluralize": "^0.0.29",
+    "aws-cdk": "^2.33.0",
+    "aws-cdk-lib": "^2.33.0",
+    "constructs": "^10.1.54",
+    "btoa": "^1.2.1",
+    "es6-promise": "^4.2.4",
+    "folder-hash": "^4.0.1",
+    "form-data": "^2.5.0",
+    "node-fetch": "^2.6.7",
+    "pluralize": "^8.0.0",
+    "lodash": "^4.17.21",
+    "url-parse": "^1.4.3"
+  }
+}

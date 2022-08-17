@@ -1,0 +1,271 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stack snapshots 1`] = `
+Object {
+  "Description": "(SO0190-CognitoAuth) - Automated Data Analytics on AWS. Version v1.0.0",
+  "Outputs": Object {
+    "AdaCognitoAuthUserPoolBD7CD0F7Arn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "UserPool6BA7E5F2",
+          "Arn",
+        ],
+      },
+    },
+    "AdaCognitoAuthUserPoolBD7CD0F7Ref": Object {
+      "Value": Object {
+        "Ref": "UserPool6BA7E5F2",
+      },
+    },
+    "AdaCognitoAuthUserPoolCognitoDomain8B19C675Ref": Object {
+      "Value": Object {
+        "Ref": "UserPoolCognitoDomainD6C7F9FA",
+      },
+    },
+    "advancedSecurityModeOutput": Object {
+      "Value": Object {
+        "Ref": "referencetoAdaadvancedSecurityModeA861D946Ref",
+      },
+    },
+  },
+  "Parameters": Object {
+    "referencetoAdaadminEmail7EA005BFRef": Object {
+      "Type": "String",
+    },
+    "referencetoAdaadminMFA45F91363Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaadminPhoneNumberAE9C68D4Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaadvancedSecurityModeA861D946Ref": Object {
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "AdminUser": Object {
+      "Properties": Object {
+        "DesiredDeliveryMediums": Array [
+          "EMAIL",
+        ],
+        "ForceAliasCreation": true,
+        "UserAttributes": Array [
+          Object {
+            "Name": "email_verified",
+            "Value": "true",
+          },
+          Object {
+            "Name": "email",
+            "Value": Object {
+              "Ref": "referencetoAdaadminEmail7EA005BFRef",
+            },
+          },
+          Object {
+            "Name": "custom:claims",
+            "Value": "root",
+          },
+          Object {
+            "Name": "preferred_username",
+            "Value": "root_admin",
+          },
+          Object {
+            "Name": "phone_number_verified",
+            "Value": "true",
+          },
+          Object {
+            "Name": "phone_number",
+            "Value": Object {
+              "Ref": "referencetoAdaadminPhoneNumberAE9C68D4Ref",
+            },
+          },
+        ],
+        "UserPoolId": Object {
+          "Ref": "UserPool6BA7E5F2",
+        },
+        "Username": Object {
+          "Ref": "referencetoAdaadminEmail7EA005BFRef",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolUser",
+    },
+    "CognitoUserPoolRiskConfiguration": Object {
+      "Properties": Object {
+        "AccountTakeoverRiskConfiguration": Object {
+          "Actions": Object {
+            "HighAction": Object {
+              "EventAction": "BLOCK",
+              "Notify": false,
+            },
+            "LowAction": Object {
+              "EventAction": "NO_ACTION",
+              "Notify": false,
+            },
+            "MediumAction": Object {
+              "EventAction": "MFA_IF_CONFIGURED",
+              "Notify": false,
+            },
+          },
+        },
+        "ClientId": "ALL",
+        "CompromisedCredentialsRiskConfiguration": Object {
+          "Actions": Object {
+            "EventAction": "BLOCK",
+          },
+        },
+        "UserPoolId": Object {
+          "Ref": "UserPool6BA7E5F2",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolRiskConfigurationAttachment",
+    },
+    "UserPool6BA7E5F2": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "AccountRecoverySetting": Object {
+          "RecoveryMechanisms": Array [
+            Object {
+              "Name": "verified_email",
+              "Priority": 1,
+            },
+          ],
+        },
+        "AdminCreateUserConfig": Object {
+          "AllowAdminCreateUserOnly": true,
+        },
+        "EmailVerificationMessage": "The verification code to your new account is {####}",
+        "EmailVerificationSubject": "Verify your new account",
+        "EnabledMfas": Array [
+          "SMS_MFA",
+        ],
+        "MfaConfiguration": Object {
+          "Ref": "referencetoAdaadminMFA45F91363Ref",
+        },
+        "Schema": Array [
+          Object {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "claims",
+            "StringAttributeConstraints": Object {
+              "MaxLength": "2048",
+              "MinLength": "1",
+            },
+          },
+          Object {
+            "AttributeDataType": "String",
+            "Mutable": true,
+            "Name": "groups",
+            "StringAttributeConstraints": Object {
+              "MaxLength": "2048",
+              "MinLength": "1",
+            },
+          },
+        ],
+        "SmsConfiguration": Object {
+          "ExternalId": "AdaCognitoAuthUserPoolDABC7120",
+          "SnsCallerArn": Object {
+            "Fn::GetAtt": Array [
+              "UserPoolSmsRole4EA729DD",
+              "Arn",
+            ],
+          },
+        },
+        "SmsVerificationMessage": "The verification code to your new account is {####}",
+        "UserPoolAddOns": Object {
+          "AdvancedSecurityMode": Object {
+            "Ref": "referencetoAdaadvancedSecurityModeA861D946Ref",
+          },
+        },
+        "UserPoolTags": Object {
+          "Application": "Ada",
+        },
+        "VerificationMessageTemplate": Object {
+          "DefaultEmailOption": "CONFIRM_WITH_CODE",
+          "EmailMessage": "The verification code to your new account is {####}",
+          "EmailSubject": "Verify your new account",
+          "SmsMessage": "The verification code to your new account is {####}",
+        },
+      },
+      "Type": "AWS::Cognito::UserPool",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "UserPoolAdaResourceServer06028AB9": Object {
+      "Properties": Object {
+        "Identifier": "ada",
+        "Name": "ada",
+        "Scopes": Array [
+          Object {
+            "ScopeDescription": "scope used by user that issue their own tokens",
+            "ScopeName": "userid",
+          },
+        ],
+        "UserPoolId": Object {
+          "Ref": "UserPool6BA7E5F2",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolResourceServer",
+    },
+    "UserPoolCognitoDomainD6C7F9FA": Object {
+      "Properties": Object {
+        "Domain": "ada-domain-5022ghashx",
+        "UserPoolId": Object {
+          "Ref": "UserPool6BA7E5F2",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolDomain",
+    },
+    "UserPoolSmsRole4EA729DD": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W11",
+              "reason": "Allowing * resource on permissions policy since its used by Cognito to send SMS messages via sns:Publish",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Condition": Object {
+                "StringEquals": Object {
+                  "sts:ExternalId": "AdaCognitoAuthUserPoolDABC7120",
+                },
+              },
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "cognito-idp.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Policies": Array [
+          Object {
+            "PolicyDocument": Object {
+              "Statement": Array [
+                Object {
+                  "Action": "sns:Publish",
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "sns-publish",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+}
+`;

@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`federated-api/utils extendsSchema definitions should merge schema and maintain models 1`] = `
+Object {
+  "definitions": Object {
+    "A": Object {
+      "id": "A",
+      "type": "string",
+    },
+    "B": Object {
+      "id": "B",
+      "type": "string",
+    },
+    "Bar": Object {
+      "id": "Bar",
+      "properties": Object {
+        "bar": Object {
+          "ref": "#/definitions/BarProps",
+        },
+      },
+    },
+    "BarProps": Object {
+      "id": "BarProps",
+      "properties": Object {
+        "b": Object {
+          "ref": "#/definitions/b",
+        },
+        "baz": Object {
+          "ref": "#/definitions/Baz",
+        },
+        "c": Object {
+          "ref": "#/definitions/c",
+        },
+      },
+      "type": "object",
+    },
+    "Baz": Object {
+      "id": "Baz",
+      "properties": Object {
+        "a": Object {
+          "ref": "#/definitions/a",
+        },
+        "bar": Object {
+          "ref": "#/definitions/BazProps",
+        },
+        "d": Object {
+          "ref": "#/definitions/d",
+        },
+      },
+    },
+    "BazProps": Object {
+      "id": "BazProps",
+      "properties": Object {
+        "a": Object {
+          "ref": "#/definitions/a",
+        },
+        "d": Object {
+          "ref": "#/definitions/d",
+        },
+      },
+      "type": "object",
+    },
+    "Biz": Object {
+      "id": "Biz",
+      "properties": Object {
+        "a": Object {
+          "ref": "#/definitions/a",
+        },
+        "bar": Object {
+          "ref": "#/definitions/BizProps",
+        },
+        "d": Object {
+          "ref": "#/definitions/d",
+        },
+      },
+    },
+    "BizProps": Object {
+      "id": "BizProps",
+      "properties": Object {
+        "a": Object {
+          "ref": "#/definitions/a",
+        },
+        "d": Object {
+          "ref": "#/definitions/d",
+        },
+      },
+      "type": "object",
+    },
+    "C": Object {
+      "id": "C",
+      "type": "string",
+    },
+    "D": Object {
+      "id": "D",
+      "type": "string",
+    },
+    "FooProps": Object {
+      "id": "FooProps",
+      "properties": Object {
+        "a": Object {
+          "ref": "#/definitions/a",
+        },
+        "b": Object {
+          "ref": "#/definitions/b",
+        },
+      },
+      "type": "object",
+    },
+  },
+  "id": "Foo",
+  "properties": Object {
+    "a": Object {
+      "ref": "#/definitions/a",
+    },
+    "b": Object {
+      "ref": "#/definitions/b",
+    },
+    "bar": Object {
+      "ref": "#/definitions/BarProps",
+    },
+    "d": Object {
+      "ref": "#/definitions/d",
+    },
+    "foo": Object {
+      "ref": "#/definitions/FooProps",
+    },
+  },
+}
+`;
+
+exports[`federated-api/utils normalize should hoist and maintain all definitions/refs 1`] = `
+Object {
+  "definitions": Object {
+    "A": Object {
+      "id": "A",
+      "type": "string",
+    },
+    "B": Object {
+      "id": "B",
+      "type": "string",
+    },
+    "Bar": Object {
+      "id": "Bar",
+      "properties": Object {
+        "bar": Object {
+          "ref": "#/definitions/BarProps",
+        },
+      },
+    },
+    "BarProps": Object {
+      "id": "BarProps",
+      "properties": Object {
+        "b": Object {
+          "ref": "#/definitions/b",
+        },
+        "c": Object {
+          "ref": "#/definitions/c",
+        },
+      },
+      "type": "object",
+    },
+    "C": Object {
+      "id": "C",
+      "type": "string",
+    },
+    "FooProps": Object {
+      "id": "FooProps",
+      "properties": Object {
+        "a": Object {
+          "ref": "#/definitions/a",
+        },
+        "b": Object {
+          "ref": "#/definitions/b",
+        },
+        "bar": Object {
+          "ref": "#/definitions/Bar",
+        },
+      },
+      "type": "object",
+    },
+  },
+  "id": "Foo",
+  "properties": Object {
+    "foo": Object {
+      "ref": "#/definitions/FooProps",
+    },
+  },
+}
+`;

@@ -1,0 +1,17 @@
+node_modules/
+**/nodes_modules/
+**/dist
+**/build
+**/target
+**/cdk.out
+**/scripts/
+**/public/runtime-config.*
+react-app-env.d.ts
+packages/@ada/api/client
+packages/@ada/api/docs
+packages/@ada/api/safe/**/*.js
+packages/@ada/api/safe/**/*.d.ts
+**/htmlcov
+packages/@ada/infra/src/services/data-product/components/schema-preview/docker-image/dependencies/**/*
+**/__tests__/**/*
+/packages/@ada/api/client/**/*

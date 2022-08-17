@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "$ts-utils": ["../../../../@types/ts-utils"],
+      "$northstar-plus": ["./northstar-plus"],
+      "$northstar-plus/*": ["./northstar-plus/*"],
+      "$common": ["./common"],
+      "$common/*": ["./common/*"],
+      "$core": ["./core"],
+      "$core/*": ["./core/*"],
+      "$views": ["./views"],
+      "$views/*": ["./views/*"],
+      "$api": ["./api"],
+      "$api/*": ["./api/*"],
+      "$config": ["./config"],
+      "$config/*": ["./config/*"],
+      "$strings": ["./strings"],
+      "$strings/*": ["./strings/*"],
+      "$source-type": ["./source-type"],
+      "$source-type/*": ["./source-type/*"],
+      "$storybook/*": ["../.storybook/*"],
+      "$testing/*": ["./testing/*"]
+    }
+  }
+}

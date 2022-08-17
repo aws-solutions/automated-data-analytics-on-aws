@@ -1,0 +1,14 @@
+<component name="CopyrightManager">
+  <settings default="main-license">
+    <module2copyright>
+      <element module="All" copyright="main-license" />
+    </module2copyright>
+    <LanguageOptions name="__TEMPLATE__">
+      <option name="separateBefore" value="true" />
+      <option name="separateAfter" value="true" />
+      <option name="lenBefore" value="120" />
+      <option name="lenAfter" value="120" />
+      <option name="box" value="true" />
+    </LanguageOptions>
+  </settings>
+</component>

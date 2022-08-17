@@ -1,0 +1,26 @@
+{
+  "name": "@ada/transforms",
+  "description": "Built-in transforms",
+  "version": "0.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "yarn run compile",
+    "postbuild": "yarn copy:python-scripts",
+    "copy:python-scripts": "copyfiles --all --follow -u 1 ./src/**/*.py dist",
+    "compile": "tsc",
+    "test": "jest --coverage",
+    "clean": "rm -rf node_modules dist"
+  },
+  "dependencies": {
+    "@ada/api": "*",
+    "@ada/common": "*"
+  },
+  "devDependencies": {
+    "@rjsf/core": "^4.2.0",
+    "@types/json-schema": "^7.0.9",
+    "ttypescript": "^1.5.12"
+  }
+}

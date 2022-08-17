@@ -1,0 +1,33 @@
+{
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "types": [
+      "jest",
+      "ts-jest",
+      "@types/jest-environment-puppeteer"
+    ],
+    "module": "esnext",
+    "noEmitOnError": false,
+    "target": "ES2018",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "noEmit": true
+  },
+  "include": [
+    "__tests__/**/*.ts"
+  ]
+}
