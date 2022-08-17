@@ -1,0 +1,30 @@
+{
+  "name": "@ada/cdk-core",
+  "version": "0.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "yarn run compile",
+    "compile": "tsc",
+    "test": "jest --coverage --silent",
+    "test:dev": "jest",
+    "clean": "rm -rf node_modules"
+  },
+  "dependencies": {
+    "@ada/common": "*",
+    "aws-cdk-lib": "^2.33.0",
+    "constructs": "^10.1.54",
+    "truncate-middle": "^1.0.6"
+  },
+  "devDependencies": {
+    "@types/truncate-middle": "^1.0.1",
+    "aws-cdk": "^2.33.0",
+    "aws-sdk": "^2.1181.0",
+    "cross-env": "^7.0.2",
+    "module-alias": "^2.2.2",
+    "string-hash": "^1.1.3",
+    "ttypescript": "^1.5.12"
+  }
+}

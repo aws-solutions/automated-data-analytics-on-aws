@@ -1,0 +1,8 @@
+{
+  "packages": ["packages/*", "packages/@ada/*"],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "rejectCycles": "true",
+  "concurrency": 3,
+  "version": "0.0.0"
+}

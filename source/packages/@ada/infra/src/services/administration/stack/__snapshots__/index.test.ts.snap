@@ -1,0 +1,2046 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stack snapshots 1`] = `
+Object {
+  "Description": "(SO0190-AdministrationService) - Automated Data Analytics on AWS. Version v1.0.0",
+  "Outputs": Object {
+    "ApiAdministrationUrl93E5953E": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            },
+            ".execute-api.ap-southeast-1.amazonaws.com/prod/administration",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "referencetoAdaAWSStackId": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiWafDeploymentSecretCA25FA9ARef": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
+      "Type": "String",
+    },
+    "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceDataProductTableC1CE90D5Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceDataProductTableC1CE90D5Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu0312C0F1": Object {
+      "Type": "String",
+    },
+    "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu1AA3D612": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaLayer6FB4FEF4Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaSharedEvntBus3C45F515Arn": Object {
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "ApiLambdaStartTearDownDestroyData8A16B5F1": Object {
+      "DependsOn": Array [
+        "ApiLambdaStartTearDownDestroyDataServiceRoleDefaultPolicyEE46E7FC",
+        "ApiLambdaStartTearDownDestroyDataServiceRoleFC7A40E3",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "TypescriptFunction Ada/AdministrationService/Api/LambdaStartTearDownDestroyData of start-tear-down-destroy-data.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "API_ENDPOINT": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "https://",
+                  Object {
+                    "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+                  },
+                  ".execute-api.ap-southeast-1.amazonaws.com/prod/",
+                ],
+              ],
+            },
+            "API_WAF_ALLOW_RULE_SECRET": Object {
+              "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+            },
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "CORE_STACK_ID": Object {
+              "Ref": "referencetoAdaAWSStackId",
+            },
+            "CORE_STACK_NAME": "Ada",
+            "COUNTER_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+            },
+            "DATA_PRODUCT_TABLE_NAME": Object {
+              "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceDataProductTableC1CE90D5Ref",
+            },
+            "INTERNAL_TOKEN_KMS_KEY": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef",
+            },
+            "INTERNAL_TOKEN_SECRET_NAME": "sign-internal-token2855ghashx",
+            "LOCK_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            },
+            "NOTIFICATION_BUS_EVENT_BUS_ARN": Object {
+              "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+            },
+            "RELATIONSHIP_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            },
+            "RETAINED_RESOURCES": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "[\\"",
+                  Object {
+                    "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu1AA3D612",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu0312C0F1",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Arn",
+                  },
+                  "\\"]",
+                ],
+              ],
+            },
+            "TEAR_DOWN_LAMBDA_ARN": Object {
+              "Fn::GetAtt": Array [
+                "ApiLambdaTearDownE19F3AC4",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Layers": Array [
+          Object {
+            "Ref": "referencetoAdaLayer6FB4FEF4Ref",
+          },
+        ],
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaStartTearDownDestroyDataServiceRoleFC7A40E3",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 30,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiLambdaStartTearDownDestroyDataServiceRoleDefaultPolicyEE46E7FC": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+              },
+            },
+            Object {
+              "Action": "events:PutEvents",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn",
+              },
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:ap-southeast-1:1111111111:secret:sign-internal-token2855ghashx*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:DisableKey",
+                "kms:ScheduleKeyDeletion",
+                "kms:DeleteAlias",
+                "s3:Get*",
+                "s3:Describe*",
+                "s3:List*",
+                "s3:Delete*",
+                "logs:Delete*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+                },
+                Object {
+                  "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn",
+                },
+                Object {
+                  "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu1AA3D612",
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu1AA3D612",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu0312C0F1",
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu0312C0F1",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Arn",
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Arn",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ApiLambdaTearDownE19F3AC4",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "ApiLambdaTearDownE19F3AC4",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiLambdaStartTearDownDestroyDataServiceRoleDefaultPolicyEE46E7FC",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiLambdaStartTearDownDestroyDataServiceRoleFC7A40E3",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiLambdaStartTearDownDestroyDataServiceRoleFC7A40E3": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiLambdaStartTearDownRetainData494048DD": Object {
+      "DependsOn": Array [
+        "ApiLambdaStartTearDownRetainDataServiceRoleDefaultPolicy3877510D",
+        "ApiLambdaStartTearDownRetainDataServiceRole6E14B1C6",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "TypescriptFunction Ada/AdministrationService/Api/LambdaStartTearDownRetainData of start-tear-down-retain-data.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "API_ENDPOINT": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "https://",
+                  Object {
+                    "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+                  },
+                  ".execute-api.ap-southeast-1.amazonaws.com/prod/",
+                ],
+              ],
+            },
+            "API_WAF_ALLOW_RULE_SECRET": Object {
+              "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+            },
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "CORE_STACK_ID": Object {
+              "Ref": "referencetoAdaAWSStackId",
+            },
+            "CORE_STACK_NAME": "Ada",
+            "COUNTER_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+            },
+            "DATA_PRODUCT_TABLE_NAME": Object {
+              "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceDataProductTableC1CE90D5Ref",
+            },
+            "INTERNAL_TOKEN_KMS_KEY": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef",
+            },
+            "INTERNAL_TOKEN_SECRET_NAME": "sign-internal-token2855ghashx",
+            "LOCK_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            },
+            "NOTIFICATION_BUS_EVENT_BUS_ARN": Object {
+              "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+            },
+            "RELATIONSHIP_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            },
+            "RETAINED_RESOURCES": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "[\\"",
+                  Object {
+                    "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu1AA3D612",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu0312C0F1",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Arn",
+                  },
+                  "\\"]",
+                ],
+              ],
+            },
+            "TEAR_DOWN_LAMBDA_ARN": Object {
+              "Fn::GetAtt": Array [
+                "ApiLambdaTearDownE19F3AC4",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Layers": Array [
+          Object {
+            "Ref": "referencetoAdaLayer6FB4FEF4Ref",
+          },
+        ],
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaStartTearDownRetainDataServiceRole6E14B1C6",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 30,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiLambdaStartTearDownRetainDataServiceRole6E14B1C6": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiLambdaStartTearDownRetainDataServiceRoleDefaultPolicy3877510D": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+              },
+            },
+            Object {
+              "Action": "events:PutEvents",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn",
+              },
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:ap-southeast-1:1111111111:secret:sign-internal-token2855ghashx*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:DisableKey",
+                "kms:ScheduleKeyDeletion",
+                "kms:DeleteAlias",
+                "s3:Get*",
+                "s3:Describe*",
+                "s3:List*",
+                "s3:Delete*",
+                "logs:Delete*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+                },
+                Object {
+                  "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn",
+                },
+                Object {
+                  "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu1AA3D612",
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu1AA3D612",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu0312C0F1",
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu0312C0F1",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Arn",
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Arn",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ApiLambdaTearDownE19F3AC4",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "ApiLambdaTearDownE19F3AC4",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiLambdaStartTearDownRetainDataServiceRoleDefaultPolicy3877510D",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiLambdaStartTearDownRetainDataServiceRole6E14B1C6",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiLambdaTearDownE19F3AC4": Object {
+      "DependsOn": Array [
+        "ApiLambdaTearDownServiceRoleDefaultPolicyF2BD814F",
+        "ApiLambdaTearDownServiceRole49396A85",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "TypescriptFunction Ada/AdministrationService/Api/LambdaTearDown of tear-down.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "API_ENDPOINT": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "https://",
+                  Object {
+                    "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+                  },
+                  ".execute-api.ap-southeast-1.amazonaws.com/prod/",
+                ],
+              ],
+            },
+            "API_WAF_ALLOW_RULE_SECRET": Object {
+              "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+            },
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "CORE_STACK_ID": Object {
+              "Ref": "referencetoAdaAWSStackId",
+            },
+            "CORE_STACK_NAME": "Ada",
+            "COUNTER_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+            },
+            "DATA_PRODUCT_TABLE_NAME": Object {
+              "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceDataProductTableC1CE90D5Ref",
+            },
+            "INTERNAL_TOKEN_KMS_KEY": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef",
+            },
+            "INTERNAL_TOKEN_SECRET_NAME": "sign-internal-token2855ghashx",
+            "LOCK_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            },
+            "NOTIFICATION_BUS_EVENT_BUS_ARN": Object {
+              "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+            },
+            "RELATIONSHIP_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            },
+            "RETAINED_RESOURCES": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "[\\"",
+                  Object {
+                    "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu1AA3D612",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu0312C0F1",
+                  },
+                  "\\",\\"",
+                  Object {
+                    "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Arn",
+                  },
+                  "\\"]",
+                ],
+              ],
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Layers": Array [
+          Object {
+            "Ref": "referencetoAdaLayer6FB4FEF4Ref",
+          },
+        ],
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaTearDownServiceRole49396A85",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 900,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiLambdaTearDownServiceRole49396A85": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "PermissionsBoundary": Object {
+          "Ref": "ApiTearDownPermissionsBoundaryBE821880",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiLambdaTearDownServiceRoleDefaultPolicyF2BD814F": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "F4",
+              "reason": "Used to tear down the CloudFormation stack",
+            },
+            Object {
+              "id": "F39",
+              "reason": "Used to tear down the CloudFormation stack",
+            },
+            Object {
+              "id": "W12",
+              "reason": "Used to tear down the CloudFormation stack",
+            },
+            Object {
+              "id": "W76",
+              "reason": "SPCM expected to be high for CloudFormation execution role",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+              },
+            },
+            Object {
+              "Action": "events:PutEvents",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn",
+              },
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:ap-southeast-1:1111111111:secret:sign-internal-token2855ghashx*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:DisableKey",
+                "kms:ScheduleKeyDeletion",
+                "kms:DeleteAlias",
+                "s3:Get*",
+                "s3:Describe*",
+                "s3:List*",
+                "s3:Delete*",
+                "logs:Delete*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+                },
+                Object {
+                  "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn",
+                },
+                Object {
+                  "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu1AA3D612",
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu1AA3D612",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu0312C0F1",
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu0312C0F1",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Arn",
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Arn",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceDataProductTableC1CE90D5Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "cloudformation:DeleteStack",
+                "cloudformation:DescribeStacks",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":cloudformation:ap-southeast-1:1111111111:stack/ada-dp-*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":cloudformation:ap-southeast-1:1111111111:stack/CDKToolkit/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Ref": "referencetoAdaAWSStackId",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "s3:*",
+                "cloudformation:*",
+                "lambda:*",
+                "glue:*",
+                "ecs:*",
+                "states:*",
+                "logs:*",
+                "kms:*",
+                "iam:*",
+                "cloudtrail:*",
+                "cloudwatch:*",
+                "events:*",
+                "kinesis:*",
+                "firehose:*",
+              ],
+              "Condition": Object {
+                "ForAnyValue:StringEquals": Object {
+                  "aws:CalledVia": Array [
+                    "cloudformation.amazonaws.com",
+                  ],
+                },
+              },
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiLambdaTearDownServiceRoleDefaultPolicyF2BD814F",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiLambdaTearDownServiceRole49396A85",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiRestApiRefAdministrationD50CFF79": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+        },
+        "PathPart": "administration",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefadministrationOPTIONS9595A0BA": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefAdministrationD50CFF79",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefadministrationStartTearDown66E3AD16": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefAdministrationD50CFF79",
+        },
+        "PathPart": "start-tear-down",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefadministrationstartteardownDestroyDataDCBFCBA5": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefadministrationStartTearDown66E3AD16",
+        },
+        "PathPart": "destroy-data",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefadministrationstartteardownOPTIONS6D1EC999": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefadministrationStartTearDown66E3AD16",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefadministrationstartteardownRetainDataD8D5A6FE": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefadministrationStartTearDown66E3AD16",
+        },
+        "PathPart": "retain-data",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefadministrationstartteardowndestroydataDELETE95234A82": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefadministrationstartteardowndestroydataOPTIONSB50EAC5B",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "DELETE",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ApiLambdaStartTearDownDestroyData8A16B5F1",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "ApiRestApiRefadministrationstartteardowndestroydataDeleteAdministrationStartTearDownDestroyDataResponseC7F18D56",
+              },
+            },
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "403",
+          },
+        ],
+        "OperationName": "DeleteAdministrationStartTearDownDestroyData",
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefadministrationstartteardownDestroyDataDCBFCBA5",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefadministrationstartteardowndestroydataDELETEApiPermissionAdaAdministrationServiceApiRestApiRef8F32857ADELETEAdministrationStartTearDownDestroyData139AFCFD": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaStartTearDownDestroyData8A16B5F1",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/DELETE/administration/start-tear-down/destroy-data",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefadministrationstartteardowndestroydataDELETEApiPermissionTestAdaAdministrationServiceApiRestApiRef8F32857ADELETEAdministrationStartTearDownDestroyData87F2D899": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaStartTearDownDestroyData8A16B5F1",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/DELETE/administration/start-tear-down/destroy-data",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefadministrationstartteardowndestroydataDeleteAdministrationStartTearDownDestroyDataResponseC7F18D56": Object {
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "Details about the tear down that has been started",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "properties": Object {
+            "coreStackId": Object {
+              "type": "string",
+            },
+            "message": Object {
+              "type": "string",
+            },
+            "mode": Object {
+              "description": "Indicates the teardown mode being performed.",
+              "enum": Array [
+                "retain-data",
+                "destroy-data",
+              ],
+              "type": "string",
+            },
+            "retainedResources": Object {
+              "description": "List of resource arns that will be retained after deletion has completed, unless mode is destroy data.",
+              "items": Object {
+                "type": "string",
+              },
+              "type": "array",
+            },
+          },
+          "required": Array [
+            "coreStackId",
+            "mode",
+            "message",
+            "retainedResources",
+          ],
+          "title": "DeleteAdministrationStartTearDownDestroyDataResponse",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefadministrationstartteardowndestroydataOPTIONSB50EAC5B": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefadministrationstartteardownDestroyDataDCBFCBA5",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefadministrationstartteardownretaindataDELETEApiPermissionAdaAdministrationServiceApiRestApiRef8F32857ADELETEAdministrationStartTearDownRetainData6FD18BDE": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaStartTearDownRetainData494048DD",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/DELETE/administration/start-tear-down/retain-data",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefadministrationstartteardownretaindataDELETEApiPermissionTestAdaAdministrationServiceApiRestApiRef8F32857ADELETEAdministrationStartTearDownRetainDataA3A59248": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaStartTearDownRetainData494048DD",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/DELETE/administration/start-tear-down/retain-data",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefadministrationstartteardownretaindataDELETED088B466": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefadministrationstartteardownretaindataOPTIONS4EFC215B",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "DELETE",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ApiLambdaStartTearDownRetainData494048DD",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "ApiRestApiRefadministrationstartteardownretaindataDeleteAdministrationStartTearDownRetainDataResponse49D721C1",
+              },
+            },
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "403",
+          },
+        ],
+        "OperationName": "DeleteAdministrationStartTearDownRetainData",
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefadministrationstartteardownRetainDataD8D5A6FE",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefadministrationstartteardownretaindataDeleteAdministrationStartTearDownRetainDataResponse49D721C1": Object {
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "Details about the tear down that has been started",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "properties": Object {
+            "coreStackId": Object {
+              "type": "string",
+            },
+            "message": Object {
+              "type": "string",
+            },
+            "mode": Object {
+              "description": "Indicates the teardown mode being performed.",
+              "enum": Array [
+                "retain-data",
+                "destroy-data",
+              ],
+              "type": "string",
+            },
+            "retainedResources": Object {
+              "description": "List of resource arns that will be retained after deletion has completed, unless mode is destroy data.",
+              "items": Object {
+                "type": "string",
+              },
+              "type": "array",
+            },
+          },
+          "required": Array [
+            "coreStackId",
+            "mode",
+            "message",
+            "retainedResources",
+          ],
+          "title": "DeleteAdministrationStartTearDownRetainDataResponse",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefadministrationstartteardownretaindataOPTIONS4EFC215B": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefadministrationstartteardownRetainDataD8D5A6FE",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiTearDownPermissionsBoundaryBE821880": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "F40",
+              "reason": "Policy is for CDK permissions which require this level of permissiveness - solution prevents elevation of permissions through a PermissionBoundary as per AppSec requirements.",
+            },
+            Object {
+              "id": "F5",
+              "reason": "Policy is for CDK permissions which require this level of permissiveness - solution prevents elevation of permissions through a PermissionBoundary as per AppSec requirements.",
+            },
+            Object {
+              "id": "W13",
+              "reason": "Policy is for CDK permissions which require this level of permissiveness - solution prevents elevation of permissions through a PermissionBoundary as per AppSec requirements.",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "",
+        "Path": "/",
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:*",
+                "cloudformation:*",
+                "lambda:*",
+                "glue:*",
+                "ecs:*",
+                "states:*",
+                "logs:*",
+                "kms:*",
+                "iam:*",
+                "cloudtrail:*",
+                "cloudwatch:*",
+                "events:*",
+                "kinesis:*",
+                "firehose:*",
+                "dynamodb:*",
+                "ssm:*",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::ManagedPolicy",
+    },
+  },
+}
+`;

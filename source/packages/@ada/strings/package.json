@@ -1,0 +1,31 @@
+{
+  "name": "@ada/strings",
+  "description": "Intl string dictionary",
+  "version": "0.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "pluralize": "^8.0.0",
+    "type-fest": "^2.14.0",
+    "typesafe-i18n": "^5.5.2"
+  },
+  "devDependencies": {
+    "@types/pluralize": "^0.0.29",
+    "nodemon": "^2.0.18",
+    "typescript": "^4.7.4"
+  },
+  "scripts": {
+    "build": "yarn generate && tsc",
+    "test": "jest --coverage",
+    "generate": "typesafe-i18n --no-watch",
+    "watch": "typesafe-i18n & nodemon --ext ts --watch ./src/dictionary --exec \"touch ./src/i18n/en/index.ts\" & tsc --watch"
+  },
+  "workspaces": {
+    "nohoist": [
+      "typescript",
+      "typesafe-i18n"
+    ]
+  }
+}

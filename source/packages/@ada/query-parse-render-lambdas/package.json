@@ -1,0 +1,11 @@
+{
+  "name": "@ada/query-parse-render-lambdas",
+  "version": "0.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "mvn clean install -Djava.util.logging.config.file=./no-logging.properties",
+    "test": "mvn clean test -Djava.util.logging.config.file=./no-logging.properties",
+    "clean": "mvn clean -Djava.util.logging.config.file=./no-logging.properties"
+  }
+}

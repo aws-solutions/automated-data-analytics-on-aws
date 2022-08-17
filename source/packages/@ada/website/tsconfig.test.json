@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "types": ["jest", "ts-jest", "testing-library__react"],
+    "module": "ESNext",
+    "target": "ES6",
+    "jsx": "react-jsx",
+  },
+  "include": [
+    "src/**/*",
+    "tst/**/*",
+    "setupTests.ts"
+  ]
+}

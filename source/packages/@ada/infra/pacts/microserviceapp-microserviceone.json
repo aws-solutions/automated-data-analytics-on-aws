@@ -1,0 +1,36 @@
+{
+  "consumer": {
+    "name": "microserviceApp"
+  },
+  "provider": {
+    "name": "microserviceOne"
+  },
+  "interactions": [
+    {
+      "description": "a GET request from the proxy service",
+      "providerState": "mock GET response",
+      "request": {
+        "method": "GET",
+        "path": "/prod/micro1/my-microservice-id",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "*/*"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "mocked": "response"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

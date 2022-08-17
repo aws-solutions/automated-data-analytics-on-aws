@@ -1,0 +1,25 @@
+{
+  "name": "@ada/common",
+  "version": "0.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "scripts": {
+    "build": "yarn run compile",
+    "compile": "tsc",
+    "test:debug": "node --inspect $(yarn bin jest) --no-cache --runInBand",
+    "test:dev": "node $(yarn bin jest) --no-cache --runInBand --collectCoverage=false",
+    "test": "jest --coverage --pass-with-no-tests",
+    "test:snapshots:update": "yarn test:dev -u",
+    "clean": "rm -rf node_modules"
+  },
+  "dependencies": {
+    "@aws-sdk/signature-v4": "^3.30.0",
+    "mime-types": "^2.1.35"
+  },
+  "devDependencies": {
+    "@types/mime-types": "^2.1.1"
+  }
+}

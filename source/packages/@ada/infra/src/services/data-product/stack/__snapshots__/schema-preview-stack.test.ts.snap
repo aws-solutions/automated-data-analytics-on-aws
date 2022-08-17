@@ -1,0 +1,3749 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stack snapshots 1`] = `
+Object {
+  "Description": "(SO0190-SchemaPreview) - Automated Data Analytics on AWS. Version v1.0.0",
+  "Outputs": Object {
+    "ApiDataProductPreviewUrl95C4A115": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            },
+            ".execute-api.ap-southeast-1.amazonaws.com/prod/data-product-preview",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaApiWafDeploymentSecretCA25FA9ARef": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAccessLogBucketB5B66FEDRef": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
+      "Type": "String",
+    },
+    "referencetoAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureScriptsBucketD6FE34F9Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureScriptsBucketD6FE34F9Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyTempBucketAFE3DAB9Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdaLayer6FB4FEF4Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdaSharedEvntBus3C45F515Arn": Object {
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "ApiLambdaGetDataProductPreviewFC59B006": Object {
+      "DependsOn": Array [
+        "ApiLambdaGetDataProductPreviewServiceRoleDefaultPolicy23D11735",
+        "ApiLambdaGetDataProductPreviewServiceRole3A8F9CDE",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "TypescriptFunction Ada/DataProductService/SchemaPreview/Api/LambdaGetDataProductPreview of get-data-product-preview.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "API_ENDPOINT": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "https://",
+                  Object {
+                    "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+                  },
+                  ".execute-api.ap-southeast-1.amazonaws.com/prod/",
+                ],
+              ],
+            },
+            "API_WAF_ALLOW_RULE_SECRET": Object {
+              "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+            },
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "COUNTER_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+            },
+            "DATA_PRODUCT_PREVIEW_STATE_MACHINE_ARN": Object {
+              "Ref": "SchemaPreviewStateMachineACA4664A",
+            },
+            "INTERNAL_TOKEN_KMS_KEY": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef",
+            },
+            "INTERNAL_TOKEN_SECRET_NAME": "sign-internal-token2855ghashx",
+            "KEY_ID": Object {
+              "Ref": "DataProductPreviewKeyDFB5D943",
+            },
+            "LOCK_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            },
+            "NOTIFICATION_BUS_EVENT_BUS_ARN": Object {
+              "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+            },
+            "RELATIONSHIP_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Layers": Array [
+          Object {
+            "Ref": "referencetoAdaLayer6FB4FEF4Ref",
+          },
+        ],
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaGetDataProductPreviewServiceRole3A8F9CDE",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 30,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiLambdaGetDataProductPreviewServiceRole3A8F9CDE": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiLambdaGetDataProductPreviewServiceRoleDefaultPolicy23D11735": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+              },
+            },
+            Object {
+              "Action": "events:PutEvents",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn",
+              },
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:ap-southeast-1:1111111111:secret:sign-internal-token2855ghashx*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "states:ListExecutions",
+                "states:ListStateMachines",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "SchemaPreviewStateMachineACA4664A",
+              },
+            },
+            Object {
+              "Action": Array [
+                "states:DescribeExecution",
+                "states:DescribeStateMachineForExecution",
+                "states:GetExecutionHistory",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":states:ap-southeast-1:1111111111:execution:",
+                    Object {
+                      "Fn::Select": Array [
+                        6,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "SchemaPreviewStateMachineACA4664A",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "states:ListActivities",
+                "states:DescribeStateMachine",
+                "states:DescribeActivity",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "TempBucket",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "TempBucket",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyTempBucketAFE3DAB9Arn",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiLambdaGetDataProductPreviewServiceRoleDefaultPolicy23D11735",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiLambdaGetDataProductPreviewServiceRole3A8F9CDE",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiLambdaPostDataProductPreview8E172FB5": Object {
+      "DependsOn": Array [
+        "ApiLambdaPostDataProductPreviewServiceRoleDefaultPolicyE0246C77",
+        "ApiLambdaPostDataProductPreviewServiceRoleBE4ABB87",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "TypescriptFunction Ada/DataProductService/SchemaPreview/Api/LambdaPostDataProductPreview of post-data-product-preview.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "API_ENDPOINT": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "https://",
+                  Object {
+                    "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+                  },
+                  ".execute-api.ap-southeast-1.amazonaws.com/prod/",
+                ],
+              ],
+            },
+            "API_WAF_ALLOW_RULE_SECRET": Object {
+              "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+            },
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "COUNTER_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+            },
+            "DATA_PRODUCT_PREVIEW_STATE_MACHINE_ARN": Object {
+              "Ref": "SchemaPreviewStateMachineACA4664A",
+            },
+            "INTERNAL_TOKEN_KMS_KEY": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef",
+            },
+            "INTERNAL_TOKEN_SECRET_NAME": "sign-internal-token2855ghashx",
+            "KEY_ID": Object {
+              "Ref": "DataProductPreviewKeyDFB5D943",
+            },
+            "LOCK_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            },
+            "NOTIFICATION_BUS_EVENT_BUS_ARN": Object {
+              "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+            },
+            "RELATIONSHIP_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Layers": Array [
+          Object {
+            "Ref": "referencetoAdaLayer6FB4FEF4Ref",
+          },
+        ],
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaPostDataProductPreviewServiceRoleBE4ABB87",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 30,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiLambdaPostDataProductPreviewServiceRoleBE4ABB87": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiLambdaPostDataProductPreviewServiceRoleDefaultPolicyE0246C77": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+              },
+            },
+            Object {
+              "Action": "events:PutEvents",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn",
+              },
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:ap-southeast-1:1111111111:secret:sign-internal-token2855ghashx*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+              },
+            },
+            Object {
+              "Action": "states:StartExecution",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "SchemaPreviewStateMachineACA4664A",
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "DataProductPreviewKeyDFB5D943",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiLambdaPostDataProductPreviewServiceRoleDefaultPolicyE0246C77",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiLambdaPostDataProductPreviewServiceRoleBE4ABB87",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiRestApiRefDataProductPreview521B33E8": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+        },
+        "PathPart": "data-product-preview",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefDataProductpreviewdomaindomainIdDataProduct47C70EF8": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefdataproductpreviewdomainDomainId08A72FDE",
+        },
+        "PathPart": "data-product",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefdataproductpreviewDomain91E1FF74": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefDataProductPreview521B33E8",
+        },
+        "PathPart": "domain",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefdataproductpreviewOPTIONS62613BC4": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefDataProductPreview521B33E8",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefdataproductpreviewdomainDomainId08A72FDE": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefdataproductpreviewDomain91E1FF74",
+        },
+        "PathPart": "{domainId}",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefdataproductpreviewdomainOPTIONS2E0071CE": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefdataproductpreviewDomain91E1FF74",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIdOPTIONS2D503ADD": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefdataproductpreviewdomainDomainId08A72FDE",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductDataProductId24DC7E80": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefDataProductpreviewdomaindomainIdDataProduct47C70EF8",
+        },
+        "PathPart": "{dataProductId}",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductOPTIONS369122F4": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefDataProductpreviewdomaindomainIdDataProduct47C70EF8",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdOPTIONSFF13DD22": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefdataproductpreviewdomaindomainIddataproductDataProductId24DC7E80",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPOSTApiPermissionAdaDataProductServiceSchemaPreviewApiRestApiRefB2575933POSTDataProductPreviewDomainDomainIdDataProductDataProductId09079BF5": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaPostDataProductPreview8E172FB5",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/POST/data-product-preview/domain/*/data-product/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPOSTApiPermissionTestAdaDataProductServiceSchemaPreviewApiRestApiRefB2575933POSTDataProductPreviewDomainDomainIdDataProductDataProductIdDD583886": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaPostDataProductPreview8E172FB5",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/POST/data-product-preview/domain/*/data-product/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPOSTDF6AD336": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdOPTIONSFF13DD22",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ApiLambdaPostDataProductPreview8E172FB5",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPostDataProductPreviewDomainDataProductResponseBDF8403A",
+              },
+            },
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "403",
+          },
+        ],
+        "OperationName": "PostDataProductPreviewDomainDataProduct",
+        "RequestModels": Object {
+          "application/json": Object {
+            "Ref": "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPostDataProductPreviewDomainDataProductRequest126AAE4A",
+          },
+        },
+        "RequestParameters": Object {
+          "method.request.path.dataProductId": true,
+          "method.request.path.domainId": true,
+          "method.request.querystring.sampleSize": false,
+        },
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefdataproductpreviewdomaindomainIddataproductDataProductId24DC7E80",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPostDataProductPreviewDomainDataProductRequest126AAE4A": Object {
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "Details about the data product to preview",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "definitions": Object {
+            "ColumnMetadata": Object {
+              "properties": Object {
+                "dataType": Object {
+                  "description": "The data type of the column",
+                  "maxLength": 2048,
+                  "pattern": "^[\\\\w _\\\\{\\\\}\\"<>:,-]*$",
+                  "type": "string",
+                },
+                "description": Object {
+                  "description": "A description of the column",
+                  "maxLength": 2048,
+                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
+                  "type": "string",
+                },
+                "ontologyAttributeId": Object {
+                  "description": "The ontology attribute the column maps to (if any)",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "ontologyNamespace": Object {
+                  "description": "The ontologyNamespace of the ontology attribute",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "piiClassification": Object {
+                  "description": "Pii classification of the column",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "sortOrder": Object {
+                  "description": "The order in which this column should appear in the schema and results",
+                  "type": "number",
+                },
+              },
+              "required": Array [
+                "dataType",
+              ],
+              "type": "object",
+            },
+            "ColumnsMetadata": Object {
+              "additionalProperties": Object {
+                "$ref": "#/definitions/ColumnMetadata",
+              },
+              "description": "A map of column name to metadata about the column",
+              "type": "object",
+            },
+            "DataProductBase": Object {
+              "properties": Object {
+                "childDataProducts": Object {
+                  "description": "Any child data products, ie data products that use this data product as a source for their data",
+                  "items": Object {
+                    "$ref": "#/definitions/DataProductIdentifier",
+                  },
+                  "type": "array",
+                },
+                "cloudFormationStackId": Object {
+                  "description": "The id of the cloudformation stack for all resources pertaining to this data product",
+                  "maxLength": 2048,
+                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
+                  "type": "string",
+                },
+                "dataImportStateMachineArn": Object {
+                  "description": "The arn of the state machine for importing data product data (if any)",
+                  "type": "string",
+                },
+                "dataProductId": Object {
+                  "description": "The id of the data product",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "dataStatus": Object {
+                  "$ref": "#/definitions/DataProductDataStatus",
+                  "description": "Status of data product data",
+                },
+                "dataStatusDetails": Object {
+                  "description": "Details about the data status of the data product, eg error message if data import failed",
+                  "maxLength": 2048,
+                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
+                  "type": "string",
+                },
+                "description": Object {
+                  "description": "A description of the data product",
+                  "maxLength": 2048,
+                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
+                  "type": "string",
+                },
+                "domainId": Object {
+                  "description": "The id of the domain to which this data product belongs",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "enableAutomaticPii": Object {
+                  "description": "Whether or not to automatically apply pii detection and redaction",
+                  "type": "boolean",
+                },
+                "enableAutomaticTransforms": Object {
+                  "description": "Whether or not to automatically apply transforms based on the type of data in the data product",
+                  "type": "boolean",
+                },
+                "infrastructureStatus": Object {
+                  "$ref": "#/definitions/DataProductInfrastructureStatus",
+                  "description": "Status of data product infrastructure",
+                },
+                "infrastructureStatusDetails": Object {
+                  "description": "Details about the infrastructure status of the data product, eg error message if creation failed",
+                  "maxLength": 2048,
+                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
+                  "type": "string",
+                },
+                "latestDataUpdateTimestamp": Object {
+                  "description": "The time at which the data product data was last updated",
+                  "maxLength": 64,
+                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+                  "type": "string",
+                },
+                "name": Object {
+                  "description": "The name of the data product",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "parentDataProducts": Object {
+                  "description": "Any parent data products, ie data products that are used as a source for data in this data product",
+                  "items": Object {
+                    "$ref": "#/definitions/DataProductIdentifier",
+                  },
+                  "type": "array",
+                },
+                "sourceDataSets": Object {
+                  "$ref": "#/definitions/DataSets",
+                  "description": "Map of datasets by id",
+                },
+                "sourceDataStatus": Object {
+                  "$ref": "#/definitions/DataProductSourceDataStatus",
+                  "description": "Status of raw source data product data",
+                },
+                "sourceDataStatusDetails": Object {
+                  "description": "Details about the raw source data status of the data product, eg error message if data source inference failed",
+                  "type": "string",
+                },
+                "sourceDetails": Object {
+                  "$ref": "#/definitions/SouceDetailsSchema",
+                },
+                "sourceType": Object {
+                  "$ref": "#/definitions/SourceTypeEnum",
+                  "description": "Source type value",
+                },
+                "tags": Object {
+                  "$ref": "#/definitions/Tags",
+                },
+                "transforms": Object {
+                  "$ref": "#/definitions/DataProductTransforms",
+                  "description": "Ordered list of transformations applied to data in the data product",
+                },
+                "updateTrigger": Object {
+                  "$ref": "#/definitions/DataProductUpdateTrigger",
+                  "description": "The trigger for a data update",
+                },
+              },
+              "required": Array [
+                "childDataProducts",
+                "dataProductId",
+                "domainId",
+                "name",
+                "parentDataProducts",
+                "sourceType",
+                "tags",
+                "transforms",
+                "updateTrigger",
+              ],
+              "type": "object",
+            },
+            "DataProductDataStatus": Object {
+              "description": "Status of data product data",
+              "enum": Array [
+                "NO_DATA",
+                "UPDATING",
+                "READY",
+                "FAILED",
+              ],
+              "type": "string",
+            },
+            "DataProductIdentifier": Object {
+              "properties": Object {
+                "dataProductId": Object {
+                  "description": "The id of the data product",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "domainId": Object {
+                  "description": "The id of the domain to which this data product belongs",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "dataProductId",
+                "domainId",
+              ],
+              "type": "object",
+            },
+            "DataProductInfrastructureStatus": Object {
+              "description": "Status of data product infrastructure",
+              "enum": Array [
+                "PROVISIONING",
+                "READY",
+                "FAILED",
+              ],
+              "type": "string",
+            },
+            "DataProductSourceDataStatus": Object {
+              "description": "Status of raw source data product data",
+              "enum": Array [
+                "NO_DATA",
+                "UPDATING",
+                "READY",
+                "FAILED",
+              ],
+              "type": "string",
+            },
+            "DataProductTransform": Object {
+              "description": "Uniquely identifies the script. Used to calculate the script path in s3",
+              "properties": Object {
+                "inlineScriptContent": Object {
+                  "description": "Inline script content for use in schema previews. Data products cannot be created with inline scripts.",
+                  "maxLength": 262144,
+                  "pattern": "^[\\\\s\\\\S]*def apply_transform\\\\([\\\\s\\\\S]*$",
+                  "type": "string",
+                },
+                "inputArgs": Object {
+                  "description": "Arguments to pass to the script",
+                },
+                "namespace": Object {
+                  "description": "The namespace in which the script resides, eg the domain.",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "scriptId": Object {
+                  "description": "Identifies the script within the namespace",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "scriptId",
+                "namespace",
+              ],
+              "type": "object",
+            },
+            "DataProductTransforms": Object {
+              "description": "Ordered list of transformations applied to data in the data product",
+              "items": Object {
+                "$ref": "#/definitions/DataProductTransform",
+                "description": "Uniquely identifies the script. Used to calculate the script path in s3",
+              },
+              "type": "array",
+            },
+            "DataProductUpdatePolicyType": Object {
+              "description": "Update types for a data product data",
+              "enum": Array [
+                "APPEND",
+                "REPLACE",
+              ],
+              "type": "string",
+            },
+            "DataProductUpdateTrigger": Object {
+              "description": "The trigger for a data update",
+              "properties": Object {
+                "scheduleRate": Object {
+                  "description": "Cron schedule for data update (if triggerType is scheduled)",
+                  "maxLength": 64,
+                  "pattern": "(?:(?:^rate\\\\((\\\\d+) (minutes?|hours?|days?)\\\\)$)|(?:^cron\\\\(([\\\\w,/\\\\-*?#]{1,20} ?){1,6}\\\\)$))",
+                  "type": "string",
+                },
+                "triggerType": Object {
+                  "$ref": "#/definitions/DataProductUpdateTriggerType",
+                  "description": "Trigger types for a data product data",
+                },
+                "updatePolicy": Object {
+                  "$ref": "#/definitions/DataProductUpdatePolicyType",
+                  "description": "Update types for a data product data",
+                },
+              },
+              "required": Array [
+                "triggerType",
+              ],
+              "type": "object",
+            },
+            "DataProductUpdateTriggerType": Object {
+              "description": "Trigger types for a data product data",
+              "enum": Array [
+                "ON_DEMAND",
+                "SCHEDULE",
+                "AUTOMATIC",
+              ],
+              "type": "string",
+            },
+            "DataSet": Object {
+              "properties": Object {
+                "columnMetadata": Object {
+                  "$ref": "#/definitions/ColumnsMetadata",
+                  "description": "A map of column name to metadata about the column",
+                },
+                "description": Object {
+                  "description": "A description of the dataset",
+                  "maxLength": 2048,
+                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
+                  "type": "string",
+                },
+                "identifiers": Object {
+                  "$ref": "#/definitions/DataSetIdentifiers",
+                  "description": "Details specific to attributes that identify the dataset",
+                },
+                "name": Object {
+                  "description": "The name of the dataset within the data product",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "columnMetadata",
+                "identifiers",
+              ],
+              "type": "object",
+            },
+            "DataSetDetails": Object {
+              "properties": Object {
+                "description": Object {
+                  "description": "A description of the dataset",
+                  "maxLength": 2048,
+                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
+                  "type": "string",
+                },
+                "identifiers": Object {
+                  "$ref": "#/definitions/DataSetIdentifiers",
+                  "description": "Details specific to attributes that identify the dataset",
+                },
+                "name": Object {
+                  "description": "The name of the dataset within the data product",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "identifiers",
+              ],
+              "type": "object",
+            },
+            "DataSetIdentifiers": Object {
+              "description": "Details specific to attributes that identify the dataset",
+              "properties": Object {
+                "catalog": Object {
+                  "description": "The catalog of the dataset",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "database": Object {
+                  "description": "The database where the detaset is located",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "table": Object {
+                  "description": "The name of the table that contains the data of the dataset",
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+              },
+              "type": "object",
+            },
+            "DataSets": Object {
+              "additionalProperties": Object {
+                "$ref": "#/definitions/DataSet",
+              },
+              "description": "Map of datasets by id",
+              "type": "object",
+            },
+            "GSLocation": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "properties": Object {
+                "bucket": Object {
+                  "maxLength": 63,
+                  "minLength": 3,
+                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
+                  "type": "string",
+                },
+                "key": Object {
+                  "maxLength": 1024,
+                  "minLength": 1,
+                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "bucket",
+                "key",
+              ],
+              "type": "object",
+            },
+            "GoogleAnalyticsIdentifier": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "properties": Object {
+                "dimensions": Object {
+                  "maxLength": 20480,
+                  "minLength": 4,
+                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
+                  "type": "string",
+                },
+                "metrics": Object {
+                  "maxLength": 20480,
+                  "minLength": 4,
+                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
+                  "type": "string",
+                },
+                "scheduleRate": Object {
+                  "type": "string",
+                },
+                "since": Object {
+                  "maxLength": 64,
+                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+                  "type": "string",
+                },
+                "until": Object {
+                  "maxLength": 64,
+                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+                  "type": "string",
+                },
+                "viewId": Object {
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "viewId",
+                "dimensions",
+                "metrics",
+              ],
+              "type": "object",
+            },
+            "GoogleBigQueryTableIdentifier": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "properties": Object {
+                "query": Object {
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "query",
+              ],
+              "type": "object",
+            },
+            "GoogleServiceAccountAuth": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "properties": Object {
+                "clientEmail": Object {
+                  "description": "The email address of the service account",
+                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
+                  "title": "Client Email",
+                  "type": "string",
+                },
+                "clientId": Object {
+                  "description": "The client id of the Google Service Account",
+                  "title": "Client ID",
+                  "type": "string",
+                },
+                "privateKey": Object {
+                  "description": "The private key of the service account",
+                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
+                  "title": "Private Key",
+                  "type": "string",
+                },
+                "privateKeyId": Object {
+                  "description": "The private key id of the Google Service Account",
+                  "title": "Private Key ID",
+                  "type": "string",
+                },
+                "privateKeySecretName": Object {
+                  "type": "string",
+                },
+                "projectId": Object {
+                  "description": "The ID of the Google Cloud Project",
+                  "maxLength": 30,
+                  "minLength": 6,
+                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
+                  "title": "Project Id",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "projectId",
+                "clientEmail",
+                "clientId",
+                "privateKeyId",
+              ],
+              "type": "object",
+            },
+            "S3Location": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "properties": Object {
+                "bucket": Object {
+                  "maxLength": 63,
+                  "minLength": 3,
+                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
+                  "type": "string",
+                },
+                "key": Object {
+                  "maxLength": 1024,
+                  "minLength": 1,
+                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "bucket",
+                "key",
+              ],
+              "type": "object",
+            },
+            "ScriptIdentifier": Object {
+              "description": "Uniquely identifies the script. Used to calculate the script path in s3",
+              "properties": Object {
+                "namespace": Object {
+                  "description": "The namespace in which the script resides, eg the domain.",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "scriptId": Object {
+                  "description": "Identifies the script within the namespace",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "scriptId",
+                "namespace",
+              ],
+              "type": "object",
+            },
+            "SouceDetailsSchema": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "properties": Object {
+                "bucket": Object {
+                  "maxLength": 63,
+                  "minLength": 3,
+                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
+                  "type": "string",
+                },
+                "clientEmail": Object {
+                  "description": "The email address of the service account",
+                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
+                  "title": "Client Email",
+                  "type": "string",
+                },
+                "clientId": Object {
+                  "description": "The client id of the Google Service Account",
+                  "title": "Client ID",
+                  "type": "string",
+                },
+                "dimensions": Object {
+                  "maxLength": 20480,
+                  "minLength": 4,
+                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
+                  "type": "string",
+                },
+                "key": Object {
+                  "maxLength": 1024,
+                  "minLength": 1,
+                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
+                  "type": "string",
+                },
+                "kinesisStreamArn": Object {
+                  "maxLength": 2048,
+                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
+                  "type": "string",
+                },
+                "metrics": Object {
+                  "maxLength": 20480,
+                  "minLength": 4,
+                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
+                  "type": "string",
+                },
+                "privateKey": Object {
+                  "description": "The private key of the service account",
+                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
+                  "title": "Private Key",
+                  "type": "string",
+                },
+                "privateKeyId": Object {
+                  "description": "The private key id of the Google Service Account",
+                  "title": "Private Key ID",
+                  "type": "string",
+                },
+                "privateKeySecretName": Object {
+                  "type": "string",
+                },
+                "projectId": Object {
+                  "description": "The ID of the Google Cloud Project",
+                  "maxLength": 30,
+                  "minLength": 6,
+                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
+                  "title": "Project Id",
+                  "type": "string",
+                },
+                "query": Object {
+                  "type": "string",
+                },
+                "scheduleRate": Object {
+                  "type": "string",
+                },
+                "since": Object {
+                  "maxLength": 64,
+                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+                  "type": "string",
+                },
+                "until": Object {
+                  "maxLength": 64,
+                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+                  "type": "string",
+                },
+                "viewId": Object {
+                  "type": "string",
+                },
+              },
+              "type": "object",
+            },
+            "SourceDetailsFileUpload": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "properties": Object {
+                "bucket": Object {
+                  "maxLength": 63,
+                  "minLength": 3,
+                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
+                  "type": "string",
+                },
+                "key": Object {
+                  "maxLength": 1024,
+                  "minLength": 1,
+                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "bucket",
+                "key",
+              ],
+              "type": "object",
+            },
+            "SourceDetailsGoogleAnalytics": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "allOf": Array [
+                Object {
+                  "$ref": "#/definitions/GoogleAnalyticsIdentifier",
+                },
+                Object {
+                  "$ref": "#/definitions/GoogleServiceAccountAuth",
+                },
+              ],
+              "type": "object",
+            },
+            "SourceDetailsGoogleBigQuery": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "allOf": Array [
+                Object {
+                  "$ref": "#/definitions/GoogleBigQueryTableIdentifier",
+                },
+                Object {
+                  "$ref": "#/definitions/GoogleServiceAccountAuth",
+                },
+              ],
+              "type": "object",
+            },
+            "SourceDetailsGoogleStorage": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "allOf": Array [
+                Object {
+                  "$ref": "#/definitions/GSLocation",
+                },
+                Object {
+                  "$ref": "#/definitions/GoogleServiceAccountAuth",
+                },
+              ],
+              "type": "object",
+            },
+            "SourceDetailsKinesis": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "properties": Object {
+                "kinesisStreamArn": Object {
+                  "maxLength": 2048,
+                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "kinesisStreamArn",
+              ],
+              "type": "object",
+            },
+            "SourceDetailsS3": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "properties": Object {
+                "bucket": Object {
+                  "maxLength": 63,
+                  "minLength": 3,
+                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
+                  "type": "string",
+                },
+                "key": Object {
+                  "maxLength": 1024,
+                  "minLength": 1,
+                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "bucket",
+                "key",
+              ],
+              "type": "object",
+            },
+            "SourceTypeEnum": Object {
+              "description": "Source type value",
+              "enum": Array [
+                "UPLOAD",
+                "QUERY",
+                "S3",
+                "KINESIS",
+                "GOOGLE_ANALYTICS",
+                "GOOGLE_BIGQUERY",
+                "GOOGLE_STORAGE",
+              ],
+              "type": "string",
+            },
+            "Tag": Object {
+              "properties": Object {
+                "key": Object {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
+                  "type": "string",
+                },
+                "value": Object {
+                  "maxLength": 256,
+                  "minLength": 0,
+                  "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "key",
+              ],
+              "type": "object",
+            },
+            "Tags": Object {
+              "items": Object {
+                "$ref": "#/definitions/Tag",
+              },
+              "type": "array",
+            },
+          },
+          "properties": Object {
+            "childDataProducts": Object {
+              "description": "Any child data products, ie data products that use this data product as a source for their data",
+              "items": Object {
+                "$ref": "#/definitions/DataProductIdentifier",
+              },
+              "type": "array",
+            },
+            "cloudFormationStackId": Object {
+              "description": "The id of the cloudformation stack for all resources pertaining to this data product",
+              "maxLength": 2048,
+              "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
+              "type": "string",
+            },
+            "dataImportStateMachineArn": Object {
+              "description": "The arn of the state machine for importing data product data (if any)",
+              "type": "string",
+            },
+            "dataProductId": Object {
+              "description": "The id of the data product",
+              "maxLength": 256,
+              "minLength": 2,
+              "pattern": "^[a-z][a-z_0-9]*$",
+              "type": "string",
+            },
+            "dataSets": Object {
+              "$ref": "#/definitions/DataSets",
+              "description": "Map of datasets by id",
+            },
+            "dataStatus": Object {
+              "$ref": "#/definitions/DataProductDataStatus",
+              "description": "Status of data product data",
+            },
+            "dataStatusDetails": Object {
+              "description": "Details about the data status of the data product, eg error message if data import failed",
+              "maxLength": 2048,
+              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
+              "type": "string",
+            },
+            "description": Object {
+              "description": "A description of the data product",
+              "maxLength": 2048,
+              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
+              "type": "string",
+            },
+            "domainId": Object {
+              "description": "The id of the domain to which this data product belongs",
+              "maxLength": 256,
+              "minLength": 2,
+              "pattern": "^[a-z][a-z_0-9]*$",
+              "type": "string",
+            },
+            "enableAutomaticPii": Object {
+              "description": "Whether or not to automatically apply pii detection and redaction",
+              "type": "boolean",
+            },
+            "enableAutomaticTransforms": Object {
+              "description": "Whether or not to automatically apply transforms based on the type of data in the data product",
+              "type": "boolean",
+            },
+            "infrastructureStatus": Object {
+              "$ref": "#/definitions/DataProductInfrastructureStatus",
+              "description": "Status of data product infrastructure",
+            },
+            "infrastructureStatusDetails": Object {
+              "description": "Details about the infrastructure status of the data product, eg error message if creation failed",
+              "maxLength": 2048,
+              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
+              "type": "string",
+            },
+            "latestDataUpdateTimestamp": Object {
+              "description": "The time at which the data product data was last updated",
+              "maxLength": 64,
+              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
+              "type": "string",
+            },
+            "name": Object {
+              "description": "The name of the data product",
+              "maxLength": 2048,
+              "minLength": 2,
+              "pattern": "^[\\\\w _-]*$",
+              "type": "string",
+            },
+            "parentDataProducts": Object {
+              "description": "Any parent data products, ie data products that are used as a source for data in this data product",
+              "items": Object {
+                "$ref": "#/definitions/DataProductIdentifier",
+              },
+              "type": "array",
+            },
+            "sourceDataSets": Object {
+              "$ref": "#/definitions/DataSets",
+              "description": "Map of datasets by id",
+            },
+            "sourceDataStatus": Object {
+              "$ref": "#/definitions/DataProductSourceDataStatus",
+              "description": "Status of raw source data product data",
+            },
+            "sourceDataStatusDetails": Object {
+              "description": "Details about the raw source data status of the data product, eg error message if data source inference failed",
+              "type": "string",
+            },
+            "sourceDetails": Object {
+              "$ref": "#/definitions/SouceDetailsSchema",
+            },
+            "sourceType": Object {
+              "$ref": "#/definitions/SourceTypeEnum",
+              "description": "Source type value",
+            },
+            "tags": Object {
+              "$ref": "#/definitions/Tags",
+            },
+            "transforms": Object {
+              "$ref": "#/definitions/DataProductTransforms",
+              "description": "Ordered list of transformations applied to data in the data product",
+            },
+            "updateTrigger": Object {
+              "$ref": "#/definitions/DataProductUpdateTrigger",
+              "description": "The trigger for a data update",
+            },
+          },
+          "required": Array [
+            "sourceType",
+            "transforms",
+          ],
+          "title": "PostDataProductPreviewDomainDataProductRequest",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPostDataProductPreviewDomainDataProductResponseBDF8403A": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPostDataProductPreviewDomainDataProductRequest126AAE4A",
+      ],
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "An execution id for tracking the preview of a data product",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "properties": Object {
+            "previewId": Object {
+              "description": "The id of the data product preview",
+              "maxLength": 256,
+              "minLength": 2,
+              "pattern": "^[a-z][a-z_0-9]*$",
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "previewId",
+          ],
+          "title": "PostDataProductPreviewDomainDataProductResponse",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPreviewId56729D3A": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefdataproductpreviewdomaindomainIddataproductDataProductId24DC7E80",
+        },
+        "PathPart": "{previewId}",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdpreviewIdGET922BC2C9": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdpreviewIdOPTIONS2638608A",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ApiLambdaGetDataProductPreviewFC59B006",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdpreviewIdGetDataProductPreviewDomainDataProductResponse867CB336",
+              },
+            },
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "404",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "403",
+          },
+        ],
+        "OperationName": "GetDataProductPreviewDomainDataProduct",
+        "RequestParameters": Object {
+          "method.request.path.dataProductId": true,
+          "method.request.path.domainId": true,
+          "method.request.path.previewId": true,
+        },
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPreviewId56729D3A",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdpreviewIdGETApiPermissionAdaDataProductServiceSchemaPreviewApiRestApiRefB2575933GETDataProductPreviewDomainDomainIdDataProductDataProductIdPreviewIdD5E2384D": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaGetDataProductPreviewFC59B006",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/GET/data-product-preview/domain/*/data-product/*/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdpreviewIdGETApiPermissionTestAdaDataProductServiceSchemaPreviewApiRestApiRefB2575933GETDataProductPreviewDomainDomainIdDataProductDataProductIdPreviewId94FD5B3B": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaGetDataProductPreviewFC59B006",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/GET/data-product-preview/domain/*/data-product/*/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdpreviewIdGetDataProductPreviewDomainDataProductResponse867CB336": Object {
+      "Properties": Object {
+        "ContentType": "application/json",
+        "Description": "The data product preview, or just its status if the preview is ongoing",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+        "Schema": Object {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "definitions": Object {
+            "ApiError": Object {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "properties": Object {
+                "cause": Object {
+                  "type": "string",
+                },
+                "details": Object {
+                  "type": "string",
+                },
+                "errorId": Object {
+                  "type": "string",
+                },
+                "message": Object {
+                  "type": "string",
+                },
+                "name": Object {
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "message",
+              ],
+              "title": "GenericError",
+              "type": "object",
+            },
+            "DataProductPreviewIdentifier": Object {
+              "properties": Object {
+                "previewId": Object {
+                  "description": "The id of the data product preview",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "previewId",
+              ],
+              "type": "object",
+            },
+            "DataProductTransform": Object {
+              "description": "Uniquely identifies the script. Used to calculate the script path in s3",
+              "properties": Object {
+                "inlineScriptContent": Object {
+                  "description": "Inline script content for use in schema previews. Data products cannot be created with inline scripts.",
+                  "maxLength": 262144,
+                  "pattern": "^[\\\\s\\\\S]*def apply_transform\\\\([\\\\s\\\\S]*$",
+                  "type": "string",
+                },
+                "inputArgs": Object {
+                  "description": "Arguments to pass to the script",
+                },
+                "namespace": Object {
+                  "description": "The namespace in which the script resides, eg the domain.",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "scriptId": Object {
+                  "description": "Identifies the script within the namespace",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "scriptId",
+                "namespace",
+              ],
+              "type": "object",
+            },
+            "DataProductTransforms": Object {
+              "description": "Ordered list of transformations applied to data in the data product",
+              "items": Object {
+                "$ref": "#/definitions/DataProductTransform",
+                "description": "Uniquely identifies the script. Used to calculate the script path in s3",
+              },
+              "type": "array",
+            },
+            "DataSetPreview": Object {
+              "properties": Object {
+                "classification": Object {
+                  "description": "The classification of the data stored for this dataset in s3 (if any)",
+                  "type": "string",
+                },
+                "data": Object {
+                  "items": Object {
+                    "type": "object",
+                  },
+                  "type": "array",
+                },
+                "metadata": Object {
+                  "description": "Any metadata that may have been discovered by the preview",
+                  "type": "object",
+                },
+                "s3Path": Object {
+                  "description": "The path to the data for this dataset in s3 (if any)",
+                  "type": "string",
+                },
+                "s3SamplePath": Object {
+                  "description": "The path to the sample data for this dataset in s3 (if any)",
+                  "type": "string",
+                },
+                "schema": Object {
+                  "$ref": "#/definitions/DataSetPreviewSchema",
+                },
+              },
+              "required": Array [
+                "schema",
+                "data",
+              ],
+              "type": "object",
+            },
+            "DataSetPreviewNamedSchema": Object {
+              "properties": Object {
+                "container": Object {
+                  "$ref": "#/definitions/DataSetPreviewSchema",
+                },
+                "name": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "name",
+              ],
+              "type": "object",
+            },
+            "DataSetPreviewSchema": Object {
+              "properties": Object {
+                "dataType": Object {
+                  "maxLength": 2048,
+                  "minLength": 2,
+                  "pattern": "^[\\\\w _-]*$",
+                  "type": "string",
+                },
+                "elementType": Object {
+                  "$ref": "#/definitions/DataSetPreviewSchema",
+                },
+                "fields": Object {
+                  "items": Object {
+                    "$ref": "#/definitions/DataSetPreviewNamedSchema",
+                  },
+                  "type": "array",
+                },
+              },
+              "required": Array [
+                "dataType",
+              ],
+              "type": "object",
+            },
+            "ScriptIdentifier": Object {
+              "description": "Uniquely identifies the script. Used to calculate the script path in s3",
+              "properties": Object {
+                "namespace": Object {
+                  "description": "The namespace in which the script resides, eg the domain.",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+                "scriptId": Object {
+                  "description": "Identifies the script within the namespace",
+                  "maxLength": 256,
+                  "minLength": 2,
+                  "pattern": "^[a-z][a-z_0-9]*$",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "scriptId",
+                "namespace",
+              ],
+              "type": "object",
+            },
+          },
+          "properties": Object {
+            "durationMilliseconds": Object {
+              "description": "The time taken to complete the preview",
+              "type": "number",
+            },
+            "error": Object {
+              "$ref": "#/definitions/ApiError",
+            },
+            "initialDataSets": Object {
+              "additionalProperties": Object {
+                "$ref": "#/definitions/DataSetPreview",
+              },
+              "description": "Data sets discovered from the source data, keyed by dataset id",
+              "type": "object",
+            },
+            "previewId": Object {
+              "description": "The id of the data product preview",
+              "maxLength": 256,
+              "minLength": 2,
+              "pattern": "^[a-z][a-z_0-9]*$",
+              "type": "string",
+            },
+            "status": Object {
+              "description": "The status of the preview execution",
+              "enum": Array [
+                "RUNNING",
+                "SUCCEEDED",
+                "FAILED",
+                "TIMED_OUT",
+                "ABORTED",
+              ],
+              "type": "string",
+            },
+            "transformedDataSets": Object {
+              "additionalProperties": Object {
+                "$ref": "#/definitions/DataSetPreview",
+              },
+              "description": "Data set previews after transforms have been applied, keyed by dataset id",
+              "type": "object",
+            },
+            "transformsApplied": Object {
+              "$ref": "#/definitions/DataProductTransforms",
+              "description": "Ordered list of transformations applied to data in the data product",
+            },
+          },
+          "required": Array [
+            "previewId",
+            "status",
+          ],
+          "title": "GetDataProductPreviewDomainDataProductResponse",
+          "type": "object",
+        },
+      },
+      "Type": "AWS::ApiGateway::Model",
+    },
+    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdpreviewIdOPTIONS2638608A": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPreviewId56729D3A",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": Object {
+      "DependsOn": Array [
+        "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "Lambda function for auto-deleting objects in ",
+              Object {
+                "Ref": "TempBucket",
+              },
+              " S3 bucket.",
+            ],
+          ],
+        },
+        "Handler": "__entrypoint__.handler",
+        "MemorySize": 128,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Sub": "arn:\${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "DataProductPreviewKeyAlias52ADD8C1": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/data-product-preview/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "DataProductPreviewKeyDFB5D943",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "DataProductPreviewKeyDFB5D943": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "LogGroupEncryptionKmsKeyAliasB77DA9CE": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/loggroup/stack/SchemaPreview/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "LogGroupEncryptionKmsKeyE595E4BA": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "kms:Encrypt*",
+                "kms:Decrypt*",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+                "kms:Describe*",
+              ],
+              "Condition": Object {
+                "ArnLike": Object {
+                  "kms:EncryptionContext:aws:logs:arn": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:",
+                        Object {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":logs:ap-southeast-1:1111111111:*",
+                      ],
+                    ],
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "logs.ap-southeast-1.amazonaws.com",
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "SchemaPreviewDiscoverTransformsLambdaAliasprod2EE3C32D": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "SchemaPreviewDiscoverTransformsLambdaF3EFD189",
+        },
+        "FunctionVersion": Object {
+          "Fn::GetAtt": Array [
+            "SchemaPreviewDiscoverTransformsLambdaCurrentVersion###",
+            "Version",
+          ],
+        },
+        "Name": "prod",
+      },
+      "Type": "AWS::Lambda::Alias",
+    },
+    "SchemaPreviewDiscoverTransformsLambdaCurrentVersion###": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "SchemaPreviewDiscoverTransformsLambdaF3EFD189",
+        },
+      },
+      "Type": "AWS::Lambda::Version",
+    },
+    "SchemaPreviewDiscoverTransformsLambdaF3EFD189": Object {
+      "DependsOn": Array [
+        "SchemaPreviewDiscoverTransformsLambdaServiceRoleDefaultPolicy01EC0FA4",
+        "SchemaPreviewDiscoverTransformsLambdaServiceRoleE0A75551",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "Discover transforms during preview",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "SCRIPT_BUCKET_NAME": Object {
+              "Ref": "referencetoAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureScriptsBucketD6FE34F9Ref",
+            },
+            "TEMP_BUCKET_NAME": Object {
+              "Ref": "TempBucket",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SchemaPreviewDiscoverTransformsLambdaServiceRoleE0A75551",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 30,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "SchemaPreviewDiscoverTransformsLambdaServiceRoleDefaultPolicy01EC0FA4": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureScriptsBucketD6FE34F9Arn",
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Ref": "referencetoAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureScriptsBucketD6FE34F9Arn",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "SchemaPreviewDiscoverTransformsLambdaServiceRoleDefaultPolicy01EC0FA4",
+        "Roles": Array [
+          Object {
+            "Ref": "SchemaPreviewDiscoverTransformsLambdaServiceRoleE0A75551",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "SchemaPreviewDiscoverTransformsLambdaServiceRoleE0A75551": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "SchemaPreviewLambdaPullDataSample15AFD2A5": Object {
+      "DependsOn": Array [
+        "SchemaPreviewPullDataSampleRoleDefaultPolicyD14149D0",
+        "SchemaPreviewPullDataSampleRole3AF97A29",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "ImageUri": Object {
+            "Fn::Sub": "1111111111.dkr.ecr.ap-southeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1:###hash64###",
+          },
+        },
+        "Description": "Schema Preview pull_data_sample",
+        "Environment": Object {
+          "Variables": Object {
+            "KEY_ID": Object {
+              "Ref": "DataProductPreviewKeyDFB5D943",
+            },
+            "PULL_DATA_SAMPLE_ROLE_ARN": Object {
+              "Fn::GetAtt": Array [
+                "SchemaPreviewPullDataSampleRole3AF97A29",
+                "Arn",
+              ],
+            },
+            "TEMP_BUCKET_NAME": Object {
+              "Ref": "TempBucket",
+            },
+          },
+        },
+        "ImageConfig": Object {
+          "Command": Array [
+            "pull_data_sample.handler",
+          ],
+        },
+        "MemorySize": 3000,
+        "PackageType": "Image",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SchemaPreviewPullDataSampleRole3AF97A29",
+            "Arn",
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 300,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "SchemaPreviewLambdaTransform345E466B": Object {
+      "DependsOn": Array [
+        "SchemaPreviewLambdatransformServiceRoleDefaultPolicyD2D87418",
+        "SchemaPreviewLambdatransformServiceRole733BBA02",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "ImageUri": Object {
+            "Fn::Sub": "1111111111.dkr.ecr.ap-southeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1:###hash64###",
+          },
+        },
+        "Description": "Schema Preview transform",
+        "Environment": Object {
+          "Variables": Object {
+            "KEY_ID": Object {
+              "Ref": "DataProductPreviewKeyDFB5D943",
+            },
+            "PULL_DATA_SAMPLE_ROLE_ARN": Object {
+              "Fn::GetAtt": Array [
+                "SchemaPreviewPullDataSampleRole3AF97A29",
+                "Arn",
+              ],
+            },
+            "TEMP_BUCKET_NAME": Object {
+              "Ref": "TempBucket",
+            },
+          },
+        },
+        "ImageConfig": Object {
+          "Command": Array [
+            "transform.handler",
+          ],
+        },
+        "MemorySize": 3000,
+        "PackageType": "Image",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SchemaPreviewLambdatransformServiceRole733BBA02",
+            "Arn",
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 300,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "SchemaPreviewLambdapulldatasampleAliasprod56F9F850": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "SchemaPreviewLambdaPullDataSample15AFD2A5",
+        },
+        "FunctionVersion": Object {
+          "Fn::GetAtt": Array [
+            "SchemaPreviewLambdapulldatasampleCurrentVersion###",
+            "Version",
+          ],
+        },
+        "Name": "prod",
+      },
+      "Type": "AWS::Lambda::Alias",
+    },
+    "SchemaPreviewLambdapulldatasampleCurrentVersion###": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "SchemaPreviewLambdaPullDataSample15AFD2A5",
+        },
+      },
+      "Type": "AWS::Lambda::Version",
+    },
+    "SchemaPreviewLambdatransformAliasprodC4D75BCD": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "SchemaPreviewLambdaTransform345E466B",
+        },
+        "FunctionVersion": Object {
+          "Fn::GetAtt": Array [
+            "SchemaPreviewLambdatransformCurrentVersion###",
+            "Version",
+          ],
+        },
+        "Name": "prod",
+      },
+      "Type": "AWS::Lambda::Alias",
+    },
+    "SchemaPreviewLambdatransformCurrentVersion###": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "SchemaPreviewLambdaTransform345E466B",
+        },
+      },
+      "Type": "AWS::Lambda::Version",
+    },
+    "SchemaPreviewLambdatransformServiceRole733BBA02": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "SchemaPreviewLambdatransformServiceRoleDefaultPolicyD2D87418": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject",
+                "s3:PutObjectLegalHold",
+                "s3:PutObjectRetention",
+                "s3:PutObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "TempBucket",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "TempBucket",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyTempBucketAFE3DAB9Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogGroup",
+                "logs:PutLogEvents",
+                "logs:CreateLogStream",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "s3:List*",
+                "s3:Get*",
+                "s3:Describe*",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "SchemaPreviewLambdatransformServiceRoleDefaultPolicyD2D87418",
+        "Roles": Array [
+          Object {
+            "Ref": "SchemaPreviewLambdatransformServiceRole733BBA02",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "SchemaPreviewPullDataSampleRole3AF97A29": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "SchemaPreviewPullDataSampleRoleDefaultPolicyD14149D0": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject",
+                "s3:PutObjectLegalHold",
+                "s3:PutObjectRetention",
+                "s3:PutObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "TempBucket",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "TempBucket",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyTempBucketAFE3DAB9Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "sts:AssumeRole",
+                "sts:TagSession",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "SchemaPreviewPullDataSampleRole3AF97A29",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "DataProductPreviewKeyDFB5D943",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "s3:List*",
+                "s3:Get*",
+                "s3:Describe*",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt*",
+                "kms:Encrypt*",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+                "kms:Describe*",
+                "kms:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogGroup",
+                "logs:PutLogEvents",
+                "logs:CreateLogStream",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "SchemaPreviewPullDataSampleRoleDefaultPolicyD14149D0",
+        "Roles": Array [
+          Object {
+            "Ref": "SchemaPreviewPullDataSampleRole3AF97A29",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "SchemaPreviewStateMachineACA4664A": Object {
+      "DependsOn": Array [
+        "SchemaPreviewStateMachineRoleDefaultPolicy6CA1876C",
+        "SchemaPreviewStateMachineRoleE8EBA036",
+      ],
+      "Properties": Object {
+        "DefinitionString": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"StartAt\\":\\"PullDataSample\\",\\"States\\":{\\"PullDataSample\\":{\\"Next\\":\\"DiscoverTransforms\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"Failed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "SchemaPreviewLambdaPullDataSample15AFD2A5",
+                  "Arn",
+                ],
+              },
+              "\\",\\"Payload.$\\":\\"$\\"}},\\"DiscoverTransforms\\":{\\"Next\\":\\"ExecuteTransforms\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"Failed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "SchemaPreviewDiscoverTransformsLambdaAliasprod2EE3C32D",
+              },
+              "\\",\\"Payload.$\\":\\"$\\"}},\\"ExecuteTransforms\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"Failed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "SchemaPreviewLambdaTransform345E466B",
+                  "Arn",
+                ],
+              },
+              "\\",\\"Payload.$\\":\\"$\\"}},\\"Failed\\":{\\"Type\\":\\"Pass\\",\\"End\\":true}}}",
+            ],
+          ],
+        },
+        "LoggingConfiguration": Object {
+          "Destinations": Array [
+            Object {
+              "CloudWatchLogsLogGroup": Object {
+                "LogGroupArn": Object {
+                  "Fn::GetAtt": Array [
+                    "SchemaPreviewStateMachineLogs52A4304C",
+                    "Arn",
+                  ],
+                },
+              },
+            },
+          ],
+          "Level": "ERROR",
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "SchemaPreviewStateMachineRoleE8EBA036",
+            "Arn",
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TracingConfiguration": Object {
+          "Enabled": true,
+        },
+      },
+      "Type": "AWS::StepFunctions::StateMachine",
+    },
+    "SchemaPreviewStateMachineLogs52A4304C": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+        "LogGroupName": "/aws/vendedlogs/states/ada/SchemaPreviewStateMachineLogs/loggroup-######",
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "SchemaPreviewStateMachineRoleDefaultPolicy6CA1876C": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "SchemaPreviewLambdaPullDataSample15AFD2A5",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "SchemaPreviewLambdaPullDataSample15AFD2A5",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "SchemaPreviewDiscoverTransformsLambdaAliasprod2EE3C32D",
+              },
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "SchemaPreviewLambdaTransform345E466B",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "SchemaPreviewLambdaTransform345E466B",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "SchemaPreviewStateMachineRoleDefaultPolicy6CA1876C",
+        "Roles": Array [
+          Object {
+            "Ref": "SchemaPreviewStateMachineRoleE8EBA036",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "SchemaPreviewStateMachineRoleE8EBA036": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "states.ap-southeast-1.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "SchemaPreviewTempBucketAutoDeleteObjectsCustomResource03604810": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "SchemaPreviewTempBucketPolicy7C16C842",
+      ],
+      "Properties": Object {
+        "BucketName": Object {
+          "Ref": "TempBucket",
+        },
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::S3AutoDeleteObjects",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "SchemaPreviewTempBucketPolicy7C16C842": Object {
+      "Properties": Object {
+        "Bucket": Object {
+          "Ref": "TempBucket",
+        },
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "s3:*",
+              "Condition": Object {
+                "Bool": Object {
+                  "aws:SecureTransport": "false",
+                },
+              },
+              "Effect": "Deny",
+              "Principal": Object {
+                "AWS": "*",
+              },
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "TempBucket",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "TempBucket",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+              ],
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::GetAtt": Array [
+                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                    "Arn",
+                  ],
+                },
+              },
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "TempBucket",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "TempBucket",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "TempBucket": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "BucketEncryption": Object {
+          "ServerSideEncryptionConfiguration": Array [
+            Object {
+              "ServerSideEncryptionByDefault": Object {
+                "KMSMasterKeyID": Object {
+                  "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyTempBucketAFE3DAB9Arn",
+                },
+                "SSEAlgorithm": "aws:kms",
+              },
+            },
+          ],
+        },
+        "LifecycleConfiguration": Object {
+          "Rules": Array [
+            Object {
+              "AbortIncompleteMultipartUpload": Object {
+                "DaysAfterInitiation": 2,
+              },
+              "ExpirationInDays": 5,
+              "NoncurrentVersionExpiration": Object {
+                "NoncurrentDays": 2,
+              },
+              "Status": "Enabled",
+            },
+          ],
+        },
+        "LoggingConfiguration": Object {
+          "DestinationBucketName": Object {
+            "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAccessLogBucketB5B66FEDRef",
+          },
+          "LogFilePrefix": "schema-preview-logs/",
+        },
+        "PublicAccessBlockConfiguration": Object {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "aws-cdk:auto-delete-objects",
+            "Value": "true",
+          },
+        ],
+        "VersioningConfiguration": Object {
+          "Status": "Enabled",
+        },
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Delete",
+    },
+  },
+}
+`;

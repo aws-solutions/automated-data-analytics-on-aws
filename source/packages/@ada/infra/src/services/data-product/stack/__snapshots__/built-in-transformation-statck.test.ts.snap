@@ -1,0 +1,442 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stack snapshots 1`] = `
+Object {
+  "Description": "(SO0190-BuiltInTransformationStack) - Automated Data Analytics on AWS. Version v1.0.0",
+  "Parameters": Object {
+    "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn": Object {
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "AWS679f53fac002430cb0da5b7982bd22872D164C4C": Object {
+      "DependsOn": Array [
+        "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 120,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "PutAdaApplyMappingScript78AA3254": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "PutAdaApplyMappingScriptCustomResourcePolicy9824F4E9",
+      ],
+      "Properties": Object {
+        "Create": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_apply_mapping\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Apply Mapping\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Map field name and data types\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-transforms-ApplyMapping.html\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nApply mapping transformation\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n flag is used to override the default behavior of applying mappings\\\\\\\\\\\\\\\\nwhich drops out fields that are not specified in the mapping. If keep fields is\\\\\\\\\\\\\\\\nset to True, then the fields that are not specified in the mapping are kept.\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\ninput_args = {\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"mapping\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" : [['source_field_name', 'target_field_name', 'target_field_type']]}\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, input_args, glue_context, **kwargs):\\\\\\\\\\\\\\\\n    drop_fields = input_args.get(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"drop_fields\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\", True)\\\\\\\\\\\\\\\\n    mappings_by_name = { args[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"oldName\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]: args for args in input_args['mappings'] }\\\\\\\\\\\\\\\\n    dtypes = input_frame.toDF().dtypes\\\\\\\\\\\\\\\\n    mapping_args = []\\\\\\\\\\\\\\\\n    for dtype in dtypes:\\\\\\\\\\\\\\\\n        source_field_name = dtype[0]\\\\\\\\\\\\\\\\n        source_field_type = dtype[1]\\\\\\\\\\\\\\\\n        if source_field_name in mappings_by_name:\\\\\\\\\\\\\\\\n            mapping_args.append((source_field_name, source_field_type, mappings_by_name[source_field_name]['newName'], mappings_by_name[source_field_name]['newType']))\\\\\\\\\\\\\\\\n        elif not drop_fields:\\\\\\\\\\\\\\\\n            mapping_args.append((source_field_name, source_field_type, source_field_name, source_field_type))\\\\\\\\\\\\\\\\n    data = input_frame.apply_mapping(mappings=mapping_args)\\\\\\\\\\\\\\\\n    return [data]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"inputSchema\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"object\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:order\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"drop_fields\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"mappings\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"required\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"drop_fields\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"mappings\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"properties\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"drop_fields\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"boolean\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Drop other fields\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Indicates if fields not specified in mapping are dropped from schema.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"default\\\\\\\\\\\\\\":true,\\\\\\\\\\\\\\"ui:description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Indicates if fields not specified in mapping are dropped from schema.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:help\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"HINT: Uncheck to preserve unmapped fields.\\\\\\\\\\\\\\"},\\\\\\\\\\\\\\"mappings\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"array\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Field Mappings\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Add new item to map field name and data type\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:help\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"HINT: Listed field names might not match current schema at placement of tranform. Use freeform text to input any field name value.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"minItems\\\\\\\\\\\\\\":1,\\\\\\\\\\\\\\"items\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"object\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:field\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"schema-field-mapping\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:order\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"oldName\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"newName\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"newType\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"required\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"oldName\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"newName\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"newType\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"properties\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"oldName\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Source Name\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\"},\\\\\\\\\\\\\\"newName\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Target Name\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\"},\\\\\\\\\\\\\\"newType\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Target Type\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"enum\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"integer\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"long\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"float\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"double\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"boolean\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"date\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"timestamp\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"array\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"map\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"struct\\\\\\\\\\\\\\"]}}}}}}}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Apply MappingScript\\"}}",
+            ],
+          ],
+        },
+        "InstallLatestAwsSdk": true,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+            "Arn",
+          ],
+        },
+        "Update": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_apply_mapping\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Apply Mapping\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Map field name and data types\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-transforms-ApplyMapping.html\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nApply mapping transformation\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n flag is used to override the default behavior of applying mappings\\\\\\\\\\\\\\\\nwhich drops out fields that are not specified in the mapping. If keep fields is\\\\\\\\\\\\\\\\nset to True, then the fields that are not specified in the mapping are kept.\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\ninput_args = {\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"mapping\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" : [['source_field_name', 'target_field_name', 'target_field_type']]}\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, input_args, glue_context, **kwargs):\\\\\\\\\\\\\\\\n    drop_fields = input_args.get(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"drop_fields\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\", True)\\\\\\\\\\\\\\\\n    mappings_by_name = { args[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"oldName\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]: args for args in input_args['mappings'] }\\\\\\\\\\\\\\\\n    dtypes = input_frame.toDF().dtypes\\\\\\\\\\\\\\\\n    mapping_args = []\\\\\\\\\\\\\\\\n    for dtype in dtypes:\\\\\\\\\\\\\\\\n        source_field_name = dtype[0]\\\\\\\\\\\\\\\\n        source_field_type = dtype[1]\\\\\\\\\\\\\\\\n        if source_field_name in mappings_by_name:\\\\\\\\\\\\\\\\n            mapping_args.append((source_field_name, source_field_type, mappings_by_name[source_field_name]['newName'], mappings_by_name[source_field_name]['newType']))\\\\\\\\\\\\\\\\n        elif not drop_fields:\\\\\\\\\\\\\\\\n            mapping_args.append((source_field_name, source_field_type, source_field_name, source_field_type))\\\\\\\\\\\\\\\\n    data = input_frame.apply_mapping(mappings=mapping_args)\\\\\\\\\\\\\\\\n    return [data]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"inputSchema\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"object\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:order\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"drop_fields\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"mappings\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"required\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"drop_fields\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"mappings\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"properties\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"drop_fields\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"boolean\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Drop other fields\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Indicates if fields not specified in mapping are dropped from schema.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"default\\\\\\\\\\\\\\":true,\\\\\\\\\\\\\\"ui:description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Indicates if fields not specified in mapping are dropped from schema.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:help\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"HINT: Uncheck to preserve unmapped fields.\\\\\\\\\\\\\\"},\\\\\\\\\\\\\\"mappings\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"array\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Field Mappings\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Add new item to map field name and data type\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:help\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"HINT: Listed field names might not match current schema at placement of tranform. Use freeform text to input any field name value.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"minItems\\\\\\\\\\\\\\":1,\\\\\\\\\\\\\\"items\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"object\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:field\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"schema-field-mapping\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:order\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"oldName\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"newName\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"newType\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"required\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"oldName\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"newName\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"newType\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"properties\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"oldName\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Source Name\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\"},\\\\\\\\\\\\\\"newName\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Target Name\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\"},\\\\\\\\\\\\\\"newType\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Target Type\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"enum\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"integer\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"long\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"float\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"double\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"boolean\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"date\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"timestamp\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"array\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"map\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"struct\\\\\\\\\\\\\\"]}}}}}}}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Apply MappingScript\\"}}",
+            ],
+          ],
+        },
+      },
+      "Type": "Custom::AWS",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "PutAdaApplyMappingScriptCustomResourcePolicy9824F4E9": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "[*] Resource required for custom resource invoking lambda since scoping to functionArn did not work",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "PutAdaApplyMappingScriptCustomResourcePolicy9824F4E9",
+        "Roles": Array [
+          Object {
+            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "PutAdaDropFieldsScriptCustomResourcePolicy09B56E97": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "[*] Resource required for custom resource invoking lambda since scoping to functionArn did not work",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "PutAdaDropFieldsScriptCustomResourcePolicy09B56E97",
+        "Roles": Array [
+          Object {
+            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "PutAdaDropFieldsScriptDCD78499": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "PutAdaApplyMappingScript78AA3254",
+        "PutAdaDropFieldsScriptCustomResourcePolicy09B56E97",
+      ],
+      "Properties": Object {
+        "Create": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_drop_fields\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Drop Fields\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Drops fields from a data set\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-transforms-DropFields.html\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, input_args, glue_context, **kwargs):\\\\\\\\\\\\\\\\n    data = input_frame.drop_fields(paths=input_args['paths'])\\\\\\\\\\\\\\\\n    return [data]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"inputSchema\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"object\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"properties\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"paths\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"array\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Fields to drop\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Type or select from the list of fields to drop\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:widget\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"schema-field-multiselector\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:help\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"HINT: Listed field names might not match current schema at placement of tranform. Use freeform text to input any field name value.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"uniqueItems\\\\\\\\\\\\\\":true,\\\\\\\\\\\\\\"items\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\"}}}}}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Drop FieldsScript\\"}}",
+            ],
+          ],
+        },
+        "InstallLatestAwsSdk": true,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+            "Arn",
+          ],
+        },
+        "Update": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_drop_fields\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Drop Fields\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Drops fields from a data set\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-transforms-DropFields.html\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, input_args, glue_context, **kwargs):\\\\\\\\\\\\\\\\n    data = input_frame.drop_fields(paths=input_args['paths'])\\\\\\\\\\\\\\\\n    return [data]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"inputSchema\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"object\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"properties\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"paths\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"array\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Fields to drop\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Type or select from the list of fields to drop\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:widget\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"schema-field-multiselector\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:help\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"HINT: Listed field names might not match current schema at placement of tranform. Use freeform text to input any field name value.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"uniqueItems\\\\\\\\\\\\\\":true,\\\\\\\\\\\\\\"items\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\"}}}}}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Drop FieldsScript\\"}}",
+            ],
+          ],
+        },
+      },
+      "Type": "Custom::AWS",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "PutAdaJsonRelationaliseScriptBE28ABA0": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "PutAdaDropFieldsScriptDCD78499",
+        "PutAdaJsonRelationaliseScriptCustomResourcePolicyC5A9C6BB",
+      ],
+      "Properties": Object {
+        "Create": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_json_relationalise\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"JSON Relationalize\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Relationalizes json for more efficient querying of nested objects\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-transforms-Relationalize.html\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"applicableClassifications\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"json\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nJSON relationalise transform\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, data_product_id, temp_s3_path, **kwargs):\\\\\\\\\\\\\\\\n    data = input_frame.relationalize(\\\\\\\\\\\\\\\\n        data_product_id, temp_s3_path\\\\\\\\\\\\\\\\n    )\\\\\\\\\\\\\\\\n    return [frame for frame in [data.select(df_name) for df_name in data.keys()] if frame.toDF().schema]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\"}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Json RelationaliseScript\\"}}",
+            ],
+          ],
+        },
+        "InstallLatestAwsSdk": true,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+            "Arn",
+          ],
+        },
+        "Update": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_json_relationalise\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"JSON Relationalize\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Relationalizes json for more efficient querying of nested objects\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-transforms-Relationalize.html\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"applicableClassifications\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"json\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nJSON relationalise transform\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, data_product_id, temp_s3_path, **kwargs):\\\\\\\\\\\\\\\\n    data = input_frame.relationalize(\\\\\\\\\\\\\\\\n        data_product_id, temp_s3_path\\\\\\\\\\\\\\\\n    )\\\\\\\\\\\\\\\\n    return [frame for frame in [data.select(df_name) for df_name in data.keys()] if frame.toDF().schema]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\"}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Json RelationaliseScript\\"}}",
+            ],
+          ],
+        },
+      },
+      "Type": "Custom::AWS",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "PutAdaJsonRelationaliseScriptCustomResourcePolicyC5A9C6BB": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "[*] Resource required for custom resource invoking lambda since scoping to functionArn did not work",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "PutAdaJsonRelationaliseScriptCustomResourcePolicyC5A9C6BB",
+        "Roles": Array [
+          Object {
+            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "PutAdaParquetDataTypeMapScriptA3E83F14": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "PutAdaJsonRelationaliseScriptBE28ABA0",
+        "PutAdaParquetDataTypeMapScriptCustomResourcePolicy9ECC86EA",
+      ],
+      "Properties": Object {
+        "Create": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_parquet_data_type_map\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Parquet Data Type Map\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Automatically cast unsupported data types to string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Columns of type INT64 TIMESTAMP_MICROS in parquet files must be cast to string to be supported\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"applicableClassifications\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"parquet\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nParquet Data Type Map transform\\\\\\\\\\\\\\\\nAt this time this function only exists to trigger the Transform flows, during which\\\\\\\\\\\\\\\\nwe can catch and handle issues around the TIME64 data type in the file.\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, **kwargs):\\\\\\\\\\\\\\\\n    return [input_frame]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\"}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Parquet Data Type MapScript\\"}}",
+            ],
+          ],
+        },
+        "InstallLatestAwsSdk": true,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+            "Arn",
+          ],
+        },
+        "Update": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_parquet_data_type_map\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Parquet Data Type Map\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Automatically cast unsupported data types to string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Columns of type INT64 TIMESTAMP_MICROS in parquet files must be cast to string to be supported\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"applicableClassifications\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"parquet\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nParquet Data Type Map transform\\\\\\\\\\\\\\\\nAt this time this function only exists to trigger the Transform flows, during which\\\\\\\\\\\\\\\\nwe can catch and handle issues around the TIME64 data type in the file.\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, **kwargs):\\\\\\\\\\\\\\\\n    return [input_frame]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\"}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Parquet Data Type MapScript\\"}}",
+            ],
+          ],
+        },
+      },
+      "Type": "Custom::AWS",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "PutAdaParquetDataTypeMapScriptCustomResourcePolicy9ECC86EA": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "[*] Resource required for custom resource invoking lambda since scoping to functionArn did not work",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "PutAdaParquetDataTypeMapScriptCustomResourcePolicy9ECC86EA",
+        "Roles": Array [
+          Object {
+            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "PutAdaSelectFieldsScriptCustomResourcePolicyED21E2A9": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "[*] Resource required for custom resource invoking lambda since scoping to functionArn did not work",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "PutAdaSelectFieldsScriptCustomResourcePolicyED21E2A9",
+        "Roles": Array [
+          Object {
+            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "PutAdaSelectFieldsScriptD23C6899": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "PutAdaParquetDataTypeMapScriptA3E83F14",
+        "PutAdaSelectFieldsScriptCustomResourcePolicyED21E2A9",
+      ],
+      "Properties": Object {
+        "Create": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_select_fields\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Select Fields\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Select fields from a data set\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-transforms-SelectFields.html\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, input_args, glue_context, **kwargs):\\\\\\\\\\\\\\\\n    data = input_frame.select_fields(paths=input_args['paths'])\\\\\\\\\\\\\\\\n    return [data]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"inputSchema\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"object\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"properties\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"paths\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"array\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Fields to select\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Type or select from the list of fields to add to the transformation\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:widget\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"schema-field-multiselector\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:help\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"HINT: Listed field names might not match current schema at placement of tranform. Use freeform text to input any field name value.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"uniqueItems\\\\\\\\\\\\\\":true,\\\\\\\\\\\\\\"items\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\"}}}}}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Select FieldsScript\\"}}",
+            ],
+          ],
+        },
+        "InstallLatestAwsSdk": true,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+            "Arn",
+          ],
+        },
+        "Update": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_select_fields\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Select Fields\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Select fields from a data set\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-transforms-SelectFields.html\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, input_args, glue_context, **kwargs):\\\\\\\\\\\\\\\\n    data = input_frame.select_fields(paths=input_args['paths'])\\\\\\\\\\\\\\\\n    return [data]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"inputSchema\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"object\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"properties\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"paths\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"array\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Fields to select\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Type or select from the list of fields to add to the transformation\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:widget\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"schema-field-multiselector\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:help\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"HINT: Listed field names might not match current schema at placement of tranform. Use freeform text to input any field name value.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"uniqueItems\\\\\\\\\\\\\\":true,\\\\\\\\\\\\\\"items\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\"}}}}}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Select FieldsScript\\"}}",
+            ],
+          ],
+        },
+      },
+      "Type": "Custom::AWS",
+      "UpdateReplacePolicy": "Delete",
+    },
+  },
+}
+`;

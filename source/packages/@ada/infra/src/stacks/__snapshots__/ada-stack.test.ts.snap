@@ -1,0 +1,3073 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stack snapshots 1`] = `
+Object {
+  "Outputs": Object {
+    "AthenaProxyApiUrl": Object {
+      "Export": Object {
+        "Name": "AthenaProxyApiUrl",
+      },
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            Object {
+              "Fn::GetAtt": Array [
+                "QueryServiceStack09226509",
+                "Outputs.AdaQueryServiceAthenaProxyDistribution31E1FEE1DomainName",
+              ],
+            },
+            ":443",
+          ],
+        ],
+      },
+    },
+    "BaseApiUrl": Object {
+      "Export": Object {
+        "Name": "BaseApiUrl",
+      },
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Fn::GetAtt": Array [
+                "ApiServiceStack970277D1",
+                "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              ],
+            },
+            ".execute-api.ap-southeast-1.amazonaws.com/prod/",
+          ],
+        ],
+      },
+    },
+    "CognitoUserPoolId": Object {
+      "Export": Object {
+        "Name": "CognitoUserPoolId",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "CognitoAuthStack962632B3",
+          "Outputs.AdaCognitoAuthUserPoolBD7CD0F7Ref",
+        ],
+      },
+    },
+    "ExportNamespaceGlobalUUID": Object {
+      "Export": Object {
+        "Name": "NamespaceGlobalUUID",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "NamespaceGlobalUUIDCustomResource5B48DB1F",
+          "uuid",
+        ],
+      },
+    },
+    "RetainedResourcesExport": Object {
+      "Description": "List of resources that are retained after deleting the solution stack.",
+      "Export": Object {
+        "Name": "RetainedResources",
+      },
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "[\\"",
+            Object {
+              "Fn::GetAtt": Array [
+                "KMSStack7F65AEC0",
+                "Outputs.AdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+              ],
+            },
+            "\\",\\"",
+            Object {
+              "Fn::GetAtt": Array [
+                "KMSStack7F65AEC0",
+                "Outputs.AdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn",
+              ],
+            },
+            "\\",\\"",
+            Object {
+              "Fn::GetAtt": Array [
+                "DataProductServiceStack752CB910",
+                "Outputs.AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataBucketD9C0AD53Arn",
+              ],
+            },
+            "\\",\\"",
+            Object {
+              "Fn::GetAtt": Array [
+                "DataProductServiceStack752CB910",
+                "Outputs.AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureScriptsBucketD6FE34F9Arn",
+              ],
+            },
+            "\\",\\"",
+            Object {
+              "Fn::GetAtt": Array [
+                "DataProductServiceStack752CB910",
+                "Outputs.AdaDataProductServiceFileUploadBucket4C6FA9E4Arn",
+              ],
+            },
+            "\\"]",
+          ],
+        ],
+      },
+    },
+    "UserPoolClientId": Object {
+      "Export": Object {
+        "Name": "UserPoolClientId",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "IdentityServiceStack20E75786",
+          "Outputs.AdaIdentityServiceUserPoolClient300BB0C2Ref",
+        ],
+      },
+    },
+    "WebsiteUrl": Object {
+      "Export": Object {
+        "Name": "WebsiteUrl",
+      },
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Fn::GetAtt": Array [
+                "WebsiteStack290432DE",
+                "Outputs.AdaWebsiteCloudfrontDistributionCFDistribution28056574DomainName",
+              ],
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "adminEmail": Object {
+      "AllowedPattern": "^[^\\\\s@]+@[^\\\\s@]+\\\\.[^\\\\s@]+$",
+      "Default": "test@example.com",
+      "Description": "The email address of the administrator. This has to be a valid address, you will receive the temporary password to this address.",
+      "NoEcho": true,
+      "Type": "String",
+    },
+    "adminMFA": Object {
+      "AllowedValues": Array [
+        "OPTIONAL",
+        "ON",
+      ],
+      "Default": "ON",
+      "Description": "Indicates if Multi-Factor Authentication (MFA) is enabled for root administrator.",
+      "Type": "String",
+    },
+    "adminPhoneNumber": Object {
+      "AllowedPattern": "[\\\\+0-9]+",
+      "Default": "+1234567890",
+      "Description": "The phone number of the administrator. Must be a valid phone number that can receive OTP messages if MFA is enabled. Change the default value to your phone number if you want to enable this functionality",
+      "NoEcho": true,
+      "Type": "String",
+    },
+    "advancedSecurityMode": Object {
+      "AllowedValues": Array [
+        "AUDIT",
+        "ENFORCED",
+        "OFF",
+      ],
+      "Default": "ENFORCED",
+      "Description": "The advanced security mode for cognito user pool",
+      "Type": "String",
+    },
+    "autoAssociateAdmin": Object {
+      "AllowedValues": Array [
+        "true",
+        "false",
+      ],
+      "Default": "true",
+      "Description": "Indicates if the admin role is automatically mapped to the users from external identity providers if the email matches the admin email address provided as parameter during the deployment.",
+      "Type": "String",
+    },
+    "sendAnonymousData": Object {
+      "AllowedValues": Array [
+        "Yes",
+        "No",
+      ],
+      "Default": "Yes",
+      "Description": "Send anonymous operational metrics to AWS. We use this data to better understand how customers use this solution and related services and products. Choose No to opt out of this feature.",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "AWS679F53Fac002430Cb0Da5B7982Bd22872D164C4C": Object {
+      "DependsOn": Array [
+        "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 120,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "AdministrationServiceStackC56DA5ED": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "OntologyServiceStackD2BEF838",
+      ],
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaAWSStackId": Object {
+            "Ref": "AWS::StackId",
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+            ],
+          },
+          "referencetoAdaApiWafDeploymentSecretCA25FA9ARef": Object {
+            "Ref": "ApiWafDeploymentSecret5FECB872",
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550EArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550ERef",
+            ],
+          },
+          "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceDataProductTableC1CE90D5Arn": Object {
+            "Fn::GetAtt": Array [
+              "DataProductServiceStack752CB910",
+              "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Arn",
+            ],
+          },
+          "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceDataProductTableC1CE90D5Ref": Object {
+            "Fn::GetAtt": Array [
+              "DataProductServiceStack752CB910",
+              "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+            ],
+          },
+          "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Arn": Object {
+            "Fn::GetAtt": Array [
+              "DataProductServiceStack752CB910",
+              "Outputs.AdaDataProductServiceFileUploadBucket4C6FA9E4Arn",
+            ],
+          },
+          "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu0312C0F1": Object {
+            "Fn::GetAtt": Array [
+              "DataProductServiceStack752CB910",
+              "Outputs.AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureScriptsBucketD6FE34F9Arn",
+            ],
+          },
+          "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructu1AA3D612": Object {
+            "Fn::GetAtt": Array [
+              "DataProductServiceStack752CB910",
+              "Outputs.AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataBucketD9C0AD53Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableDataProductTableCFB5877CArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableLocks696688D7Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableRelationships0CDF4443Arn",
+            ],
+          },
+          "referencetoAdaLayer6FB4FEF4Ref": Object {
+            "Ref": "LayerB20D2F06",
+          },
+          "referencetoAdaSharedEvntBus3C45F515Arn": Object {
+            "Fn::GetAtt": Array [
+              "SharedEvntBusF5797523",
+              "Arn",
+            ],
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ApiServiceStack970277D1": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "KMSStack7F65AEC0",
+      ],
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaApiWafDeploymentSecretCA25FA9ARef": Object {
+            "Ref": "ApiWafDeploymentSecret5FECB872",
+          },
+          "referencetoAdaCognitoAuthNestedStackCognitoAuthNestedStackResource933F913EOutputsAdaCognitoAuthUserPoolBD7CD0F7Arn": Object {
+            "Fn::GetAtt": Array [
+              "CognitoAuthStack962632B3",
+              "Outputs.AdaCognitoAuthUserPoolBD7CD0F7Arn",
+            ],
+          },
+          "referencetoAdaCognitoAuthNestedStackCognitoAuthNestedStackResource933F913EOutputsAdaCognitoAuthUserPoolBD7CD0F7Ref": Object {
+            "Fn::GetAtt": Array [
+              "CognitoAuthStack962632B3",
+              "Outputs.AdaCognitoAuthUserPoolBD7CD0F7Ref",
+            ],
+          },
+          "referencetoAdaCognitoAuthNestedStackCognitoAuthNestedStackResource933F913EOutputsAdaCognitoAuthUserPoolCognitoDomain8B19C675Ref": Object {
+            "Fn::GetAtt": Array [
+              "CognitoAuthStack962632B3",
+              "Outputs.AdaCognitoAuthUserPoolCognitoDomain8B19C675Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550EArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550ERef",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAccessRequestTable3CBA9695Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableAccessRequestTable3CBA9695Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableApiAccessPolicyTable0958670AArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableApiAccessPolicyTable0958670AArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableGroupsTable715E88D9Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableGroupsTable715E88D9Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableIdentityMachineTableD776DA41Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableIdentityMachineTableD776DA41Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableIdentityMachineTokenTableC84EAEE4Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableIdentityMachineTokenTableC84EAEE4Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableLocks696688D7Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableRelationships0CDF4443Arn",
+            ],
+          },
+          "referencetoAdaLayer6FB4FEF4Ref": Object {
+            "Ref": "LayerB20D2F06",
+          },
+          "referencetoAdaadminEmail7EA005BFRef": Object {
+            "Ref": "adminEmail",
+          },
+          "referencetoAdaadvancedSecurityModeA861D946Ref": Object {
+            "Ref": "advancedSecurityMode",
+          },
+          "referencetoAdaautoAssociateAdminAC12C094Ref": Object {
+            "Ref": "autoAssociateAdmin",
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ApiWafDeploymentSecret5FECB872": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "Description": "Secret used to enable internal calls to bypass IPSet rule in WAF.",
+        "GenerateSecretString": Object {},
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::SecretsManager::Secret",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ApiWafDeploymentSecretPolicy4F514DDB": Object {
+      "Properties": Object {
+        "ResourcePolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::GetAtt": Array [
+                    "CommonStackA8F9EE77",
+                    "Outputs.AdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn",
+                  ],
+                },
+              },
+              "Resource": Object {
+                "Ref": "ApiWafDeploymentSecret5FECB872",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "SecretId": Object {
+          "Ref": "ApiWafDeploymentSecret5FECB872",
+        },
+      },
+      "Type": "AWS::SecretsManager::ResourcePolicy",
+    },
+    "ApiWafDeploymentSecretSecretValue2C32F2D9": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "ApiWafDeploymentSecret5FECB872",
+        "ApiWafDeploymentSecretSecretValueCustomResourcePolicy71E8D8F5",
+      ],
+      "Properties": Object {
+        "Create": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"SecretsManager\\",\\"action\\":\\"getSecretValue\\",\\"parameters\\":{\\"SecretId\\":\\"",
+              Object {
+                "Ref": "ApiWafDeploymentSecret5FECB872",
+              },
+              "\\"},\\"physicalResourceId\\":{\\"id\\":\\"DeploymentSecretApiWafDeploymentSecret\\"}}",
+            ],
+          ],
+        },
+        "InstallLatestAwsSdk": true,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "AWS679F53Fac002430Cb0Da5B7982Bd22872D164C4C",
+            "Arn",
+          ],
+        },
+        "Update": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"SecretsManager\\",\\"action\\":\\"getSecretValue\\",\\"parameters\\":{\\"SecretId\\":\\"",
+              Object {
+                "Ref": "ApiWafDeploymentSecret5FECB872",
+              },
+              "\\"},\\"physicalResourceId\\":{\\"id\\":\\"DeploymentSecretApiWafDeploymentSecret\\"}}",
+            ],
+          ],
+        },
+      },
+      "Type": "Custom::AWS",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ApiWafDeploymentSecretSecretValueCustomResourcePolicy71E8D8F5": Object {
+      "DependsOn": Array [
+        "ApiWafDeploymentSecret5FECB872",
+      ],
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "secretsmanager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "ApiWafDeploymentSecret5FECB872",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiWafDeploymentSecretSecretValueCustomResourcePolicy71E8D8F5",
+        "Roles": Array [
+          Object {
+            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "CognitoAuthStack962632B3": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaadminEmail7EA005BFRef": Object {
+            "Ref": "adminEmail",
+          },
+          "referencetoAdaadminMFA45F91363Ref": Object {
+            "Ref": "adminMFA",
+          },
+          "referencetoAdaadminPhoneNumberAE9C68D4Ref": Object {
+            "Ref": "adminPhoneNumber",
+          },
+          "referencetoAdaadvancedSecurityModeA861D946Ref": Object {
+            "Ref": "advancedSecurityMode",
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "CommonStackA8F9EE77": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "KMSStack7F65AEC0",
+      ],
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAthenaOutputBucket0D9D1563Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyAthenaOutputBucket0D9D1563Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableCachedQueryTableFD9290A0Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableCachedQueryTableFD9290A0Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableLocks696688D7Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableRelationships0CDF4443Arn",
+            ],
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "DataProductServiceStack752CB910": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "KMSStack7F65AEC0",
+        "QueryParseRenderServiceStackD4D96F94",
+      ],
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+            ],
+          },
+          "referencetoAdaApiWafDeploymentSecretCA25FA9ARef": Object {
+            "Ref": "ApiWafDeploymentSecret5FECB872",
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAccessLogBucketB5B66FEDRef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAccessLogBucketB5B66FEDRef",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DRef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAthenaOutputBucketFB25B94DRef",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCachedQueryTableADA4A480Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCachedQueryTableADA4A480Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCachedQueryTableADA4A480Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCachedQueryTableADA4A480Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550EArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550ERef",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyTempBucketAFE3DAB9Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyTempBucketAFE3DAB9Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableCachedQueryTableFD9290A0Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableCachedQueryTableFD9290A0Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableDataProductTableCFB5877CArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDomainTable333E1957Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableDomainTable333E1957Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableLocks696688D7Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableRelationships0CDF4443Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableScriptsTableF746BDE4Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableScriptsTableF746BDE4Arn",
+            ],
+          },
+          "referencetoAdaLayer6FB4FEF4Ref": Object {
+            "Ref": "LayerB20D2F06",
+          },
+          "referencetoAdaSharedEvntBus3C45F515Arn": Object {
+            "Fn::GetAtt": Array [
+              "SharedEvntBusF5797523",
+              "Arn",
+            ],
+          },
+          "referencetoAdaSharedEvntBus3C45F515Ref": Object {
+            "Ref": "SharedEvntBusF5797523",
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "FederatedApiDeploymentStack710EC56F": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "AdministrationServiceStackC56DA5ED",
+        "DataProductServiceStack752CB910",
+        "GovernanceServiceStackBF86CD70",
+        "IdentityServiceStack20E75786",
+        "KMSStack7F65AEC0",
+        "NotificationServiceStackDC04495F",
+        "OntologyServiceStackD2BEF838",
+        "QueryParseRenderServiceStackD4D96F94",
+        "QueryServiceStack09226509",
+      ],
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAccessLogBucketB5B66FEDRef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAccessLogBucketB5B66FEDRef",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyWafLogBucketBCD39C55Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyWafLogBucketBCD39C55Arn",
+            ],
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "GovernanceServiceStackBF86CD70": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "DataProductServiceStack752CB910",
+        "KMSStack7F65AEC0",
+      ],
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+            ],
+          },
+          "referencetoAdaApiWafDeploymentSecretCA25FA9ARef": Object {
+            "Ref": "ApiWafDeploymentSecret5FECB872",
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550EArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550ERef",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAttributesPolicyTable2BE20275Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableAttributesPolicyTable2BE20275Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAttributesValuePolicyTable0A88FC7CArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableAttributesValuePolicyTable0A88FC7CArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductPolicyTableD600EA3AArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableDataProductPolicyTableD600EA3AArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDefaultLensPolicyTable4B30BF12Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableDefaultLensPolicyTable4B30BF12Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableLocks696688D7Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableRelationships0CDF4443Arn",
+            ],
+          },
+          "referencetoAdaLayer6FB4FEF4Ref": Object {
+            "Ref": "LayerB20D2F06",
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "IdentityServiceStack20E75786": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "KMSStack7F65AEC0",
+      ],
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiAccessRequestTableC2AE5655Arn": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiAccessRequestTableC2AE5655Arn",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiAccessRequestTableC2AE5655Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiAccessRequestTableC2AE5655Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiApiAccessPolicyTable4950D7A5Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiApiAccessPolicyTable4950D7A5Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiGroupsTable23FA2F15Arn": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiGroupsTable23FA2F15Arn",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiGroupsTable23FA2F15Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiGroupsTable23FA2F15Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiIdentityMachineTableA214BDA9Arn": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiIdentityMachineTableA214BDA9Arn",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiIdentityMachineTableA214BDA9Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiIdentityMachineTableA214BDA9Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiIdentityMachineTokenTable8CEA4342Arn": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiIdentityMachineTokenTable8CEA4342Arn",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiIdentityMachineTokenTable8CEA4342Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiIdentityMachineTokenTable8CEA4342Ref",
+            ],
+          },
+          "referencetoAdaApiWafDeploymentSecretCA25FA9ARef": Object {
+            "Ref": "ApiWafDeploymentSecret5FECB872",
+          },
+          "referencetoAdaCognitoAuthNestedStackCognitoAuthNestedStackResource933F913EOutputsAdaCognitoAuthUserPoolBD7CD0F7Arn": Object {
+            "Fn::GetAtt": Array [
+              "CognitoAuthStack962632B3",
+              "Outputs.AdaCognitoAuthUserPoolBD7CD0F7Arn",
+            ],
+          },
+          "referencetoAdaCognitoAuthNestedStackCognitoAuthNestedStackResource933F913EOutputsAdaCognitoAuthUserPoolBD7CD0F7Ref": Object {
+            "Fn::GetAtt": Array [
+              "CognitoAuthStack962632B3",
+              "Outputs.AdaCognitoAuthUserPoolBD7CD0F7Ref",
+            ],
+          },
+          "referencetoAdaCognitoAuthNestedStackCognitoAuthNestedStackResource933F913EOutputsAdaCognitoAuthUserPoolCognitoDomain8B19C675Ref": Object {
+            "Fn::GetAtt": Array [
+              "CognitoAuthStack962632B3",
+              "Outputs.AdaCognitoAuthUserPoolCognitoDomain8B19C675Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550EArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550ERef",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAccessRequestTable3CBA9695Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableAccessRequestTable3CBA9695Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableGroupsTable715E88D9Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableGroupsTable715E88D9Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableIdentityMachineTableD776DA41Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableIdentityMachineTableD776DA41Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableIdentityMachineTokenTableC84EAEE4Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableIdentityMachineTokenTableC84EAEE4Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableIdentityProviderTable02CF28ECArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableIdentityProviderTable02CF28ECArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableLocks696688D7Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableRelationships0CDF4443Arn",
+            ],
+          },
+          "referencetoAdaLayer6FB4FEF4Ref": Object {
+            "Ref": "LayerB20D2F06",
+          },
+          "referencetoAdaSharedEvntBus3C45F515Arn": Object {
+            "Fn::GetAtt": Array [
+              "SharedEvntBusF5797523",
+              "Arn",
+            ],
+          },
+          "referencetoAdaWebsiteNestedStackWebsiteNestedStackResource5E5E7447OutputsAdaWebsiteCloudfrontDistributionCFDistribution28056574DomainName": Object {
+            "Fn::GetAtt": Array [
+              "WebsiteStack290432DE",
+              "Outputs.AdaWebsiteCloudfrontDistributionCFDistribution28056574DomainName",
+            ],
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KMSStack7F65AEC0": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "LayerB20D2F06": Object {
+      "Properties": Object {
+        "CompatibleRuntimes": Array [
+          "nodejs14.x",
+        ],
+        "Content": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "Api layer modules - provides @ada/api-client",
+      },
+      "Type": "AWS::Lambda::LayerVersion",
+    },
+    "NamespaceGlobalUUIDCustomResource5B48DB1F": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "NamespaceGlobalUUIDProviderFrameworkOnEvent376708AE",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "NamespaceGlobalUUIDNamespaceGlobalUUIDLambdaD39A6F73": Object {
+      "DependsOn": Array [
+        "NamespaceGlobalUUIDNamespaceGlobalUUIDLambdaServiceRole9972DC8A",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "Cloudformation deployment helper generated unique short uuid",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "NamespaceGlobalUUIDNamespaceGlobalUUIDLambdaServiceRole9972DC8A",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "NamespaceGlobalUUIDNamespaceGlobalUUIDLambdaServiceRole9972DC8A": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "NamespaceGlobalUUIDProviderFrameworkOnEvent376708AE": Object {
+      "DependsOn": Array [
+        "NamespaceGlobalUUIDProviderframeworkonEventServiceRoleDefaultPolicyCF9A5558",
+        "NamespaceGlobalUUIDProviderframeworkonEventServiceRole60970FB1",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (Ada/NamespaceGlobalUUID/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "NamespaceGlobalUUIDNamespaceGlobalUUIDLambdaD39A6F73",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "NamespaceGlobalUUIDProviderframeworkonEventServiceRole60970FB1",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "NamespaceGlobalUUIDProviderframeworkonEventServiceRole60970FB1": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "NamespaceGlobalUUIDProviderframeworkonEventServiceRoleDefaultPolicyCF9A5558": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "NamespaceGlobalUUIDNamespaceGlobalUUIDLambdaD39A6F73",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "NamespaceGlobalUUIDNamespaceGlobalUUIDLambdaD39A6F73",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "NamespaceGlobalUUIDProviderframeworkonEventServiceRoleDefaultPolicyCF9A5558",
+        "Roles": Array [
+          Object {
+            "Ref": "NamespaceGlobalUUIDProviderframeworkonEventServiceRole60970FB1",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "NotificationBusDynamicInfraToDataProductRule4F09CA85": Object {
+      "Properties": Object {
+        "Description": "Rule matching events from the dynamic infrastracture to update data products information",
+        "EventBusName": Object {
+          "Ref": "SharedEvntBusF5797523",
+        },
+        "EventPattern": Object {
+          "detail-type": Array [
+            "DataProductImportSuccess",
+            "DataProductImportError",
+          ],
+          "source": Array [
+            "ada.data-products",
+          ],
+        },
+        "State": "ENABLED",
+        "Targets": Array [
+          Object {
+            "Arn": Object {
+              "Fn::GetAtt": Array [
+                "DataProductServiceStack752CB910",
+                "Outputs.AdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaEventBridgeUpdateDataProductE054F2A1Arn",
+              ],
+            },
+            "Id": "Target0",
+          },
+        ],
+      },
+      "Type": "AWS::Events::Rule",
+    },
+    "NotificationBusDynamicInfraToDataProductRuleAllowEventRuleAdaDataProductServiceApiStackApiLambdaEventBridgeUpdateDataProduct6587C99AAE469F2A": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "DataProductServiceStack752CB910",
+            "Outputs.AdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaEventBridgeUpdateDataProductE054F2A1Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::GetAtt": Array [
+            "NotificationBusDynamicInfraToDataProductRule4F09CA85",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "NotificationBusListenToNotifications1F848010": Object {
+      "Properties": Object {
+        "EventBusName": Object {
+          "Ref": "SharedEvntBusF5797523",
+        },
+        "EventPattern": Object {
+          "source": Array [
+            "ada.data-products",
+            "ada.identity",
+          ],
+        },
+        "State": "ENABLED",
+        "Targets": Array [
+          Object {
+            "Arn": Object {
+              "Fn::GetAtt": Array [
+                "NotificationServiceStackDC04495F",
+                "Outputs.AdaNotificationServiceNotificationListenerLambda7FAAC5B2Arn",
+              ],
+            },
+            "Id": "Target0",
+          },
+        ],
+      },
+      "Type": "AWS::Events::Rule",
+    },
+    "NotificationBusListenToNotificationsAllowEventRuleAdaNotificationServiceNotificationListenerLambdaD48A31BA913EAAA0": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "NotificationServiceStackDC04495F",
+            "Outputs.AdaNotificationServiceNotificationListenerLambda7FAAC5B2Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::GetAtt": Array [
+            "NotificationBusListenToNotifications1F848010",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "NotificationServiceStackDC04495F": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "KMSStack7F65AEC0",
+      ],
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550EArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550ERef",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableLocks696688D7Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableNotificationTable1AF7D32EArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableNotificationTable1AF7D32EArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableRelationships0CDF4443Arn",
+            ],
+          },
+          "referencetoAdaSharedEvntBus3C45F515Arn": Object {
+            "Fn::GetAtt": Array [
+              "SharedEvntBusF5797523",
+              "Arn",
+            ],
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "OntologyServiceStackD2BEF838": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "GovernanceServiceStackBF86CD70",
+        "KMSStack7F65AEC0",
+      ],
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+            ],
+          },
+          "referencetoAdaApiWafDeploymentSecretCA25FA9ARef": Object {
+            "Ref": "ApiWafDeploymentSecret5FECB872",
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550EArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550ERef",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAliasToOntologyAttributeTable797CB698Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableAliasToOntologyAttributeTable797CB698Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableLocks696688D7Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableOntologyAttributesTable18EF31EFArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableOntologyAttributesTable18EF31EFArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableRelationships0CDF4443Arn",
+            ],
+          },
+          "referencetoAdaLayer6FB4FEF4Ref": Object {
+            "Ref": "LayerB20D2F06",
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "OpMetricsCustomResource7D989163": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "OpMetricsProviderFrameworkOnEvent0CC2BDB9",
+            "Arn",
+          ],
+        },
+        "awsRegion": Object {
+          "Ref": "AWS::Region",
+        },
+        "awsSolutionId": "SO0190",
+        "awsSolutionVersion": "v1.0.0",
+        "sendAnonymousData": Object {
+          "Ref": "sendAnonymousData",
+        },
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "OpMetricsLambdaFE42E80F": Object {
+      "DependsOn": Array [
+        "OpMetricsLambdaServiceRoleE3334425",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "Lambda for Operational Metrics collection",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "OpMetricsLambdaServiceRoleE3334425",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "OpMetricsLambdaServiceRoleE3334425": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "OpMetricsProviderFrameworkOnEvent0CC2BDB9": Object {
+      "DependsOn": Array [
+        "OpMetricsProviderframeworkonEventServiceRoleDefaultPolicy6DE52AEE",
+        "OpMetricsProviderframeworkonEventServiceRoleDB3A5E86",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (Ada/OpMetrics/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "OpMetricsLambdaFE42E80F",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "OpMetricsProviderframeworkonEventServiceRoleDB3A5E86",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "OpMetricsProviderframeworkonEventServiceRoleDB3A5E86": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "OpMetricsProviderframeworkonEventServiceRoleDefaultPolicy6DE52AEE": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "OpMetricsLambdaFE42E80F",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "OpMetricsLambdaFE42E80F",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "OpMetricsProviderframeworkonEventServiceRoleDefaultPolicy6DE52AEE",
+        "Roles": Array [
+          Object {
+            "Ref": "OpMetricsProviderframeworkonEventServiceRoleDB3A5E86",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "QueryParseRenderServiceStackD4D96F94": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "NotificationServiceStackDC04495F",
+      ],
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn",
+            ],
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "QueryServiceStack09226509": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "KMSStack7F65AEC0",
+      ],
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5RootResourceId",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+            ],
+          },
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+            ],
+          },
+          "referencetoAdaApiWafDeploymentSecretCA25FA9ARef": Object {
+            "Ref": "ApiWafDeploymentSecret5FECB872",
+          },
+          "referencetoAdaCognitoAuthNestedStackCognitoAuthNestedStackResource933F913EOutputsAdaCognitoAuthUserPoolCognitoDomain8B19C675Ref": Object {
+            "Fn::GetAtt": Array [
+              "CognitoAuthStack962632B3",
+              "Outputs.AdaCognitoAuthUserPoolCognitoDomain8B19C675Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAccessLogBucketB5B66FEDArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAccessLogBucketB5B66FEDArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAccessLogBucketB5B66FEDRegionalDomainName": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAccessLogBucketB5B66FEDRegionalDomainName",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAthenaOutputBucketFB25B94DArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DRef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAthenaOutputBucketFB25B94DRef",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCachedQueryTableADA4A480Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCachedQueryTableADA4A480Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCachedQueryTableADA4A480Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCachedQueryTableADA4A480Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackCounterTable5D6ADA16Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550EArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackKeyInternalTokenE7D6550ERef",
+            ],
+          },
+          "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceGlueEncryptionKey322DD43CArn": Object {
+            "Fn::GetAtt": Array [
+              "DataProductServiceStack752CB910",
+              "Outputs.AdaDataProductServiceGlueEncryptionKey322DD43CArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAthenaOutputBucket0D9D1563Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyAthenaOutputBucket0D9D1563Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableCachedQueryTableFD9290A0Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableCachedQueryTableFD9290A0Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableLocks696688D7Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableQueryHistoryTable27AED216Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableQueryHistoryTable27AED216Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableRelationships0CDF4443Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableSavedPrivateQueryTable093AF194Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableSavedPrivateQueryTable093AF194Arn",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableSavedPublicQueryTable01036984Arn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyTableSavedPublicQueryTable01036984Arn",
+            ],
+          },
+          "referencetoAdaLayer6FB4FEF4Ref": Object {
+            "Ref": "LayerB20D2F06",
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "SharedEvntBusF5797523": Object {
+      "Properties": Object {
+        "Name": "AdaSharedEvntBus92BA2A50",
+      },
+      "Type": "AWS::Events::EventBus",
+    },
+    "UploadWebsiteConfigurationLambdaA492EF50": Object {
+      "DependsOn": Array [
+        "UploadWebsiteConfigurationLambdaServiceRoleDefaultPolicy61B73544",
+        "UploadWebsiteConfigurationLambdaServiceRoleFB4C0DC6",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "Generate the website runtime-config.js file and upload to website bucket",
+        "Handler": "app.on_event",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "UploadWebsiteConfigurationLambdaServiceRoleFB4C0DC6",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.7",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 60,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "UploadWebsiteConfigurationLambdaServiceRoleDefaultPolicy61B73544": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "cloudfront:GetInvalidation",
+                "cloudfront:CreateInvalidation",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":cloudfront::1111111111:distribution/",
+                    Object {
+                      "Fn::GetAtt": Array [
+                        "WebsiteStack290432DE",
+                        "Outputs.AdaWebsiteCloudfrontDistributionCFDistribution28056574Ref",
+                      ],
+                    },
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "s3:DeleteObject*",
+                "s3:PutObject",
+                "s3:PutObjectLegalHold",
+                "s3:PutObjectRetention",
+                "s3:PutObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "WebsiteStack290432DE",
+                    "Outputs.AdaWebsiteWebsiteBucket2F972870Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "WebsiteStack290432DE",
+                          "Outputs.AdaWebsiteWebsiteBucket2F972870Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "UploadWebsiteConfigurationLambdaServiceRoleDefaultPolicy61B73544",
+        "Roles": Array [
+          Object {
+            "Ref": "UploadWebsiteConfigurationLambdaServiceRoleFB4C0DC6",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "UploadWebsiteConfigurationLambdaServiceRoleFB4C0DC6": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "UploadWebsiteConfigurationUploadWebsiteConfigProviderFrameworkOnEvent43806101": Object {
+      "DependsOn": Array [
+        "UploadWebsiteConfigurationUploadWebsiteConfigProviderframeworkonEventServiceRoleDefaultPolicy7A9F93F3",
+        "UploadWebsiteConfigurationUploadWebsiteConfigProviderframeworkonEventServiceRoleB61E3FF1",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (Ada/UploadWebsiteConfiguration/UploadWebsiteConfigProvider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "UploadWebsiteConfigurationLambdaA492EF50",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "UploadWebsiteConfigurationUploadWebsiteConfigProviderframeworkonEventServiceRoleB61E3FF1",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "UploadWebsiteConfigurationUploadWebsiteConfigProviderframeworkonEventServiceRoleB61E3FF1": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "UploadWebsiteConfigurationUploadWebsiteConfigProviderframeworkonEventServiceRoleDefaultPolicy7A9F93F3": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "UploadWebsiteConfigurationLambdaA492EF50",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "UploadWebsiteConfigurationLambdaA492EF50",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "UploadWebsiteConfigurationUploadWebsiteConfigProviderframeworkonEventServiceRoleDefaultPolicy7A9F93F3",
+        "Roles": Array [
+          Object {
+            "Ref": "UploadWebsiteConfigurationUploadWebsiteConfigProviderframeworkonEventServiceRoleB61E3FF1",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "UploadWebsiteConfigurationUploadWebsiteConfigResourceAA1214F1": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "WebsiteStack290432DE",
+      ],
+      "Properties": Object {
+        "ALWAYS_UPDATE": "#date#",
+        "CLOUDFRONT_DISTRIBUTION_ID": Object {
+          "Fn::GetAtt": Array [
+            "WebsiteStack290432DE",
+            "Outputs.AdaWebsiteCloudfrontDistributionCFDistribution28056574Ref",
+          ],
+        },
+        "S3_BUCKET": Object {
+          "Fn::GetAtt": Array [
+            "WebsiteStack290432DE",
+            "Outputs.AdaWebsiteWebsiteBucket2F972870Ref",
+          ],
+        },
+        "S3_CONFIG_FILE_KEY": "runtime-config.js",
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "UploadWebsiteConfigurationUploadWebsiteConfigProviderFrameworkOnEvent43806101",
+            "Arn",
+          ],
+        },
+        "WEBSITE_CONFIG": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "window['runtime-config'] = {
+  \\"userPoolId\\": \\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "CognitoAuthStack962632B3",
+                  "Outputs.AdaCognitoAuthUserPoolBD7CD0F7Ref",
+                ],
+              },
+              "\\",
+  \\"userPoolClientId\\": \\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "IdentityServiceStack20E75786",
+                  "Outputs.AdaIdentityServiceUserPoolClient300BB0C2Ref",
+                ],
+              },
+              "\\",
+  \\"apiUrl\\": \\"https://",
+              Object {
+                "Fn::GetAtt": Array [
+                  "ApiServiceStack970277D1",
+                  "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+                ],
+              },
+              ".execute-api.ap-southeast-1.amazonaws.com/prod/\\",
+  \\"region\\": \\"ap-southeast-1\\",
+  \\"oauthScopes\\": [
+    \\"phone\\",
+    \\"profile\\",
+    \\"openid\\",
+    \\"email\\",
+    \\"aws.cognito.signin.user.admin\\"
+  ],
+  \\"oauthDomain\\": \\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "CognitoAuthStack962632B3",
+                  "Outputs.AdaCognitoAuthUserPoolCognitoDomain8B19C675Ref",
+                ],
+              },
+              ".auth.ap-southeast-1.amazoncognito.com\\",
+  \\"ouathResponseType\\": \\"code\\",
+  \\"athenaProxyApiUrl\\": \\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceAthenaProxyDistribution31E1FEE1DomainName",
+                ],
+              },
+              ":443\\"
+};",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "WebsiteStack290432DE": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "Parameters": Object {
+          "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
+            "Fn::GetAtt": Array [
+              "ApiServiceStack970277D1",
+              "Outputs.AdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+            ],
+          },
+          "referencetoAdaCognitoAuthNestedStackCognitoAuthNestedStackResource933F913EOutputsAdaCognitoAuthUserPoolCognitoDomain8B19C675Ref": Object {
+            "Fn::GetAtt": Array [
+              "CognitoAuthStack962632B3",
+              "Outputs.AdaCognitoAuthUserPoolCognitoDomain8B19C675Ref",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAccessLogBucketB5B66FEDArn": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAccessLogBucketB5B66FEDArn",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAccessLogBucketB5B66FEDRef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAccessLogBucketB5B66FEDRef",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAccessLogBucketB5B66FEDRegionalDomainName": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAccessLogBucketB5B66FEDRegionalDomainName",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DRef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAthenaOutputBucketFB25B94DRef",
+            ],
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DRegionalDomainName": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAthenaOutputBucketFB25B94DRegionalDomainName",
+            ],
+          },
+          "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Ref": Object {
+            "Fn::GetAtt": Array [
+              "DataProductServiceStack752CB910",
+              "Outputs.AdaDataProductServiceFileUploadBucket4C6FA9E4Ref",
+            ],
+          },
+          "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4RegionalDomainName": Object {
+            "Fn::GetAtt": Array [
+              "DataProductServiceStack752CB910",
+              "Outputs.AdaDataProductServiceFileUploadBucket4C6FA9E4RegionalDomainName",
+            ],
+          },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn",
+            ],
+          },
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "ApplicationVersion",
+            "Value": "ada@1.0.0",
+          },
+        ],
+        "TemplateURL": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "https://s3.ap-southeast-1.",
+              Object {
+                "Ref": "AWS::URLSuffix",
+              },
+              "/cdk-#####",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::Stack",
+      "UpdateReplacePolicy": "Delete",
+    },
+  },
+  "Rules": Object {},
+}
+`;

@@ -1,0 +1,45 @@
+{
+  "name": "@ada/solution",
+  "version": "0.1.0",
+  "private": true,
+  "bin": {
+    "cdk-solution": "dist/cdk-solution.js"
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "cp-context": "cp ../../../../cdk.context.amazon_corp.json ./cdk.context.json || exit 0;",
+    "clean": "yarn run clean:tsc && rm -rf node_modules",
+    "clean:tsc": "tsc --build ./ --clean",
+    "build": "tsc",
+    "test": "jest --coverage",
+    "test:snapshots:update": "jest -u",
+    "watch": "tsc -w",
+    "cdk": "cdk",
+    "presynth": "if-env-defined SOLUTION_SKIP_CP_CONTEXT && exit 0 || yarn cp-context",
+    "synth": "cdk synth -q",
+    "deploy-env": "cdk deploy $(egrep -s -v '^#' .env | sed -e 's/^/--parameters /')",
+    "deploy-env:skip-approval": "yarn deploy-env --require-approval never",
+    "diff-synthed": "cdk diff -a ./cdk.out --all --no-color --progress=events &> cdk.out/diff.txt && echo \"Diff saved to './cdk.out/diff.txt'\"",
+    "synth:no-bundling": "NODE_ENV=development DISABLE_CDK_BUNDLING=1 yarn synth"
+  },
+  "dependencies": {
+    "@ada/common": "*",
+    "@ada/infra": "*",
+    "aws-cdk-lib": "^2.33.0",
+    "constructs": "^10.1.54",
+    "source-map-support": "^0.5.21"
+  },
+  "devDependencies": {
+    "@types/node": "^15.3.1",
+    "aws-cdk": "^2.33.0",
+    "@aws-cdk/cloudformation-diff": "^2.33.0",
+    "if-env-defined": "^1.0.0",
+    "ts-node": "^8.1.0",
+    "typescript": "4.3.5"
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "cdk-solution.ts"
+    ]
+  }
+}
