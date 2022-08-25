@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-CommonStack) - Automated Data Analytics on AWS. Version v1.0.0",
+  "Description": "(SO0190-CommonStack) - Automated Data Analytics on AWS. Version v1.0.1",
   "Outputs": Object {
     "AdaCommonStackAccessLogBucketB5B66FEDArn": Object {
       "Value": Object {
@@ -30,6 +30,14 @@ Object {
         "Fn::GetAtt": Array [
           "AthenaOutputBucket",
           "Arn",
+        ],
+      },
+    },
+    "AdaCommonStackAthenaOutputBucketFB25B94DDomainName": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "AthenaOutputBucket",
+          "DomainName",
         ],
       },
     },

@@ -178,10 +178,12 @@ export class AdaStack extends ExtendedStack {
           `https://cognito-idp.${this.region}.amazonaws.com`,
           // File Upload - bucket where user uploads data product files
           dataProductService.fileUploadBucket.urlForObject(),
-          dataProductService.fileUploadBucket.virtualHostedUrlForObject(),
+          dataProductService.fileUploadBucket.virtualHostedUrlForObject(undefined, { regional: true }),
+          dataProductService.fileUploadBucket.virtualHostedUrlForObject(undefined, { regional: false }),
           // Query download - from athena query results bucket
           athenaOutputBucket.urlForObject(),
-          athenaOutputBucket.virtualHostedUrlForObject(),
+          athenaOutputBucket.virtualHostedUrlForObject(undefined, { regional: true }),
+          athenaOutputBucket.virtualHostedUrlForObject(undefined, { regional: false }),
         ],
       },
     });

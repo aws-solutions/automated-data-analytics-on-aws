@@ -2,10 +2,10 @@
   "name": "ada",
   "title": "Automated Data Analytics on AWS",
   "description": "Automated Data Analytics on AWS simplifies the management and analysis of data, providing an end-to-end platform used for ingesting, transforming, governing, and querying datasets through a standalone user interface",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Amazon Web Services",
   "awsSolutionId": "SO0190",
-  "awsSolutionVersion": "v1.0.0",
+  "awsSolutionVersion": "v1.0.1",
   "private": true,
   "license": "Apache-2.0",
   "engines": {

@@ -431,7 +431,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -588,7 +588,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -745,7 +745,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -809,7 +809,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -1021,7 +1021,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -1081,7 +1081,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -1236,7 +1236,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -1480,7 +1480,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -1509,7 +1509,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -1952,7 +1952,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -2095,7 +2095,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -2127,7 +2127,7 @@ Object {
           "Ref": "AWS::Region",
         },
         "awsSolutionId": "SO0190",
-        "awsSolutionVersion": "v1.0.0",
+        "awsSolutionVersion": "v1.0.1",
         "sendAnonymousData": Object {
           "Ref": "sendAnonymousData",
         },
@@ -2373,7 +2373,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -2593,7 +2593,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {
@@ -3010,6 +3010,12 @@ Object {
               "Outputs.AdaCommonStackAccessLogBucketB5B66FEDRegionalDomainName",
             ],
           },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DDomainName": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAthenaOutputBucketFB25B94DDomainName",
+            ],
+          },
           "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DRef": Object {
             "Fn::GetAtt": Array [
               "CommonStackA8F9EE77",
@@ -3020,6 +3026,12 @@ Object {
             "Fn::GetAtt": Array [
               "CommonStackA8F9EE77",
               "Outputs.AdaCommonStackAthenaOutputBucketFB25B94DRegionalDomainName",
+            ],
+          },
+          "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4DomainName": Object {
+            "Fn::GetAtt": Array [
+              "DataProductServiceStack752CB910",
+              "Outputs.AdaDataProductServiceFileUploadBucket4C6FA9E4DomainName",
             ],
           },
           "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Ref": Object {
@@ -3048,7 +3060,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.0",
+            "Value": "ada@1.0.1",
           },
         ],
         "TemplateURL": Object {

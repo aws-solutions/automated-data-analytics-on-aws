@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-Website) - Automated Data Analytics on AWS. Version v1.0.0",
+  "Description": "(SO0190-Website) - Automated Data Analytics on AWS. Version v1.0.1",
   "Outputs": Object {
     "AdaWebsiteCloudfrontDistributionCFDistribution28056574DomainName": Object {
       "Value": Object {
@@ -55,10 +55,16 @@ Object {
     "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAccessLogBucketB5B66FEDRegionalDomainName": Object {
       "Type": "String",
     },
+    "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DDomainName": Object {
+      "Type": "String",
+    },
     "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DRef": Object {
       "Type": "String",
     },
     "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DRegionalDomainName": Object {
+      "Type": "String",
+    },
+    "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4DomainName": Object {
       "Type": "String",
     },
     "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4Ref": Object {
@@ -1016,6 +1022,10 @@ Object {
               Object {
                 "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4RegionalDomainName",
               },
+              " https://",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4DomainName",
+              },
               " https://s3.ap-southeast-1.",
               Object {
                 "Ref": "AWS::URLSuffix",
@@ -1027,6 +1037,10 @@ Object {
               " https://",
               Object {
                 "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DRegionalDomainName",
+              },
+              " https://",
+              Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DDomainName",
               },
               "; style-src 'self' 'unsafe-inline'; img-src 'self' awsstatic.com; object-src 'self' awsstatic.com;\\";function handler(event){var response=event.response,headers=response.headers;return headers[\\"x-frame-options\\"]={value:\\"deny\\"},headers[\\"x-xss-protection\\"]={value:\\"1; mode=block\\"},headers[\\"x-content-type-options\\"]={value:\\"nosniff\\"},headers[\\"strict-transport-security\\"]={value:\\"max-age=47304000; includeSubDomains\\"},event.request.uri.match(/^\\\\/docs\\\\//)?headers[\\"content-security-policy\\"]={value:\\"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src * 'self'; media-src 'self'\\"}:headers[\\"content-security-policy\\"]={value:CSP},response}",
             ],

@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-CognitoAuth) - Automated Data Analytics on AWS. Version v1.0.0",
+  "Description": "(SO0190-CognitoAuth) - Automated Data Analytics on AWS. Version v1.0.1",
   "Outputs": Object {
     "AdaCognitoAuthUserPoolBD7CD0F7Arn": Object {
       "Value": Object {
