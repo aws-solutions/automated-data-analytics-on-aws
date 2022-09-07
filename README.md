@@ -105,7 +105,7 @@ Before you begin, ensure that:
 - The solution has been built and all unit tests have passed as described in the [Build and run unit tests](#build-and-run-the-unit-tests) section.
 - You have configured the computer used to deploy the solution with the correct AWS credentials to access the AWS account that Automated Data Analytics on AWS solution will be deployed to.
 
-1. Set the deployment region `export AWS_REGION=<region-id>`. For a list of supported AWS region, refer to https://docs.aws.amazon.com/solutions/latest/auotmated-data-analytics-on-aws/design-considerations.html
+1. Set the deployment region `export AWS_REGION=<region-id>`. For a list of supported AWS region, refer to https://docs.aws.amazon.com/solutions/latest/automated-data-analytics-on-aws/design-considerations.html
 2. Make sure the current directory is in `automated-data-analytics-on-aws/source`
 3. Deploy the Automated Data Analytics on AWS solution:
    - To deploy the Automated Data Analytics on AWS solution with its default security settings, use the command below:
