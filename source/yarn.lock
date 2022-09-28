@@ -8866,15 +8866,10 @@ acorn@^7.1.0, acorn@^7.1.1, acorn@^7.4.0, acorn@^7.4.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.4.1.tgz#feaed255973d2e77555b83dbc08851a6c63520fa"
   integrity sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==
 
-acorn@^8.0.4, acorn@^8.2.4:
-  version "8.6.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.6.0.tgz#e3692ba0eb1a0c83eaa4f37f5fa7368dd7142895"
-  integrity sha512-U1riIR+lBSNi3IbxtaHOIKdH8sLFv3NYfNv8sg7ZsNhcfl4HF2++BfqqrNAxoCLQW1iiylOj76ecnaUxz+z9yw==
-
-acorn@^8.4.1, acorn@^8.7.0:
-  version "8.7.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.0.tgz#90951fde0f8f09df93549481e5fc141445b791cf"
-  integrity sha512-V/LGr1APy+PXIwKebEWrkZPwoeoF+w1jiOBUmuxuiUIaOHtob8Qc9BTrYo7VuI5fR8tqsy+buA2WFooR5olqvQ==
+acorn@^8.0.4, acorn@^8.2.4, acorn@^8.4.1, acorn@^8.7.0:
+  version "8.8.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.0.tgz#88c0187620435c7f6015803f5539dae05a9dbea8"
+  integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
 
 add-stream@^1.0.0:
   version "1.0.0"
@@ -9641,7 +9636,7 @@ aws-sign2@~0.7.0:
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.7.0.tgz#b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8"
   integrity sha1-tG6JCTSpWR8tL2+G1+ap8bP+dqg=
 
-aws-xray-sdk-core@3.3.6, aws-xray-sdk-core@^3.3.6:
+aws-xray-sdk-core@3.3.6:
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/aws-xray-sdk-core/-/aws-xray-sdk-core-3.3.6.tgz#57315496e13d41f15decae047bea6b2248e5d767"
   integrity sha512-5pJnix2mNBshzBtVsJxus3YOX2gM8+AirjyAJ0U+4ZkLRAcofNzBJUabZyHZPoVKud/YjEmcRr36bh4T3vOL2A==
@@ -28003,9 +27998,9 @@ vm-browserify@^1.0.1:
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
 vm2@^3.9.3, vm2@^3.9.6:
-  version "3.9.10"
-  resolved "https://registry.yarnpkg.com/vm2/-/vm2-3.9.10.tgz#c66543096b5c44c8861a6465805c23c7cc996a44"
-  integrity sha512-AuECTSvwu2OHLAZYhG716YzwodKCIJxB6u1zG7PgSQwIgAlEaoXH52bxdcvT8GkGjnYK7r7yWDW0m0sOsPuBjQ==
+  version "3.9.11"
+  resolved "https://registry.yarnpkg.com/vm2/-/vm2-3.9.11.tgz#a880f510a606481719ec3f9803b940c5805a06fe"
+  integrity sha512-PFG8iJRSjvvBdisowQ7iVF580DXb1uCIiGaXgm7tynMR1uTBlv7UJlB1zdv5KJ+Tmq1f0Upnj3fayoEOPpCBKg==
   dependencies:
     acorn "^8.7.0"
     acorn-walk "^8.2.0"
