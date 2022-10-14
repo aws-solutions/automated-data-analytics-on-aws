@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-QueryParseRenderService) - Automated Data Analytics on AWS. Version v1.0.1",
+  "Description": "(SO0190-QueryParseRenderService) - Automated Data Analytics on AWS. Version v1.0.2",
   "Outputs": Object {
     "ApiQueryParseRenderUrl1E1F836E": Object {
       "Value": Object {

@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-NotificationService) - Automated Data Analytics on AWS. Version v1.0.1",
+  "Description": "(SO0190-NotificationService) - Automated Data Analytics on AWS. Version v1.0.2",
   "Outputs": Object {
     "AdaNotificationServiceNotificationListenerLambda7FAAC5B2Arn": Object {
       "Value": Object {

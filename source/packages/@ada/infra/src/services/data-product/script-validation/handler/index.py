@@ -15,8 +15,11 @@ TASK_DIR = str(Path(os.path.dirname(os.path.realpath(__file__))).parent.absolute
 TASK_BIN_DIR = str(Path(TASK_DIR).joinpath('bin').absolute())
 os.environ["PATH"] += os.pathsep + TASK_DIR + os.pathsep + TASK_BIN_DIR
 
-BANDIT_CMD = [
-  "bandit", "-",
+# only has bin directory when it is packaged into the lambda
+IS_IN_LAMBDA=os.path.isdir(TASK_BIN_DIR)
+
+BANDIT_CMD_ARGS = [
+  "-",
   "--format", "json",
   "--severity-level", "medium",
   # Do NOT allow user to ignore via "nosec"
@@ -28,6 +31,11 @@ def generate_error_uuid ():
 
 def scan_script(script_source: str):
   logger.info("scanning script:", extra={ 'scriptSource': script_source })
+
+  if IS_IN_LAMBDA:
+    BANDIT_CMD = ["python", TASK_BIN_DIR+"/bandit", *BANDIT_CMD_ARGS]
+  else:
+    BANDIT_CMD = ["bandit", *BANDIT_CMD_ARGS]
 
   try:
     bandit_process = subprocess.run(BANDIT_CMD, stdout=subprocess.PIPE, input=script_source, encoding='utf-8', env={

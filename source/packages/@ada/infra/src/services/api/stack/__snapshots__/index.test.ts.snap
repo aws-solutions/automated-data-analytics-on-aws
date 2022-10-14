@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-ApiService) - Automated Data Analytics on AWS. Version v1.0.1",
+  "Description": "(SO0190-ApiService) - Automated Data Analytics on AWS. Version v1.0.2",
   "Outputs": Object {
     "AdaApiServiceFederatedApiAccessRequestTableC2AE5655Arn": Object {
       "Value": Object {
@@ -3797,6 +3797,7 @@ Object {
       "Type": "AWS::ApiGateway::RestApi",
     },
     "FederatedApiFederatedRestApiAccount2C6CA1E4": Object {
+      "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "FederatedApiFederatedRestApi4B626648",
       ],
@@ -3809,6 +3810,7 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Account",
+      "UpdateReplacePolicy": "Delete",
     },
     "FederatedApiFederatedRestApiApiAccessPolicyDD17746E": Object {
       "Properties": Object {
@@ -3826,6 +3828,7 @@ Object {
       "Type": "AWS::ApiGateway::Resource",
     },
     "FederatedApiFederatedRestApiCloudWatchRole97A69D0A": Object {
+      "DeletionPolicy": "Delete",
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -3861,6 +3864,7 @@ Object {
         ],
       },
       "Type": "AWS::IAM::Role",
+      "UpdateReplacePolicy": "Delete",
     },
     "FederatedApiFederatedRestApiCostBFA0C843": Object {
       "Properties": Object {

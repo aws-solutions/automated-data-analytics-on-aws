@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-SchemaPreview) - Automated Data Analytics on AWS. Version v1.0.1",
+  "Description": "(SO0190-SchemaPreview) - Automated Data Analytics on AWS. Version v1.0.2",
   "Outputs": Object {
     "ApiDataProductPreviewUrl95C4A115": Object {
       "Value": Object {
@@ -2953,8 +2953,8 @@ Object {
     },
     "SchemaPreviewLambdaPullDataSample15AFD2A5": Object {
       "DependsOn": Array [
-        "SchemaPreviewPullDataSampleRoleDefaultPolicyD14149D0",
-        "SchemaPreviewPullDataSampleRole3AF97A29",
+        "SchemaPreviewPullDataSampleLambdaExecRoleDefaultPolicyE9677BAD",
+        "SchemaPreviewPullDataSampleLambdaExecRole002F37C5",
       ],
       "Properties": Object {
         "Code": Object {
@@ -2970,7 +2970,7 @@ Object {
             },
             "PULL_DATA_SAMPLE_ROLE_ARN": Object {
               "Fn::GetAtt": Array [
-                "SchemaPreviewPullDataSampleRole3AF97A29",
+                "SchemaPreviewPullDataSampleConnectorRole40F23EF2",
                 "Arn",
               ],
             },
@@ -2988,7 +2988,7 @@ Object {
         "PackageType": "Image",
         "Role": Object {
           "Fn::GetAtt": Array [
-            "SchemaPreviewPullDataSampleRole3AF97A29",
+            "SchemaPreviewPullDataSampleLambdaExecRole002F37C5",
             "Arn",
           ],
         },
@@ -3021,7 +3021,7 @@ Object {
             },
             "PULL_DATA_SAMPLE_ROLE_ARN": Object {
               "Fn::GetAtt": Array [
-                "SchemaPreviewPullDataSampleRole3AF97A29",
+                "SchemaPreviewPullDataSampleConnectorRole40F23EF2",
                 "Arn",
               ],
             },
@@ -3191,6 +3191,16 @@ Object {
               },
             },
             Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "DataProductPreviewKeyDFB5D943",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
               "Action": Array [
                 "logs:CreateLogGroup",
                 "logs:PutLogEvents",
@@ -3220,7 +3230,84 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
-    "SchemaPreviewPullDataSampleRole3AF97A29": Object {
+    "SchemaPreviewPullDataSampleConnectorRole40F23EF2": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::GetAtt": Array [
+                    "SchemaPreviewPullDataSampleLambdaExecRole002F37C5",
+                    "Arn",
+                  ],
+                },
+              },
+            },
+            Object {
+              "Action": "sts:TagSession",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::GetAtt": Array [
+                    "SchemaPreviewPullDataSampleLambdaExecRole002F37C5",
+                    "Arn",
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "SchemaPreviewPullDataSampleConnectorRoleDefaultPolicyF4E29434": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:List*",
+                "s3:Get*",
+                "s3:Describe*",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt*",
+                "kms:Encrypt*",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+                "kms:Describe*",
+                "kms:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "SchemaPreviewPullDataSampleConnectorRoleDefaultPolicyF4E29434",
+        "Roles": Array [
+          Object {
+            "Ref": "SchemaPreviewPullDataSampleConnectorRole40F23EF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "SchemaPreviewPullDataSampleLambdaExecRole002F37C5": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -3243,10 +3330,33 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "SchemaPreviewPullDataSampleRoleDefaultPolicyD14149D0": Object {
+    "SchemaPreviewPullDataSampleLambdaExecRoleDefaultPolicyE9677BAD": Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "DataProductPreviewKeyDFB5D943",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "sts:AssumeRole",
+                "sts:TagSession",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "SchemaPreviewPullDataSampleConnectorRole40F23EF2",
+                  "Arn",
+                ],
+              },
+            },
             Object {
               "Action": Array [
                 "s3:GetObject*",
@@ -3299,50 +3409,6 @@ Object {
             },
             Object {
               "Action": Array [
-                "sts:AssumeRole",
-                "sts:TagSession",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
-                  "SchemaPreviewPullDataSampleRole3AF97A29",
-                  "Arn",
-                ],
-              },
-            },
-            Object {
-              "Action": "kms:Decrypt",
-              "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
-                  "DataProductPreviewKeyDFB5D943",
-                  "Arn",
-                ],
-              },
-            },
-            Object {
-              "Action": Array [
-                "s3:List*",
-                "s3:Get*",
-                "s3:Describe*",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt*",
-                "kms:Encrypt*",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-                "kms:Describe*",
-                "kms:List*",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
                 "logs:CreateLogGroup",
                 "logs:PutLogEvents",
                 "logs:CreateLogStream",
@@ -3353,10 +3419,10 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "SchemaPreviewPullDataSampleRoleDefaultPolicyD14149D0",
+        "PolicyName": "SchemaPreviewPullDataSampleLambdaExecRoleDefaultPolicyE9677BAD",
         "Roles": Array [
           Object {
-            "Ref": "SchemaPreviewPullDataSampleRole3AF97A29",
+            "Ref": "SchemaPreviewPullDataSampleLambdaExecRole002F37C5",
           },
         ],
       },

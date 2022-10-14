@@ -834,20 +834,6 @@ Object {
       "Type": "AWS::Logs::LogGroup",
       "UpdateReplacePolicy": "Delete",
     },
-    "StaticInfrastructureNotificationBusDataProductOnDemandUpdateRuleAllowEventRuleteststackStaticInfrastructureStartDataImportLambda7306828ADCDC188C": Object {
-      "Properties": Object {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": "arn:aws:lambda:ap-southeast-1:1111111111:test",
-        "Principal": "events.amazonaws.com",
-        "SourceArn": Object {
-          "Fn::GetAtt": Array [
-            "StaticInfrastructureNotificationBusDataProductOnDemandUpdateRuleCBE74CDB",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
-    },
     "StaticInfrastructureNotificationBusDataProductOnDemandUpdateRuleCBE74CDB": Object {
       "Properties": Object {
         "Description": "On demand updates for Test",

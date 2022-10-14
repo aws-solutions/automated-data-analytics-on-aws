@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-DataProductService) - Automated Data Analytics on AWS. Version v1.0.1",
+  "Description": "(SO0190-DataProductService) - Automated Data Analytics on AWS. Version v1.0.2",
   "Outputs": Object {
     "AdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaEventBridgeUpdateDataProductE054F2A1Arn": Object {
       "Value": Object {
@@ -389,7 +389,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.1",
+            "Value": "ada@1.0.2",
           },
         ],
         "TemplateURL": Object {
@@ -426,7 +426,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.1",
+            "Value": "ada@1.0.2",
           },
         ],
         "TemplateURL": Object {
@@ -915,7 +915,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.1",
+            "Value": "ada@1.0.2",
           },
         ],
         "TemplateURL": Object {
@@ -1130,7 +1130,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.1",
+            "Value": "ada@1.0.2",
           },
         ],
         "TemplateURL": Object {

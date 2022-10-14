@@ -1,17 +1,20 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import * as iam from 'aws-cdk-lib/aws-iam'
 import { ApiDeployStack } from './deployment';
 import { ApiError } from '../common';
-import { Aspects, Duration } from 'aws-cdk-lib';
+import { Aspects, Duration, RemovalPolicy } from 'aws-cdk-lib';
 import {
   AuthorizationType,
+  CfnAccount,
+  CfnRestApi,
   Cors,
   RequestAuthorizer,
   Resource,
   ResourceOptions,
   ResponseType,
   RestApi,
-  RestApiProps,
+  RestApiProps
 } from 'aws-cdk-lib/aws-apigateway';
 import { Bucket } from '../../../constructs/s3/bucket';
 import { Construct } from 'constructs';
@@ -115,7 +118,11 @@ export class BaseRestApi extends RestApi implements IDecoratedRestApi {
       // https://docs.aws.amazon.com/cdk/api/latest/docs/aws-apigateway-readme.html#breaking-up-methods-and-resources-across-stacks
       deploy: false,
       deployOptions: undefined,
+      cloudWatchRole: false
     });
+
+    // configure destroyable CfnAccount and APIGateway CloudWatchRole
+    this.configureCloudWatchRole((this.node.defaultChild) as CfnRestApi)
 
     const rootStack = getRootStack(this);
 
@@ -179,6 +186,20 @@ export class BaseRestApi extends RestApi implements IDecoratedRestApi {
 
   addRootResource(pathPart: string, options?: ResourceOptions): IDecoratedResource {
     return this.decoratedRoot.addResource(pathPart, options);
+  }
+
+  protected configureCloudWatchRole(apiResource: CfnRestApi): void {
+    const role = new iam.Role(this, 'CloudWatchRole', {
+      assumedBy: new iam.ServicePrincipal('apigateway.amazonaws.com'),
+      managedPolicies: [iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AmazonAPIGatewayPushToCloudWatchLogs')],
+    });
+    role.applyRemovalPolicy(RemovalPolicy.DESTROY);
+
+    this.cloudWatchAccount = new CfnAccount(this, 'Account', {
+      cloudWatchRoleArn: role.roleArn,
+    });
+    this.cloudWatchAccount.applyRemovalPolicy(RemovalPolicy.DESTROY);
+    this.cloudWatchAccount.node.addDependency(apiResource);
   }
 
   protected decorateResource(resource: Resource): IDecoratedResource {

@@ -56,15 +56,38 @@ export default class SchemaPreview extends Construct {
       ],
     });
 
-    const pullDataSampleRole = new Role(this, 'PullDataSampleRole', {
+    const pullDataSampleLambdaExecRole = new Role(this, 'PullDataSampleLambdaExecRole', {
       assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
     });
 
+    // Grant KMS permission
+    productPreviewKey.grantDecrypt(pullDataSampleLambdaExecRole);
+
+    // Connector Role will be assumed by Lambda Exec role to perform the sampling work
+    const pullDataSampleConnectorRole = new Role(this, 'PullDataSampleConnectorRole', {
+      assumedBy: pullDataSampleLambdaExecRole,
+    });
+
+    pullDataSampleConnectorRole.assumeRolePolicy?.addStatements(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ['sts:TagSession'],
+        principals: [pullDataSampleLambdaExecRole],
+      })
+    )
+
+    // Grant read access to any s3 bucket for pulling data
+    pullDataSampleConnectorRole.addToPolicy(ExternalSourceDataS3AccessPolicyStatement);
+    // Grant access to any kms key in case these buckets are encrypted
+    pullDataSampleConnectorRole.addToPolicy(ExternalSourceDataKmsAccessPolicyStatement);
+
+
+    // Container Lambda for preview sampling
     const previewSchemaDockerImage = new TarballImageAsset(scope, 'Tarball', {
       tarballFile: getDockerImagePath('schema-preview'),
     });
 
-    const buildDockerImageLambda = (handler: string, role?: IRole) => {
+    const buildDockerImageLambda = (handler: string, lambdaExecRole?: IRole) => {
       const lambdaId = `Lambda-${handler}`;
       const lambda = new DockerImageFunction(this, lambdaId, {
         // Use prebuilt docker image
@@ -76,13 +99,13 @@ export default class SchemaPreview extends Construct {
         environment: {
           TEMP_BUCKET_NAME: this.bucket.bucketName,
           KEY_ID: productPreviewKey.keyId,
-          PULL_DATA_SAMPLE_ROLE_ARN: pullDataSampleRole.roleArn,
+          PULL_DATA_SAMPLE_ROLE_ARN: pullDataSampleConnectorRole.roleArn,
         },
         // Force a new version for every deployment to avoid version already exists exception
         description: uniqueLambdaDescription(`Schema Preview ${handler}`),
-        role,
+        role: lambdaExecRole,
       });
-      this.bucket.grantReadWrite(lambda);
+
 
       // Provisioned concurrency of 1 to reduce latency for initial spark context initialisation
       let provisionedConcurrentExecutions = tryGetSolutionContext(
@@ -98,20 +121,18 @@ export default class SchemaPreview extends Construct {
       return lambda;
     };
 
-    const pullDataSampleLambda = buildDockerImageLambda('pull_data_sample', pullDataSampleRole);
+    const pullDataSampleLambda = buildDockerImageLambda('pull_data_sample', pullDataSampleLambdaExecRole);
+
     pullDataSampleLambda.addToRolePolicy(
       new PolicyStatement({
         effect: Effect.ALLOW,
         actions: ['sts:AssumeRole', 'sts:TagSession'],
-        resources: [pullDataSampleRole.roleArn],
+        resources: [pullDataSampleConnectorRole.roleArn],
       }),
     );
+    
+    this.bucket.grantReadWrite(pullDataSampleLambda)
     productPreviewKey.grantDecrypt(pullDataSampleLambda);
-
-    // Grant read access to any s3 bucket for pulling data
-    pullDataSampleLambda.addToRolePolicy(ExternalSourceDataS3AccessPolicyStatement);
-    // Grant access to any kms key in case these buckets are encrypted
-    pullDataSampleLambda.addToRolePolicy(ExternalSourceDataKmsAccessPolicyStatement);
 
     pullDataSampleLambda.addToRolePolicy(
       new PolicyStatement({
@@ -149,7 +170,9 @@ export default class SchemaPreview extends Construct {
     }).addCatch(notifyError, catchProps);
 
     const executeTransformsLambda = buildDockerImageLambda('transform');
-
+    // allow execute transform lambda to access temp bucket
+    this.bucket.grantReadWrite(executeTransformsLambda)
+    productPreviewKey.grantDecrypt(executeTransformsLambda);
     executeTransformsLambda.addToRolePolicy(
       new PolicyStatement({
         resources: ['*'],

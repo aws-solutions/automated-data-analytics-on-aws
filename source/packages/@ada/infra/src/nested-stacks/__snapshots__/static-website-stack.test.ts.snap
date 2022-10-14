@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-Website) - Automated Data Analytics on AWS. Version v1.0.1",
+  "Description": "(SO0190-Website) - Automated Data Analytics on AWS. Version v1.0.2",
   "Outputs": Object {
     "AdaWebsiteCloudfrontDistributionCFDistribution28056574DomainName": Object {
       "Value": Object {
@@ -796,7 +796,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "python3.7",
+        "Runtime": "python3.9",
         "Tags": Array [
           Object {
             "Key": "Application",

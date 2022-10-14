@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-StaticInfrastructure) - Automated Data Analytics on AWS. Version v1.0.1",
+  "Description": "(SO0190-StaticInfrastructure) - Automated Data Analytics on AWS. Version v1.0.2",
   "Outputs": Object {
     "AdaDataProductServiceStaticInfrastructureDataBucketD9C0AD53Arn": Object {
       "Value": Object {
@@ -749,7 +749,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "python3.7",
+        "Runtime": "python3.9",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5966,6 +5966,10 @@ Object {
       "Type": "AWS::EC2::Subnet",
     },
     "ECSContainersContainersVpcECSPublicsubnetForNATGatewaySubnet1NATGatewayD502CCDC": Object {
+      "DependsOn": Array [
+        "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1DefaultRoute4539CADE",
+        "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1RouteTableAssociation9F73271B",
+      ],
       "Properties": Object {
         "AllocationId": Object {
           "Fn::GetAtt": Array [
@@ -5990,6 +5994,10 @@ Object {
       "Type": "AWS::EC2::NatGateway",
     },
     "ECSContainersContainersVpcECSPublicsubnetForNATGatewaySubnet2NATGatewayA011BA65": Object {
+      "DependsOn": Array [
+        "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2DefaultRoute85836A03",
+        "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2RouteTableAssociation180A3781",
+      ],
       "Properties": Object {
         "AllocationId": Object {
           "Fn::GetAtt": Array [

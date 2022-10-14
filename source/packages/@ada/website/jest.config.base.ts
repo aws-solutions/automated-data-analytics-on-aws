@@ -31,6 +31,7 @@ export const config: Config.InitialOptions = {
     "typesafe-i18n/react": "typesafe-i18n/react/index.cjs",
     "typesafe-i18n/formatters": "typesafe-i18n/formatters/index.cjs",
     "typesafe-i18n/detectors": "typesafe-i18n/detectors/index.cjs",
+    'd3-color': '<rootDir>/../../../node_modules/d3-color/dist/d3-color.min.js',
   },
   transformIgnorePatterns: ['.*\\.js$'],
   testPathIgnorePatterns: ['/node_modules/', '.*\\puppeteer\\.*'],

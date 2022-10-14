@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-CommonStack) - Automated Data Analytics on AWS. Version v1.0.1",
+  "Description": "(SO0190-CommonStack) - Automated Data Analytics on AWS. Version v1.0.2",
   "Outputs": Object {
     "AdaCommonStackAccessLogBucketB5B66FEDArn": Object {
       "Value": Object {

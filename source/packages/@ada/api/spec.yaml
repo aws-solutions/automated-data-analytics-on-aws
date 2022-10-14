@@ -4,7 +4,7 @@ info:
     of data, providing an end-to-end platform used for ingesting, transforming, governing,
     and querying datasets through a standalone user interface
   title: Automated Data Analytics on AWS API
-  version: 1.0.1
+  version: 1.0.2
 servers:
 - url: https://{apigId}.execute-api.{region}.amazonaws.com/{stage}
   variables:

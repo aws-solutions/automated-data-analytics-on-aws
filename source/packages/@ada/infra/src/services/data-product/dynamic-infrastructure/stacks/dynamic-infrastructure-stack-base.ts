@@ -13,9 +13,9 @@ import { Construct } from 'constructs';
 import { DataProductEntity } from '@ada/api';
 import { DataProductEventDetailTypes, EventSource, StaticInfrastructure, s3PathJoin } from '@ada/microservice-common';
 import { EventBridgePutEvents, LambdaInvoke, StepFunctionsStartExecution } from 'aws-cdk-lib/aws-stepfunctions-tasks';
+import { EventLambdaTargetFunction } from '@ada/infra-common/constructs/lambda/lambda-event-target';
 import { ExtendedStack, NamespaceGlobalUUID, get4DigitsHash, getFriendlyHash } from '@ada/cdk-core';
 import { ExternalFacingRole } from '@ada/infra-common/constructs/iam/external-facing-role';
-import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
 import { Rule, RuleTargetInput, Schedule } from 'aws-cdk-lib/aws-events';
 import { VError } from 'verror';
 import ArbitraryTransformLoop from '../constructs/step-functions/arbitrary-transform-loop';
@@ -195,7 +195,7 @@ export default abstract class DynamicInfrastructureStackBase<
     });
 
     // Lambda used to trigger the step function for data imports
-    const startDataImportTarget = new LambdaFunction(startDataImportLambda, {
+    const startDataImportTarget = new EventLambdaTargetFunction(startDataImportLambda, {
       event: RuleTargetInput.fromObject(<StartDataImportInput>{
         stateMachineArn: stateMachine.stateMachineArn,
         dataProductIdentifier: { domainId, dataProductId },
