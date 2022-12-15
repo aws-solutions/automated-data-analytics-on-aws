@@ -1,26 +1,14 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import { Connectors } from '@ada/connectors';
 import { DataProduct, DataProductPreview, DataProductUpdateTrigger, DataSets, Script } from '@ada/api';
 import {
   DataProductUpdateTriggerType,
-  GoogleServiceAccountAuth,
-  SourceDetails,
-  SourceDetailsFileUpload,
-  SourceDetailsGoogleAnalytics,
-  SourceDetailsGoogleBigQuery,
-  SourceDetailsGoogleStorage,
-  SourceDetailsKinesis,
-  SourceDetailsS3,
-  SourceType,
-  SourceTypeDefinitions,
   StepFunctionExecutionStatus,
 } from '@ada/common';
-import { SCHEDULERATE_CUSTOM } from '$source-type';
+import { SCHEDULERATE_CUSTOM } from '$connectors/common';
 import { nameToIdentifier } from '$common/utils/identifier';
 import { previewSchemaToColumnMetadata } from '$common/utils';
-
-const PATTERN_S3_PATH = /^s3:\/\/(?<bucket>[^/]+)(?:\/(?<key>.+))?$/;
-const PATTERN_GS_PATH = /^gs:\/\/(?<bucket>[^/]+)(?:\/(?<key>.+))?$/;
 
 export const supportedGlueDataTypes = [
   'byte',
@@ -86,70 +74,13 @@ export interface FormData
 }
 
 export const marshalSourceDetails = (
-  sourceType: DataProduct['sourceType'],
-  details: any,
+  sourceType: Connectors.ID,
+  sourceDetails: any,
   updateTrigger: DataProductUpdateTrigger,
-): SourceDetails => {
-  switch (sourceType) {
-    case SourceType.S3:
-      return {
-        bucket: PATTERN_S3_PATH.exec(details.s3Path)!.groups!.bucket,
-        key: PATTERN_S3_PATH.exec(details.s3Path)!.groups!.key || '',
-      } as SourceDetailsS3;
-    case SourceType.UPLOAD:
-      return {
-        bucket: details.bucket,
-        key: details.key,
-      } as SourceDetailsFileUpload;
-    case SourceType.KINESIS:
-      return {
-        kinesisStreamArn: details.kinesisStreamArn,
-      } as SourceDetailsKinesis;
-    case SourceType.GOOGLE_ANALYTICS:
-    case SourceType.GOOGLE_BIGQUERY:
-    case SourceType.GOOGLE_STORAGE: {
-      const { projectId, clientEmail, privateKey, clientId, privateKeyId } = details;
+): Connectors.SourceDetails => {
+  const connector = Connectors.find(sourceType);
 
-      const serviceAccountAuth = {
-        projectId,
-        clientId,
-        clientEmail,
-        privateKeyId,
-        privateKey,
-      } as GoogleServiceAccountAuth;
-
-      if (sourceType === SourceType.GOOGLE_ANALYTICS) {
-        return {
-          viewId: details.viewId,
-          dimensions: details.dimensions.map((d: { label: string; value: string }) => d.value).join(','),
-          metrics: details.metrics.map((m: { label: string; value: string }) => m.value).join(','),
-          ...(updateTrigger.triggerType === DataProductUpdateTriggerType.ON_DEMAND ? {
-            // convert the data format from iso to yyyy-MM-DD based on local date as ga does not take time stamps
-            // en-ca formats the data as yyyy-MM-DD
-            // scheduled import does not support start and end date form
-            since: new Date(details.since).toLocaleDateString('en-CA'),
-            until: new Date(details.until).toLocaleDateString('en-CA'),
-          } : {}),
-          ...serviceAccountAuth,
-        } as SourceDetailsGoogleAnalytics;
-      }
-
-      if (sourceType === SourceType.GOOGLE_STORAGE) {
-        return {
-          bucket: PATTERN_GS_PATH.exec(details.googleStoragePath)!.groups!.bucket,
-          key: PATTERN_GS_PATH.exec(details.googleStoragePath)!.groups!.key || '',
-          ...serviceAccountAuth,
-        } as SourceDetailsGoogleStorage;
-      }
-
-      return {
-        query: details.query,
-        ...serviceAccountAuth,
-      } as SourceDetailsGoogleBigQuery;
-    }
-    default:
-      throw new Error(`Source type "${sourceType}" is unsupported`);
-  }
+  return connector.VIEW.Wizard.sourceDetailsFormDataToInputData({ sourceDetails, updateTrigger });
 };
 
 const generateDataSetsFromPreview = (preview?: DataProductPreview): DataSets => {
@@ -183,7 +114,7 @@ export const formDataToDataProduct = (formData: FormData): DataProduct => {
     enableAutomaticPii,
   } = formData;
 
-  const supports = SourceTypeDefinitions[sourceType].CONFIG.supports;
+  const supports = Connectors.find(sourceType).CONFIG.supports;
 
   let dataSets: DataProduct['dataSets'] = {};
   let transforms: DataProduct['transforms'] | undefined = undefined;

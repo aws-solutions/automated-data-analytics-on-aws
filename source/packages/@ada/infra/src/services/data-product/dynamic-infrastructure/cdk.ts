@@ -7,10 +7,10 @@ import { CallingUser, DATA_PRODUCT_CLOUD_FORMATION_STACK_NAME_PREFIX } from '@ad
 import { CloudFormationDeployments } from 'aws-cdk/lib/api/cloudformation-deployments';
 import { DataProduct } from '@ada/api';
 import { SdkProvider } from 'aws-cdk/lib/api/aws-auth';
-import { StaticInfrastructure } from '@ada/microservice-common';
+import { StaticInfra } from '@ada/infra-common/services';
 import { VError } from 'verror';
 import { getFriendlyHash } from '@ada/cdk-core';
-import { synthesizeStack } from './synthesizers';
+import { synthesizeConnectorStack } from './synthesizers';
 import { v4 as uuid } from 'uuid';
 
 const cfn = AwsCloudFormationInstance();
@@ -19,7 +19,7 @@ const DATA_PRODUCT_STATIC_INFRASTRUCTURE_PARAMETER_NAME = process.env.DATA_PRODU
 
 const ssm = AwsSSMInstance();
 
-export const getStaticInfrastructureDetails = async (): Promise<StaticInfrastructure> =>
+export const getStaticInfrastructureDetails = async (): Promise<StaticInfra.IStaticParams> =>
   JSON.parse(
     (
       await ssm
@@ -42,7 +42,7 @@ const createDataProductInfraStack = async (
   callingUser: CallingUser,
 ): Promise<App> => {
   const app = new App({ outdir: `/tmp/${stackIdentifier}` });
-  await synthesizeStack({
+  await synthesizeConnectorStack({
     app,
     api,
     stackIdentifier,

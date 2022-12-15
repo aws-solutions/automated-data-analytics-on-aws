@@ -2,13 +2,65 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-StaticInfrastructure) - Automated Data Analytics on AWS. Version v1.0.2",
+  "Description": "(SO0190-StaticInfrastructure) - Automated Data Analytics on AWS. Version v1.1.0",
   "Outputs": Object {
     "AdaDataProductServiceStaticInfrastructureDataBucketD9C0AD53Arn": Object {
       "Value": Object {
         "Fn::GetAtt": Array [
           "DataBucket",
           "Arn",
+        ],
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureDataIngressGatewayDataIngressTransitGateway196F0E44Id": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "DataIngressGatewayDataIngressTransitGateway1DBD08EE",
+          "Id",
+        ],
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureDataIngressGatewayDataIngressVPCAttachmentRouteTable903EB9C8Ref": Object {
+      "Value": Object {
+        "Ref": "DataIngressGatewayDataIngressVPCAttachmentRouteTableF09658C0",
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureDataIngressGatewayDataSourceVPCAttachmentRouteTable76F28C73Ref": Object {
+      "Value": Object {
+        "Ref": "DataIngressGatewayDataSourceVPCAttachmentRouteTable5798BCBB",
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureDataIngressVpcDataIngressVPCCFF11DA8CidrBlock": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "DataIngressVPCDataIngressVPCA6A56323",
+          "CidrBlock",
+        ],
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureDataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet98B3AEECRef": Object {
+      "Value": Object {
+        "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureDataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet6769BEE4Ref": Object {
+      "Value": Object {
+        "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureDataIngressVpcPreviewSecurityGroupA3BA1BD7GroupId": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "DataIngressVpcPreviewSecurityGroup341DBCD5",
+          "GroupId",
+        ],
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureDataIngressVpcglueJDBCTargetSecurityGroup80904DD3GroupId": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "DataIngressVpcGlueJDBCTargetSecurityGroup6DAD0A15",
+          "GroupId",
         ],
       },
     },
@@ -122,6 +174,411 @@ Object {
     },
   },
   "Resources": Object {
+    "AWS679F53Fac002430Cb0Da5B7982Bd22872D164C4C": Object {
+      "DependsOn": Array [
+        "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 120,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "AppRegistryAssociation": Object {
+      "Properties": Object {
+        "Application": Object {
+          "Fn::Join": Array [
+            "-",
+            Array [
+              "Automated-Data-Analysis-on-AWS",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+            ],
+          ],
+        },
+        "Resource": Object {
+          "Ref": "AWS::StackId",
+        },
+        "ResourceType": "CFN_STACK",
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
+    },
+    "CloudWatchImportDataStateMachine1D920684": Object {
+      "DependsOn": Array [
+        "CloudWatchImportDataStateMachineRoleDefaultPolicyFDAB8D25",
+        "CloudWatchImportDataStateMachineRole88D934C6",
+      ],
+      "Properties": Object {
+        "DefinitionString": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"StartAt\\":\\"RunECSImportTask\\",\\"States\\":{\\"RunECSImportTask\\":{\\"Next\\":\\"ECSTaskSucceeded\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"ECSTaskFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::ecs:runTask.sync\\",\\"Parameters\\":{\\"PropagateTags\\":\\"TASK_DEFINITION\\",\\"Cluster\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersCloudWatchECSClusterCloudwatch012098AD",
+                  "Arn",
+                ],
+              },
+              "\\",\\"TaskDefinition\\":\\"AdaDataProductServiceStaticInfrastructureECSContainersCloudWatchECSTaskDefinitioncloudwatch1D59161F\\",\\"NetworkConfiguration\\":{\\"AwsvpcConfiguration\\":{\\"Subnets\\":[\\"",
+              Object {
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
+              },
+              "\\",\\"",
+              Object {
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
+              },
+              "\\"],\\"SecurityGroups\\":[\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcECSSecurityGroup61BDCCBA",
+                  "GroupId",
+                ],
+              },
+              "\\"]}},\\"Overrides\\":{\\"ContainerOverrides\\":[{\\"Name\\":\\"ECSContainerDef-cloudwatch\\",\\"Environment\\":[{\\"Name\\":\\"S3_OUTPUT_BUCKET_URI\\",\\"Value.$\\":\\"$.s3OutputPath\\"},{\\"Name\\":\\"TRIGGER_TYPE\\",\\"Value.$\\":\\"$.triggerType\\"},{\\"Name\\":\\"SCHEDULE_RATE\\",\\"Value.$\\":\\"$.scheduleRate\\"},{\\"Name\\":\\"QUERY\\",\\"Value.$\\":\\"$.query\\"},{\\"Name\\":\\"CW_LOG_GROUP_NAME\\",\\"Value.$\\":\\"$.cloudwatchLogGroupArn\\"},{\\"Name\\":\\"SINCE\\",\\"Value.$\\":\\"$.since\\"},{\\"Name\\":\\"UNTIL\\",\\"Value.$\\":\\"$.until\\"},{\\"Name\\":\\"TABLE_NAME\\",\\"Value.$\\":\\"$.tableName\\"},{\\"Name\\":\\"DOMAIN_ID\\",\\"Value.$\\":\\"$.domainId\\"},{\\"Name\\":\\"DATA_PRODUCT_ID\\",\\"Value.$\\":\\"$.dataProductId\\"},{\\"Name\\":\\"CROSS_ACCOUNT_ACCESS_ROLE\\",\\"Value.$\\":\\"$.crossAccountRoleArn\\"}]}]},\\"LaunchType\\":\\"FARGATE\\",\\"PlatformVersion\\":\\"LATEST\\"}},\\"ECSTaskSucceeded\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"status\\":\\"SUCCEEDED\\"},\\"End\\":true},\\"ECSTaskFailed\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"details.$\\":\\"$\\",\\"error\\":\\"Import failed in the ECS container, verify the logs\\",\\"status\\":\\"FAILED\\"},\\"End\\":true}},\\"TimeoutSeconds\\":172800}",
+            ],
+          ],
+        },
+        "LoggingConfiguration": Object {
+          "Destinations": Array [
+            Object {
+              "CloudWatchLogsLogGroup": Object {
+                "LogGroupArn": Object {
+                  "Fn::GetAtt": Array [
+                    "CloudWatchImportDataStateMachineStateMachineLogsB0754FDC",
+                    "Arn",
+                  ],
+                },
+              },
+            },
+          ],
+          "Level": "ERROR",
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "CloudWatchImportDataStateMachineRole88D934C6",
+            "Arn",
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TracingConfiguration": Object {
+          "Enabled": true,
+        },
+      },
+      "Type": "AWS::StepFunctions::StateMachine",
+    },
+    "CloudWatchImportDataStateMachineRole88D934C6": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "states.ap-southeast-1.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CloudWatchImportDataStateMachineRoleDefaultPolicyFDAB8D25": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "ecs:RunTask",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        2,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        3,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        4,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        0,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "/",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "ecs:StopTask",
+                "ecs:DescribeTasks",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "iam:PassRole",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ECSContainersCloudWatchRole9C252028",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ECSContainersCloudWatchECSExecutionRoleCloudwatch7AA55746",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "events:PutTargets",
+                "events:PutRule",
+                "events:DescribeRule",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":events:ap-southeast-1:1111111111:rule/StepFunctionsGetEventsForECSTaskRule",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "CloudWatchImportDataStateMachineRoleDefaultPolicyFDAB8D25",
+        "Roles": Array [
+          Object {
+            "Ref": "CloudWatchImportDataStateMachineRole88D934C6",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "CloudWatchImportDataStateMachineStateMachineLogsB0754FDC": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+        "LogGroupName": "/aws/vendedlogs/states/ada/CloudWatchImportDataStateMachineStateMachineLogs/loggroup-######",
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
     "CrawlerPollerLambdaGetFinalStatusE307FFA6": Object {
       "DependsOn": Array [
         "CrawlerPollerLambdaGetFinalStatusServiceRoleDefaultPolicy9BD99148",
@@ -1060,6 +1517,972 @@ Object {
         },
       },
       "Type": "AWS::S3::BucketPolicy",
+    },
+    "DataIngressGatewayDataIngressTransitGateway1DBD08EE": Object {
+      "Properties": Object {
+        "AutoAcceptSharedAttachments": "disable",
+        "DefaultRouteTableAssociation": "disable",
+        "DefaultRouteTablePropagation": "disable",
+        "Description": "Ada Transit Gateway for data ingress connector VPC connectivity",
+        "DnsSupport": "enable",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada Data Ingress Transit Gateway",
+          },
+        ],
+        "TransitGatewayCidrBlocks": Array [
+          "192.168.0.0/16",
+        ],
+      },
+      "Type": "AWS::EC2::TransitGateway",
+    },
+    "DataIngressGatewayDataIngressVPCAssociation4BBCC568": Object {
+      "Properties": Object {
+        "TransitGatewayAttachmentId": Object {
+          "Fn::GetAtt": Array [
+            "DataIngressGatewayDataIngressVPCAttachmentEBA41B04",
+            "Id",
+          ],
+        },
+        "TransitGatewayRouteTableId": Object {
+          "Ref": "DataIngressGatewayDataIngressVPCAttachmentRouteTableF09658C0",
+        },
+      },
+      "Type": "AWS::EC2::TransitGatewayRouteTableAssociation",
+    },
+    "DataIngressGatewayDataIngressVPCAttachmentEBA41B04": Object {
+      "Properties": Object {
+        "Options": Object {
+          "ApplianceModeSupport": "disable",
+          "DnsSupport": "enable",
+          "Ipv6Support": "disable",
+        },
+        "SubnetIds": Array [
+          Object {
+            "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
+          },
+          Object {
+            "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada Data Ingress VPC Attachment",
+          },
+        ],
+        "TransitGatewayId": Object {
+          "Fn::GetAtt": Array [
+            "DataIngressGatewayDataIngressTransitGateway1DBD08EE",
+            "Id",
+          ],
+        },
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::TransitGatewayAttachment",
+    },
+    "DataIngressGatewayDataIngressVPCAttachmentRouteTableF09658C0": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada Data Source Attachment Propogate",
+          },
+        ],
+        "TransitGatewayId": Object {
+          "Fn::GetAtt": Array [
+            "DataIngressGatewayDataIngressTransitGateway1DBD08EE",
+            "Id",
+          ],
+        },
+      },
+      "Type": "AWS::EC2::TransitGatewayRouteTable",
+    },
+    "DataIngressGatewayDataIngressVPCPropogation92837B39": Object {
+      "Properties": Object {
+        "TransitGatewayAttachmentId": Object {
+          "Fn::GetAtt": Array [
+            "DataIngressGatewayDataIngressVPCAttachmentEBA41B04",
+            "Id",
+          ],
+        },
+        "TransitGatewayRouteTableId": Object {
+          "Ref": "DataIngressGatewayDataSourceVPCAttachmentRouteTable5798BCBB",
+        },
+      },
+      "Type": "AWS::EC2::TransitGatewayRouteTablePropagation",
+    },
+    "DataIngressGatewayDataSourceVPCAttachmentRouteTable5798BCBB": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada Data Source Attachment Associate",
+          },
+        ],
+        "TransitGatewayId": Object {
+          "Fn::GetAtt": Array [
+            "DataIngressGatewayDataIngressTransitGateway1DBD08EE",
+            "Id",
+          ],
+        },
+      },
+      "Type": "AWS::EC2::TransitGatewayRouteTable",
+    },
+    "DataIngressGatewayTransitGatewayRouteDataIngressPrivateWithNatSubnet150FFF331": Object {
+      "DependsOn": Array [
+        "DataIngressGatewayDataIngressVPCAttachmentEBA41B04",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "192.168.0.0/16",
+        "RouteTableId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1RouteTableE11DE1F0",
+        },
+        "TransitGatewayId": Object {
+          "Fn::GetAtt": Array [
+            "DataIngressGatewayDataIngressTransitGateway1DBD08EE",
+            "Id",
+          ],
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "DataIngressGatewayTransitGatewayRouteDataIngressPrivateWithNatSubnet205B87A0B": Object {
+      "DependsOn": Array [
+        "DataIngressGatewayDataIngressVPCAttachmentEBA41B04",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "192.168.0.0/16",
+        "RouteTableId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2RouteTableD70DC269",
+        },
+        "TransitGatewayId": Object {
+          "Fn::GetAtt": Array [
+            "DataIngressGatewayDataIngressTransitGateway1DBD08EE",
+            "Id",
+          ],
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "DataIngressVPCDataIngressVPCA6A56323": Object {
+      "Properties": Object {
+        "CidrBlock": "192.168.254.0/23",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::VPC",
+    },
+    "DataIngressVpcAddSelfReferenceIngressCustomResourcePolicyF50A48BB": Object {
+      "DependsOn": Array [
+        "DataIngressVpcGlueJDBCTargetSecurityGroup6DAD0A15",
+      ],
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "ec2:AuthorizeSecurityGroupIngress",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":ec2:ap-southeast-1:1111111111:security-group/",
+                    Object {
+                      "Fn::GetAtt": Array [
+                        "DataIngressVpcGlueJDBCTargetSecurityGroup6DAD0A15",
+                        "GroupId",
+                      ],
+                    },
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "DataIngressVpcAddSelfReferenceIngressCustomResourcePolicyF50A48BB",
+        "Roles": Array [
+          Object {
+            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "DataIngressVpcAddSelfReferenceIngressEAA0D0CE": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "DataIngressVpcAddSelfReferenceIngressCustomResourcePolicyF50A48BB",
+        "DataIngressVpcGlueJDBCTargetSecurityGroup6DAD0A15",
+      ],
+      "Properties": Object {
+        "Create": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"EC2\\",\\"action\\":\\"authorizeSecurityGroupIngress\\",\\"parameters\\":{\\"GroupId\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcGlueJDBCTargetSecurityGroup6DAD0A15",
+                  "GroupId",
+                ],
+              },
+              "\\",\\"IpPermissions\\":[{\\"IpProtocol\\":\\"-1\\",\\"UserIdGroupPairs\\":[{\\"Description\\":\\"Glue JDBC Connection\\",\\"GroupId\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcGlueJDBCTargetSecurityGroup6DAD0A15",
+                  "GroupId",
+                ],
+              },
+              "\\"}]}]},\\"physicalResourceId\\":{\\"id\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcGlueJDBCTargetSecurityGroup6DAD0A15",
+                  "GroupId",
+                ],
+              },
+              "-rule\\"}}",
+            ],
+          ],
+        },
+        "InstallLatestAwsSdk": true,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "AWS679F53Fac002430Cb0Da5B7982Bd22872D164C4C",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::AWS",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1DefaultRoute5B1B708E": Object {
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNATGatewaySubnet1NATGateway96FC7C28",
+        },
+        "RouteTableId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1RouteTableE11DE1F0",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1RouteTableAssociationC1452B2F": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1RouteTableE11DE1F0",
+        },
+        "SubnetId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1RouteTableE11DE1F0": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPrivateWithNatSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W33",
+              "reason": "MapPublicIpOnLaunch required for public subnet",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "AvailabilityZone": "dummy1a",
+        "CidrBlock": "192.168.255.0/25",
+        "MapPublicIpOnLaunch": false,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "DataIngressPrivateWithNat",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPrivateWithNatSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2DefaultRoute7071C83B": Object {
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNATGatewaySubnet2NATGatewayD04DE2B0",
+        },
+        "RouteTableId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2RouteTableD70DC269",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2RouteTableAssociation2B8C5A63": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2RouteTableD70DC269",
+        },
+        "SubnetId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2RouteTableD70DC269": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPrivateWithNatSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W33",
+              "reason": "MapPublicIpOnLaunch required for public subnet",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "AvailabilityZone": "dummy1b",
+        "CidrBlock": "192.168.255.128/25",
+        "MapPublicIpOnLaunch": false,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "DataIngressPrivateWithNat",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPrivateWithNatSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNATGatewaySubnet1NATGateway96FC7C28": Object {
+      "DependsOn": Array [
+        "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1DefaultRoute0F94E2EC",
+        "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1RouteTableAssociation7A28FA7F",
+      ],
+      "Properties": Object {
+        "AllocationId": Object {
+          "Fn::GetAtt": Array [
+            "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1EIP231B3613",
+            "AllocationId",
+          ],
+        },
+        "SubnetId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1Subnet39AF23AD",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPublicsubnetForNatGatewaySubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::NatGateway",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNATGatewaySubnet2NATGatewayD04DE2B0": Object {
+      "DependsOn": Array [
+        "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2DefaultRouteD4CE9155",
+        "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2RouteTableAssociationBA895555",
+      ],
+      "Properties": Object {
+        "AllocationId": Object {
+          "Fn::GetAtt": Array [
+            "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2EIPA5BCFE1C",
+            "AllocationId",
+          ],
+        },
+        "SubnetId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2SubnetC7D0F102",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPublicsubnetForNatGatewaySubnet2",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::NatGateway",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1DefaultRoute0F94E2EC": Object {
+      "DependsOn": Array [
+        "DataIngressVpcDataIngressVPCVPCGWB3D4707F",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCIGW2DE97A3C",
+        },
+        "RouteTableId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1RouteTable287BF176",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1EIP231B3613": Object {
+      "Properties": Object {
+        "Domain": "vpc",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPublicsubnetForNatGatewaySubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::EIP",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1RouteTable287BF176": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPublicsubnetForNatGatewaySubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1RouteTableAssociation7A28FA7F": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1RouteTable287BF176",
+        },
+        "SubnetId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1Subnet39AF23AD",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet1Subnet39AF23AD": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W33",
+              "reason": "MapPublicIpOnLaunch required for public subnet",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "AvailabilityZone": "dummy1a",
+        "CidrBlock": "192.168.254.0/25",
+        "MapPublicIpOnLaunch": true,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "DataIngressPublicsubnetForNatGateway",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPublicsubnetForNatGatewaySubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2DefaultRouteD4CE9155": Object {
+      "DependsOn": Array [
+        "DataIngressVpcDataIngressVPCVPCGWB3D4707F",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCIGW2DE97A3C",
+        },
+        "RouteTableId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2RouteTableA086E62A",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2EIPA5BCFE1C": Object {
+      "Properties": Object {
+        "Domain": "vpc",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPublicsubnetForNatGatewaySubnet2",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::EIP",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2RouteTableA086E62A": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPublicsubnetForNatGatewaySubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2RouteTableAssociationBA895555": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2RouteTableA086E62A",
+        },
+        "SubnetId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2SubnetC7D0F102",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "DataIngressVpcDataIngressVPCDataIngressPublicsubnetForNatGatewaySubnet2SubnetC7D0F102": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W33",
+              "reason": "MapPublicIpOnLaunch required for public subnet",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "AvailabilityZone": "dummy1b",
+        "CidrBlock": "192.168.254.128/25",
+        "MapPublicIpOnLaunch": true,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "DataIngressPublicsubnetForNatGateway",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC/DataIngressPublicsubnetForNatGatewaySubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "DataIngressVpcDataIngressVPCIGW2DE97A3C": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/DataIngressVPC",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::InternetGateway",
+    },
+    "DataIngressVpcDataIngressVPCVPCGWB3D4707F": Object {
+      "Properties": Object {
+        "InternetGatewayId": Object {
+          "Ref": "DataIngressVpcDataIngressVPCIGW2DE97A3C",
+        },
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+    },
+    "DataIngressVpcECSSecurityGroup61BDCCBA": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W5",
+              "reason": "All egress traffic permitted for full internet access for communication with dependent services, eg GCP",
+            },
+            Object {
+              "id": "W40",
+              "reason": "All egress traffic permitted for full internet access for communication with dependent services, eg GCP",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "GroupDescription": "Security group used by the ECS container",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "DataIngressVpcECSVPCLogsRoleDefaultPolicy7921F84E": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+                "logs:DescribeLogStreams",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcVPCLogs140BDE6A",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": "iam:PassRole",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcECSVPCLogsRoleF36539F5",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "DataIngressVpcECSVPCLogsRoleDefaultPolicy7921F84E",
+        "Roles": Array [
+          Object {
+            "Ref": "DataIngressVpcECSVPCLogsRoleF36539F5",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "DataIngressVpcECSVPCLogsRoleF36539F5": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "vpc-flow-logs.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "DataIngressVpcGlueConnectionSecurityGroupB984F2E0": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W5",
+              "reason": "All egress traffic permitted for full internet access for communication with dependent services, eg GCP",
+            },
+            Object {
+              "id": "W40",
+              "reason": "All egress traffic permitted for full internet access for communication with dependent services, eg GCP",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "GroupDescription": "Security group used by the Glue Connections",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "DataIngressVpcGlueJDBCTargetSecurityGroup6DAD0A15": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W5",
+              "reason": "All egress traffic permitted for full internet access for communication with dependent services, eg GCP",
+            },
+            Object {
+              "id": "W40",
+              "reason": "All egress traffic permitted for full internet access for communication with dependent services, eg GCP",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "GroupDescription": "Security group used by the Glue JDBC Connections",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "DataIngressVpcPreviewSecurityGroup341DBCD5": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W5",
+              "reason": "All egress traffic permitted for full internet access for communication with dependent services, eg GCP",
+            },
+            Object {
+              "id": "W40",
+              "reason": "All egress traffic permitted for full internet access for communication with dependent services, eg GCP",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "GroupDescription": "Security group used by the Preview Lambda",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "DataIngressVpcVPCFlowLogsFlowLog308503D9": Object {
+      "Properties": Object {
+        "DeliverLogsPermissionArn": Object {
+          "Fn::GetAtt": Array [
+            "DataIngressVpcECSVPCLogsRoleF36539F5",
+            "Arn",
+          ],
+        },
+        "LogDestinationType": "cloud-watch-logs",
+        "LogGroupName": Object {
+          "Ref": "DataIngressVpcVPCLogs140BDE6A",
+        },
+        "ResourceId": Object {
+          "Ref": "DataIngressVPCDataIngressVPCA6A56323",
+        },
+        "ResourceType": "VPC",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TrafficType": "ALL",
+      },
+      "Type": "AWS::EC2::FlowLog",
+    },
+    "DataIngressVpcVPCLogs140BDE6A": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
     },
     "DataProductCreationStateMachineC5A4C4A3": Object {
       "DependsOn": Array [
@@ -3219,263 +4642,6 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
-    "DataProductInfraLambdasLambdaDiscoverTransformsD8804571": Object {
-      "DependsOn": Array [
-        "DataProductInfraLambdasLambdaDiscoverTransformsServiceRoleDefaultPolicy853637DE",
-        "DataProductInfraLambdasLambdaDiscoverTransformsServiceRoleC5580FF1",
-      ],
-      "Properties": Object {
-        "Architectures": Array [
-          "x86_64",
-        ],
-        "Code": Object {
-          "S3Bucket": "cdk-#####",
-          "S3Key": "cdkhash######.zip",
-        },
-        "Description": "TypescriptFunction Ada/DataProductService/StaticInfrastructure/DataProductInfraLambdas/LambdaDiscoverTransforms of discover-transforms.ts",
-        "Environment": Object {
-          "Variables": Object {
-            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
-            "LOCK_TABLE_NAME": Object {
-              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
-            },
-            "NOTIFICATION_BUS_EVENT_BUS_ARN": Object {
-              "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
-            },
-            "RELATIONSHIP_TABLE_NAME": Object {
-              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
-            },
-          },
-        },
-        "Handler": "index.handler",
-        "MemorySize": 1024,
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "DataProductInfraLambdasLambdaDiscoverTransformsServiceRoleC5580FF1",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs14.x",
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-        "Timeout": 30,
-        "TracingConfig": Object {
-          "Mode": "Active",
-        },
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "DataProductInfraLambdasLambdaDiscoverTransformsServiceRoleC5580FF1": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "DataProductInfraLambdasLambdaDiscoverTransformsServiceRoleDefaultPolicy853637DE": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": "events:PutEvents",
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
-              },
-            },
-            Object {
-              "Action": Array [
-                "dynamodb:BatchGetItem",
-                "dynamodb:GetRecords",
-                "dynamodb:GetShardIterator",
-                "dynamodb:Query",
-                "dynamodb:GetItem",
-                "dynamodb:Scan",
-                "dynamodb:ConditionCheckItem",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:PutItem",
-                "dynamodb:UpdateItem",
-                "dynamodb:DeleteItem",
-                "dynamodb:DescribeTable",
-              ],
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
-                },
-                Object {
-                  "Ref": "AWS::NoValue",
-                },
-              ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
-              },
-            },
-            Object {
-              "Action": Array [
-                "dynamodb:BatchGetItem",
-                "dynamodb:GetRecords",
-                "dynamodb:GetShardIterator",
-                "dynamodb:Query",
-                "dynamodb:GetItem",
-                "dynamodb:Scan",
-                "dynamodb:ConditionCheckItem",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:PutItem",
-                "dynamodb:UpdateItem",
-                "dynamodb:DeleteItem",
-                "dynamodb:DescribeTable",
-              ],
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
-                },
-                Object {
-                  "Ref": "AWS::NoValue",
-                },
-              ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
-            },
-            Object {
-              "Action": Array [
-                "glue:GetTables",
-                "glue:UpdateTable",
-              ],
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "arn:",
-                      Object {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":glue:ap-southeast-1:1111111111:table/",
-                      Object {
-                        "Ref": "DataProductDatabase03AEDDD4",
-                      },
-                      "/*",
-                    ],
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "arn:",
-                      Object {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":glue:ap-southeast-1:1111111111:database/",
-                      Object {
-                        "Ref": "DataProductDatabase03AEDDD4",
-                      },
-                    ],
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "arn:",
-                      Object {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":glue:ap-southeast-1:1111111111:catalog",
-                    ],
-                  ],
-                },
-              ],
-            },
-            Object {
-              "Action": Array [
-                "kms:GenerateDataKey",
-                "kms:Decrypt",
-                "kms:Encrypt",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaDataProductServiceGlueEncryptionKey322DD43CArn",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "DataProductInfraLambdasLambdaDiscoverTransformsServiceRoleDefaultPolicy853637DE",
-        "Roles": Array [
-          Object {
-            "Ref": "DataProductInfraLambdasLambdaDiscoverTransformsServiceRoleC5580FF1",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
     "DataProductInfraLambdasLambdaExternalImportPrepareExternalImportF9E88BEB": Object {
       "DependsOn": Array [
         "DataProductInfraLambdasLambdaExternalImportPrepareExternalImportServiceRoleDefaultPolicy7BE8703F",
@@ -4844,10 +6010,10 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
-    "DataProductInfraLambdasLambdaQuerySourcePrepareCtasQuery0EB60EE7": Object {
+    "DataProductInfraLambdasLambdaPrepareTransformChain251B2855": Object {
       "DependsOn": Array [
-        "DataProductInfraLambdasLambdaQuerySourcePrepareCtasQueryServiceRoleDefaultPolicy55DDFB3B",
-        "DataProductInfraLambdasLambdaQuerySourcePrepareCtasQueryServiceRole6A0DBF39",
+        "DataProductInfraLambdasLambdaPrepareTransformChainServiceRoleDefaultPolicy379A28A1",
+        "DataProductInfraLambdasLambdaPrepareTransformChainServiceRole4F31B3B0",
       ],
       "Properties": Object {
         "Architectures": Array [
@@ -4857,7 +6023,7 @@ Object {
           "S3Bucket": "cdk-#####",
           "S3Key": "cdkhash######.zip",
         },
-        "Description": "TypescriptFunction Ada/DataProductService/StaticInfrastructure/DataProductInfraLambdas/LambdaQuerySourcePrepareCtasQuery of prepare-ctas-query.ts",
+        "Description": "TypescriptFunction Ada/DataProductService/StaticInfrastructure/DataProductInfraLambdas/LambdaPrepareTransformChain of prepare-transform-chain.ts",
         "Environment": Object {
           "Variables": Object {
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
@@ -4876,7 +6042,7 @@ Object {
         "MemorySize": 1024,
         "Role": Object {
           "Fn::GetAtt": Array [
-            "DataProductInfraLambdasLambdaQuerySourcePrepareCtasQueryServiceRole6A0DBF39",
+            "DataProductInfraLambdasLambdaPrepareTransformChainServiceRole4F31B3B0",
             "Arn",
           ],
         },
@@ -4894,7 +6060,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "DataProductInfraLambdasLambdaQuerySourcePrepareCtasQueryServiceRole6A0DBF39": Object {
+    "DataProductInfraLambdasLambdaPrepareTransformChainServiceRole4F31B3B0": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -4931,7 +6097,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "DataProductInfraLambdasLambdaQuerySourcePrepareCtasQueryServiceRoleDefaultPolicy55DDFB3B": Object {
+    "DataProductInfraLambdasLambdaPrepareTransformChainServiceRoleDefaultPolicy379A28A1": Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -5108,10 +6274,10 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "DataProductInfraLambdasLambdaQuerySourcePrepareCtasQueryServiceRoleDefaultPolicy55DDFB3B",
+        "PolicyName": "DataProductInfraLambdasLambdaPrepareTransformChainServiceRoleDefaultPolicy379A28A1",
         "Roles": Array [
           Object {
-            "Ref": "DataProductInfraLambdasLambdaQuerySourcePrepareCtasQueryServiceRole6A0DBF39",
+            "Ref": "DataProductInfraLambdasLambdaPrepareTransformChainServiceRole4F31B3B0",
           },
         ],
       },
@@ -5786,461 +6952,12 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
-    "ECSContainersContainersVpc495E6EF4": Object {
+    "ECSContainersCloudWatchECSClusterCloudwatch012098AD": Object {
       "Properties": Object {
-        "CidrBlock": "192.168.0.0/16",
-        "EnableDnsHostnames": true,
-        "EnableDnsSupport": true,
-        "InstanceTenancy": "default",
-        "Tags": Array [
+        "ClusterSettings": Array [
           Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc",
-          },
-        ],
-      },
-      "Type": "AWS::EC2::VPC",
-    },
-    "ECSContainersContainersVpcECSPrivateWithNatSubnet1DefaultRoute26F012CE": Object {
-      "Properties": Object {
-        "DestinationCidrBlock": "0.0.0.0/0",
-        "NatGatewayId": Object {
-          "Ref": "ECSContainersContainersVpcECSPublicsubnetForNATGatewaySubnet1NATGatewayD502CCDC",
-        },
-        "RouteTableId": Object {
-          "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet1RouteTable38B2D5E6",
-        },
-      },
-      "Type": "AWS::EC2::Route",
-    },
-    "ECSContainersContainersVpcECSPrivateWithNatSubnet1RouteTable38B2D5E6": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPrivateWithNatSubnet1",
-          },
-        ],
-        "VpcId": Object {
-          "Ref": "ECSContainersContainersVpc495E6EF4",
-        },
-      },
-      "Type": "AWS::EC2::RouteTable",
-    },
-    "ECSContainersContainersVpcECSPrivateWithNatSubnet1RouteTableAssociationB86B54A8": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
-          "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet1RouteTable38B2D5E6",
-        },
-        "SubnetId": Object {
-          "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet1Subnet88348AF3",
-        },
-      },
-      "Type": "AWS::EC2::SubnetRouteTableAssociation",
-    },
-    "ECSContainersContainersVpcECSPrivateWithNatSubnet1Subnet88348AF3": Object {
-      "Metadata": Object {
-        "cfn_nag": Object {
-          "rules_to_suppress": Array [
-            Object {
-              "id": "W33",
-              "reason": "MapPublicIpOnLaunch required for public subnet",
-            },
-          ],
-        },
-      },
-      "Properties": Object {
-        "AvailabilityZone": "dummy1a",
-        "CidrBlock": "192.168.128.0/18",
-        "MapPublicIpOnLaunch": false,
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "aws-cdk:subnet-name",
-            "Value": "ECSPrivateWithNat",
-          },
-          Object {
-            "Key": "aws-cdk:subnet-type",
-            "Value": "Private",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPrivateWithNatSubnet1",
-          },
-        ],
-        "VpcId": Object {
-          "Ref": "ECSContainersContainersVpc495E6EF4",
-        },
-      },
-      "Type": "AWS::EC2::Subnet",
-    },
-    "ECSContainersContainersVpcECSPrivateWithNatSubnet2DefaultRoute59277298": Object {
-      "Properties": Object {
-        "DestinationCidrBlock": "0.0.0.0/0",
-        "NatGatewayId": Object {
-          "Ref": "ECSContainersContainersVpcECSPublicsubnetForNATGatewaySubnet2NATGatewayA011BA65",
-        },
-        "RouteTableId": Object {
-          "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet2RouteTableA3DDECD1",
-        },
-      },
-      "Type": "AWS::EC2::Route",
-    },
-    "ECSContainersContainersVpcECSPrivateWithNatSubnet2RouteTableA3DDECD1": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPrivateWithNatSubnet2",
-          },
-        ],
-        "VpcId": Object {
-          "Ref": "ECSContainersContainersVpc495E6EF4",
-        },
-      },
-      "Type": "AWS::EC2::RouteTable",
-    },
-    "ECSContainersContainersVpcECSPrivateWithNatSubnet2RouteTableAssociationF0818713": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
-          "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet2RouteTableA3DDECD1",
-        },
-        "SubnetId": Object {
-          "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet2SubnetC8408603",
-        },
-      },
-      "Type": "AWS::EC2::SubnetRouteTableAssociation",
-    },
-    "ECSContainersContainersVpcECSPrivateWithNatSubnet2SubnetC8408603": Object {
-      "Metadata": Object {
-        "cfn_nag": Object {
-          "rules_to_suppress": Array [
-            Object {
-              "id": "W33",
-              "reason": "MapPublicIpOnLaunch required for public subnet",
-            },
-          ],
-        },
-      },
-      "Properties": Object {
-        "AvailabilityZone": "dummy1b",
-        "CidrBlock": "192.168.192.0/18",
-        "MapPublicIpOnLaunch": false,
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "aws-cdk:subnet-name",
-            "Value": "ECSPrivateWithNat",
-          },
-          Object {
-            "Key": "aws-cdk:subnet-type",
-            "Value": "Private",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPrivateWithNatSubnet2",
-          },
-        ],
-        "VpcId": Object {
-          "Ref": "ECSContainersContainersVpc495E6EF4",
-        },
-      },
-      "Type": "AWS::EC2::Subnet",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNATGatewaySubnet1NATGatewayD502CCDC": Object {
-      "DependsOn": Array [
-        "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1DefaultRoute4539CADE",
-        "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1RouteTableAssociation9F73271B",
-      ],
-      "Properties": Object {
-        "AllocationId": Object {
-          "Fn::GetAtt": Array [
-            "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1EIP277E73A8",
-            "AllocationId",
-          ],
-        },
-        "SubnetId": Object {
-          "Ref": "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1SubnetE8B23D72",
-        },
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPublicsubnetForNatGatewaySubnet1",
-          },
-        ],
-      },
-      "Type": "AWS::EC2::NatGateway",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNATGatewaySubnet2NATGatewayA011BA65": Object {
-      "DependsOn": Array [
-        "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2DefaultRoute85836A03",
-        "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2RouteTableAssociation180A3781",
-      ],
-      "Properties": Object {
-        "AllocationId": Object {
-          "Fn::GetAtt": Array [
-            "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2EIPA7429D1D",
-            "AllocationId",
-          ],
-        },
-        "SubnetId": Object {
-          "Ref": "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2Subnet45F07450",
-        },
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPublicsubnetForNatGatewaySubnet2",
-          },
-        ],
-      },
-      "Type": "AWS::EC2::NatGateway",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1DefaultRoute4539CADE": Object {
-      "DependsOn": Array [
-        "ECSContainersContainersVpcVPCGW46A3D8AD",
-      ],
-      "Properties": Object {
-        "DestinationCidrBlock": "0.0.0.0/0",
-        "GatewayId": Object {
-          "Ref": "ECSContainersContainersVpcIGW42DB8268",
-        },
-        "RouteTableId": Object {
-          "Ref": "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1RouteTable4247E5CB",
-        },
-      },
-      "Type": "AWS::EC2::Route",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1EIP277E73A8": Object {
-      "Properties": Object {
-        "Domain": "vpc",
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPublicsubnetForNatGatewaySubnet1",
-          },
-        ],
-      },
-      "Type": "AWS::EC2::EIP",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1RouteTable4247E5CB": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPublicsubnetForNatGatewaySubnet1",
-          },
-        ],
-        "VpcId": Object {
-          "Ref": "ECSContainersContainersVpc495E6EF4",
-        },
-      },
-      "Type": "AWS::EC2::RouteTable",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1RouteTableAssociation9F73271B": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
-          "Ref": "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1RouteTable4247E5CB",
-        },
-        "SubnetId": Object {
-          "Ref": "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1SubnetE8B23D72",
-        },
-      },
-      "Type": "AWS::EC2::SubnetRouteTableAssociation",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet1SubnetE8B23D72": Object {
-      "Metadata": Object {
-        "cfn_nag": Object {
-          "rules_to_suppress": Array [
-            Object {
-              "id": "W33",
-              "reason": "MapPublicIpOnLaunch required for public subnet",
-            },
-          ],
-        },
-      },
-      "Properties": Object {
-        "AvailabilityZone": "dummy1a",
-        "CidrBlock": "192.168.0.0/18",
-        "MapPublicIpOnLaunch": true,
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "aws-cdk:subnet-name",
-            "Value": "ECSPublicsubnetForNatGateway",
-          },
-          Object {
-            "Key": "aws-cdk:subnet-type",
-            "Value": "Public",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPublicsubnetForNatGatewaySubnet1",
-          },
-        ],
-        "VpcId": Object {
-          "Ref": "ECSContainersContainersVpc495E6EF4",
-        },
-      },
-      "Type": "AWS::EC2::Subnet",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2DefaultRoute85836A03": Object {
-      "DependsOn": Array [
-        "ECSContainersContainersVpcVPCGW46A3D8AD",
-      ],
-      "Properties": Object {
-        "DestinationCidrBlock": "0.0.0.0/0",
-        "GatewayId": Object {
-          "Ref": "ECSContainersContainersVpcIGW42DB8268",
-        },
-        "RouteTableId": Object {
-          "Ref": "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2RouteTable53D66F66",
-        },
-      },
-      "Type": "AWS::EC2::Route",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2EIPA7429D1D": Object {
-      "Properties": Object {
-        "Domain": "vpc",
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPublicsubnetForNatGatewaySubnet2",
-          },
-        ],
-      },
-      "Type": "AWS::EC2::EIP",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2RouteTable53D66F66": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPublicsubnetForNatGatewaySubnet2",
-          },
-        ],
-        "VpcId": Object {
-          "Ref": "ECSContainersContainersVpc495E6EF4",
-        },
-      },
-      "Type": "AWS::EC2::RouteTable",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2RouteTableAssociation180A3781": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
-          "Ref": "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2RouteTable53D66F66",
-        },
-        "SubnetId": Object {
-          "Ref": "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2Subnet45F07450",
-        },
-      },
-      "Type": "AWS::EC2::SubnetRouteTableAssociation",
-    },
-    "ECSContainersContainersVpcECSPublicsubnetForNatGatewaySubnet2Subnet45F07450": Object {
-      "Metadata": Object {
-        "cfn_nag": Object {
-          "rules_to_suppress": Array [
-            Object {
-              "id": "W33",
-              "reason": "MapPublicIpOnLaunch required for public subnet",
-            },
-          ],
-        },
-      },
-      "Properties": Object {
-        "AvailabilityZone": "dummy1b",
-        "CidrBlock": "192.168.64.0/18",
-        "MapPublicIpOnLaunch": true,
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "aws-cdk:subnet-name",
-            "Value": "ECSPublicsubnetForNatGateway",
-          },
-          Object {
-            "Key": "aws-cdk:subnet-type",
-            "Value": "Public",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc/ECSPublicsubnetForNatGatewaySubnet2",
-          },
-        ],
-        "VpcId": Object {
-          "Ref": "ECSContainersContainersVpc495E6EF4",
-        },
-      },
-      "Type": "AWS::EC2::Subnet",
-    },
-    "ECSContainersContainersVpcECSSecurityGroup789B3CCC": Object {
-      "Metadata": Object {
-        "cfn_nag": Object {
-          "rules_to_suppress": Array [
-            Object {
-              "id": "W5",
-              "reason": "All egress traffic permitted for full internet access for communication with dependent services, eg GCP",
-            },
-            Object {
-              "id": "W40",
-              "reason": "All egress traffic permitted for full internet access for communication with dependent services, eg GCP",
-            },
-          ],
-        },
-      },
-      "Properties": Object {
-        "GroupDescription": "Security group used by the ECS container",
-        "SecurityGroupEgress": Array [
-          Object {
-            "CidrIp": "0.0.0.0/0",
-            "Description": "Allow all outbound traffic by default",
-            "IpProtocol": "-1",
+            "Name": "containerInsights",
+            "Value": "enabled",
           },
         ],
         "Tags": Array [
@@ -6249,128 +6966,10 @@ Object {
             "Value": "Ada",
           },
         ],
-        "VpcId": Object {
-          "Ref": "ECSContainersContainersVpc495E6EF4",
-        },
       },
-      "Type": "AWS::EC2::SecurityGroup",
+      "Type": "AWS::ECS::Cluster",
     },
-    "ECSContainersContainersVpcECSVPCLogsRoleDefaultPolicy07B3D6B8": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
-                "logs:CreateLogStream",
-                "logs:PutLogEvents",
-                "logs:DescribeLogStreams",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
-                  "ECSContainersContainersVpcVPCLogsD2877F16",
-                  "Arn",
-                ],
-              },
-            },
-            Object {
-              "Action": "iam:PassRole",
-              "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
-                  "ECSContainersContainersVpcECSVPCLogsRoleF8834EDD",
-                  "Arn",
-                ],
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "ECSContainersContainersVpcECSVPCLogsRoleDefaultPolicy07B3D6B8",
-        "Roles": Array [
-          Object {
-            "Ref": "ECSContainersContainersVpcECSVPCLogsRoleF8834EDD",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "ECSContainersContainersVpcECSVPCLogsRoleF8834EDD": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "vpc-flow-logs.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "ECSContainersContainersVpcIGW42DB8268": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-          Object {
-            "Key": "Name",
-            "Value": "Ada/DataProductService/StaticInfrastructure/ECSContainers/ContainersVpc/Vpc",
-          },
-        ],
-      },
-      "Type": "AWS::EC2::InternetGateway",
-    },
-    "ECSContainersContainersVpcVPCFlowLogsFlowLog26191E33": Object {
-      "Properties": Object {
-        "DeliverLogsPermissionArn": Object {
-          "Fn::GetAtt": Array [
-            "ECSContainersContainersVpcECSVPCLogsRoleF8834EDD",
-            "Arn",
-          ],
-        },
-        "LogDestinationType": "cloud-watch-logs",
-        "LogGroupName": Object {
-          "Ref": "ECSContainersContainersVpcVPCLogsD2877F16",
-        },
-        "ResourceId": Object {
-          "Ref": "ECSContainersContainersVpc495E6EF4",
-        },
-        "ResourceType": "VPC",
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-        "TrafficType": "ALL",
-      },
-      "Type": "AWS::EC2::FlowLog",
-    },
-    "ECSContainersContainersVpcVPCGW46A3D8AD": Object {
-      "Properties": Object {
-        "InternetGatewayId": Object {
-          "Ref": "ECSContainersContainersVpcIGW42DB8268",
-        },
-        "VpcId": Object {
-          "Ref": "ECSContainersContainersVpc495E6EF4",
-        },
-      },
-      "Type": "AWS::EC2::VPCGatewayAttachment",
-    },
-    "ECSContainersContainersVpcVPCLogsD2877F16": Object {
+    "ECSContainersCloudWatchECSContainerLogGroupCloudwatch07B571A6": Object {
       "DeletionPolicy": "Delete",
       "Properties": Object {
         "KmsKeyId": Object {
@@ -6390,7 +6989,7 @@ Object {
       "Type": "AWS::Logs::LogGroup",
       "UpdateReplacePolicy": "Delete",
     },
-    "ECSContainersGCPAnalyticsRole8573C356": Object {
+    "ECSContainersCloudWatchECSExecutionRoleCloudwatch7AA55746": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -6413,7 +7012,163 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "ECSContainersGCPAnalyticsRoleDefaultPolicyD6B787B8": Object {
+    "ECSContainersCloudWatchECSExecutionRolecloudwatchDefaultPolicyC7D11702": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:PutLogEvents",
+                "logs:CreateLogStream",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":ecr:ap-southeast-1:1111111111:repository/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersCloudWatchECSContainerLogGroupCloudwatch07B571A6",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ECSContainersCloudWatchECSExecutionRolecloudwatchDefaultPolicyC7D11702",
+        "Roles": Array [
+          Object {
+            "Ref": "ECSContainersCloudWatchECSExecutionRoleCloudwatch7AA55746",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4": Object {
+      "Properties": Object {
+        "ContainerDefinitions": Array [
+          Object {
+            "Cpu": 512,
+            "Essential": true,
+            "Image": Object {
+              "Fn::Sub": "1111111111.dkr.ecr.ap-southeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1:###hash64###",
+            },
+            "LogConfiguration": Object {
+              "LogDriver": "awslogs",
+              "Options": Object {
+                "awslogs-group": Object {
+                  "Ref": "ECSContainersCloudWatchECSContainerLogGroupCloudwatch07B571A6",
+                },
+                "awslogs-region": "ap-southeast-1",
+                "awslogs-stream-prefix": "ecs-cloudwatch",
+              },
+            },
+            "MemoryReservation": 1024,
+            "Name": "ECSContainerDef-cloudwatch",
+          },
+        ],
+        "Cpu": "512",
+        "ExecutionRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ECSContainersCloudWatchECSExecutionRoleCloudwatch7AA55746",
+            "Arn",
+          ],
+        },
+        "Family": "AdaDataProductServiceStaticInfrastructureECSContainersCloudWatchECSTaskDefinitioncloudwatch1D59161F",
+        "Memory": "1024",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": Array [
+          "FARGATE",
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TaskRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ECSContainersCloudWatchRole9C252028",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ECS::TaskDefinition",
+    },
+    "ECSContainersCloudWatchRole9C252028": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ECSContainersCloudWatchRoleDefaultPolicyECDEF624": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+          ],
+        },
+      },
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -6477,13 +7232,49 @@ Object {
                 "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
               },
             },
+            Object {
+              "Action": Array [
+                "logs:StartQuery",
+                "logs:GetQueryResults",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "LastUpdatedDetail",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "ECSContainersGCPAnalyticsRoleDefaultPolicyD6B787B8",
+        "PolicyName": "ECSContainersCloudWatchRoleDefaultPolicyECDEF624",
         "Roles": Array [
           Object {
-            "Ref": "ECSContainersGCPAnalyticsRole8573C356",
+            "Ref": "ECSContainersCloudWatchRole9C252028",
           },
         ],
       },
@@ -6696,6 +7487,16 @@ Object {
       "Type": "AWS::IAM::Role",
     },
     "ECSContainersGCPBigQueryRoleDefaultPolicy95C48F10": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+          ],
+        },
+      },
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -6978,6 +7779,16 @@ Object {
       "Type": "AWS::IAM::Role",
     },
     "ECSContainersGCPStorageRoleDefaultPolicy3AED7A1B": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+          ],
+        },
+      },
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -7229,12 +8040,121 @@ Object {
         ],
         "TaskRoleArn": Object {
           "Fn::GetAtt": Array [
-            "ECSContainersGCPAnalyticsRole8573C356",
+            "ECSContainersGoogleAnalyticsRole6E74F345",
             "Arn",
           ],
         },
       },
       "Type": "AWS::ECS::TaskDefinition",
+    },
+    "ECSContainersGoogleAnalyticsRole6E74F345": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ECSContainersGoogleAnalyticsRoleDefaultPolicy30EE458B": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:AbortMultipartUpload",
+                "s3:GetBucketLocation",
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:ListBucketMultipartUploads",
+                "s3:PutObject",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "DataBucket",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "DataBucket",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:ap-southeast-1:1111111111:secret:DPSecrets*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:GenerateDataKey",
+                "kms:Decrypt",
+                "kms:Encrypt",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ECSContainersGoogleAnalyticsRoleDefaultPolicy30EE458B",
+        "Roles": Array [
+          Object {
+            "Ref": "ECSContainersGoogleAnalyticsRole6E74F345",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
     },
     "ExecuteGovernedQueryStateMachineAthenaExecutionPolicy4FC26084": Object {
       "Metadata": Object {
@@ -8559,16 +9479,16 @@ Object {
               },
               "\\",\\"TaskDefinition\\":\\"AdaDataProductServiceStaticInfrastructureECSContainersGoogleAnalyticsECSTaskDefinitiongoogleanalyticsD461B0E9\\",\\"NetworkConfiguration\\":{\\"AwsvpcConfiguration\\":{\\"Subnets\\":[\\"",
               Object {
-                "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet1Subnet88348AF3",
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
               },
               "\\",\\"",
               Object {
-                "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet2SubnetC8408603",
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
               },
               "\\"],\\"SecurityGroups\\":[\\"",
               Object {
                 "Fn::GetAtt": Array [
-                  "ECSContainersContainersVpcECSSecurityGroup789B3CCC",
+                  "DataIngressVpcECSSecurityGroup61BDCCBA",
                   "GroupId",
                 ],
               },
@@ -8789,7 +9709,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "ECSContainersGCPAnalyticsRole8573C356",
+                    "ECSContainersGoogleAnalyticsRole6E74F345",
                     "Arn",
                   ],
                 },
@@ -8877,16 +9797,16 @@ Object {
               },
               "\\",\\"TaskDefinition\\":\\"AdaDataProductServiceStaticInfrastructureECSContainersGCPBigQueryECSTaskDefinitiongcpbigquery3D080A68\\",\\"NetworkConfiguration\\":{\\"AwsvpcConfiguration\\":{\\"Subnets\\":[\\"",
               Object {
-                "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet1Subnet88348AF3",
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
               },
               "\\",\\"",
               Object {
-                "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet2SubnetC8408603",
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
               },
               "\\"],\\"SecurityGroups\\":[\\"",
               Object {
                 "Fn::GetAtt": Array [
-                  "ECSContainersContainersVpcECSSecurityGroup789B3CCC",
+                  "DataIngressVpcECSSecurityGroup61BDCCBA",
                   "GroupId",
                 ],
               },
@@ -9195,16 +10115,16 @@ Object {
               },
               "\\",\\"TaskDefinition\\":\\"AdaDataProductServiceStaticInfrastructureECSContainersGCPStorageECSTaskDefinitiongcpstorageE5F3AEE6\\",\\"NetworkConfiguration\\":{\\"AwsvpcConfiguration\\":{\\"Subnets\\":[\\"",
               Object {
-                "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet1Subnet88348AF3",
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
               },
               "\\",\\"",
               Object {
-                "Ref": "ECSContainersContainersVpcECSPrivateWithNatSubnet2SubnetC8408603",
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
               },
               "\\"],\\"SecurityGroups\\":[\\"",
               Object {
                 "Fn::GetAtt": Array [
-                  "ECSContainersContainersVpcECSSecurityGroup789B3CCC",
+                  "DataIngressVpcECSSecurityGroup61BDCCBA",
                   "GroupId",
                 ],
               },
@@ -9509,6 +10429,53 @@ Object {
       },
       "Type": "AWS::Glue::SecurityConfiguration",
     },
+    "LastUpdatedDetail": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W74",
+              "reason": "Table with no sensitive data and using AWS_MANAGED encryption",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "AttributeDefinitions": Array [
+          Object {
+            "AttributeName": "dataProductId",
+            "AttributeType": "S",
+          },
+          Object {
+            "AttributeName": "domainId",
+            "AttributeType": "S",
+          },
+        ],
+        "BillingMode": "PAY_PER_REQUEST",
+        "KeySchema": Array [
+          Object {
+            "AttributeName": "dataProductId",
+            "KeyType": "HASH",
+          },
+          Object {
+            "AttributeName": "domainId",
+            "KeyType": "RANGE",
+          },
+        ],
+        "PointInTimeRecoverySpecification": Object {
+          "PointInTimeRecoveryEnabled": true,
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::DynamoDB::Table",
+      "UpdateReplacePolicy": "Delete",
+    },
     "LogGroupEncryptionKmsKeyAliasB77DA9CE": Object {
       "Properties": Object {
         "AliasName": "alias/ada/loggroup/stack/StaticInfrastructure/ghashx",
@@ -9736,10 +10703,10 @@ Object {
                   "Arn",
                 ],
               },
-              "\\",\\"discoverTransformsArn\\":\\"",
+              "\\",\\"prepareTransformChainArn\\":\\"",
               Object {
                 "Fn::GetAtt": Array [
-                  "DataProductInfraLambdasLambdaDiscoverTransformsD8804571",
+                  "DataProductInfraLambdasLambdaPrepareTransformChain251B2855",
                   "Arn",
                 ],
               },
@@ -9747,13 +10714,6 @@ Object {
               Object {
                 "Fn::GetAtt": Array [
                   "DataProductInfraLambdasLambdaPrepareNextTransformB6BEDE78",
-                  "Arn",
-                ],
-              },
-              "\\",\\"prepareCtasQueryArn\\":\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "DataProductInfraLambdasLambdaQuerySourcePrepareCtasQuery0EB60EE7",
                   "Arn",
                 ],
               },
@@ -9810,19 +10770,56 @@ Object {
               Object {
                 "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn",
               },
-              "\\",\\"googleCloudStorageConnector\\":{\\"importDataStateMachineArn\\":\\"",
+              "\\",\\"dataIngressVPC\\":{\\"subnetIds\\":[\\"",
               Object {
-                "Ref": "GCPImportDataStateMachine193D1733",
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
+              },
+              "\\",\\"",
+              Object {
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
+              },
+              "\\"],\\"availabilityZones\\":[\\"dummy1a\\",\\"dummy1b\\"],\\"securityGroupIds\\":[\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcGlueConnectionSecurityGroupB984F2E0",
+                  "GroupId",
+                ],
+              },
+              "\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcGlueJDBCTargetSecurityGroup6DAD0A15",
+                  "GroupId",
+                ],
+              },
+              "\\"]},\\"googleAnalyticsConnector\\":{\\"importDataStateMachineArn\\":\\"",
+              Object {
+                "Ref": "GAImportDataStateMachineBA5D539B",
               },
               "\\"},\\"googleBigQueryConnector\\":{\\"importDataStateMachineArn\\":\\"",
               Object {
                 "Ref": "GCBigQueryImportDataStateMachineA46C9770",
               },
-              "\\"},\\"googleAnalyticsConnector\\":{\\"importDataStateMachineArn\\":\\"",
+              "\\"},\\"googleCloudStorageConnector\\":{\\"importDataStateMachineArn\\":\\"",
               Object {
-                "Ref": "GAImportDataStateMachineBA5D539B",
+                "Ref": "GCPImportDataStateMachine193D1733",
               },
-              "\\"}}",
+              "\\"},\\"cloudWatchConnector\\":{\\"importDataStateMachineArn\\":\\"",
+              Object {
+                "Ref": "CloudWatchImportDataStateMachine1D920684",
+              },
+              "\\",\\"lastUpdatedDetailTableName\\":\\"",
+              Object {
+                "Ref": "LastUpdatedDetail",
+              },
+              "\\",\\"otherArns\\":{\\"ecsTaskRole\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersCloudWatchRole9C252028",
+                  "Arn",
+                ],
+              },
+              "\\"}}}",
             ],
           ],
         },

@@ -3,11 +3,12 @@ SPDX-License-Identifier: Apache-2.0 */
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as path from 'path';
+import { CfnResource, RemovalPolicy, Stack } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { DeploymentSecret } from './secret';
 import { ENV_DEVELOPMENT } from '../../../env';
 import { NodejsFunctionProps } from 'aws-cdk-lib/aws-lambda-nodejs';
-import { RemovalPolicy, Stack } from 'aws-cdk-lib';
+import { addCfnNagSuppressions } from '@ada/cdk-core';
 import { getRootStack } from '../../../../utils/stack-utils';
 
 export const API_WAF_ALLOW_RULE_HEADER = 'x-api-waf-allow';
@@ -117,5 +118,12 @@ export class ApiLambdaLayer extends Construct {
       description: 'Secret used to enable internal calls to bypass IPSet rule in WAF.',
       removalPolicy: RemovalPolicy.DESTROY,
     });
+
+    addCfnNagSuppressions(this.secret.node.defaultChild as CfnResource, [
+      {
+        id: 'W77',
+        reason: 'The secret is not considered highly sensitive as they just identity unique deployment',
+      },
+    ]);
   }
 }

@@ -35,7 +35,7 @@ export class EventLambdaTargetFunction implements events.IRuleTarget {
      * result from an EventBridge event.
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public bind(rule: events.IRule, _id?: string): events.RuleTargetConfig {
+    public bind(_rule: events.IRule, _id?: string): events.RuleTargetConfig {
         return {
             ...bindBaseTargetConfig(this.props),
             arn: this.handler.functionArn,

@@ -120,7 +120,7 @@ const SavedQueryDetails: React.FC<{ savedQuery: SavedQueryEntity }> = ({ savedQu
                   }
                 />
               )}
-              {tags && !isEmpty(tags) && <KeyValuePair label="Tags" value={<TagGroup tags={tags} />} />}
+              {tags && !isEmpty(tags) && <KeyValuePair label="Tags" value={<TagGroup tags={tags as any} />} />}
             </Stack>
           </Column>
         )}

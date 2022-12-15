@@ -4,8 +4,10 @@ import { Bucket } from '../../../../common/constructs/s3/bucket';
 import { Construct } from 'constructs';
 import { DockerImageFunction } from 'aws-cdk-lib/aws-lambda';
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
-import { Effect, IRole, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
+import { Effect, IRole, ManagedPolicy, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import {
+  ExternalSourceAssumeRolePolicyStatement,
+  ExternalSourceDataCloudWatchAccessPolicyStatement,
   ExternalSourceDataKmsAccessPolicyStatement,
   ExternalSourceDataS3AccessPolicyStatement,
   SolutionContext,
@@ -17,9 +19,11 @@ import { Key } from 'aws-cdk-lib/aws-kms';
 import { LambdaInvoke } from 'aws-cdk-lib/aws-stepfunctions-tasks';
 import { LogGroup } from '../../../../common/constructs/cloudwatch/log-group';
 import { LogLevel, Pass, StateMachine, TaskInput } from 'aws-cdk-lib/aws-stepfunctions';
+import { SubnetType } from 'aws-cdk-lib/aws-ec2';
 import { TarballImageAsset } from '../../../../common/constructs/ecr-assets/tarball-image-asset';
-import { getUniqueStateMachineLogGroupName } from '@ada/cdk-core';
+import { addCfnNagSuppressionsToRolePolicy, getUniqueStateMachineLogGroupName } from '@ada/cdk-core';
 import { uniqueLambdaDescription } from '@ada/infra-common/constructs/lambda/utils';
+import DataIngressVPC from '../../core/network/vpc';
 
 const LAMBDA_ALIAS_NAME = 'prod';
 export interface SchemaPreviewProps {
@@ -27,6 +31,7 @@ export interface SchemaPreviewProps {
   readonly dataBucket: Bucket;
   readonly productPreviewKey: Key;
   readonly accessLogsBucket: Bucket;
+  readonly dataIngressVPC: DataIngressVPC;
 }
 
 export default class SchemaPreview extends Construct {
@@ -36,7 +41,7 @@ export default class SchemaPreview extends Construct {
   constructor(
     scope: Construct,
     id: string,
-    { scriptBucket, productPreviewKey, accessLogsBucket }: SchemaPreviewProps,
+    { scriptBucket, productPreviewKey, accessLogsBucket, dataIngressVPC }: SchemaPreviewProps,
   ) {
     super(scope, id);
 
@@ -58,6 +63,7 @@ export default class SchemaPreview extends Construct {
 
     const pullDataSampleLambdaExecRole = new Role(this, 'PullDataSampleLambdaExecRole', {
       assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
+      managedPolicies: [ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaVPCAccessExecutionRole')],
     });
 
     // Grant KMS permission
@@ -73,26 +79,53 @@ export default class SchemaPreview extends Construct {
         effect: Effect.ALLOW,
         actions: ['sts:TagSession'],
         principals: [pullDataSampleLambdaExecRole],
-      })
-    )
+      }),
+    );
 
+    // Grant schemapreview lambda permissions to create, use and delete glue connection
+    // so that glue connection can be used in the preview lambda for jdbc connector
+    pullDataSampleConnectorRole.addToPolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ['glue:*Connection*'],
+        resources: ['*'],
+      }),
+    );
+
+    // Grant access to assume roles within to access external services.
+    pullDataSampleConnectorRole.addToPolicy(ExternalSourceAssumeRolePolicyStatement);
     // Grant read access to any s3 bucket for pulling data
     pullDataSampleConnectorRole.addToPolicy(ExternalSourceDataS3AccessPolicyStatement);
     // Grant access to any kms key in case these buckets are encrypted
     pullDataSampleConnectorRole.addToPolicy(ExternalSourceDataKmsAccessPolicyStatement);
+    // Grant access to Query CloudWatch Logs
+    pullDataSampleConnectorRole.addToPolicy(ExternalSourceDataCloudWatchAccessPolicyStatement);
 
+    addCfnNagSuppressionsToRolePolicy(pullDataSampleConnectorRole, [
+      {
+        id: 'W12',
+        reason: '* required to access external reousrces added later from data product console',
+      },
+    ]);
 
     // Container Lambda for preview sampling
     const previewSchemaDockerImage = new TarballImageAsset(scope, 'Tarball', {
       tarballFile: getDockerImagePath('schema-preview'),
     });
 
-    const buildDockerImageLambda = (handler: string, lambdaExecRole?: IRole) => {
-      const lambdaId = `Lambda-${handler}`;
+    const buildDockerImageLambda = (handlerModule: string, lambdaExecRole?: IRole) => {
+      const lambdaId = `Lambda-${handlerModule}`;
       const lambda = new DockerImageFunction(this, lambdaId, {
+        // put preview lambda in the DataIngress VPC
+        vpc: dataIngressVPC.vpc,
+        vpcSubnets: {
+          subnetType: SubnetType.PRIVATE_WITH_EGRESS,
+        },
+        securityGroups: [dataIngressVPC.previewSecurityGroup],
+
         // Use prebuilt docker image
         code: TarballImageAsset.tarballImageCode(previewSchemaDockerImage, {
-          cmd: [`${handler}.handler`],
+          cmd: [`handlers.${handlerModule}.handler`],
         }),
         memorySize: 3000,
         timeout: Duration.minutes(5),
@@ -100,20 +133,28 @@ export default class SchemaPreview extends Construct {
           TEMP_BUCKET_NAME: this.bucket.bucketName,
           KEY_ID: productPreviewKey.keyId,
           PULL_DATA_SAMPLE_ROLE_ARN: pullDataSampleConnectorRole.roleArn,
+          // pass in Data Ingress Network info so that it can be used in the preview lambda for some connectors (e.g. RDS)
+          DATA_INGRESS_NETWORK_SUBNET_IDS: dataIngressVPC.vpc.privateSubnets.map((subnet) => subnet.subnetId).join(','),
+          DATA_INGRESS_NETWORK_AVAILABILITY_ZONES: dataIngressVPC.vpc.privateSubnets
+            .map((subnet) => subnet.availabilityZone)
+            .join(','),
+          DATA_INGRESS_NETWORK_SECURITY_GROUP_IDS: [
+            dataIngressVPC.previewSecurityGroup.securityGroupId,
+            dataIngressVPC.glueJDBCTargetSecurityGroup.securityGroupId,
+          ].join(','),
         },
         // Force a new version for every deployment to avoid version already exists exception
-        description: uniqueLambdaDescription(`Schema Preview ${handler}`),
+        description: uniqueLambdaDescription(`Schema Preview ${handlerModule}`),
         role: lambdaExecRole,
       });
-
 
       // Provisioned concurrency of 1 to reduce latency for initial spark context initialisation
       let provisionedConcurrentExecutions = tryGetSolutionContext(
         this,
-        SolutionContext.JAVA_LAMBDA_PROVISIONED_CONCURRENT_EXECUTIONS
+        SolutionContext.JAVA_LAMBDA_PROVISIONED_CONCURRENT_EXECUTIONS,
       );
-      provisionedConcurrentExecutions = (provisionedConcurrentExecutions || 0) >= 1 ?
-        provisionedConcurrentExecutions : undefined
+      provisionedConcurrentExecutions =
+        (provisionedConcurrentExecutions || 0) >= 1 ? provisionedConcurrentExecutions : undefined;
       lambda.addAlias(LAMBDA_ALIAS_NAME, {
         provisionedConcurrentExecutions,
       });
@@ -121,7 +162,7 @@ export default class SchemaPreview extends Construct {
       return lambda;
     };
 
-    const pullDataSampleLambda = buildDockerImageLambda('pull_data_sample', pullDataSampleLambdaExecRole);
+    const pullDataSampleLambda = buildDockerImageLambda('sampling', pullDataSampleLambdaExecRole);
 
     pullDataSampleLambda.addToRolePolicy(
       new PolicyStatement({
@@ -130,8 +171,8 @@ export default class SchemaPreview extends Construct {
         resources: [pullDataSampleConnectorRole.roleArn],
       }),
     );
-    
-    this.bucket.grantReadWrite(pullDataSampleLambda)
+
+    this.bucket.grantReadWrite(pullDataSampleLambda);
     productPreviewKey.grantDecrypt(pullDataSampleLambda);
 
     pullDataSampleLambda.addToRolePolicy(
@@ -171,7 +212,7 @@ export default class SchemaPreview extends Construct {
 
     const executeTransformsLambda = buildDockerImageLambda('transform');
     // allow execute transform lambda to access temp bucket
-    this.bucket.grantReadWrite(executeTransformsLambda)
+    this.bucket.grantReadWrite(executeTransformsLambda);
     productPreviewKey.grantDecrypt(executeTransformsLambda);
     executeTransformsLambda.addToRolePolicy(
       new PolicyStatement({

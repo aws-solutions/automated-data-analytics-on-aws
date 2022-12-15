@@ -20,6 +20,7 @@ import { Duration, RemovalPolicy, Stack } from 'aws-cdk-lib';
 import {
   DynamicInfraDeploymentPermissionsBoundaryPolicyStatement,
   DynamicInfraDeploymentPolicyStatement,
+  OperationalMetricsConfig,
   SolutionIntegrationTypescriptFunctionProps,
   TypescriptFunction,
   TypescriptFunctionProps,
@@ -42,12 +43,13 @@ export interface DataProductCreationStateMachineProps {
   federatedApi: FederatedRestApi;
   internalTokenKey: InternalTokenKey;
   entityManagementTables: EntityManagementTables;
+  operationalMetricsConfig: OperationalMetricsConfig;
 }
 
 /**
  * Defines the step function state machine used to create data products
  */
-export default class DataProductCreationStateMachine extends Construct {
+export class DataProductCreationStateMachine extends Construct {
   public readonly stateMachine: StateMachine;
   public readonly stepLambdas: LambdaFunction[] = [];
 
@@ -215,6 +217,7 @@ export default class DataProductCreationStateMachine extends Construct {
     });
 
     const dataProductInfraDeploymentCompleteLambda = buildLambda('data-product-infra-deployment-complete');
+
     const dataProductInfraDeploymentComplete = new LambdaInvoke(this, 'DataProductInfraDeploymentComplete', {
       lambdaFunction: dataProductInfraDeploymentCompleteLambda,
     });
@@ -265,3 +268,5 @@ export default class DataProductCreationStateMachine extends Construct {
     });
   }
 }
+
+export default DataProductCreationStateMachine;

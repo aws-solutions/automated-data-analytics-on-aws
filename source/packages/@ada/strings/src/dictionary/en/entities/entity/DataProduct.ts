@@ -70,36 +70,6 @@ export const DataProduct_ = {
 	permissions: `${DataProduct.DataProduct} permissions`,
 	policy: `${DataProduct.DataProduct} policy`,
 
-	SourceType: {
-    S3: {
-      label: 'Amazon S3',
-      description: 'Data product from Amazon S3 bucket data',
-    },
-    UPLOAD: {
-      label: 'File Upload',
-      description: 'Data product from uploading a data file',
-    },
-    QUERY: {
-      label: 'SQL Query',
-      description: 'Data product from SQL query results',
-    },
-    KINESIS: {
-      label: 'Amazon Kinesis Stream',
-      description: 'Data product from streaming data',
-    },
-    GOOGLE_ANALYTICS: {
-      label: 'Google Analytics',
-      description: 'Data product from Google Analytics data',
-    },
-    GOOGLE_BIGQUERY: {
-      label: 'Google BigQuery',
-      description: 'Data product from Google BigQuery data',
-    },
-    GOOGLE_STORAGE: {
-      label: 'Google Storage',
-      description: 'Data product from Google Storage data',
-    },
-  },
   UpdateTriggerType: {
     label: 'Update Trigger',
     description: 'How data updates are triggered after initial import',

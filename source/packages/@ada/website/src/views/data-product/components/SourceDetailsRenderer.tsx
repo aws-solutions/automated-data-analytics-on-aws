@@ -1,20 +1,21 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import { SourceDetails, SourceType } from '@ada/common';
-import { SourceTypeSummaryProps, UXDataProductSources } from '$source-type';
+import { Connectors } from '@ada/connectors';
+import {SourceDetailsSummary, SourceTypeSummaryProps } from '$connectors/common';
 import React, { useMemo } from 'react';
 
 export const SourceDetailsRenderer = ({
   sourceType,
   sourceDetails,
   collapsible,
-}: SourceTypeSummaryProps<SourceDetails> & { sourceType: SourceType }) => {
+}: SourceTypeSummaryProps<any> & { sourceType: Connectors.ID }) => {
   return useMemo(() => {
-    const SourceSummary = Object.values(UXDataProductSources).find((def) => def.TYPE === sourceType)?.SUMMARY
-      .SourceSummary;
-
-    if (SourceSummary == null) return null;
-
-    return <SourceSummary sourceType={sourceType} sourceDetails={sourceDetails as any} collapsible={collapsible} />;
+    return (
+      <SourceDetailsSummary
+        sourceType={sourceType}
+        sourceDetails={sourceDetails as any}
+        collapsible={collapsible}
+      />
+    );
   }, [sourceType, sourceDetails]);
 };

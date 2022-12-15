@@ -69,7 +69,7 @@ export function getStackSynthContext(): StackSynthContext {
 
       const stackMapping: StackMapping = Object.fromEntries(
         nestedStacks.map((stack) => {
-          return [stack.constructor.name, stack.templateFile];
+          return [stack.constructor.name || stack.stackName, stack.templateFile];
         }),
       );
       stackMapping[RootStack.name] = rootStack.templateFile;

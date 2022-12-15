@@ -1,12 +1,12 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import { Connectors } from '@ada/connectors';
 import { DataProduct } from '@ada/api-client';
 import {
   DataProductDataStatus,
   DataProductInfrastructureStatus,
   DataProductSourceDataStatus,
   DataProductUpdateTriggerType,
-  SourceType,
 } from '@ada/common';
 import { isEmpty } from 'lodash';
 
@@ -96,7 +96,7 @@ export function getDataProductState(dataProduct?: DataProduct): DataProductState
 
   // source data
   const sourceDataStatus = dataProduct.sourceDataStatus as DataProductSourceDataStatus;
-  const isSourceDataSupported = [SourceType.S3, SourceType.UPLOAD].includes(dataProduct.sourceType as SourceType);
+  const isSourceDataSupported = Connectors.CATEGORIES.SOURCE_QUERY_ENABLED_CONNECTORS.has(dataProduct.sourceType);
   const isSourceDataReady = sourceDataStatus === DataProductSourceDataStatus.READY;
   const isSourceUpdating = sourceDataStatus === DataProductSourceDataStatus.UPDATING;
   const isMissingSourceData = sourceDataStatus === DataProductSourceDataStatus.NO_DATA;
@@ -115,7 +115,7 @@ export function getDataProductState(dataProduct?: DataProduct): DataProductState
   const isProcessing = isProvisioning || isImporting;
   const isQueryable = isReady || (isProvisioned && dataProduct.latestDataUpdateTimestamp != null);
   const onDemandUpdateSupported =
-    dataProduct.sourceType !== SourceType.UPLOAD &&
+    dataProduct.sourceType !== Connectors.Id.UPLOAD &&
     dataProduct.updateTrigger.triggerType === DataProductUpdateTriggerType.ON_DEMAND;
   const onDemandUpdateAvailable = onDemandUpdateSupported && isReady && !isProcessing && !isImporting;
   const hasSchema = !(isEmpty(dataProduct.dataSets) && isEmpty(dataProduct.sourceDataSets));

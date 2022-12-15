@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-BuiltInTransformationStack) - Automated Data Analytics on AWS. Version v1.0.2",
+  "Description": "(SO0190-BuiltInTransformationStack) - Automated Data Analytics on AWS. Version v1.1.0",
   "Parameters": Object {
     "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn": Object {
       "Type": "String",
@@ -72,6 +72,29 @@ Object {
         ],
       },
       "Type": "AWS::IAM::Role",
+    },
+    "AppRegistryAssociation": Object {
+      "Properties": Object {
+        "Application": Object {
+          "Fn::Join": Array [
+            "-",
+            Array [
+              "Automated-Data-Analysis-on-AWS",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+            ],
+          ],
+        },
+        "Resource": Object {
+          "Ref": "AWS::StackId",
+        },
+        "ResourceType": "CFN_STACK",
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
     },
     "PutAdaApplyMappingScript78AA3254": Object {
       "DeletionPolicy": "Delete",
@@ -306,7 +329,7 @@ Object {
               Object {
                 "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
               },
-              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_parquet_data_type_map\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Parquet Data Type Map\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Automatically cast unsupported data types to string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Columns of type INT64 TIMESTAMP_MICROS in parquet files must be cast to string to be supported\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"applicableClassifications\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"parquet\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nParquet Data Type Map transform\\\\\\\\\\\\\\\\nAt this time this function only exists to trigger the Transform flows, during which\\\\\\\\\\\\\\\\nwe can catch and handle issues around the TIME64 data type in the file.\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, **kwargs):\\\\\\\\\\\\\\\\n    return [input_frame]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\"}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Parquet Data Type MapScript\\"}}",
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_parquet_data_type_map\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Parquet Data Type Map\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Automatically cast unsupported data types to string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Columns of type INT64 TIMESTAMP_MICROS in parquet files must be cast to string to be supported\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"applicableClassifications\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"parquet\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nParquet Data Type Map transform\\\\\\\\\\\\\\\\nAt this time this function only exists to trigger the Transform flows, during which\\\\\\\\\\\\\\\\nwe can catch and handle issues around the TIME64 data type in the file.\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, **__):\\\\\\\\\\\\\\\\n    return [input_frame]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\"}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Parquet Data Type MapScript\\"}}",
             ],
           ],
         },
@@ -325,7 +348,7 @@ Object {
               Object {
                 "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
               },
-              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_parquet_data_type_map\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Parquet Data Type Map\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Automatically cast unsupported data types to string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Columns of type INT64 TIMESTAMP_MICROS in parquet files must be cast to string to be supported\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"applicableClassifications\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"parquet\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nParquet Data Type Map transform\\\\\\\\\\\\\\\\nAt this time this function only exists to trigger the Transform flows, during which\\\\\\\\\\\\\\\\nwe can catch and handle issues around the TIME64 data type in the file.\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, **kwargs):\\\\\\\\\\\\\\\\n    return [input_frame]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\"}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Parquet Data Type MapScript\\"}}",
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"ada_parquet_data_type_map\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Parquet Data Type Map\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Automatically cast unsupported data types to string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"helperText\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Columns of type INT64 TIMESTAMP_MICROS in parquet files must be cast to string to be supported\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"applicableClassifications\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"parquet\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nParquet Data Type Map transform\\\\\\\\\\\\\\\\nAt this time this function only exists to trigger the Transform flows, during which\\\\\\\\\\\\\\\\nwe can catch and handle issues around the TIME64 data type in the file.\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, **__):\\\\\\\\\\\\\\\\n    return [input_frame]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\"}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutAda Parquet Data Type MapScript\\"}}",
             ],
           ],
         },
@@ -436,6 +459,79 @@ Object {
       },
       "Type": "Custom::AWS",
       "UpdateReplacePolicy": "Delete",
+    },
+    "PutCwJsonMsgExplodeScriptAE97C22D": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "PutAdaSelectFieldsScriptD23C6899",
+        "PutCwJsonMsgExplodeScriptCustomResourcePolicy87D135B7",
+      ],
+      "Properties": Object {
+        "Create": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"cw_json_msg_explode\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Cloudwatch JSON explode\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Explode nested json for cloudwatch logs\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\nimport pandas as pd\\\\\\\\\\\\\\\\nimport re\\\\\\\\\\\\\\\\nimport json\\\\\\\\\\\\\\\\nfrom awsglue.dynamicframe import DynamicFrame\\\\\\\\\\\\\\\\nfrom pyspark.sql import SparkSession\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\ndef extract_json(payload: str, pattern: str) -> object or None:\\\\\\\\\\\\\\\\n    result = re.search(pattern, payload)\\\\\\\\\\\\\\\\n    if result:\\\\\\\\\\\\\\\\n        try:  \\\\\\\\\\\\\\\\n            return json.loads(result.group(1))\\\\\\\\\\\\\\\\n        except json.JSONDecodeError as e:\\\\\\\\\\\\\\\\n            return None\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    return None\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nMessage Explode transformation\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\nFor Cloudwatch Lambda Logs, where the message field contains nested JSON messages substring.\\\\\\\\\\\\\\\\nThis transform will extract the JSON string and explode the key values onto the table\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\neg initial table:\\\\\\\\\\\\\\\\ntimestamp   |   messege\\\\\\\\\\\\\\\\n-------------------------------------\\\\\\\\\\\\\\\\n1985/09/25  | {'A' : 'a1', 'B': 'b1'}\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\nresultant table:\\\\\\\\\\\\\\\\ntimestamp   |        messege          |    A    |    B    \\\\\\\\\\\\\\\\n----------------------------------------------------------\\\\\\\\\\\\\\\\n1985/09/25  | {'A' : 'a1', 'B': 'b1'} |   a1    |   b1\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\ninput_args = {\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"mapping\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" : [['source_field_name', 'target_field_name', 'target_field_type']]}\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, input_args, glue_context, **kwargs):\\\\\\\\\\\\\\\\n    print(f\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Input args: {input_args}\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")\\\\\\\\\\\\\\\\n    df = input_frame.toDF()\\\\\\\\\\\\\\\\n    pandas_df = df.toPandas()\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n    pandas_df[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"json_extracted\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"] = pandas_df[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"message\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"].apply(extract_json, pattern=input_args[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"extraction_str\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"])\\\\\\\\\\\\\\\\n    print(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Extraction has been applied\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")\\\\\\\\\\\\\\\\n    print(pandas_df)\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n    if pandas_df['json_extracted'].isnull().all():\\\\\\\\\\\\\\\\n        print(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"No JSON extracted - returning origin data\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")\\\\\\\\\\\\\\\\n        return [input_frame]\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    pandas_df = pandas_df.dropna(axis=0, subset=['json_extracted'])\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    ndf = pd.json_normalize(pandas_df.json_extracted)\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    # null percent drop\\\\\\\\\\\\\\\\n    perc = input_args[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"drop_threshold\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\\\n    min_count =  int(((100-perc)/100)*ndf.shape[0] + 1)\\\\\\\\\\\\\\\\n    mod_df = ndf.dropna( axis=1, thresh=min_count)\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    merged = pd.merge(pandas_df, mod_df, left_index=True, right_index=True)\\\\\\\\\\\\\\\\n    merged = merged.drop(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"json_extracted\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\", axis=1)\\\\\\\\\\\\\\\\n    merged=merged.astype(str)\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    spark = SparkSession.builder.master(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"local[1]\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\").appName(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"ada\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\").getOrCreate()\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    fin_sp_df=spark.createDataFrame(merged)\\\\\\\\\\\\\\\\n    output_frame = DynamicFrame.fromDF(fin_sp_df, glue_context, \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"output_frame\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n    return [output_frame]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"inputSchema\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"object\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:order\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"drop_threshold\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"extraction_str\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"required\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"drop_threshold\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"extraction_str\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"properties\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"drop_threshold\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"number\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Column null drop threshold\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Drop columns that have a percentage of null values above this threshold.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"default\\\\\\\\\\\\\\":90,\\\\\\\\\\\\\\"ui:description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Drop columns that have a percentage of null values above this threshold.\\\\\\\\\\\\\\"},\\\\\\\\\\\\\\"extraction_str\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Regex to Extract embedded json\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"The regex pattern used to extract the json substring in message field.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"default\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"^.+\\\\\\\\\\\\\\\\t({.+})$\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"The regex pattern used to extract the json substring in message field.\\\\\\\\\\\\\\"}}}}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutCw Json Msg ExplodeScript\\"}}",
+            ],
+          ],
+        },
+        "InstallLatestAwsSdk": true,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+            "Arn",
+          ],
+        },
+        "Update": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"service\\":\\"Lambda\\",\\"action\\":\\"invoke\\",\\"parameters\\":{\\"FunctionName\\":\\"",
+              Object {
+                "Ref": "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn",
+              },
+              "\\",\\"Payload\\":\\"{\\\\\\"requestContext\\\\\\":{\\\\\\"authorizer\\\\\\":{\\\\\\"x-user-id\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-username\\\\\\":\\\\\\"system\\\\\\",\\\\\\"x-groups\\\\\\":\\\\\\"system\\\\\\"}},\\\\\\"pathParameters\\\\\\":{\\\\\\"scriptId\\\\\\":\\\\\\"cw_json_msg_explode\\\\\\",\\\\\\"namespace\\\\\\":\\\\\\"global\\\\\\"},\\\\\\"body\\\\\\":\\\\\\"{\\\\\\\\\\\\\\"namespace\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"global\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Cloudwatch JSON explode\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Explode nested json for cloudwatch logs\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"###################################################################\\\\\\\\\\\\\\\\n# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\\\\\\\\\\\\\\\\n# SPDX-License-Identifier: Apache-2.0 \\\\\\\\\\\\\\\\n###################################################################\\\\\\\\\\\\\\\\nimport pandas as pd\\\\\\\\\\\\\\\\nimport re\\\\\\\\\\\\\\\\nimport json\\\\\\\\\\\\\\\\nfrom awsglue.dynamicframe import DynamicFrame\\\\\\\\\\\\\\\\nfrom pyspark.sql import SparkSession\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\ndef extract_json(payload: str, pattern: str) -> object or None:\\\\\\\\\\\\\\\\n    result = re.search(pattern, payload)\\\\\\\\\\\\\\\\n    if result:\\\\\\\\\\\\\\\\n        try:  \\\\\\\\\\\\\\\\n            return json.loads(result.group(1))\\\\\\\\\\\\\\\\n        except json.JSONDecodeError as e:\\\\\\\\\\\\\\\\n            return None\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    return None\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\nMessage Explode transformation\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\nFor Cloudwatch Lambda Logs, where the message field contains nested JSON messages substring.\\\\\\\\\\\\\\\\nThis transform will extract the JSON string and explode the key values onto the table\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\neg initial table:\\\\\\\\\\\\\\\\ntimestamp   |   messege\\\\\\\\\\\\\\\\n-------------------------------------\\\\\\\\\\\\\\\\n1985/09/25  | {'A' : 'a1', 'B': 'b1'}\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\nresultant table:\\\\\\\\\\\\\\\\ntimestamp   |        messege          |    A    |    B    \\\\\\\\\\\\\\\\n----------------------------------------------------------\\\\\\\\\\\\\\\\n1985/09/25  | {'A' : 'a1', 'B': 'b1'} |   a1    |   b1\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\ninput_args = {\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"mapping\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" : [['source_field_name', 'target_field_name', 'target_field_type']]}\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\ndef apply_transform(input_frame, input_args, glue_context, **kwargs):\\\\\\\\\\\\\\\\n    print(f\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Input args: {input_args}\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")\\\\\\\\\\\\\\\\n    df = input_frame.toDF()\\\\\\\\\\\\\\\\n    pandas_df = df.toPandas()\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n    pandas_df[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"json_extracted\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"] = pandas_df[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"message\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"].apply(extract_json, pattern=input_args[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"extraction_str\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"])\\\\\\\\\\\\\\\\n    print(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Extraction has been applied\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")\\\\\\\\\\\\\\\\n    print(pandas_df)\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n    if pandas_df['json_extracted'].isnull().all():\\\\\\\\\\\\\\\\n        print(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"No JSON extracted - returning origin data\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")\\\\\\\\\\\\\\\\n        return [input_frame]\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    pandas_df = pandas_df.dropna(axis=0, subset=['json_extracted'])\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    ndf = pd.json_normalize(pandas_df.json_extracted)\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    # null percent drop\\\\\\\\\\\\\\\\n    perc = input_args[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"drop_threshold\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\\\n    min_count =  int(((100-perc)/100)*ndf.shape[0] + 1)\\\\\\\\\\\\\\\\n    mod_df = ndf.dropna( axis=1, thresh=min_count)\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    merged = pd.merge(pandas_df, mod_df, left_index=True, right_index=True)\\\\\\\\\\\\\\\\n    merged = merged.drop(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"json_extracted\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\", axis=1)\\\\\\\\\\\\\\\\n    merged=merged.astype(str)\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    spark = SparkSession.builder.master(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"local[1]\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\").appName(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"ada\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\").getOrCreate()\\\\\\\\\\\\\\\\n    \\\\\\\\\\\\\\\\n    fin_sp_df=spark.createDataFrame(merged)\\\\\\\\\\\\\\\\n    output_frame = DynamicFrame.fromDF(fin_sp_df, glue_context, \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"output_frame\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\\\n    return [output_frame]\\\\\\\\\\\\\\\\n\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"inputSchema\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"object\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:order\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"drop_threshold\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"extraction_str\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"required\\\\\\\\\\\\\\":[\\\\\\\\\\\\\\"drop_threshold\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"extraction_str\\\\\\\\\\\\\\"],\\\\\\\\\\\\\\"properties\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"drop_threshold\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"number\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Column null drop threshold\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Drop columns that have a percentage of null values above this threshold.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"default\\\\\\\\\\\\\\":90,\\\\\\\\\\\\\\"ui:description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Drop columns that have a percentage of null values above this threshold.\\\\\\\\\\\\\\"},\\\\\\\\\\\\\\"extraction_str\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"title\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"Regex to Extract embedded json\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"The regex pattern used to extract the json substring in message field.\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"default\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"^.+\\\\\\\\\\\\\\\\t({.+})$\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ui:description\\\\\\\\\\\\\\":\\\\\\\\\\\\\\"The regex pattern used to extract the json substring in message field.\\\\\\\\\\\\\\"}}}}\\\\\\"}\\"},\\"physicalResourceId\\":{\\"id\\":\\"PutCw Json Msg ExplodeScript\\"}}",
+            ],
+          ],
+        },
+      },
+      "Type": "Custom::AWS",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "PutCwJsonMsgExplodeScriptCustomResourcePolicy87D135B7": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "[*] Resource required for custom resource invoking lambda since scoping to functionArn did not work",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "PutCwJsonMsgExplodeScriptCustomResourcePolicy87D135B7",
+        "Roles": Array [
+          Object {
+            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
     },
   },
 }

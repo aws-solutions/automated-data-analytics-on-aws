@@ -7,6 +7,12 @@ import { StepFunctionLambdaEvent } from '../../../../../../common/services';
 import { entityIdentifier } from '@ada/api-client/types';
 import { startDataProductInfraDeployment } from '../../../../dynamic-infrastructure/cdk';
 
+// NB: since this is lambda and not construct, connector infra must be registed explicitly
+import '@ada/connectors/register-infra';
+import { Connectors } from '@ada/connectors';
+
+console.debug('CONNECTORS:', Connectors);
+
 /**
  * Start the deployment of dynamic data product infrastructure
  * @param event initial payload of step function execution

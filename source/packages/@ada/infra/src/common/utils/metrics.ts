@@ -19,6 +19,10 @@ export interface MetricsPayload {
   data: unknown;
 }
 
+export enum SEND_ANONYMOUS_METRICS_RESULT {
+  Succeeded = 'Succeeded'
+}
+
 export async function sendAnonymousMetric(payload: MetricsPayload): Promise<string> {
   try {
     const payloadStr = JSON.stringify({
@@ -39,7 +43,7 @@ export async function sendAnonymousMetric(payload: MetricsPayload): Promise<stri
     console.log('Sending anonymous metric', payloadStr);
     const response = await axios.post(METRICS_ENDPOINT, payloadStr, config);
     console.log(`Anonymous metric response: ${response.statusText} (${response.status})`);
-    return 'Succeeded';
+    return SEND_ANONYMOUS_METRICS_RESULT.Succeeded;
   } catch (err) {
     // Log the error
     console.error('Error sending anonymous metric');

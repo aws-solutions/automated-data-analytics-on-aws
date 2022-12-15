@@ -1,15 +1,11 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
 import { AwsGlueInstance } from '@ada/aws-sdk';
-import {
-  DATA_PRODUCT_APPEND_DATA_PARTITION_KEY,
-  DataProductUpdatePolicy,
-  DataProductUpdateTriggerType,
-  DataSetIds,
-} from '@ada/common';
 import { DataProduct } from '@ada/api';
-import { StepFunctionLambdaEvent, s3PathJoin } from '@ada/microservice-common';
+import { DataProductUpdatePolicy } from '@ada/common';
+import { StepFunctionLambdaEvent } from '@ada/microservice-common';
 import { VError } from 'verror';
+import { getNewIngestionLocation, getNewIngestionPartition } from '../common';
 export interface PrepareExternalImportInput {
   crawlerName: string;
   tablePrefix: string;
@@ -22,6 +18,7 @@ export interface PrepareExternalImportOutput {
   tablePrefix: string;
   outputS3Path: string;
   triggerType: string;
+  ingestionTimestamp: string;
   scheduleRate?: string;
 }
 
@@ -32,34 +29,41 @@ const glue = AwsGlueInstance();
  */
 export const handler = async (
   event: StepFunctionLambdaEvent<PrepareExternalImportInput>,
-  _context: any,
+  _context: unknown,
 ): Promise<PrepareExternalImportOutput> => {
   const { crawlerName, dataProduct, tablePrefix: inputTablePrefix, outputS3Path: outputS3PathPrefix } = event.Payload;
   let outputS3Path, tablePrefix;
   const { triggerType, updatePolicy, scheduleRate } = dataProduct.updateTrigger;
-  const now = Date.now();
+  const ingestionTimestamp = Date.now().toString();
+
+  // if update policy is APPEND, for every update, the new data will be imported in the same location as a new partition by the ingestion timestamp
+  // and always use the same glue table.
+  //    for example:
+  // .           - outputLocation: outputS3PathPrefix/ada_default_dataset/1670629770233
+  //             - tableName: tableprefix
+  // .  the transform chain should run on the
+  //
+  // if update policy is REPLACE, for every upate, the new data will be imported to a new location and use a new glue table
+  // .  for example:
+  //             - outputLocation: outputS3PathPrefix/1670629770233/ada_default_dataset/
+  // .           - tableName: tableprefix1670629770233
+  // This logic should apply to all connectors so every connection must have PrepareExternalImport as the first step in the
+  // importing state machine
 
   if (updatePolicy === DataProductUpdatePolicy.APPEND) {
-    if (dataProduct.updateTrigger.triggerType === DataProductUpdateTriggerType.SCHEDULE) {
-      // Use the glue partition syntax to treat new data as another partition of the existing table
-      outputS3Path = s3PathJoin(
-        outputS3PathPrefix,
-        DataSetIds.DEFAULT,
-        `${DATA_PRODUCT_APPEND_DATA_PARTITION_KEY}=${now}`,
-      );
-      // The table prefix for our crawler remains unchanged since we're updating the existing table. We therefore return
-      // the original table prefix for the get-crawled-table-details step which comes later.
-      tablePrefix = inputTablePrefix;
-    } else {
-      // currently only supports scheduled append, on-demand support to be implemented
-      throw new VError(
-        { name: 'UsupportedUpdateTypeError' },
-        `Unsupported update type ${updatePolicy} with trigger type ${dataProduct.updateTrigger?.triggerType}`,
-      );
-    }
-  } else {
-    tablePrefix = `${inputTablePrefix}${now}`;
-    outputS3Path = s3PathJoin(outputS3PathPrefix, `${now}`, DataSetIds.DEFAULT);
+    // Use the glue partition syntax to treat new data as another partition of the existing table
+    // The table prefix for our crawler remains unchanged since we're updating the existing table. We therefore return
+    // the original table prefix for the get-crawled-table-details step which comes later.
+    const newIngestionLocation = getNewIngestionPartition(inputTablePrefix, outputS3PathPrefix, ingestionTimestamp);
+    tablePrefix = newIngestionLocation.tablePrefix;
+    outputS3Path = newIngestionLocation.outputS3Path;
+  }
+  // if update policy is undefined, it is default to be REPLACE. This should be changed to be more explicit later
+  // keep it for backward compatibility
+  else if (updatePolicy === undefined || updatePolicy === DataProductUpdatePolicy.REPLACE) {
+    const newIngestionLocation = getNewIngestionLocation(inputTablePrefix, outputS3PathPrefix, ingestionTimestamp);
+    tablePrefix = newIngestionLocation.tablePrefix;
+    outputS3Path = newIngestionLocation.outputS3Path;
     await glue
       .updateCrawler({
         Name: crawlerName,
@@ -73,12 +77,19 @@ export const handler = async (
         TablePrefix: tablePrefix,
       })
       .promise();
+  } else {
+    throw new VError(
+      { name: 'UsupportedUpdatePolicyError' },
+      `Unsupported update policy ${updatePolicy}. Valid value is APPEND or REPLACE`,
+    );
   }
+
   return {
     ...event.Payload,
     tablePrefix,
     outputS3Path,
     triggerType,
+    ingestionTimestamp,
     scheduleRate,
   };
 };

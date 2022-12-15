@@ -2,15 +2,16 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { CreateDataProductView } from '../../../index';
-import { DataProductUpdateTriggerType, SourceDetailsGoogleAnalytics, SourceType } from '@ada/common';
+import { DataProductUpdateTriggerType } from '@ada/common';
 import { act } from '@testing-library/react';
 import { userEvent, within } from '@storybook/testing-library';
 import { assertReview, assertSubmit, clickNext, gotoSourceTypeDetails, selectUpdateTriggerType, useSourceTypeTestApiMocks } from '../../helpers';
 import { DELAY } from '$testing/interaction';
 import { GOOGLE_SOURCE_DETAILS, selectMostRecentAuth, useGoogleSourceTypeTestSetup } from './helpers';
 import { multiselectOptionEvent } from '$testing/user-event';
+import * as Connectors from '@ada/connectors';
 
-const SOURCE_DETAILS: SourceDetailsGoogleAnalytics = {
+const SOURCE_DETAILS: Connectors.GoogleAnalytics.ISourceDetails = {
   ...GOOGLE_SOURCE_DETAILS,
   viewId: '12345678',
   dimensions: 'ga:userType,ga:visitCount',
@@ -20,7 +21,7 @@ const SOURCE_DETAILS: SourceDetailsGoogleAnalytics = {
 }
 
 export default {
-  title: `Views/DataProduct/Create/${SourceType.GOOGLE_ANALYTICS}`,
+  title: `Views/DataProduct/Create/${Connectors.GoogleAnalytics.ID}`,
   component: CreateDataProductView,
 } as ComponentMeta<typeof CreateDataProductView>;
 
@@ -33,7 +34,7 @@ const Template: ComponentStory<typeof CreateDataProductView> = (args) => {
 
 export const Primary = Template.bind({});
 Primary.play = async ({ canvasElement }) => {
-  await gotoSourceTypeDetails(canvasElement, SourceType.GOOGLE_ANALYTICS);
+  await gotoSourceTypeDetails(canvasElement, Connectors.GoogleAnalytics.ID);
 
   const { getByLabelText } = within(canvasElement);
 
@@ -69,7 +70,7 @@ Primary.play = async ({ canvasElement }) => {
 
   await clickNext(canvasElement);
 
-  await assertReview(canvasElement, {
+  await assertReview(canvasElement, Connectors.GoogleAnalytics.ID, {
     ...SOURCE_DETAILS,
     privateKeyId: '**********',
     privateKey: '**********',
@@ -77,7 +78,7 @@ Primary.play = async ({ canvasElement }) => {
 
   await act(async () => {
     await assertSubmit(canvasElement, {
-      sourceType: SourceType.GOOGLE_ANALYTICS,
+      sourceType: Connectors.GoogleAnalytics.ID,
       sourceDetails: SOURCE_DETAILS,
     });
   })

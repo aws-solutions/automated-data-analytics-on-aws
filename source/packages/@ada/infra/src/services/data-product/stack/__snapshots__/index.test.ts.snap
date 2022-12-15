@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-DataProductService) - Automated Data Analytics on AWS. Version v1.0.2",
+  "Description": "(SO0190-DataProductService) - Automated Data Analytics on AWS. Version v1.1.0",
   "Outputs": Object {
     "AdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaEventBridgeUpdateDataProductE054F2A1Arn": Object {
       "Value": Object {
@@ -23,6 +23,11 @@ Object {
     "AdaDataProductServiceDataProductTableC1CE90D5Ref": Object {
       "Value": Object {
         "Ref": "DataProductTable",
+      },
+    },
+    "AdaDataProductServiceDomainTableE30344A2Ref": Object {
+      "Value": Object {
+        "Ref": "DomainTable",
       },
     },
     "AdaDataProductServiceFileUploadBucket4C6FA9E4Arn": Object {
@@ -67,6 +72,38 @@ Object {
         "Fn::GetAtt": Array [
           "StaticInfrastructureStack4F5EE61A",
           "Outputs.AdaDataProductServiceStaticInfrastructureDataBucketD9C0AD53Arn",
+        ],
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressGatewayDataIngressTransitGateway196F0E44Id": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "StaticInfrastructureStack4F5EE61A",
+          "Outputs.AdaDataProductServiceStaticInfrastructureDataIngressGatewayDataIngressTransitGateway196F0E44Id",
+        ],
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressGatewayDataIngressVPCAttachmentRouteTable903EB9C8Ref": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "StaticInfrastructureStack4F5EE61A",
+          "Outputs.AdaDataProductServiceStaticInfrastructureDataIngressGatewayDataIngressVPCAttachmentRouteTable903EB9C8Ref",
+        ],
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressGatewayDataSourceVPCAttachmentRouteTable76F28C73Ref": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "StaticInfrastructureStack4F5EE61A",
+          "Outputs.AdaDataProductServiceStaticInfrastructureDataIngressGatewayDataSourceVPCAttachmentRouteTable76F28C73Ref",
+        ],
+      },
+    },
+    "AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressVpcDataIngressVPCCFF11DA8CidrBlock": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "StaticInfrastructureStack4F5EE61A",
+          "Outputs.AdaDataProductServiceStaticInfrastructureDataIngressVpcDataIngressVPCCFF11DA8CidrBlock",
         ],
       },
     },
@@ -167,10 +204,16 @@ Object {
     "referencetoAdaLayer6FB4FEF4Ref": Object {
       "Type": "String",
     },
+    "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID": Object {
+      "Type": "String",
+    },
     "referencetoAdaSharedEvntBus3C45F515Arn": Object {
       "Type": "String",
     },
     "referencetoAdaSharedEvntBus3C45F515Ref": Object {
+      "Type": "String",
+    },
+    "referencetoAdasendAnonymousData25711742Ref": Object {
       "Type": "String",
     },
   },
@@ -378,8 +421,14 @@ Object {
           "referencetoAdaLayer6FB4FEF4Ref": Object {
             "Ref": "referencetoAdaLayer6FB4FEF4Ref",
           },
+          "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID": Object {
+            "Ref": "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID",
+          },
           "referencetoAdaSharedEvntBus3C45F515Arn": Object {
             "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+          },
+          "referencetoAdasendAnonymousData25711742Ref": Object {
+            "Ref": "referencetoAdasendAnonymousData25711742Ref",
           },
         },
         "Tags": Array [
@@ -389,7 +438,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -407,6 +456,29 @@ Object {
       },
       "Type": "AWS::CloudFormation::Stack",
       "UpdateReplacePolicy": "Delete",
+    },
+    "AppRegistryAssociation": Object {
+      "Properties": Object {
+        "Application": Object {
+          "Fn::Join": Array [
+            "-",
+            Array [
+              "Automated-Data-Analysis-on-AWS",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+            ],
+          ],
+        },
+        "Resource": Object {
+          "Ref": "AWS::StackId",
+        },
+        "ResourceType": "CFN_STACK",
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
     },
     "BuiltInTransformationStackBC8A1D71": Object {
       "DeletionPolicy": "Delete",
@@ -426,7 +498,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -830,6 +902,9 @@ Object {
     },
     "SchemaPreviewStack96AF8263": Object {
       "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "StaticInfrastructureStack4F5EE61A",
+      ],
       "Properties": Object {
         "Parameters": Object {
           "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref": Object {
@@ -877,6 +952,30 @@ Object {
           "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef": Object {
             "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef",
           },
+          "referencetoAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet98B3AEECRef": Object {
+            "Fn::GetAtt": Array [
+              "StaticInfrastructureStack4F5EE61A",
+              "Outputs.AdaDataProductServiceStaticInfrastructureDataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet98B3AEECRef",
+            ],
+          },
+          "referencetoAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet6769BEE4Ref": Object {
+            "Fn::GetAtt": Array [
+              "StaticInfrastructureStack4F5EE61A",
+              "Outputs.AdaDataProductServiceStaticInfrastructureDataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet6769BEE4Ref",
+            ],
+          },
+          "referencetoAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressVpcPreviewSecurityGroupA3BA1BD7GroupId": Object {
+            "Fn::GetAtt": Array [
+              "StaticInfrastructureStack4F5EE61A",
+              "Outputs.AdaDataProductServiceStaticInfrastructureDataIngressVpcPreviewSecurityGroupA3BA1BD7GroupId",
+            ],
+          },
+          "referencetoAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressVpcglueJDBCTargetSecurityGroup80904DD3GroupId": Object {
+            "Fn::GetAtt": Array [
+              "StaticInfrastructureStack4F5EE61A",
+              "Outputs.AdaDataProductServiceStaticInfrastructureDataIngressVpcglueJDBCTargetSecurityGroup80904DD3GroupId",
+            ],
+          },
           "referencetoAdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureScriptsBucketD6FE34F9Arn": Object {
             "Fn::GetAtt": Array [
               "StaticInfrastructureStack4F5EE61A",
@@ -915,7 +1014,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -1130,7 +1229,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {

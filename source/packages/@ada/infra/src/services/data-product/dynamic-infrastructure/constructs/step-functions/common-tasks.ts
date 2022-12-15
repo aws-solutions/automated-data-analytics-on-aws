@@ -2,22 +2,22 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { CallingUser } from '@ada/common';
 import { Construct } from 'constructs';
-import { DataProductEventDetailTypes, EventSource } from '@ada/microservice-common';
+import { DataProductEventDetailTypes, EventSource, StaticInfra } from '@ada/microservice-common';
 import { EventBridgePutEvents } from 'aws-cdk-lib/aws-stepfunctions-tasks';
-import { StaticInfrastructureRefs } from '../static-infrastructure-references';
 import { TaskInput } from 'aws-cdk-lib/aws-stepfunctions';
 import type { DataProductEntity } from '@ada/api';
 
 export interface CommonTasksProps {
   readonly callingUser: CallingUser;
   readonly dataProduct: DataProductEntity;
-  readonly staticInfrastructureReferences: StaticInfrastructureRefs;
+  readonly staticInfrastructureReferences: StaticInfra.Refs.IRecord;
   readonly additionalNotificationPayload?: { [key: string]: any };
 }
 
 export default class CommonTasks extends Construct {
   public readonly putErrorEventOnEventBridge: EventBridgePutEvents;
   public readonly putSuccessEventOnEventBridge: EventBridgePutEvents;
+  public readonly putNoUpdateEventOnEventBridge: EventBridgePutEvents;
 
   constructor(
     scope: Construct,
@@ -65,6 +65,15 @@ export default class CommonTasks extends Construct {
       },
       DataProductEventDetailTypes.DATA_PRODUCT_IMPORT_SUCCESS,
       'Success',
+    );
+
+    this.putNoUpdateEventOnEventBridge = putEventOnEventBridge(
+      {
+        dataProductCompositeIdentifier: `${dataProduct.domainId}.${dataProduct.dataProductId}`,
+        ...additionalNotificationPayload,
+      },
+      DataProductEventDetailTypes.DATA_PRODUCT_IMPORT_SUCCESS_NO_UPDATE,
+      'SuccessNoUpdate',
     );
   }
 }

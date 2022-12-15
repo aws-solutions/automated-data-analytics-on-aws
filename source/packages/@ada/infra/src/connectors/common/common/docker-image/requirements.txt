@@ -1,0 +1,5 @@
+boto3==1.21.36
+botocore==1.24.36
+smart_open[s3]==5.2.1
+pandas==1.3.5
+pyarrow==7.0.0

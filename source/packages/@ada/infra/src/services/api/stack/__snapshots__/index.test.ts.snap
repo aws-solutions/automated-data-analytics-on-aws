@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-ApiService) - Automated Data Analytics on AWS. Version v1.0.2",
+  "Description": "(SO0190-ApiService) - Automated Data Analytics on AWS. Version v1.1.0",
   "Outputs": Object {
     "AdaApiServiceFederatedApiAccessRequestTableC2AE5655Arn": Object {
       "Value": Object {
@@ -369,6 +369,29 @@ Object {
         ],
       },
       "Type": "AWS::IAM::Policy",
+    },
+    "AppRegistryAssociation": Object {
+      "Properties": Object {
+        "Application": Object {
+          "Fn::Join": Array [
+            "-",
+            Array [
+              "Automated-Data-Analysis-on-AWS",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+            ],
+          ],
+        },
+        "Resource": Object {
+          "Ref": "AWS::StackId",
+        },
+        "ResourceType": "CFN_STACK",
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
     },
     "FederatedApiAccessRequestTableCounterInitialization71CA00CC": Object {
       "DeletionPolicy": "Delete",
@@ -3963,9 +3986,6 @@ Object {
     "FederatedApiFederatedRestApiOPTIONSDAF42E56": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "FederatedApiCustomAuthorizerHandlerFACFB2CE",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -4355,9 +4375,6 @@ Object {
     "FederatedApiFederatedRestApiapiaccesspolicyOPTIONS7ECA6862": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "FederatedApiCustomAuthorizerHandlerFACFB2CE",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -4988,9 +5005,6 @@ Object {
     "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdOPTIONSDE3C07F9": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "FederatedApiCustomAuthorizerHandlerFACFB2CE",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -5671,9 +5685,6 @@ Object {
     "FederatedApiFederatedRestApicostOPTIONS031F695C": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "FederatedApiCustomAuthorizerHandlerFACFB2CE",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -5715,9 +5726,6 @@ Object {
     "FederatedApiFederatedRestApipermissionOPTIONS4C8552DE": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "FederatedApiCustomAuthorizerHandlerFACFB2CE",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -5771,9 +5779,6 @@ Object {
     "FederatedApiFederatedRestApipermissionuserOPTIONSBFEA1350": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "FederatedApiCustomAuthorizerHandlerFACFB2CE",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -6012,9 +6017,6 @@ Object {
     "FederatedApiFederatedRestApipermissionuseruserIdOPTIONS39A666CC": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "FederatedApiCustomAuthorizerHandlerFACFB2CE",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [

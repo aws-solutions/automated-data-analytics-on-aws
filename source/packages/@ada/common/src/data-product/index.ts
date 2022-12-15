@@ -9,5 +9,3 @@ export * from './upload-data-product';
 export * from './domain';
 
 export * from './data-product';
-
-export * from './sources';

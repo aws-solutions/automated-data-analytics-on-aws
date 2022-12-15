@@ -1,15 +1,15 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
 import { DataProductPreview } from '@ada/api';
+import { FileUpload } from '@ada/connectors';
 import { FormData, formDataToDataProduct } from '../../utils';
 import { Input } from '@data-driven-forms/react-form-renderer';
 import { MultiPartFileUploader } from '$common/utils/multipart-file-uploader';
 import { MultipartFileUploadProgressInfo, nameToIdentifier } from '$common/utils';
 import { ProgressBar } from '$northstar-plus/components/ProgressBar';
 import { SchemaRenderer } from '$views/data-product/components/schema/SchemaRenderer';
-import { SourceDetailsFileUpload, SourceType, StepFunctionExecutionStatus } from '@ada/common';
 import { Stack } from 'aws-northstar';
-import { UPLOAD_FILE_WIZARD_FIELDS } from '$source-type/file-upload/wizard';
+import { StepFunctionExecutionStatus } from '@ada/common';
 import { get } from 'lodash';
 import { previewDataProductUntilComplete } from '$api/data-product';
 import { useI18nContext } from '$strings';
@@ -30,7 +30,7 @@ export const SchemaPreviewStep: React.FC<SchemaPreviewStepProps> = ({ input, dat
   const [fileUploadError, setFileUploadError] = useState<Error>();
   const [preview, setPreview] = useState<DataProductPreview | undefined>(input.value?.preview);
 
-  const isUpload = formData.sourceType === SourceType.UPLOAD;
+  const isUpload = formData.sourceType === FileUpload.ID;
 
   const generateSchemaPreview = useCallback(
     async (_formData: FormData) => {
@@ -59,12 +59,12 @@ export const SchemaPreviewStep: React.FC<SchemaPreviewStepProps> = ({ input, dat
   );
 
   const uploadFile = useCallback(async () => {
-    if (formData.sourceType === SourceType.UPLOAD) {
+    if (formData.sourceType === FileUpload.ID) {
       try {
         change('canSkipPreview', false); // disable skipping preview while uploading
         setFileUploadProgress(undefined);
         setFileUploadError(undefined);
-        const fileInput = get(formData, UPLOAD_FILE_WIZARD_FIELDS.UPLOAD_FILE);
+        const fileInput = get(formData, FileUpload.CONSTANT.UPLOAD_FILE_WIZARD_FIELD);
         if (fileInput == null) {
           throw new Error(LL.VIEW.DATA_PRODUCT.Wizard.FILE_UPLOAD.error.missingFile());
         }
@@ -74,7 +74,7 @@ export const SchemaPreviewStep: React.FC<SchemaPreviewStepProps> = ({ input, dat
         });
         const result = await uploader.startUpload();
 
-        const sourceDetails: SourceDetailsFileUpload = {
+        const sourceDetails: FileUpload.ISourceDetails = {
           // remove the fileName from the key, just use the folder for the data product creation
           key: result.key.split('/').slice(0, -1).join('/'),
           bucket: result.bucket,

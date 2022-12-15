@@ -4,7 +4,7 @@ info:
     of data, providing an end-to-end platform used for ingesting, transforming, governing,
     and querying datasets through a standalone user interface
   title: Automated Data Analytics on AWS API
-  version: 1.0.2
+  version: 1.1.0
 servers:
 - url: https://{apigId}.execute-api.{region}.amazonaws.com/{stage}
   variables:
@@ -4679,23 +4679,7 @@ components:
         name: name
         sourceDataStatusDetails: sourceDataStatusDetails
         dataStatusDetails: dataStatusDetails
-        sourceDetails:
-          clientId: clientId
-          clientEmail: clientEmail
-          query: query
-          privateKeySecretName: privateKeySecretName
-          bucket: bucket
-          privateKey: privateKey
-          scheduleRate: scheduleRate
-          viewId: viewId
-          until: until
-          kinesisStreamArn: kinesisStreamArn
-          metrics: metrics
-          projectId: projectId
-          key: key
-          privateKeyId: privateKeyId
-          dimensions: dimensions
-          since: since
+        sourceDetails: '{}'
       properties:
         childDataProducts:
           description: Any child data products, ie data products that use this data
@@ -4781,7 +4765,7 @@ components:
             eg error message if data source inference failed
           type: string
         sourceDetails:
-          $ref: '#/components/schemas/SouceDetailsSchema'
+          type: object
         sourceType:
           $ref: '#/components/schemas/SourceTypeEnum'
         tags:
@@ -4893,7 +4877,7 @@ components:
             eg error message if data source inference failed
           type: string
         sourceDetails:
-          $ref: '#/components/schemas/SouceDetailsSchema'
+          type: object
         sourceType:
           $ref: '#/components/schemas/SourceTypeEnum'
         tags:
@@ -4937,23 +4921,7 @@ components:
         dataProductId: dataProductId
         infrastructureStatusDetails: infrastructureStatusDetails
         dataStatusDetails: dataStatusDetails
-        sourceDetails:
-          clientId: clientId
-          clientEmail: clientEmail
-          query: query
-          privateKeySecretName: privateKeySecretName
-          bucket: bucket
-          privateKey: privateKey
-          scheduleRate: scheduleRate
-          viewId: viewId
-          until: until
-          kinesisStreamArn: kinesisStreamArn
-          metrics: metrics
-          projectId: projectId
-          key: key
-          privateKeyId: privateKeyId
-          dimensions: dimensions
-          since: since
+        sourceDetails: '{}'
         enableAutomaticPii: true
         updatedBy: updatedBy
         cloudFormationStackId: cloudFormationStackId
@@ -5061,7 +5029,7 @@ components:
             eg error message if data source inference failed
           type: string
         sourceDetails:
-          $ref: '#/components/schemas/SouceDetailsSchema'
+          type: object
         sourceType:
           $ref: '#/components/schemas/SourceTypeEnum'
         tags:
@@ -5154,23 +5122,7 @@ components:
         dataProductId: dataProductId
         infrastructureStatusDetails: infrastructureStatusDetails
         dataStatusDetails: dataStatusDetails
-        sourceDetails:
-          clientId: clientId
-          clientEmail: clientEmail
-          query: query
-          privateKeySecretName: privateKeySecretName
-          bucket: bucket
-          privateKey: privateKey
-          scheduleRate: scheduleRate
-          viewId: viewId
-          until: until
-          kinesisStreamArn: kinesisStreamArn
-          metrics: metrics
-          projectId: projectId
-          key: key
-          privateKeyId: privateKeyId
-          dimensions: dimensions
-          since: since
+        sourceDetails: '{}'
         enableAutomaticPii: true
         cloudFormationStackId: cloudFormationStackId
         childDataProducts:
@@ -5267,7 +5219,7 @@ components:
             eg error message if data source inference failed
           type: string
         sourceDetails:
-          $ref: '#/components/schemas/SouceDetailsSchema'
+          type: object
         sourceType:
           $ref: '#/components/schemas/SourceTypeEnum'
         tags:
@@ -5556,23 +5508,7 @@ components:
         name: name
         sourceDataStatusDetails: sourceDataStatusDetails
         dataStatusDetails: dataStatusDetails
-        sourceDetails:
-          clientId: clientId
-          clientEmail: clientEmail
-          query: query
-          privateKeySecretName: privateKeySecretName
-          bucket: bucket
-          privateKey: privateKey
-          scheduleRate: scheduleRate
-          viewId: viewId
-          until: until
-          kinesisStreamArn: kinesisStreamArn
-          metrics: metrics
-          projectId: projectId
-          key: key
-          privateKeyId: privateKeyId
-          dimensions: dimensions
-          since: since
+        sourceDetails: '{}'
       properties:
         childDataProducts:
           description: Any child data products, ie data products that use this data
@@ -5658,7 +5594,7 @@ components:
             eg error message if data source inference failed
           type: string
         sourceDetails:
-          $ref: '#/components/schemas/SouceDetailsSchema'
+          type: object
         sourceType:
           $ref: '#/components/schemas/SourceTypeEnum'
         tags:
@@ -6206,23 +6142,7 @@ components:
           name: name
           sourceDataStatusDetails: sourceDataStatusDetails
           dataStatusDetails: dataStatusDetails
-          sourceDetails:
-            clientId: clientId
-            clientEmail: clientEmail
-            query: query
-            privateKeySecretName: privateKeySecretName
-            bucket: bucket
-            privateKey: privateKey
-            scheduleRate: scheduleRate
-            viewId: viewId
-            until: until
-            kinesisStreamArn: kinesisStreamArn
-            metrics: metrics
-            projectId: projectId
-            key: key
-            privateKeyId: privateKeyId
-            dimensions: dimensions
-            since: since
+          sourceDetails: '{}'
         - latestDataUpdateTimestamp: latestDataUpdateTimestamp
           enableAutomaticPii: true
           cloudFormationStackId: cloudFormationStackId
@@ -6247,23 +6167,7 @@ components:
           name: name
           sourceDataStatusDetails: sourceDataStatusDetails
           dataStatusDetails: dataStatusDetails
-          sourceDetails:
-            clientId: clientId
-            clientEmail: clientEmail
-            query: query
-            privateKeySecretName: privateKeySecretName
-            bucket: bucket
-            privateKey: privateKey
-            scheduleRate: scheduleRate
-            viewId: viewId
-            until: until
-            kinesisStreamArn: kinesisStreamArn
-            metrics: metrics
-            projectId: projectId
-            key: key
-            privateKeyId: privateKeyId
-            dimensions: dimensions
-            since: since
+          sourceDetails: '{}'
       properties:
         dataProducts:
           description: The data products involved in the query
@@ -6423,78 +6327,6 @@ components:
       description: A redirect to the query result api
       title: GetQuerySyncResultResponse
       type: object
-    GoogleAnalyticsIdentifier:
-      properties:
-        dimensions:
-          maxLength: 20480
-          minLength: 4
-          pattern: ^(ga:[a-zA-Z0-9]+,?)+$
-          type: string
-        metrics:
-          maxLength: 20480
-          minLength: 4
-          pattern: ^(ga:[a-zA-Z0-9]+,?)+$
-          type: string
-        scheduleRate:
-          type: string
-        since:
-          maxLength: 64
-          pattern: ^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?))?$
-          type: string
-        until:
-          maxLength: 64
-          pattern: ^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?))?$
-          type: string
-        viewId:
-          type: string
-      required:
-      - dimensions
-      - metrics
-      - viewId
-      type: object
-    GoogleBigQueryTableIdentifier:
-      properties:
-        query:
-          type: string
-      required:
-      - query
-      type: object
-    GoogleServiceAccountAuth:
-      properties:
-        clientEmail:
-          description: The email address of the service account
-          pattern: ^[^@]+@[^@]+\.iam\.gserviceaccount\.com$
-          title: Client Email
-          type: string
-        clientId:
-          description: The client id of the Google Service Account
-          title: Client ID
-          type: string
-        privateKey:
-          description: The private key of the service account
-          pattern: ^(-{5}BEGIN PRIVATE KEY-{5}\s(([\w+/=]{63,76}\s){10,30})([\w+/=]{1,76}\s)?-{5}END
-            PRIVATE KEY-{5})\s?$
-          title: Private Key
-          type: string
-        privateKeyId:
-          description: The private key id of the Google Service Account
-          title: Private Key ID
-          type: string
-        privateKeySecretName:
-          type: string
-        projectId:
-          description: The ID of the Google Cloud Project
-          maxLength: 30
-          minLength: 6
-          pattern: ^[a-z][a-z0-9-]{4,28}[a-z0-9]$
-          title: Project Id
-          type: string
-      required:
-      - clientEmail
-      - clientId
-      - privateKeyId
-      - projectId
-      type: object
     GovernedColumnMetadata:
       properties:
         dataType:
@@ -6632,7 +6464,7 @@ components:
             eg error message if data source inference failed
           type: string
         sourceDetails:
-          $ref: '#/components/schemas/SouceDetailsSchema'
+          type: object
         sourceType:
           $ref: '#/components/schemas/SourceTypeEnum'
         tags:
@@ -6670,23 +6502,7 @@ components:
         dataProductId: dataProductId
         infrastructureStatusDetails: infrastructureStatusDetails
         dataStatusDetails: dataStatusDetails
-        sourceDetails:
-          clientId: clientId
-          clientEmail: clientEmail
-          query: query
-          privateKeySecretName: privateKeySecretName
-          bucket: bucket
-          privateKey: privateKey
-          scheduleRate: scheduleRate
-          viewId: viewId
-          until: until
-          kinesisStreamArn: kinesisStreamArn
-          metrics: metrics
-          projectId: projectId
-          key: key
-          privateKeyId: privateKeyId
-          dimensions: dimensions
-          since: since
+        sourceDetails: '{}'
         enableAutomaticPii: true
         updatedBy: updatedBy
         cloudFormationStackId: cloudFormationStackId
@@ -6794,7 +6610,7 @@ components:
             eg error message if data source inference failed
           type: string
         sourceDetails:
-          $ref: '#/components/schemas/SouceDetailsSchema'
+          type: object
         sourceType:
           $ref: '#/components/schemas/SourceTypeEnum'
         tags:
@@ -7106,22 +6922,6 @@ components:
       - members
       title: GroupMembersInput
       type: object
-    GSLocation:
-      properties:
-        bucket:
-          maxLength: 63
-          minLength: 3
-          pattern: ^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$
-          type: string
-        key:
-          maxLength: 1024
-          minLength: 1
-          pattern: ^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$
-          type: string
-      required:
-      - bucket
-      - key
-      type: object
     IdentityAttribute:
       example:
         name: name
@@ -7431,23 +7231,7 @@ components:
           dataProductId: dataProductId
           infrastructureStatusDetails: infrastructureStatusDetails
           dataStatusDetails: dataStatusDetails
-          sourceDetails:
-            clientId: clientId
-            clientEmail: clientEmail
-            query: query
-            privateKeySecretName: privateKeySecretName
-            bucket: bucket
-            privateKey: privateKey
-            scheduleRate: scheduleRate
-            viewId: viewId
-            until: until
-            kinesisStreamArn: kinesisStreamArn
-            metrics: metrics
-            projectId: projectId
-            key: key
-            privateKeyId: privateKeyId
-            dimensions: dimensions
-            since: since
+          sourceDetails: '{}'
           enableAutomaticPii: true
           updatedBy: updatedBy
           cloudFormationStackId: cloudFormationStackId
@@ -7476,23 +7260,7 @@ components:
           dataProductId: dataProductId
           infrastructureStatusDetails: infrastructureStatusDetails
           dataStatusDetails: dataStatusDetails
-          sourceDetails:
-            clientId: clientId
-            clientEmail: clientEmail
-            query: query
-            privateKeySecretName: privateKeySecretName
-            bucket: bucket
-            privateKey: privateKey
-            scheduleRate: scheduleRate
-            viewId: viewId
-            until: until
-            kinesisStreamArn: kinesisStreamArn
-            metrics: metrics
-            projectId: projectId
-            key: key
-            privateKeyId: privateKeyId
-            dimensions: dimensions
-            since: since
+          sourceDetails: '{}'
           enableAutomaticPii: true
           updatedBy: updatedBy
           cloudFormationStackId: cloudFormationStackId
@@ -8975,6 +8743,7 @@ components:
       - domainId
       type: object
     S3Location:
+      description: Details about the bucket and the object that have been stored
       example:
         bucket: bucket
         key: key
@@ -8992,6 +8761,7 @@ components:
       required:
       - bucket
       - key
+      title: S3Location
       type: object
     SavedQuery:
       properties:
@@ -9684,157 +9454,20 @@ components:
       - results
       type: object
     SouceDetailsSchema:
-      example:
-        clientId: clientId
-        clientEmail: clientEmail
-        query: query
-        privateKeySecretName: privateKeySecretName
-        bucket: bucket
-        privateKey: privateKey
-        scheduleRate: scheduleRate
-        viewId: viewId
-        until: until
-        kinesisStreamArn: kinesisStreamArn
-        metrics: metrics
-        projectId: projectId
-        key: key
-        privateKeyId: privateKeyId
-        dimensions: dimensions
-        since: since
-      properties:
-        bucket:
-          maxLength: 63
-          minLength: 3
-          pattern: ^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$
-          type: string
-        clientEmail:
-          description: The email address of the service account
-          pattern: ^[^@]+@[^@]+\.iam\.gserviceaccount\.com$
-          title: Client Email
-          type: string
-        clientId:
-          description: The client id of the Google Service Account
-          title: Client ID
-          type: string
-        dimensions:
-          maxLength: 20480
-          minLength: 4
-          pattern: ^(ga:[a-zA-Z0-9]+,?)+$
-          type: string
-        key:
-          maxLength: 1024
-          minLength: 1
-          pattern: ^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$
-          type: string
-        kinesisStreamArn:
-          maxLength: 2048
-          pattern: ^arn:[\w]+:[\w-]+:[\w-]+:[\d]+:[*-\/\w]+$
-          type: string
-        metrics:
-          maxLength: 20480
-          minLength: 4
-          pattern: ^(ga:[a-zA-Z0-9]+,?)+$
-          type: string
-        privateKey:
-          description: The private key of the service account
-          pattern: ^(-{5}BEGIN PRIVATE KEY-{5}\s(([\w+/=]{63,76}\s){10,30})([\w+/=]{1,76}\s)?-{5}END
-            PRIVATE KEY-{5})\s?$
-          title: Private Key
-          type: string
-        privateKeyId:
-          description: The private key id of the Google Service Account
-          title: Private Key ID
-          type: string
-        privateKeySecretName:
-          type: string
-        projectId:
-          description: The ID of the Google Cloud Project
-          maxLength: 30
-          minLength: 6
-          pattern: ^[a-z][a-z0-9-]{4,28}[a-z0-9]$
-          title: Project Id
-          type: string
-        query:
-          type: string
-        scheduleRate:
-          type: string
-        since:
-          maxLength: 64
-          pattern: ^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?))?$
-          type: string
-        until:
-          maxLength: 64
-          pattern: ^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?))?$
-          type: string
-        viewId:
-          type: string
-      type: object
-    SourceDetailsFileUpload:
-      properties:
-        bucket:
-          maxLength: 63
-          minLength: 3
-          pattern: ^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$
-          type: string
-        key:
-          maxLength: 1024
-          minLength: 1
-          pattern: ^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$
-          type: string
-      required:
-      - bucket
-      - key
-      type: object
-    SourceDetailsGoogleAnalytics:
-      allOf:
-      - $ref: '#/components/schemas/GoogleAnalyticsIdentifier'
-      - $ref: '#/components/schemas/GoogleServiceAccountAuth'
-      type: object
-    SourceDetailsGoogleBigQuery:
-      allOf:
-      - $ref: '#/components/schemas/GoogleBigQueryTableIdentifier'
-      - $ref: '#/components/schemas/GoogleServiceAccountAuth'
-      type: object
-    SourceDetailsGoogleStorage:
-      allOf:
-      - $ref: '#/components/schemas/GSLocation'
-      - $ref: '#/components/schemas/GoogleServiceAccountAuth'
-      type: object
-    SourceDetailsKinesis:
-      properties:
-        kinesisStreamArn:
-          maxLength: 2048
-          pattern: ^arn:[\w]+:[\w-]+:[\w-]+:[\d]+:[*-\/\w]+$
-          type: string
-      required:
-      - kinesisStreamArn
-      type: object
-    SourceDetailsS3:
-      properties:
-        bucket:
-          maxLength: 63
-          minLength: 3
-          pattern: ^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$
-          type: string
-        key:
-          maxLength: 1024
-          minLength: 1
-          pattern: ^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$
-          type: string
-      required:
-      - bucket
-      - key
       type: object
     SourceTypeEnum:
       description: Source type value
       enum:
       - UPLOAD
-      - QUERY
       - S3
       - KINESIS
       - GOOGLE_ANALYTICS
       - GOOGLE_BIGQUERY
       - GOOGLE_STORAGE
+      - CLOUDWATCH
+      - MYSQL5
+      - POSTGRESQL
+      - SQLSERVER
       type: string
     Tag:
       properties:
@@ -9842,12 +9475,12 @@ components:
           maxLength: 128
           minLength: 1
           pattern: ^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$
-          type: string
+          type: object
         value:
           maxLength: 256
           minLength: 0
           pattern: ^([a-zA-Z0-9_.:/=+-@]{0,256})$
-          type: string
+          type: object
       required:
       - key
       type: object

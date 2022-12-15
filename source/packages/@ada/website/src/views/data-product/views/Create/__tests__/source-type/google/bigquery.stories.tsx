@@ -2,19 +2,20 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { CreateDataProductView } from '../../../index';
-import { DataProductUpdateTriggerType, SourceDetailsGoogleBigQuery, SourceType } from '@ada/common';
+import { DataProductUpdateTriggerType } from '@ada/common';
 import { act } from '@testing-library/react';
 import { assertReview, assertSubmit, clickNext, gotoSourceTypeDetails, selectUpdateTriggerType, useSourceTypeTestApiMocks } from '../../helpers';
 import { GOOGLE_SOURCE_DETAILS, selectMostRecentAuth, useGoogleSourceTypeTestSetup } from './helpers';
 import { findSQLEditor } from '$testing/sql-editor';
+import * as Connectors from '@ada/connectors';
 
-const SOURCE_DETAILS: SourceDetailsGoogleBigQuery = {
+const SOURCE_DETAILS: Connectors.GoogleBigQuery.ISourceDetails = {
   ...GOOGLE_SOURCE_DETAILS,
   query: 'SELECT * FROM table'
 }
 
 export default {
-  title: `Views/DataProduct/Create/${SourceType.GOOGLE_BIGQUERY}`,
+  title: `Views/DataProduct/Create/${Connectors.GoogleBigQuery.ID}`,
   component: CreateDataProductView,
 } as ComponentMeta<typeof CreateDataProductView>;
 
@@ -27,7 +28,7 @@ const Template: ComponentStory<typeof CreateDataProductView> = (args) => {
 
 export const Primary = Template.bind({});
 Primary.play = async ({ canvasElement }) => {
-  await gotoSourceTypeDetails(canvasElement, SourceType.GOOGLE_BIGQUERY);
+  await gotoSourceTypeDetails(canvasElement, Connectors.GoogleBigQuery.ID);
 
   await act(async () => {
     const sqlEditor = await findSQLEditor(canvasElement);
@@ -40,7 +41,7 @@ Primary.play = async ({ canvasElement }) => {
 
   await clickNext(canvasElement);
 
-  await assertReview(canvasElement, {
+  await assertReview(canvasElement, Connectors.GoogleBigQuery.ID, {
     ...SOURCE_DETAILS,
     privateKeyId: '**********',
     privateKey: '**********',
@@ -48,7 +49,7 @@ Primary.play = async ({ canvasElement }) => {
 
   await act(async () => {
     await assertSubmit(canvasElement, {
-      sourceType: SourceType.GOOGLE_BIGQUERY,
+      sourceType: Connectors.GoogleBigQuery.ID,
       sourceDetails: SOURCE_DETAILS,
     });
   })

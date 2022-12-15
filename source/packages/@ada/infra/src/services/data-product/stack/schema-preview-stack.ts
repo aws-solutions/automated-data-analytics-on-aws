@@ -6,6 +6,7 @@ import { ExtendedNestedStack, getUniqueKmsKeyAlias } from '@ada/cdk-core';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { MicroserviceProps } from '@ada/microservice-common';
 import { RemovalPolicy } from 'aws-cdk-lib';
+import DataIngressVPC from '../core/network/vpc';
 import SchemaPreview from '../components/schema-preview';
 import SchemaPreviewApi from '../api/schema-preview-api';
 
@@ -13,6 +14,7 @@ export interface SchemaPreviewStackProps extends MicroserviceProps {
   readonly scriptBucket: Bucket;
   readonly dataBucket: Bucket;
   readonly accessLogsBucket: Bucket;
+  readonly dataIngressVPC: DataIngressVPC;
 }
 
 /**
@@ -29,6 +31,7 @@ export class SchemaPreviewStack extends ExtendedNestedStack {
     });
 
     const schemaPreview = new SchemaPreview(this, 'SchemaPreview', {
+      dataIngressVPC: props.dataIngressVPC,
       scriptBucket: props.scriptBucket,
       dataBucket: props.dataBucket,
       productPreviewKey,

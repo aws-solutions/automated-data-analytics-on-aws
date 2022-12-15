@@ -15,7 +15,6 @@ import {
   NAME_VALIDATION,
   SCHEDULE_RATE_VALIDATION,
   SQL_CLAUSE_VALIDATION,
-  SouceDetailsSchema,
   StepFunctionExecutionStatus,
 } from '@ada/common';
 import {
@@ -348,6 +347,11 @@ export const DataProductTransforms: JsonSchema = {
   definitions: {
     DataProductTransform,
   },
+};
+
+export const SouceDetailsSchema: JsonSchema = {
+  id: `${__filename}/SouceDetailsSchema`,
+  type: JsonSchemaType.OBJECT,
 };
 
 export const DataProductBase: JsonSchema = extendSchema(

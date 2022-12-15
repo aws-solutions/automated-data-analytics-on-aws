@@ -6,11 +6,11 @@ import {
   AthenaQueryExecutionState,
   CallingUser,
   DataProductSourceDataStatus,
-  SourceType,
   hasQueryFailed,
   isQueryExecuting,
   sleep,
 } from '@ada/common';
+import { Connectors } from '@ada/connectors';
 import { DataProduct, DataProductPreview, DataSet, DataSetPreview } from '@ada/api-client';
 import { DataProductStore } from '../../components/ddb/data-product';
 import {
@@ -41,14 +41,12 @@ export interface BuildDataProductInput {
 // The size of data sample to use for final schema inference
 const SCHEMA_INFERENCE_PREVIEW_SAMPLE_SIZE = 100;
 
-// Only S3-based source types can have their source data queried
-const SOURCE_DATA_SUPPORTED_TYPES = new Set<string>(<SourceType[]>[SourceType.S3, SourceType.UPLOAD]);
-
 /**
  * Returns whether or not the given data product supports querying its raw source
  */
-export const isRawSourceSupported = (dataProduct: DataProduct): boolean =>
-  SOURCE_DATA_SUPPORTED_TYPES.has(dataProduct.sourceType);
+export const isRawSourceSupported = (dataProduct: DataProduct): boolean => {
+  return Connectors.CATEGORIES.SOURCE_QUERY_ENABLED_CONNECTORS.has(dataProduct.sourceType as Connectors.ID);
+}
 
 /**
  * Start the final schema preview discovery (to be saved with the data product so it can be governed early)
@@ -256,7 +254,7 @@ export const handler = async ({ callingUser, dataProduct }: BuildDataProductInpu
       // Preview succeeded
       log.info('Preview succeeded');
       let extraDataProductUpdates: Partial<DataProduct> = {};
-      
+
       // Check if we support creating the reference to the raw source
       if (
         isRawSourceSupported(currentDataProduct) &&
@@ -284,7 +282,7 @@ export const handler = async ({ callingUser, dataProduct }: BuildDataProductInpu
       });
     }
   } finally {
-    if (dataProduct?.sourceType === SourceType.UPLOAD) {
+    if (dataProduct?.sourceType === Connectors.Id.UPLOAD) {
       await cleanS3UploadFolder(dataProduct);
     }
     await lockClient.releaseAll();

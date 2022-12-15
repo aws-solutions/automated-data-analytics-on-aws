@@ -1,17 +1,16 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+/** eslint-disable import/order */
+import { CatchProps, INextable, IStateMachine, IntegrationPattern, TaskInput } from 'aws-cdk-lib/aws-stepfunctions';
+import { CfnOutput } from 'aws-cdk-lib';
+import { CompositePrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
+import { Construct } from 'constructs';
 import {
-  CallingUser,
   DATA_PRODUCT_DATA_IMPORT_STATE_MACHINE_STACK_OUTPUT_PREFIX,
   DataProductUpdateTriggerType,
   PrincipalTagServiceValue,
 } from '@ada/common';
-import { CatchProps, IStateMachine, IntegrationPattern, TaskInput } from 'aws-cdk-lib/aws-stepfunctions';
-import { CfnOutput, StackProps } from 'aws-cdk-lib';
-import { CompositePrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
-import { Construct } from 'constructs';
-import { DataProductEntity } from '@ada/api';
-import { DataProductEventDetailTypes, EventSource, StaticInfrastructure, s3PathJoin } from '@ada/microservice-common';
+import { DataProductEventDetailTypes, EventSource, s3PathJoin } from '@ada/microservice-common';
 import { EventBridgePutEvents, LambdaInvoke, StepFunctionsStartExecution } from 'aws-cdk-lib/aws-stepfunctions-tasks';
 import { EventLambdaTargetFunction } from '@ada/infra-common/constructs/lambda/lambda-event-target';
 import { ExtendedStack, NamespaceGlobalUUID, get4DigitsHash, getFriendlyHash } from '@ada/cdk-core';
@@ -21,17 +20,12 @@ import { VError } from 'verror';
 import ArbitraryTransformLoop from '../constructs/step-functions/arbitrary-transform-loop';
 import CommonTasks from '../constructs/step-functions/common-tasks';
 import Crawler from '../constructs/glue/crawler';
-import StaticInfrastructureReferences, {
-  StaticInfrastructureRefs,
-} from '../constructs/static-infrastructure-references';
+import StaticInfrastructureReferences from '../constructs/static-infrastructure-references';
+import type { DataProductEntity } from '@ada/api';
+import type { DynamicInfra, StaticInfra } from '@ada/microservice-common';
 import type { StartDataImportInput } from '../lambdas/handlers/start-data-import';
 
-export interface DynamicInfrastructureStackBaseProps extends StackProps {
-  readonly dataProduct: DataProductEntity;
-  readonly callingUser: CallingUser;
-  readonly staticInfrastructure: StaticInfrastructure;
-  readonly additionalNotificationPayload?: { [key: string]: any };
-}
+export type DynamicInfraStackProps = DynamicInfra.StackProps;
 
 /**
  * Base CDK stack for dynamic infrastructure for a data product.
@@ -42,14 +36,14 @@ export interface DynamicInfrastructureStackBaseProps extends StackProps {
  * Inheriting stacks can optionally create an event bridge rule and any other infrastructure to handle an automatic data
  * update for the data product.
  */
-export default abstract class DynamicInfrastructureStackBase<
-  Props extends DynamicInfrastructureStackBaseProps,
-> extends ExtendedStack {
-  public readonly staticInfrastructureReferences: StaticInfrastructureRefs;
+export abstract class DynamicInfrastructureStackBase extends ExtendedStack implements DynamicInfra.IStack {
+  public readonly staticInfrastructureReferences: StaticInfra.Refs.IRecord;
   public readonly dataProductUniqueIdentifier: string;
+  public readonly glueConnectionName: string;
   public readonly dataBucketPath: string;
   public readonly putSuccessEventOnEventBridge: EventBridgePutEvents;
   public readonly putErrorEventOnEventBridge: EventBridgePutEvents;
+  public readonly putNoUpdateEventOnEventBridge: EventBridgePutEvents;
   public readonly transformLoop: ArbitraryTransformLoop;
   public readonly catchProps: CatchProps = {
     resultPath: '$.ErrorDetails',
@@ -63,18 +57,20 @@ export default abstract class DynamicInfrastructureStackBase<
    * Create a step function state machine to manage ingestion of data for this data product. Expected to include the
    * transform loop upon successful ingestion to apply user-specified and automatic transforms to the data once ingested.
    */
-  protected abstract createDataSourceInfrastructureAndStateMachine(props: Props): IStateMachine;
+  protected abstract createDataSourceInfrastructureAndStateMachine(props: DynamicInfraStackProps): IStateMachine;
 
   /**
    * Create the automatic data update trigger rule for this data product. If not supported, this method may throw an
    * error.
    */
-  protected abstract createAutomaticDataUpdateTriggerRule(props: Props): Rule;
+  protected abstract createAutomaticDataUpdateTriggerRule(props: DynamicInfraStackProps): Rule;
 
   /**
    * Can be overridden to add additional policy statements to the external facing role
    */
-  protected createExternalFacingRoleInlinePolicyStatements(_props: Props): { [key: string]: PolicyDocument } {
+  protected createExternalFacingRoleInlinePolicyStatements(_props: DynamicInfraStackProps): {
+    [key: string]: PolicyDocument;
+  } {
     return {
       glueTransformsPolicy: new PolicyDocument({
         statements: [
@@ -100,12 +96,54 @@ export default abstract class DynamicInfrastructureStackBase<
             ],
             effect: Effect.ALLOW,
           }),
+          new PolicyStatement({
+            resources: [
+              'arn:aws:ec2:*:*:network-interface/*',
+              'arn:aws:ec2:*:*:security-group/*',
+              'arn:aws:ec2:*:*:instance/*',
+            ],
+            actions: ['ec2:CreateTags', 'ec2:DeleteTags'],
+            conditions: {
+              'ForAllValues:StringEquals': {
+                'aws:TagKeys': ['aws-glue-service-resource'],
+              },
+            },
+            effect: Effect.ALLOW,
+          }),
+          new PolicyStatement({
+            resources: ['*'],
+            actions: [
+              'glue:*',
+              's3:GetBucketLocation',
+              's3:ListBucket',
+              's3:ListAllMyBuckets',
+              's3:GetBucketAcl',
+              'ec2:DescribeVpcEndpoints',
+              'ec2:DescribeRouteTables',
+              'ec2:CreateNetworkInterface',
+              'ec2:DeleteNetworkInterface',
+              'ec2:DescribeNetworkInterfaces',
+              'ec2:DescribeSecurityGroups',
+              'ec2:DescribeSubnets',
+              'ec2:DescribeVpcAttribute',
+              'iam:ListRolePolicies',
+              'iam:GetRole',
+              'iam:GetRolePolicy',
+              'cloudwatch:PutMetricData',
+            ],
+            effect: Effect.ALLOW,
+          }),
         ],
       }),
     };
   }
 
-  protected constructor(scope: Construct, id: string, props: Props) {
+  // override this function if the connecto will need to specify connection to the glue transform
+  protected getConnectionName(): string {
+    return '';
+  }
+
+  protected constructor(scope: Construct, id: string, props: DynamicInfraStackProps) {
     super(scope, id, {
       ...props,
       // Must have concrete environment for events
@@ -140,14 +178,21 @@ export default abstract class DynamicInfrastructureStackBase<
       dataProduct.dataProductId,
     )}${get4DigitsHash(this.stackIdentifier)}`.replace(/_/g, '-');
 
-    const { putSuccessEventOnEventBridge, putErrorEventOnEventBridge } = new CommonTasks(this, 'CommonTasks', {
-      callingUser,
-      staticInfrastructureReferences,
-      dataProduct,
-      additionalNotificationPayload,
-    });
+    this.glueConnectionName = this.getConnectionName();
+
+    const { putSuccessEventOnEventBridge, putErrorEventOnEventBridge, putNoUpdateEventOnEventBridge } = new CommonTasks(
+      this,
+      'CommonTasks',
+      {
+        callingUser,
+        staticInfrastructureReferences,
+        dataProduct,
+        additionalNotificationPayload,
+      },
+    );
     this.putErrorEventOnEventBridge = putErrorEventOnEventBridge;
     this.putSuccessEventOnEventBridge = putSuccessEventOnEventBridge;
+    this.putNoUpdateEventOnEventBridge = putNoUpdateEventOnEventBridge;
 
     this.role = new ExternalFacingRole(this, 'SourceAccessRole', {
       service: PrincipalTagServiceValue.DATA_PRODUCT,
@@ -169,6 +214,8 @@ export default abstract class DynamicInfrastructureStackBase<
       putSuccessEventOnEventBridge,
       putErrorEventOnEventBridge,
       sourceAccessRole: this.role,
+      glueConnectionNames: this.glueConnectionName ? [this.glueConnectionName] : undefined,
+      extraJobArgs: props.extraJobArgs,
     });
 
     const stateMachine = this.createDataSourceInfrastructureAndStateMachine(props);
@@ -231,6 +278,25 @@ export default abstract class DynamicInfrastructureStackBase<
     }
   }
 
+  protected buildPrepareImportExternalStep = (
+    crawler: Crawler,
+    dataProduct: DataProductEntity,
+    tablePrefix: string,
+    outputS3Path: string,
+  ): INextable => {
+    return new LambdaInvoke(this, 'PrepareImportExternal', {
+      lambdaFunction: this.staticInfrastructureReferences.prepareExternalImportLambda,
+      payload: TaskInput.fromObject({
+        Payload: {
+          crawlerName: crawler.crawler.name,
+          tablePrefix,
+          outputS3Path,
+          dataProduct,
+        },
+      }),
+    }).addCatch(this.putErrorEventOnEventBridge, this.catchProps);
+  };
+
   /**
    * Build a step for discovering the crawled tables given the table prefix
    * @param tablePrefix the prefix to check
@@ -241,7 +307,7 @@ export default abstract class DynamicInfrastructureStackBase<
     tablePrefix: string,
     id?: string,
     additionalPayload?: { [key: string]: any },
-  ) =>
+  ): INextable =>
     new LambdaInvoke(this, `GetCrawledTableDetailsFor${id || tablePrefix}`, {
       lambdaFunction: this.staticInfrastructureReferences.getCrawledTableDetailsLambda,
       payload: TaskInput.fromObject({
@@ -281,3 +347,5 @@ export default abstract class DynamicInfrastructureStackBase<
     return { executeCrawler, getCrawledTableDetails };
   };
 }
+
+export default DynamicInfrastructureStackBase;

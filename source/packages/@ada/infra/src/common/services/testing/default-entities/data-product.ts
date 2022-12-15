@@ -7,11 +7,12 @@ import {
   DataProductInfrastructureStatus,
   DataProductUpdateTriggerType,
   DataSetIds,
-  SourceType,
 } from '@ada/common';
+import { Connectors } from '@ada/connectors';
 import { DataProduct } from '@ada/api';
-import { StaticInfrastructure } from '../..';
+import { MOCK_GOOGLE_SERVICE_ACCOUNT } from '@ada/connectors/common/google/testing';
 import { TEST_ACCOUNT, TEST_REGION } from '@ada/cdk-core';
+import type { StaticInfra } from '../../types';
 
 export const TEST_GLOBAL_HASH = 'ghash';
 
@@ -36,7 +37,7 @@ export const DEFAULT_S3_SOURCE_DATA_PRODUCT_WITH_DATASETS: DataProduct = {
   dataProductId: 'test-data-product',
   domainId: 'test-domain',
   name: 'Test',
-  sourceType: SourceType.S3,
+  sourceType: Connectors.Id.S3,
   sourceDetails: {
     bucket: 'some-bucket',
     key: 'some-s3-key',
@@ -106,7 +107,7 @@ export const MOCK_BASE_DATAPRODUCT: Omit<DataProduct, 'sourceType' | 'sourceDeta
 
 export const DEFAULT_S3_SOURCE_DATA_PRODUCT: DataProduct = {
   ...MOCK_BASE_DATAPRODUCT,
-  sourceType: SourceType.S3,
+  sourceType: 'S3',
   sourceDetails: {
     bucket: 'some-bucket',
     key: 'some-s3-key',
@@ -117,10 +118,11 @@ export const DEFAULT_GOOGLE_ANALYTICS_SOURCE_OD_DATA_PRODUCT: DataProduct = {
   dataProductId: 'test-data-product',
   domainId: 'test-domain',
   name: 'Test',
-  sourceType: SourceType.GOOGLE_ANALYTICS,
+  sourceType: Connectors.Id.GOOGLE_ANALYTICS,
   sourceDetails: {
     bucket: 'some-bucket',
     key: 'some-s3-key',
+    ...MOCK_GOOGLE_SERVICE_ACCOUNT,
   },
   infrastructureStatus: DataProductInfrastructureStatus.PROVISIONING,
   dataStatus: DataProductDataStatus.NO_DATA,
@@ -140,10 +142,11 @@ export const DEFAULT_GOOGLE_ANALYTICS_SOURCE_SCHEULDED_DATA_PRODUCT: DataProduct
   dataProductId: 'test-data-product',
   domainId: 'test-domain',
   name: 'Test',
-  sourceType: SourceType.GOOGLE_ANALYTICS,
+  sourceType: Connectors.Id.GOOGLE_ANALYTICS,
   sourceDetails: {
     bucket: 'some-bucket',
     key: 'some-s3-key',
+    ...MOCK_GOOGLE_SERVICE_ACCOUNT,
   },
   infrastructureStatus: DataProductInfrastructureStatus.PROVISIONING,
   dataStatus: DataProductDataStatus.NO_DATA,
@@ -161,7 +164,7 @@ export const DEFAULT_GOOGLE_ANALYTICS_SOURCE_SCHEULDED_DATA_PRODUCT: DataProduct
   childDataProducts: [],
 };
 
-export const TEST_STATIC_INFRASTRUCTURE: StaticInfrastructure = {
+export const TEST_STATIC_INFRASTRUCTURE: StaticInfra.IStaticParams = {
   globalHash: TEST_GLOBAL_HASH,
   counterTableName: 'counterTableName',
   glueSecurityConfigurationName: 'glueSecurityConfiguration',
@@ -174,10 +177,9 @@ export const TEST_STATIC_INFRASTRUCTURE: StaticInfrastructure = {
   dataBucketName: 'data-bucket',
   executeAthenaQueryLambdaRoleArn: 'arn:aws:iam::123456789012:role/mock-role-name',
   lambdas: {
-    discoverTransformsArn: TEST_ARN,
+    prepareTransformChainArn: TEST_ARN,
     getCrawledTableDetailsArn: TEST_ARN,
     prepareNextTransformArn: TEST_ARN,
-    prepareCtasQueryArn: TEST_ARN,
     prepareExternalImportLambdaArn: TEST_ARN,
     validateS3PathLambdaArn: TEST_ARN,
     generatePIIQueryLambdaArn: TEST_ARN,
@@ -193,5 +195,17 @@ export const TEST_STATIC_INFRASTRUCTURE: StaticInfrastructure = {
   },
   googleAnalyticsConnector: {
     importDataStateMachineArn: 'arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachineImport',
+  },
+  cloudWatchConnector: {
+    importDataStateMachineArn: 'arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachineImport',
+    lastUpdatedDetailTableName: 'CloudWatchTableName',
+    otherArns: {
+      ecsTaskRole: 'arn:aws:iam::123456789012:role/mock-cross-account-role',
+    },
+  },
+  dataIngressVPC: {
+    subnetIds: ['subnet-123', 'subnet-456'],
+    availabilityZones: ['ap-southeast-2a', 'ap-southeast-2b'],
+    securityGroupIds: ['sg-12345', 'sg-23456'],
   },
 };

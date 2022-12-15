@@ -1,5 +1,6 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+/** eslint-disable import/order */
 import { AttributeType } from 'aws-cdk-lib/aws-dynamodb';
 import { Bucket } from '../../../../common/constructs/s3/bucket';
 import { Construct } from 'constructs';
@@ -8,6 +9,7 @@ import { EntityManagementTables } from '../../../../services/api/components/enti
 import { FederatedRestApi } from '../../../constructs/api';
 import { InternalTokenKey } from '../../../../common/constructs/kms/internal-token-key';
 import { NotificationBus } from '../../../../services/api/components/notification/constructs/bus';
+import { OperationalMetricsConfig } from '@ada/infra-common/utils';
 import { TestStack } from '@ada/cdk-core';
 import { UserPool } from 'aws-cdk-lib/aws-cognito';
 import ApiServiceStack from '../../../../services/api/stack';
@@ -25,6 +27,7 @@ export class TestStackWithMockedApiService extends TestStack {
   readonly accessLogsBucket: Bucket;
   readonly apiService: ApiServiceStack;
   readonly federatedApi: FederatedRestApi;
+  readonly operationalMetricsConfig: OperationalMetricsConfig;
 
   constructor(scope?: Construct, id?: string) {
     super(scope, id);
@@ -63,6 +66,13 @@ export class TestStackWithMockedApiService extends TestStack {
       notificationBus: this.notificationBus,
       entityManagementTables: this.entityManagementTables,
     });
+
+    this.operationalMetricsConfig = {
+      awsSolutionId: 'awsSolutionId',
+      awsSolutionVersion: 'awsSolutionVersion',
+      anonymousDataUUID: 'anonymousDataUUID',
+      sendAnonymousData: 'Yes'
+    }
 
     this.federatedApi = this.apiService.api;
   }

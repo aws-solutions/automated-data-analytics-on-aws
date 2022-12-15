@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-Website) - Automated Data Analytics on AWS. Version v1.0.2",
+  "Description": "(SO0190-Website) - Automated Data Analytics on AWS. Version v1.1.0",
   "Outputs": Object {
     "AdaWebsiteCloudfrontDistributionCFDistribution28056574DomainName": Object {
       "Value": Object {
@@ -141,6 +141,29 @@ Object {
         ],
       },
       "Type": "AWS::IAM::Role",
+    },
+    "AppRegistryAssociation": Object {
+      "Properties": Object {
+        "Application": Object {
+          "Fn::Join": Array [
+            "-",
+            Array [
+              "Automated-Data-Analysis-on-AWS",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+            ],
+          ],
+        },
+        "Resource": Object {
+          "Ref": "AWS::StackId",
+        },
+        "ResourceType": "CFN_STACK",
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
     },
     "CfWebACLDeliveryStream722E32A3": Object {
       "DeletionPolicy": "Delete",

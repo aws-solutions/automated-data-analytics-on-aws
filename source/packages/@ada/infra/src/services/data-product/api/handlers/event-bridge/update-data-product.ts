@@ -51,7 +51,7 @@ export const buildDataSetId = (dataProductId: string, tableNameSuffix: string): 
 /**
  * Update the data product added the crawled table information
  * @param event initial payload of step function execution
- * @param context lambda context
+ * @param _context lambda context
  */
 /* eslint-disable sonarjs/cognitive-complexity */
 export const handler = async (
@@ -66,11 +66,12 @@ export const handler = async (
   }
 
   const dataProductEventDetailType = event['detail-type'] as DataProductEventDetailTypes;
-  
+
   if (
     ![
       DataProductEventDetailTypes.DATA_PRODUCT_IMPORT_SUCCESS,
       DataProductEventDetailTypes.DATA_PRODUCT_IMPORT_ERROR,
+      DataProductEventDetailTypes.DATA_PRODUCT_IMPORT_SUCCESS_NO_UPDATE
     ].includes(dataProductEventDetailType)
   ) {
     console.error(`Unsupported detail type ${event['detail-type']}, skipping the event`);
@@ -152,6 +153,12 @@ export const handler = async (
         dataProductUpdates = {
           dataStatus: DataProductDataStatus.FAILED,
           dataStatusDetails: buildErrorMessageFromStepFunctionErrorDetails(errorDetails),
+        };
+        break;
+      }
+      case DataProductEventDetailTypes.DATA_PRODUCT_IMPORT_SUCCESS_NO_UPDATE: {
+        dataProductUpdates = {
+          dataStatus: DataProductDataStatus.READY,
         };
         break;
       }

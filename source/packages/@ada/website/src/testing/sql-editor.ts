@@ -109,7 +109,9 @@ export class SqlEditorController {
 
   async type(value: string, typeDelay?: number) {
     await userEvent.keyboard(value, { delay: typeDelay || this.options.typeDelay });
-    await delay(this.options.eventDelay);
+    // delay after keyboard typing is necessary to prevent loss of focus uncommitting input values
+    // which leads to truncated final value in editor
+    await delay(200);
   }
 
   async append(value: string) {

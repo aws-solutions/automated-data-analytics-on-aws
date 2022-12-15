@@ -2,12 +2,12 @@
 SPDX-License-Identifier: Apache-2.0 */
 import * as POLLING from '$config/polling';
 import { AccessRequestNotificationType, DataProductEventDetailTypes } from '@ada/common';
+import { DataProduct, PersistedNotificationEntity } from '@ada/api';
 import { ENV_PRODUCTION, featureFlag } from '$config';
 import { LL } from '@ada/strings';
 import { Notification, NotificationInput, useNotificationContext } from '$northstar-plus';
-import { PersistedNotificationEntity } from '@ada/api';
 import { apiHooks } from '$api';
-import { getDataProductSQLIdentitier } from '$common/utils';
+import { getDataProductSQLIdentitier, identifierToName } from '$common/utils';
 import { getDataProductUrl } from '$common/entity/data-product/utils';
 import { getGroupUrl } from '$common/entity/group';
 import { isEmpty, startCase } from 'lodash';
@@ -93,10 +93,12 @@ function marshalNotification( //NOSONAR (S3776:Cognitive Complexity) - won't fix
       case DataProductEventDetailTypes.DATA_PRODUCT_IMPORT_START_FAILED:
       case DataProductEventDetailTypes.DATA_PRODUCT_IMPORT_SUCCESS:
       case DataProductEventDetailTypes.DATA_PRODUCT_ON_DEMAND_UPDATE: {
-        const url = getDataProductUrl(payload.dataProduct);
+        // some events come through with payload as partial data product, others with nested dataProduct property
+        const dataProduct: DataProduct = payload.dataProduct || payload;
+        const url = getDataProductUrl(dataProduct);
 
         return Object.assign(notification, {
-          content: `${payload.dataProduct.name} - ${getDataProductSQLIdentitier(payload.dataProduct)}`,
+          content: `${dataProduct.name || identifierToName(dataProduct.dataProductId)} - ${getDataProductSQLIdentitier(dataProduct)}`,
           onClick: onClickFactory(url),
         } as Partial<NotificationInput>);
       }

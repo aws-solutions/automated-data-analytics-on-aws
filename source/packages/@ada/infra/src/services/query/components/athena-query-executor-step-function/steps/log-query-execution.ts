@@ -3,8 +3,10 @@ SPDX-License-Identifier: Apache-2.0 */
 
 import { AwsKinesisInstance, Kinesis } from '@ada/aws-sdk';
 import { CallingUser } from '@ada/common';
+import { METRICS_EVENT_TYPE, OperationalMetricsClient } from '../../../../api/components/operational-metrics/client';
 import { Query } from '@ada/api';
 import { StepFunctionLambdaLogEvent } from '../../../../../common/services';
+
 export interface LogQueryExecutionEvent extends Query {
   callingUser: CallingUser;
   originalQuery: string;
@@ -52,6 +54,10 @@ export const handler = async (
 
   try {
     await kinesis.putRecord(params).promise();
+
+    await OperationalMetricsClient.getInstance().send({
+      event: METRICS_EVENT_TYPE.QUERY_EXECUTED,
+    });
   } catch (e) {
     console.error(e);
   }

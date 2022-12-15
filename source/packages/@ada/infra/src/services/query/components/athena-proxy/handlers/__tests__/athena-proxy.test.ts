@@ -3,10 +3,11 @@ SPDX-License-Identifier: Apache-2.0 */
 import 'jest-extended';
 import { MOCK_API_CLIENT as API } from '@ada/api-client/mock';
 import { APIGatewayProxyEventHeaders, APIGatewayProxyResult } from 'aws-lambda';
-import { QueryExecutionStatus, SourceType } from '@ada/common';
+import { QueryExecutionStatus } from '@ada/common';
 import { apiGatewayEvent, recreateAllTables } from '@ada/infra-common/services/testing';
 import { athenaCmds, extractAPIKey, getFullyQualifiedTableName, handler } from '../athena-proxy';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { Connectors } from '@ada/connectors';
 
 const MOCK_DOMAIN = {
   domainId: 'my-domain-id',
@@ -24,7 +25,7 @@ const MOCK_DATA_PRODUCT = {
   name: 'Customers',
   description: 'Full record of all customers',
   owningGroups: ['group1', 'group2'],
-  sourceType: SourceType.S3,
+  sourceType: Connectors.Id.S3,
   sourceDetails: {
     bucket: 'examplebucket',
     key: 'mydata',
@@ -234,7 +235,7 @@ describe('athena-proxy', () => {
     getAccessTokenMock.mockReturnValue('any');
     requestHeaders['x-amz-target'] = athenaCmds.listDatabases;
     const requestBody = Buffer.from('{"CatalogName":""}').toString('base64');
-    API.listDataProductDomainDataProducts.mockResolvedValue({ dataProducts: [MOCK_DATA_PRODUCT] });
+    API.listDataProductDomainDataProducts.mockResolvedValue({ dataProducts: [MOCK_DATA_PRODUCT as any] });
     const result = getAthenaProxyHandler(requestHeaders, requestBody);
     await expect(result).rejects.toThrowError();
   });
@@ -243,7 +244,7 @@ describe('athena-proxy', () => {
     getAccessTokenMock.mockReturnValue('any');
     requestHeaders['x-amz-target'] = athenaCmds.listDatabases;
     const requestBody = Buffer.from('{"CatalogName":"my-domain-id"}').toString('base64');
-    API.listDataProductDomainDataProducts.mockResolvedValue({ dataProducts: [MOCK_DATA_PRODUCT] });
+    API.listDataProductDomainDataProducts.mockResolvedValue({ dataProducts: [MOCK_DATA_PRODUCT as any] });
     const result = await getAthenaProxyHandler(requestHeaders, requestBody);
     const responseBody = JSON.parse(result.body);
     expect(result.statusCode).toBe(200);
@@ -265,7 +266,7 @@ describe('athena-proxy', () => {
     const requestBody = Buffer.from('{"CatalogName":"my-domain-id", "DatabaseName":"my-customer-dp-id"}').toString(
       'base64',
     );
-    API.getDataProductDomainDataProduct.mockResolvedValue(MOCK_DATA_PRODUCT);
+    API.getDataProductDomainDataProduct.mockResolvedValue(MOCK_DATA_PRODUCT as any);
     const result = await getAthenaProxyHandler(requestHeaders, requestBody);
     const responseBody = JSON.parse(result.body);
     expect(result.statusCode).toBe(200);
@@ -331,7 +332,7 @@ describe('athena-proxy', () => {
     const requestBody = Buffer.from(
       '{"CatalogName":"aws","DatabaseName":"my-customer-dp-id", "TableName":"customerDataSet"}',
     ).toString('base64');
-    API.getDataProductDomainDataProduct.mockResolvedValue(MOCK_DATA_PRODUCT);
+    API.getDataProductDomainDataProduct.mockResolvedValue(MOCK_DATA_PRODUCT as any);
     const result = await getAthenaProxyHandler(requestHeaders, requestBody);
     const responseBody = JSON.parse(result.body);
     expect(result.statusCode).toBe(200);

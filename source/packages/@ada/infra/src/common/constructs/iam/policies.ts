@@ -84,3 +84,21 @@ export const ExternalSourceDataKmsAccessPolicyStatement = new PolicyStatement({
   actions: ['kms:Decrypt*', 'kms:Encrypt*', 'kms:ReEncrypt*', 'kms:GenerateDataKey*', 'kms:Describe*', 'kms:List*'],
   resources: ['*'],
 });
+
+/**
+ * Grant access to assume roles within to access external services.
+ */
+export const ExternalSourceAssumeRolePolicyStatement = new PolicyStatement({
+  effect: Effect.ALLOW,
+  actions: ['sts:AssumeRole', 'sts:TagSession'],
+  resources: ['*'],
+});
+
+/**
+ * Grant access to Query and Receive results of CloudWatch logs for all log groups.
+ */
+ export const ExternalSourceDataCloudWatchAccessPolicyStatement = new PolicyStatement({
+  effect: Effect.ALLOW,
+  actions: ['logs:StartQuery', 'logs:GetQueryResults'],
+  resources: ['*'],
+});

@@ -4,6 +4,7 @@
   "private": true,
   "main": "index.js",
   "types": "index.d.ts",
+  "license": "Apache-2.0",
   "files": [
     "index.js",
     "index.d.ts"

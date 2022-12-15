@@ -1,14 +1,15 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import * as Connectors from '@ada/connectors';
 import * as schema from './schema';
 import { DataProductInput } from '@ada/api';
-import { DefaultGroupIds, GOOGLE_SERVICE_ACCOUNT_JSON_KEYS, GOOGLE_SOURCE_TYPES, SourceDetails, SourceType } from '@ada/common';
+import { DefaultGroupIds } from '@ada/common';
 import { ErrorAlert } from '$common/components/errors';
 import { FormData, formDataToDataProduct } from '../../utils';
 import { HookError, ListAllOptions, NO_REFRESH_OPTIONS, apiHooks } from '$api';
 import { Skeletons, WizardLayout, WizardStep, useNotificationContext } from '$northstar-plus';
 import { isEmpty, omit, pick } from 'lodash';
-import { setPersistentGoogleServiceAccountDetails } from '$source-type/google/common/google-session-credentials';
+import { setPersistentGoogleServiceAccountDetails } from '$connectors/google/common/google-session-credentials';
 import { useHistory } from 'react-router-dom';
 import { useI18nContext } from '$strings';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -95,10 +96,13 @@ export const CreateDataProductWizard: React.FC<CreateDataProductWizardProps> = (
     [history.location.search, domainId],
   );
 
-  const persistGoogleCreds = useCallback((sourceDetails: SourceDetails) => {
+  const persistGoogleCreds = useCallback((sourceDetails: any) => {
     try {
       // store the credentials in session storage for reuse between data product creation flows
-      const serviceAccountDetails = pick(sourceDetails || {}, GOOGLE_SERVICE_ACCOUNT_JSON_KEYS);
+      const serviceAccountDetails = pick(
+        sourceDetails || {},
+        Connectors.Common.Google.GOOGLE_SERVICE_ACCOUNT_JSON_KEYS
+      );
       if (!isEmpty(serviceAccountDetails)) {
         setPersistentGoogleServiceAccountDetails(serviceAccountDetails as any)
       }
@@ -115,8 +119,9 @@ export const CreateDataProductWizard: React.FC<CreateDataProductWizardProps> = (
         const { customTransforms = {} } = formData;
         const dataProduct = formDataToDataProduct(formData);
 
-        GOOGLE_SOURCE_TYPES.includes(dataProduct.sourceType as SourceType) &&
-          persistGoogleCreds(dataProduct.sourceDetails! as SourceDetails);
+        if (Connectors.Common.Google.hasGoogleAuthKeys(dataProduct.sourceDetails)) {
+          persistGoogleCreds(dataProduct.sourceDetails)
+        }
 
         // store list of custom transformed being created so we don't duplicate
         const resolvedCustomTranforms: Record<string, Promise<DataProductTransform>> = {};

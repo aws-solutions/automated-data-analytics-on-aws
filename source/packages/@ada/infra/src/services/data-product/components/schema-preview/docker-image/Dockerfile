@@ -1,6 +1,6 @@
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:8 AS build
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:8 AS sandbox
 
-RUN mkdir glue
+RUN mkdir /glue
 
 RUN yum update -y
 RUN yum install -y \
@@ -17,7 +17,8 @@ RUN yum install -y \
   autoconf \
   libtool \
   unzip \
-  libcurl-devel
+  libcurl-devel \
+  tree
 
 # Address scan vulnerabilities:
 # https://alas.aws.amazon.com/AL2/ALAS-2022-1764.html
@@ -26,13 +27,18 @@ RUN yum install -y \
 # https://alas.aws.amazon.com/AL2/ALAS-2022-1754.html
 RUN yum update -y \
   expat \
-  cyrus-sasl
+  cyrus-sasl 
 
-WORKDIR ./glue
+# Microsoft SQL Server driver
+RUN yum install -y unixODBC-devel
+RUN curl https://packages.microsoft.com/config/rhel/6/prod.repo > /etc/yum.repos.d/mssql-release.repo
+RUN ACCEPT_EULA=Y yum install -y msodbcsql17
+
+WORKDIR /glue
 
 # Install any other lambda dependencies
 RUN pip3 install \
-  awswrangler regex
+  awswrangler[sqlserver] regex 
 
 # copy all dependencies into glue directory
 COPY ./dependencies .
@@ -65,14 +71,17 @@ ENV SPARK_LOCAL_IP 127.0.0.1
 RUN yum clean all
 RUN rm -rf /var/cache/yum
 
+# Install python deps via poetry project - https://python-poetry.org/docs/
+RUN pip3 install 'poetry==1.1.15'
+COPY pyproject.toml .
+COPY poetry.lock .
+RUN poetry config virtualenvs.create false
+RUN poetry install --extras "ada-docker-image" --no-dev --no-interaction --no-ansi
+
 # Replace the spark-class launcher script with our own (see details in spark-class)
 COPY spark-class .
 RUN mv spark-class $SPARK_HOME/bin/
 RUN chmod +x $SPARK_HOME/bin/spark-class
-
-# Install lambda dependencies
-COPY requirements.txt .
-RUN pip3 install -r requirements.txt
 
 # Set up sandbox environment for transform scripts
 RUN mkdir /sandbox
@@ -90,31 +99,36 @@ RUN echo $SPARK_PYTHON_PATH > /sandbox/lib/python3.7/site-packages/spark-python.
 RUN echo $SPARK_PY4J_PATH > /sandbox/lib/python3.7/site-packages/spark-py4j.pth
 RUN echo $GLUE_PYTHON_PATH > /sandbox/lib/python3.7/site-packages/glue-python.pth
 
-# Copy function code
-COPY handlers/constants.py .
-COPY handlers/transform.py .
-COPY handlers/pull_data_sample.py .
-ADD handlers/transform-templates ./transform-templates
+FROM sandbox AS build
+# copy all handler code
+COPY handlers handlers
+# remove all tests from build
+RUN find ./handlers -type d -name __tests__ -exec "rm -rf {} || exit 0" \;
 
 # Run tests
 FROM build AS test
-COPY handlers /glue/tests
+# copy all code + tests into testing dir
+COPY handlers /glue/tests/handlers
+# working dir must be parent of "handlers" for `handlers` modules
 WORKDIR /glue/tests
-RUN pip3 install pytest
+# Install dev dependencies
+RUN poetry install --no-root --no-interaction --no-ansi
+# RUN pip3 install pytest
 ENV TEMP_BUCKET_NAME test-temp-bucket
 ENV KEY_ID test-key-id
 ENV AWS_DEFAULT_REGION ap-test-1
 ENV PULL_DATA_SAMPLE_ROLE_ARN some-test-role-arn
 ENV AWS_REGION=ap-test-1 \
-    AWS_ACCESS_KEY_ID=test-access-key \
-    AWS_SECRET_ACCESS_KEY=test-secret-access-key \
-    AWS_SESSION_TOKEN=test-session-token
-RUN pytest -vv
-RUN echo "success" > /glue/test_result.txt
+  AWS_ACCESS_KEY_ID=test-access-key \
+  AWS_SECRET_ACCESS_KEY=test-secret-access-key \
+  AWS_SESSION_TOKEN=test-session-token
+RUN pytest -vv --capture=tee-sys
+RUN echo "success" > /glue/handlers/test_result.txt
 
 FROM build AS prod
 # Docker skips the 'test' stage unless there's a dependency, so copy the test result file and delete it
-COPY --from=test /glue/test_result.txt .
-RUN rm /glue/test_result.txt
+COPY --from=test /glue/handlers/test_result.txt .
+RUN rm test_result.txt
+# define lambda docker entry
 ENTRYPOINT [ "python3", "-m", "awslambdaric" ]
-CMD [ "transform.handler" ]
+CMD [ "handlers.transform.handler" ]

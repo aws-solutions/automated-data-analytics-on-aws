@@ -1,21 +1,17 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
 import 'jest-extended';
+import { Connectors } from '@ada/connectors';
 import {
   DEFAULT_S3_SOURCE_DATA_PRODUCT,
   getLocalDynamoDocumentClient,
   recreateAllTables,
 } from '@ada/microservice-test-common';
 import { DataProductStore } from '../../../ddb/data-product';
-import { SourceType } from '@ada/common';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { handler } from '../start-data-product-infra-deployment';
 import { localDynamoLockClient } from '../../../../../api/components/entity/locks/mock';
 import { localDynamoRelationshipClient } from '../../../../../api/components/entity/relationships/mock';
-
-jest.mock('../../../../dynamic-infrastructure/stacks/s3-source-stack.ts', () => ({
-  S3SourceStack: jest.fn(),
-}));
 
 const mockAddTags = jest.fn();
 
@@ -76,6 +72,8 @@ describe('start-data-product-infra-deployment', () => {
   // Mock the dataProduct store to point to our local dynamodb
   const testDataProductStore = new (DataProductStore as any)(getLocalDynamoDocumentClient());
 
+  const getStackClassSpy = jest.spyOn(Connectors.Infra.Dynamic, 'getStackClass');
+
   beforeEach(async () => {
     // @ts-ignore
     await recreateAllTables(global.__JEST_DYNAMODB_TABLES);
@@ -86,6 +84,8 @@ describe('start-data-product-infra-deployment', () => {
     mockGetParameter.mockReturnValue({
       Parameter: { Value: '{}' },
     });
+
+    getStackClassSpy.mockReturnValue(jest.fn() as any);
   });
 
   afterEach(async () => {
@@ -140,6 +140,11 @@ describe('start-data-product-infra-deployment', () => {
   });
 
   it('should throw an error for unsupported source types', async () => {
+    const BAD_SOURCE_TYPE = 'bad-source-type' as Connectors.ID;
+    getStackClassSpy.mockImplementationOnce(() => {
+      throw new Error(`Connector ${BAD_SOURCE_TYPE} does not exist`);
+    });
+
     // Create our new dataProduct
     await expect(
       async () =>
@@ -148,14 +153,14 @@ describe('start-data-product-infra-deployment', () => {
             Payload: {
               dataProduct: {
                 ...DEFAULT_S3_SOURCE_DATA_PRODUCT,
-                sourceType: 'bad-source-type' as SourceType,
+                sourceType: BAD_SOURCE_TYPE,
               },
               callingUser: { userId: 'test-user', username: 'test-user@usr.example.com', groups: [] },
             },
           },
           null,
         ),
-    ).rejects.toHaveProperty('message', expect.stringContaining('bad-source-type'));
+    ).rejects.toHaveProperty('message', expect.stringContaining(BAD_SOURCE_TYPE));
   });
 
   it('should throw an error when cdk generates no change sets', async () => {

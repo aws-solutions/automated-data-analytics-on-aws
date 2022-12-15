@@ -1,12 +1,14 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import { AppRegistry } from '../common/aspects/app-registry';
+import { Aspects, CfnOutput, StackProps } from 'aws-cdk-lib';
 import { BUNDLING_STACKS, DISABLE_ASSET_STAGING_CONTEXT } from 'aws-cdk-lib/cx-api';
-import { CfnOutput, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import { Dashboard } from '@ada/infra-common/constructs/cloudwatch/dashboard';
+import { DeploymentMetricsCollection } from '../common/constructs/deployment-metrics';
 import { ExtendedStack, InputParameters, NamespaceGlobalUUID, RetainedAspect } from '@ada/cdk-core';
 import { IdentityServiceStack } from '../services/identity/stack';
 import { NotificationBus } from '../services/api/components/notification/constructs/bus';
-import { OperationalMetricsCollection } from '../common/constructs/operational-metrics';
 import { OperationalMetricsConfig, applyApplicationTags } from '@ada/infra-common';
 import { WebAclRuleProvider } from '@ada/infra-common/constructs/waf/WebAclRuleProvider';
 import { solutionInfo } from '@ada/common';
@@ -65,7 +67,17 @@ export class AdaStack extends ExtendedStack {
 
     applyApplicationTags(this);
 
-    const opMetrics = new OperationalMetricsCollection(this, 'OpMetrics', {
+    const appRegistryAspect = new AppRegistry(this, 'AppRegistry', {
+      solutionId: solution.awsSolutionId,
+      solutionVersion: solution.awsSolutionVersion,
+      solutionName: solution.title,
+      applicationType: 'AWS-Solutions',
+      applicationName: 'Automated-Data-Analysis-on-AWS',
+    });
+
+    Aspects.of(this).add(appRegistryAspect);
+
+    const deploymentMetrics = new DeploymentMetricsCollection(this, 'OpMetrics', {
       sendAnonymousData: parameters.sendAnonymousData,
     });
 
@@ -73,8 +85,8 @@ export class AdaStack extends ExtendedStack {
     const operationalMetricsConfig: OperationalMetricsConfig = {
       awsSolutionId: solution.awsSolutionId,
       awsSolutionVersion: solution.awsSolutionVersion,
-      anonymousDataUUID: opMetrics.anonymousDataUUID,
-      sendAnonymousData: opMetrics.sendAnonymousData,
+      anonymousDataUUID: deploymentMetrics.anonymousDataUUID,
+      sendAnonymousData: deploymentMetrics.sendAnonymousData,
     };
 
     const {
@@ -265,6 +277,43 @@ export class AdaStack extends ExtendedStack {
     this.athenaProxyUrl = new CfnOutput(this, 'AthenaProxyApiUrl', {
       value: `${queryService.proxyDistributionDomain}:443`,
       exportName: 'AthenaProxyApiUrl',
+    });
+
+    new Dashboard(this, 'dashboard', {
+      dataProductApi: dataProductService.api,
+      domainTable: dataProductService.domainTable,
+      dataProductTable: dataProductService.dataProductTable,
+      queryApi: queryService.api,
+      administrationApi: administrationService.api,
+      governanceApi: governanceService.api,
+      ontologyApi: ontologyService.api,
+      queryParserApi: queryParseRenderService.api,
+    });
+
+    // Data Ingress Gateway
+    new CfnOutput(this, 'DataIngressNetworkCIDR', {
+      value: dataProductService.dataIngressGateway.dataIngressNetworkCidr,
+      exportName: 'DataIngressNetworkCIDR',
+    });
+
+    new CfnOutput(this, 'DataIngressVPCCIDR', {
+      value: dataProductService.dataIngressGateway.dataIngressVPCCidr,
+      exportName: 'DataIngressVPCCIDR',
+    });
+
+    new CfnOutput(this, 'DataIngressTransitGatewayId', {
+      value: dataProductService.dataIngressGateway.transiteGatewayId,
+      exportName: 'DataIngressTransitGatewayId',
+    });
+
+    new CfnOutput(this, 'DataSourceVPCAttachmentRouteTableId', {
+      value: dataProductService.dataIngressGateway.dataSourceVPCAttachmentRouteTableId,
+      exportName: 'DataSourceVPCAttachmentRouteTableId',
+    });
+
+    new CfnOutput(this, 'DataSourceVPCAttachmentPropogationRouteTableId', {
+      value: dataProductService.dataIngressGateway.dataSourceVPCAttachmentPropogationRouteTableId,
+      exportName: 'DataSourceVPCAttachmentPropogationRouteTableId',
     });
   }
 }

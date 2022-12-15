@@ -13,7 +13,7 @@ import { METADATA_DETAIL_KEY, buildSource, buildTargetAndStatusKey, persistedNot
 import {
   UpdateDataProductEventError,
   UpdateDataProductEventSuccess,
-} from 'src/services/data-product/api/handlers/event-bridge/update-data-product';
+} from '@ada/services/data-product/api/handlers/event-bridge/update-data-product';
 
 describe('notification-common', () => {
   const baseMockEventBridgeEvent = {

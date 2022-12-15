@@ -52,11 +52,25 @@ export enum SolutionContext {
   WAF_IPSET = '@ada/waf:ipSet',
 
   /**
-   * Customize the CIDR used for VPC.
+   * Customize the CIDR used for Ada Data Ingress Network.
+   * Data Ingress Network CIDR should be set to cover CIDR for Ada Data Ingress VPC and
+   * also all the other data source VPC CIDRs so that the network connectivity can be
+   * established between Ada and the data source in VPC through AWS Transit Gateway.
    *
    * @default '192.168.0.0/16'
    */
-  VPC_CIDR = '@ada/vpc:cidr',
+  DATA_INGRESS_NETWORK_CIDR = '@ada/ingress_network:cidr',
+
+  /**
+   * Customize the CIDR used for Ada Data Ingress VPC.
+   * Ada establish its importing resources in this VPC and this VPC can be set to have
+   * connectivity to other data source VPC as long as the VPC CIDRs are not overlapped.
+   * This CIDR should be part of the `@ada/ingress_network:cidr`.
+   * To have enough IP addresses for concurrency, this CIDR should have at least 256 IP addresses (/24)
+   *
+   * @default '192.168.254.0/23'
+   */
+  DATA_INGRESS_VPC_CIDR = '@ada/ingress_vpc:cidr',
 }
 
 export const SOLUTION_CONTEXT_DEFAULTS: Record<SolutionContext, any> = {
@@ -64,8 +78,9 @@ export const SOLUTION_CONTEXT_DEFAULTS: Record<SolutionContext, any> = {
   [SolutionContext.KMS_DEFAULT_REMOVAL_POLICY]: RemovalPolicy.DESTROY,
   [SolutionContext.DISABLE_WAF_CLOUDFRONT_WEBACLS]: false,
   [SolutionContext.WAF_IPSET]: undefined,
-  [SolutionContext.VPC_CIDR]: '192.168.0.0/16', //NOSONAR (typescript:S1313:IPADDRESS)
-}
+  [SolutionContext.DATA_INGRESS_NETWORK_CIDR]: '192.168.0.0/16', //NOSONAR (typescript:S1313:IPADDRESS)
+  [SolutionContext.DATA_INGRESS_VPC_CIDR]: '192.168.254.0/23', //NOSONAR (typescript:S1313:IPADDRESS)
+};
 
 export function tryGetSolutionContext(scope: Construct, context: SolutionContext): any {
   const value = scope.node.tryGetContext(context);

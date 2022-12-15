@@ -36,7 +36,7 @@ docker run -d -v ~/.aws-lambda-rie:/aws-lambda -p 9000:8080 \
   --env KEY_ID=your-kms-key \
   --env PULL_DATA_SAMPLE_ROLE_ARN=arn-of-a-role-in-your-account-eg-Admin \
   --entrypoint /aws-lambda/aws-lambda-rie ada:schema-preview \
-  python3 -m awslambdaric transform.handler
+  python3 -m awslambdaric handlers.transform.handler
 ```
 
 ### Call the lambda

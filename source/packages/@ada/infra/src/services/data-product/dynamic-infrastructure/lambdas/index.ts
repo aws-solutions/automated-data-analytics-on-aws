@@ -9,8 +9,8 @@ import { EntityManagementTables } from '../../../api/components/entity/construct
 import { JavaFunction, TypescriptFunction } from '@ada/infra-common';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { NotificationBus } from '../../../api/components/notification/constructs/bus';
-import { StaticInfrastructureLambdas } from '@ada/microservice-common';
 import { addCfnNagSuppressionsToRolePolicy } from '@ada/cdk-core';
+import type { StaticInfra } from '@ada/infra-common/services';
 
 export interface DataProductInfraLambdasProps {
   executeAthenaQueryLambdaRoleArn: string;
@@ -24,14 +24,14 @@ export interface DataProductInfraLambdasProps {
 /**
  * Defines the lambdas that may be referenced by data product dynamic infra
  */
-export default class DataProductInfraLambdas extends Construct {
-  public readonly lambdas: StaticInfrastructureLambdas;
+export class DataProductInfraLambdas extends Construct {
+  public readonly lambdas: StaticInfra.Lambdas;
   public readonly startDataImportLambda: TypescriptFunction;
 
   constructor(scope: Construct, id: string, props: DataProductInfraLambdasProps) {
     super(scope, id);
 
-    const buildLambda = (handlerFile: string) => {
+    const buildLambda = (handlerFile: string, additionalPolices?: PolicyStatement[]) => {
       const lambda = new TypescriptFunction(this, `Lambda-${handlerFile}`, {
         package: 'data-product-service',
         handlerFile: require.resolve(`./handlers/${handlerFile}`),
@@ -77,6 +77,11 @@ export default class DataProductInfraLambdas extends Construct {
         }),
       );
 
+      // add additional policies
+      if (additionalPolices && additionalPolices.length > 0) {
+        for (const policy of additionalPolices) lambda.addToRolePolicy(policy);
+      }
+
       return lambda;
     };
 
@@ -95,21 +100,6 @@ export default class DataProductInfraLambdas extends Construct {
         effect: Effect.ALLOW,
         actions: ['comprehend:DetectPiiEntities'],
         resources: ['*'],
-      }),
-    );
-
-    const prepareCtasQuery = buildLambda('query-source/prepare-ctas-query');
-    prepareCtasQuery.addToRolePolicy(
-      new PolicyStatement({
-        effect: Effect.ALLOW,
-        actions: ['glue:UpdateCrawler'],
-        resources: [
-          Stack.of(this).formatArn({
-            service: 'glue',
-            resource: 'crawler',
-            resourceName: '*',
-          }),
-        ],
       }),
     );
 
@@ -196,11 +186,23 @@ export default class DataProductInfraLambdas extends Construct {
       },
     ]);
 
+    // additional policy for prepare-transform-chain
+    const policyUpdateCrawler = new PolicyStatement({
+      effect: Effect.ALLOW,
+      actions: ['glue:UpdateCrawler'],
+      resources: [
+        Stack.of(this).formatArn({
+          service: 'glue',
+          resource: 'crawler',
+          resourceName: '*',
+        }),
+      ],
+    });
+
     this.lambdas = {
       getCrawledTableDetailsArn: buildLambda('get-crawled-table-details').functionArn,
-      discoverTransformsArn: buildLambda('discover-transforms').functionArn,
+      prepareTransformChainArn: buildLambda('prepare-transform-chain', [policyUpdateCrawler]).functionArn,
       prepareNextTransformArn: buildLambda('prepare-next-transform').functionArn,
-      prepareCtasQueryArn: prepareCtasQuery.functionArn,
       validateS3PathLambdaArn: validateS3PathLambda.functionArn,
       athenaUtilitiesLambdaName: athenaUtilitiesLambda.functionName,
       generatePIIQueryLambdaArn: buildLambda('generate-pii-query').functionArn,
@@ -210,3 +212,5 @@ export default class DataProductInfraLambdas extends Construct {
     };
   }
 }
+
+export default DataProductInfraLambdas;

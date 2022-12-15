@@ -17,10 +17,10 @@
       "$config/*": ["./config/*"],
       "$strings": ["./strings"],
       "$strings/*": ["./strings/*"],
-      "$source-type": ["./source-type"],
-      "$source-type/*": ["./source-type/*"],
       "$storybook/*": ["../.storybook/*"],
-      "$testing/*": ["./testing/*"]
+      "$testing/*": ["./testing/*"],
+      "@ada/connectors": ["./connectors"],
+      "$connectors/*": ["./connectors/*"]
     }
   }
 }

@@ -7,7 +7,12 @@ export const config: Config.InitialOptions = {
   ...baseConfig(),
   rootDir: __dirname,
   displayName: 'root',
-  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/services/', '<rootDir>/generator/openapi/'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/connectors/',
+    '<rootDir>/services/',
+    '<rootDir>/generator/openapi/'
+  ],
 };
 
 export default config;

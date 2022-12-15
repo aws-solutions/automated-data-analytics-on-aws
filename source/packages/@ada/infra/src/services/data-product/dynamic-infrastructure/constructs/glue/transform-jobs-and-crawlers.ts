@@ -2,7 +2,7 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { Construct } from 'constructs';
 import { DataProduct } from '@ada/api';
-import { DataSetIds } from '@ada/common';
+import { DataProductUpdatePolicy, DataSetIds } from '@ada/common';
 import { Effect, IGrantable, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { ExternalFacingRole } from '@ada/infra-common/constructs/iam/external-facing-role';
 import { ExternalSourceDataKmsAccessPolicyStatement } from '@ada/infra-common';
@@ -24,6 +24,8 @@ export interface TransformJobsAndCrawlersProps {
   readonly glueKmsKey: IKey;
   readonly glueSecurityConfigurationName: string;
   readonly sourceAccessRole: ExternalFacingRole;
+  readonly glueConnectionNames?: string[];
+  readonly extraJobArgs?: { [key: string]: string };
 }
 
 /**
@@ -46,6 +48,8 @@ export default class TransformJobsAndCrawlers extends Construct {
       glueKmsKey,
       glueSecurityConfigurationName,
       sourceAccessRole,
+      glueConnectionNames,
+      extraJobArgs,
     }: TransformJobsAndCrawlersProps,
   ) {
     super(scope, id);
@@ -57,6 +61,13 @@ export default class TransformJobsAndCrawlers extends Construct {
         resources: [glueKmsKey.keyArn],
       }),
     );
+
+    const { updatePolicy } = dataProduct.updateTrigger;
+    // add glue job bookmark to handle the APPEND case
+    const extraJobArgsForJobs =
+      updatePolicy === DataProductUpdatePolicy.APPEND
+        ? { ...extraJobArgs, '--job-bookmark-option': 'job-bookmark-enable' }
+        : extraJobArgs;
 
     // Script bucket access is required for the jobs to read the scripts to execute
     scriptBucket.grantRead(sourceAccessRole);
@@ -76,7 +87,7 @@ export default class TransformJobsAndCrawlers extends Construct {
       const tablePrefix = `${dataProductUniqueIdentifier}-transform-${i}-`;
       const crawler = new Crawler(this, `TransformOutputCrawler-${i}`, {
         targetGlueDatabase: database,
-        s3Target: outputS3Target,
+        targetDescription: { s3Target: outputS3Target },
         tablePrefix,
         glueSecurityConfigurationName,
         sourceAccessRole,
@@ -89,6 +100,10 @@ export default class TransformJobsAndCrawlers extends Construct {
         scriptBucket,
         glueSecurityConfigurationName,
         sourceAccessRole,
+        //only the first ETL job needs connection to read from external data source, the rest of the transform read from bucket of the previous output
+        glueConnectionNames:
+          glueConnectionNames && glueConnectionNames.length > 0 && i == 0 ? glueConnectionNames : undefined,
+        extraJobArgs: extraJobArgsForJobs,
       });
       this.glueJobs.push(job);
 

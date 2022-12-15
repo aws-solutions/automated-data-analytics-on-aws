@@ -1,22 +1,24 @@
+/*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+
 import { useImmediateEffect } from '$common/hooks';
-import { setPersistentGoogleServiceAccountDetails } from '$source-type/google/common/google-session-credentials';
-import * as fixtures from '$testing/__fixtures__';
-import { GoogleServiceAccountAuth } from '@ada/common';
+import { setPersistentGoogleServiceAccountDetails } from '$connectors/google/common/google-session-credentials';
+import { MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT } from '$connectors/google/common/testing';
+import { Common as ConnectorsCommon } from '@ada/connectors';
 import { userEvent, within } from '@storybook/testing-library';
 import { act } from '@testing-library/react';
 
-export const GOOGLE_SOURCE_DETAILS: GoogleServiceAccountAuth = fixtures.GOOGLE_SERVICE_ACCOUNT;
+export const GOOGLE_SOURCE_DETAILS: ConnectorsCommon.Google.IGoogleServiceAccountAuth =
+  MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT;
 
-export function useGoogleSourceTypeTestSetup () {
-	useImmediateEffect(() => {
-    setPersistentGoogleServiceAccountDetails(fixtures.GOOGLE_SERVICE_ACCOUNT);
+export function useGoogleSourceTypeTestSetup() {
+  useImmediateEffect(() => {
+    setPersistentGoogleServiceAccountDetails(MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT);
   });
 }
 
-export async function selectMostRecentAuth (
-	canvasElement: HTMLElement,
-): Promise<void> {
-	const { getByText } = within(canvasElement);
+export async function selectMostRecentAuth(canvasElement: HTMLElement): Promise<void> {
+  const { getByText } = within(canvasElement);
   await act(async () => {
     userEvent.click(getByText('Reuse most recent'));
   });

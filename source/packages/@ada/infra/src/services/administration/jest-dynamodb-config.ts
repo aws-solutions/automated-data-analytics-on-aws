@@ -13,7 +13,12 @@ import DataProductCreationStateMachine from '../data-product/components/creation
 export const generateEnvironmentForTests = () => {
   const stack = new TestStackWithMockedApiService(new TestApp());
   new RetainedAspect(stack); //NOSONAR (S1848) - cdk construct is used
-  const { federatedApi, counterTable, notificationBus, entityManagementTables, internalTokenKey } = stack;
+  const { federatedApi, 
+    counterTable, 
+    notificationBus, 
+    entityManagementTables, 
+    internalTokenKey, 
+    operationalMetricsConfig } = stack;
 
   return {
     ...buildCdkEnvironmentForTests<AdministrationServiceStack, AdministrationServiceStackProps>(
@@ -32,6 +37,7 @@ export const generateEnvironmentForTests = () => {
           }),
           internalTokenKey,
           notificationBus,
+          operationalMetricsConfig
         }),
         dataProductTable: new CountedTable(stack, 'DataProductTable', {
           partitionKey: {

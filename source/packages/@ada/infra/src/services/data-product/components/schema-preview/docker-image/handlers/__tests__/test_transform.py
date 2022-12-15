@@ -1,9 +1,7 @@
 ###################################################################
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-# SPDX-License-Identifier: Apache-2.0 
+# SPDX-License-Identifier: Apache-2.0
 ###################################################################
-import transform
-from constants import DEFAULT_DATASET_ID
 import pathlib
 import os
 import json
@@ -15,6 +13,9 @@ from awsglue.context import GlueContext
 from pyspark.conf import SparkConf
 from unittest.mock import patch
 import pytest
+
+from handlers.common import * # NOSONAR
+import handlers.transform as transform
 
 sc = SparkContext.getOrCreate(SparkConf()
                               .setMaster('local[1]')
@@ -69,7 +70,7 @@ def _make_dynamic_frame(name, data, ordered_columns):
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
+@patch("handlers.transform.core._load_sample_data_table")
 def test_should_apply_no_transforms(mock_load_sample_data, uuid_mock, s3):
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
         {"name": "Darth Vader", "lightsaber_colour": "red"},
@@ -134,7 +135,7 @@ def test_should_apply_no_transforms(mock_load_sample_data, uuid_mock, s3):
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
+@patch("handlers.transform.core._load_sample_data_table")
 def test_should_sanitise_column_names(mock_load_sample_data, uuid_mock, s3):
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
         {"  Name  ": "Darth Vader", "LightsaberColour": "red"},
@@ -199,7 +200,7 @@ def test_should_sanitise_column_names(mock_load_sample_data, uuid_mock, s3):
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
+@patch("handlers.transform.core._load_sample_data_table")
 def test_should_not_load_more_than_10_rows_for_preview(mock_load_sample_data, uuid_mock, s3):
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
         {"name": "1"},
@@ -263,7 +264,7 @@ def test_should_not_load_more_than_10_rows_for_preview(mock_load_sample_data, uu
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
+@patch("handlers.transform.core._load_sample_data_table")
 def test_should_apply_multiple_transforms(mock_load_sample_data, uuid_mock, s3):
     # Data is nested json to test relationalize transform is executed correctly
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
@@ -343,7 +344,7 @@ def test_should_apply_multiple_transforms(mock_load_sample_data, uuid_mock, s3):
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
+@patch("handlers.transform.core._load_sample_data_table")
 def test_should_apply_built_in_apply_mapping_transforms(mock_load_sample_data, uuid_mock, s3):
     # Data is nested json to test relationalize transform is executed correctly
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
@@ -367,7 +368,7 @@ def test_should_apply_built_in_apply_mapping_transforms(mock_load_sample_data, u
         "tableName": "simpleTable",
         "classification": "json",
         "sampleDataS3Path": "s3://test/json",
-    }],  
+    }],
     ) == {
         "initialDataSets": {
             "simpletable": {
@@ -424,7 +425,7 @@ def test_should_apply_built_in_apply_mapping_transforms(mock_load_sample_data, u
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
+@patch("handlers.transform.core._load_sample_data_table")
 def test_should_apply_built_in_drop_fields_transforms(mock_load_sample_data, uuid_mock, s3):
     # Data is nested json to test relationalize transform is executed correctly
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
@@ -442,7 +443,7 @@ def test_should_apply_built_in_drop_fields_transforms(mock_load_sample_data, uui
         "tableName": "simpleTable",
         "classification": "json",
         "sampleDataS3Path": "s3://test/json",
-    }],  
+    }],
     ) == {
         "initialDataSets": {
             "simpletable": {
@@ -494,7 +495,7 @@ def test_should_apply_built_in_drop_fields_transforms(mock_load_sample_data, uui
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
+@patch("handlers.transform.core._load_sample_data_table")
 def test_should_apply_built_in_select_fields_transforms(mock_load_sample_data, uuid_mock, s3):
     # Data is nested json to test relationalize transform is executed correctly
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
@@ -512,7 +513,7 @@ def test_should_apply_built_in_select_fields_transforms(mock_load_sample_data, u
         "tableName": "simpleTable",
         "classification": "json",
         "sampleDataS3Path": "s3://test/json",
-    }],  
+    }],
     ) == {
         "initialDataSets": {
             "simpletable": {
@@ -563,8 +564,8 @@ def test_should_apply_built_in_select_fields_transforms(mock_load_sample_data, u
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
-@patch("transform.boto3")
+@patch("handlers.transform.core._load_sample_data_table")
+@patch("handlers.transform.core.boto3")
 def test_should_permit_transforms_that_result_in_empty_frames(boto3, mock_load_sample_data, uuid_mock, s3):
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
         {"name": "Darth Vader", "midi-chlorians": 27000},
@@ -640,8 +641,8 @@ def test_should_permit_transforms_that_result_in_empty_frames(boto3, mock_load_s
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
-@patch("transform.boto3")
+@patch("handlers.transform.core._load_sample_data_table")
+@patch("handlers.transform.core.boto3")
 def test_should_permit_transforms_that_result_in_empty_schemas(boto3, mock_load_sample_data, uuid_mock, s3):
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
         {"name": "Darth Vader", "midi-chlorians": 27000},
@@ -707,7 +708,7 @@ def test_should_permit_transforms_that_result_in_empty_schemas(boto3, mock_load_
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
+@patch("handlers.transform.core._load_sample_data_table")
 def test_should_parse_json_with_unexpected_values(mock_load_sample_data, uuid_mock, s3):
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
         {"name": "Darth Vader", "lightsaber_colour": "red"},
@@ -776,7 +777,7 @@ def test_should_parse_json_with_unexpected_values(mock_load_sample_data, uuid_mo
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
+@patch("handlers.transform.core._load_sample_data_table")
 def test_should_allow_transforms_with_helper_functions(mock_load_sample_data, uuid_mock, s3):
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
         {"name": "Darth Vader", "midi-chlorians": 27000},
@@ -845,7 +846,7 @@ def test_should_allow_transforms_with_helper_functions(mock_load_sample_data, uu
 
 @patch("awswrangler.s3")
 @patch("uuid.uuid4")
-@patch("transform._load_sample_data_table")
+@patch("handlers.transform.core._load_sample_data_table")
 def test_should_not_allow_transforms_with_non_sandbox_modules(mock_load_sample_data, uuid_mock, s3):
     mock_load_sample_data.return_value = _make_dynamic_frame('simpleTable', [
         {"name": "Darth Vader", "midi-chlorians": 27000},

@@ -2,8 +2,33 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-GovernanceService) - Automated Data Analytics on AWS. Version v1.0.2",
+  "Description": "(SO0190-GovernanceService) - Automated Data Analytics on AWS. Version v1.1.0",
   "Outputs": Object {
+    "AdaGovernanceServiceApiLambdaGetAttributePolicy49F83004Ref": Object {
+      "Value": Object {
+        "Ref": "ApiLambdaGetAttributePolicyA18B2511",
+      },
+    },
+    "AdaGovernanceServiceApiLambdaGetAttributeValuePolicyFCF5E1C3Ref": Object {
+      "Value": Object {
+        "Ref": "ApiLambdaGetAttributeValuePolicy4B6B1E42",
+      },
+    },
+    "AdaGovernanceServiceApiLambdaGetDataProductPolicy8193040BRef": Object {
+      "Value": Object {
+        "Ref": "ApiLambdaGetDataProductPolicy0BA8B2AD",
+      },
+    },
+    "AdaGovernanceServiceApiLambdaGetDataProductPolicyPermissions8C0BEA91Ref": Object {
+      "Value": Object {
+        "Ref": "ApiLambdaGetDataProductPolicyPermissionsB3A4FAA6",
+      },
+    },
+    "AdaGovernanceServiceApiLambdaGetDefaultLensPolicyFBD0C25DRef": Object {
+      "Value": Object {
+        "Ref": "ApiLambdaGetDefaultLensPolicyF26C06AD",
+      },
+    },
     "ApiGovernanceUrl62F5D9CE": Object {
       "Value": Object {
         "Fn::Join": Array [
@@ -6244,9 +6269,6 @@ Object {
     "ApiRestApiRefgovernanceOPTIONSB8D89C55": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -6348,9 +6370,6 @@ Object {
     "ApiRestApiRefgovernancepolicyOPTIONS6CD05D13": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -6848,9 +6867,6 @@ Object {
     "ApiRestApiRefgovernancepolicyattributesOPTIONS19FABCFB": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -7227,9 +7243,6 @@ Object {
     "ApiRestApiRefgovernancepolicyattributesontologyNamespaceOPTIONS61BE92EC": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -7295,9 +7308,6 @@ Object {
     "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdOPTIONS5A60D49E": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -7339,9 +7349,6 @@ Object {
     "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupOPTIONS542A87CE": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -7940,9 +7947,6 @@ Object {
     "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupOPTIONS290C4255": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -8523,9 +8527,6 @@ Object {
     "ApiRestApiRefgovernancepolicyattributevaluesOPTIONS2CD33AC5": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -8896,9 +8897,6 @@ Object {
     "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceOPTIONS9D2DEFFB": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -8964,9 +8962,6 @@ Object {
     "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdOPTIONS99070B70": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -9008,9 +9003,6 @@ Object {
     "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupOPTIONSA51F65D2": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -9617,9 +9609,6 @@ Object {
     "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupOPTIONS81610F5D": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -10044,9 +10033,6 @@ Object {
     "ApiRestApiRefgovernancepolicydefaultlensOPTIONS69B692E3": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -10100,9 +10086,6 @@ Object {
     "ApiRestApiRefgovernancepolicydefaultlensdomainOPTIONS3811C253": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -10156,9 +10139,6 @@ Object {
     "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIdOPTIONSBB32C8BC": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -10212,9 +10192,6 @@ Object {
     "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductOPTIONS9A40B55F": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -10871,9 +10848,6 @@ Object {
     "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdOPTIONS02528619": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -11330,9 +11304,6 @@ Object {
     "ApiRestApiRefgovernancepolicydomainOPTIONS7C71819F": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -11386,9 +11357,6 @@ Object {
     "ApiRestApiRefgovernancepolicydomaindomainIdOPTIONS54F3CBD6": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -11442,9 +11410,6 @@ Object {
     "ApiRestApiRefgovernancepolicydomaindomainIddataproductOPTIONS6218C1C3": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -12097,9 +12062,6 @@ Object {
     "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdOPTIONS88C31DBB": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -12797,9 +12759,6 @@ Object {
     "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdpermissionsOPTIONSBCD9A405": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -12837,6 +12796,29 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Method",
+    },
+    "AppRegistryAssociation": Object {
+      "Properties": Object {
+        "Application": Object {
+          "Fn::Join": Array [
+            "-",
+            Array [
+              "Automated-Data-Analysis-on-AWS",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+            ],
+          ],
+        },
+        "Resource": Object {
+          "Ref": "AWS::StackId",
+        },
+        "ResourceType": "CFN_STACK",
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
     },
     "AttributesPolicyTable": Object {
       "DeletionPolicy": "Delete",

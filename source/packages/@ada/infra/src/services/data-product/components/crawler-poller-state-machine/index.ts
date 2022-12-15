@@ -15,7 +15,7 @@ const { stringEquals } = Condition;
 /**
  * Construct to create our generic crawler state machine
  */
-export default class CrawlerPollerStateMachine extends Construct {
+export class CrawlerPollerStateMachine extends Construct {
   public readonly stateMachine: StateMachine;
   public readonly stepLambdas: LambdaFunction[] = [];
 
@@ -107,3 +107,5 @@ export default class CrawlerPollerStateMachine extends Construct {
     });
   }
 }
+
+export default CrawlerPollerStateMachine;

@@ -68,7 +68,7 @@ const generatePolicyDocument = async (userId: string, username: string, groups: 
   try {
     // if the user does not belong to any group
     if (!groups || groups.length === 0) {
-      return buildPolicyDocument(userId, username, groups, DEFAULT_ACCESS_POLICIES!);
+      return buildPolicyDocument(userId, username, groups, DEFAULT_ACCESS_POLICIES ?? []);
     }
     const resources = await getResourcePoliciesFromGroups(groups);
 
@@ -236,7 +236,7 @@ const processInternalToken = async (token: string) => {
   }
 
   const nowInSec = Math.floor(Date.now() / 1000);
-  if (expiration! <= nowInSec) {
+  if (!expiration || expiration <= nowInSec) {
     throw new AuthError('The provided token is expired');
   }
 

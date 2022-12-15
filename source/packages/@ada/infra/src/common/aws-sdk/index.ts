@@ -66,4 +66,7 @@ export * from 'aws-sdk';
 
 export const DynamoDBConverterMarshall = AWS.DynamoDB.Converter.marshall;
 
+export const ServiceCatalogAppRegistryInstance = (props?: SDKProps): AWS.ServiceCatalogAppRegistry => 
+  new AWS.ServiceCatalogAppRegistry({ ...props, ...commonProps });
+
 export { PromiseResult } from 'aws-sdk/lib/request';

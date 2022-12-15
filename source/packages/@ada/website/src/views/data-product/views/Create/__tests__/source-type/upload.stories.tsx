@@ -2,16 +2,16 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { CreateDataProductView } from '../../index';
-import { SourceType } from '@ada/common';
 import { act } from '@testing-library/react';
 import { fireEvent, within } from '@storybook/testing-library';
 import { gotoSourceTypeDetails, useSourceTypeTestApiMocks } from '../helpers';
+import * as Connectors from '@ada/connectors';
 
 const FILE_JSON = JSON.stringify({ aString: 'my-string', aBoolean: true });
 const FILE = new File([FILE_JSON], 'test-file.json', { type: 'application/json' });
 
 export default {
-  title: `Views/DataProduct/Create/${SourceType.UPLOAD}`,
+  title: `Views/DataProduct/Create/${Connectors.FileUpload.ID}`,
   component: CreateDataProductView,
 } as ComponentMeta<typeof CreateDataProductView>;
 
@@ -23,7 +23,7 @@ const Template: ComponentStory<typeof CreateDataProductView> = (args) => {
 
 export const Primary = Template.bind({});
 Primary.play = async ({ canvasElement }) => {
-  await gotoSourceTypeDetails(canvasElement, SourceType.UPLOAD);
+  await gotoSourceTypeDetails(canvasElement, Connectors.FileUpload.ID);
 
   const { getByLabelText } = within(canvasElement);
 

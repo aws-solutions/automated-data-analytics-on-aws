@@ -11,8 +11,6 @@ import {
   DataProductSourceDataStatus,
   DefaultGroupIds,
   ReservedDataProducts,
-  SourceDetailsGoogleStorage,
-  SourceType,
 } from '@ada/common';
 import {
   DEFAULT_S3_SOURCE_DATA_PRODUCT,
@@ -26,11 +24,16 @@ import { buildApiRequest } from '@ada/api-gateway';
 import { handler } from '../post-data-product';
 import { noopMockLockClient } from '../../../../api/components/entity/locks/mock';
 import { noopMockRelationshipClient } from '../../../../api/components/entity/relationships/mock';
+import { Connectors } from '@ada/connectors';
+import { ISourceDetails__GOOGLE_STORAGE } from '@ada/connectors/sources/google_storage';
+import { MOCK_GOOGLE_SERVICE_ACCOUNT, MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT } from '@ada/connectors/common/google/testing';
+import { METRICS_EVENT_TYPE, OperationalMetricsClient } from '@ada/services/api/components/operational-metrics/client';
 
 jest.mock('@ada/api-client-lambda');
 const mockStartExecution = jest.fn();
 const mockCreateSecret = jest.fn();
 const mockInvokeAsync = jest.fn();
+const mockSendOperationalMetrics = jest.fn();
 
 jest.mock('@ada/aws-sdk', () => ({
   ...(jest.requireActual('@ada/aws-sdk') as any),
@@ -79,6 +82,10 @@ describe('post-data-product', () => {
         },
       },
     });
+
+    OperationalMetricsClient.getInstance = jest.fn(() => ({
+      send: mockSendOperationalMetrics
+    }));
   });
 
   afterEach(async () => {
@@ -154,38 +161,38 @@ describe('post-data-product', () => {
       },
     });
     expect(mockCreateSecret).not.toHaveBeenCalled();
+
+    expect(mockSendOperationalMetrics).toHaveBeenCalledWith({
+      event: METRICS_EVENT_TYPE.DATA_PRODUCTS_CREATED,
+      connector: expectedDataProduct.sourceType,
+    });
   });
 
   it('should create a new data product and store secrets if the product requires it', async () => {
     mockCreateSecret.mockReturnValue({
-      Name: 'a-secret-name',
+      Name: MOCK_GOOGLE_SERVICE_ACCOUNT.privateKeySecretName,
     });
 
     const inputDataProduct: DataProductInput = {
       ...DEFAULT_S3_SOURCE_DATA_PRODUCT,
-      sourceType: SourceType.GOOGLE_STORAGE,
+      sourceType: Connectors.Id.GOOGLE_STORAGE,
       sourceDetails: {
-        clientId: 'c-id',
-        clientEmail: 'mock@mock.it',
-        privateKeyId: 'pk-id',
-        privateKey: 'private-key-raw-content',
-        projectId: 'p-id',
-      } as SourceDetailsGoogleStorage,
+        bucket: 'my-bucket',
+        key: 'my-key',
+        ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
+      } as ISourceDetails__GOOGLE_STORAGE,
     };
     const response = await postDataProductHandler('my-google-data-product', inputDataProduct);
     expect(response.statusCode).toBe(200);
 
     const expectedDataProduct = {
       ...DEFAULT_S3_SOURCE_DATA_PRODUCT,
-      sourceType: SourceType.GOOGLE_STORAGE,
+      sourceType: Connectors.Id.GOOGLE_STORAGE,
       sourceDetails: {
-        clientId: 'c-id',
-        clientEmail: 'mock@mock.it',
-        privateKeyId: 'pk-id',
-        privateKey: undefined,
-        projectId: 'p-id',
-        privateKeySecretName: 'a-secret-name',
-      } as SourceDetailsGoogleStorage,
+        bucket: 'my-bucket',
+        key: 'my-key',
+        ...MOCK_GOOGLE_SERVICE_ACCOUNT,
+      } as ISourceDetails__GOOGLE_STORAGE,
       dataProductId: 'my-google-data-product',
       infrastructureStatus: DataProductInfrastructureStatus.PROVISIONING,
       dataStatus: DataProductDataStatus.NO_DATA,
@@ -216,7 +223,7 @@ describe('post-data-product', () => {
     // Should have created the secret as this is google storage
     expect(mockCreateSecret).toHaveBeenCalledWith({
       Name: expect.stringMatching(/DPSecrets-data-product-test.*/),
-      SecretString: 'private-key-raw-content',
+      SecretString: MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT.privateKey,
     });
     expect(mockCreateSecret.name.length).toBeLessThanOrEqual(512);
   });

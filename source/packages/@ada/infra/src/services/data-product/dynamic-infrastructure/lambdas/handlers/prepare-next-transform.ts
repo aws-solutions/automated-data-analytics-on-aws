@@ -1,6 +1,6 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import { DiscoverTransformsOutput } from './discover-transforms';
+import { DiscoverTransformsOutput } from './prepare-transform-chain';
 import { StepFunctionLambdaEvent } from '@ada/microservice-common';
 import { resolveTransforms } from '../../../components/transforms/utils/transform-utils';
 

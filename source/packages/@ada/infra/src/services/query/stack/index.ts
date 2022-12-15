@@ -9,8 +9,8 @@ import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { Microservice, MicroserviceApi, MicroserviceProps } from '../../../common/services';
+import { OperationalMetricsConfig, TypescriptFunction } from '@ada/infra-common';
 import { Stream, StreamEncryption } from 'aws-cdk-lib/aws-kinesis';
-import { TypescriptFunction } from '@ada/infra-common';
 import { getUniqueKmsKeyAlias } from '@ada/cdk-core';
 import AthenaQueryExecutorStateMachine from '../components/athena-query-executor-step-function';
 import QueryApi from '../api';
@@ -26,6 +26,7 @@ export interface QueryServiceStackProps extends MicroserviceProps {
   athenaOutputBucket: Bucket;
   accessLogsBucket: Bucket;
   cognitoDomain: string;
+  operationalMetricsConfig: OperationalMetricsConfig;
 }
 
 /**
@@ -140,6 +141,7 @@ export class QueryServiceStack extends Microservice {
         entityManagementTables,
         glueKmsKey,
         queryEventsStream,
+        operationalMetricsConfig: props.operationalMetricsConfig, 
       },
     );
 

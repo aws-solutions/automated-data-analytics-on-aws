@@ -1,68 +1,26 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import { Arn, ArnComponents, ArnFormat, Stack } from 'aws-cdk-lib';
-import { Bucket, IBucket } from 'aws-cdk-lib/aws-s3';
+import { Arn, ArnFormat, Stack } from 'aws-cdk-lib';
+import { Bucket } from 'aws-cdk-lib/aws-s3';
+import { Connectors } from '@ada/connectors';
 import { Construct } from 'constructs';
-import { Database, IDatabase } from '@aws-cdk/aws-glue-alpha';
+import { Database } from '@aws-cdk/aws-glue-alpha';
 import { EventBus } from 'aws-cdk-lib/aws-events';
-import { Function, IFunction } from 'aws-cdk-lib/aws-lambda';
-import { IKey, Key } from 'aws-cdk-lib/aws-kms';
-import { INotificationBus, NotificationBus } from '../../../api/components/notification/constructs/bus';
-import { IRole, Role } from 'aws-cdk-lib/aws-iam';
-import { IStateMachine, StateMachine } from 'aws-cdk-lib/aws-stepfunctions';
-import { ITable, Table } from 'aws-cdk-lib/aws-dynamodb';
-import { StaticInfrastructure } from '@ada/microservice-common';
-
-export interface StaticInfrastructureReferencesProps {
-  staticInfrastructure: StaticInfrastructure;
-}
-
-export interface GoogleCloudStorageConnectorRefs {
-  readonly importDataStateMachine: IStateMachine;
-}
-
-export interface GoogleBigQueryConnectorRefs {
-  readonly importDataStateMachine: IStateMachine;
-}
-
-export interface GoogleAnalyticsConnectorRefs {
-  readonly importDataStateMachine: IStateMachine;
-}
-
-export interface StaticInfrastructureRefs {
-  readonly counterTable: ITable;
-  readonly notificationBus: INotificationBus;
-  readonly glueDBArn: ArnComponents;
-  readonly glueKmsKey: IKey;
-  readonly glueDatabase: IDatabase;
-  readonly scriptBucket: IBucket;
-  readonly dataBucket: IBucket;
-  readonly executeAthenaQueryLambdaRole: IRole;
-  readonly crawlerStateMachine: IStateMachine;
-  readonly executeGeneratedQueryStateMachine: IStateMachine;
-  readonly getCrawledTableDetailsLambda: IFunction;
-  readonly discoverTransformsLambda: IFunction;
-  readonly prepareNextTransformLambda: IFunction;
-  readonly prepareCtasQueryLambda: IFunction;
-  readonly validateS3PathLambda: IFunction;
-  readonly athenaUtilitiesLambdaName: string;
-  readonly generatePIIQueryLambda: IFunction;
-  readonly getPiiQueryResultLambda: IFunction;
-  readonly prepareExternalImportLambda: IFunction;
-  readonly startDataImportLambda: IFunction;
-  readonly googleCloudStorageConnector: GoogleCloudStorageConnectorRefs;
-  readonly googleBigQueryConnector: GoogleBigQueryConnectorRefs;
-  readonly googleAnalyticsConnector: GoogleAnalyticsConnectorRefs;
-  readonly glueSecurityConfigurationName: string;
-}
+import { Function } from 'aws-cdk-lib/aws-lambda';
+import { Key } from 'aws-cdk-lib/aws-kms';
+import { NotificationBus } from '../../../api/components/notification/constructs/bus';
+import { Role } from 'aws-cdk-lib/aws-iam';
+import { StateMachine } from 'aws-cdk-lib/aws-stepfunctions';
+import { Table } from 'aws-cdk-lib/aws-dynamodb';
+import type { StaticInfra } from '@ada/microservice-common';
 
 /**
  * Construct to resolve references to static infrastructure as constructs for use in dynamic infrastructure.
  */
-export default class StaticInfrastructureReferences extends Construct {
-  public readonly staticInfrastructureReferences: StaticInfrastructureRefs;
+class BaseStaticInfrastructureReferences extends Construct implements StaticInfra.Refs.IBaseConstruct {
+  public readonly staticInfrastructureReferences: StaticInfra.Refs.IBaseRecord;
 
-  constructor(scope: Construct, id: string, { staticInfrastructure }: StaticInfrastructureReferencesProps) {
+  constructor(scope: Construct, id: string, { staticInfrastructure }: StaticInfra.Refs.IConstructProps) {
     super(scope, id);
 
     const counterTable = Table.fromTableName(this, 'CounterTable', staticInfrastructure.counterTableName);
@@ -106,10 +64,10 @@ export default class StaticInfrastructureReferences extends Construct {
       staticInfrastructure.lambdas.getCrawledTableDetailsArn,
     );
 
-    const discoverTransformsLambda = Function.fromFunctionArn(
+    const prepareTransformChainLambda = Function.fromFunctionArn(
       this,
-      'DiscoverTransformsLambda',
-      staticInfrastructure.lambdas.discoverTransformsArn,
+      'PrepareTransformChainLambda',
+      staticInfrastructure.lambdas.prepareTransformChainArn,
     );
 
     const prepareNextTransformLambda = Function.fromFunctionArn(
@@ -124,12 +82,6 @@ export default class StaticInfrastructureReferences extends Construct {
       staticInfrastructure.lambdas.prepareExternalImportLambdaArn,
     );
 
-    const prepareCtasQueryLambda = Function.fromFunctionArn(
-      this,
-      'PrepareCtasQueryLambda',
-      staticInfrastructure.lambdas.prepareCtasQueryArn,
-    );
-
     const validateS3PathLambda = Function.fromFunctionArn(
       this,
       'ValidateS3PathLambda',
@@ -140,24 +92,6 @@ export default class StaticInfrastructureReferences extends Construct {
       this,
       'StartDataImportLambda',
       staticInfrastructure.lambdas.startDataImportLambdaArn,
-    );
-
-    const googleStorageImportDataStateMachine = StateMachine.fromStateMachineArn(
-      this,
-      'GoogleStorageImportDataStateMachine',
-      staticInfrastructure.googleCloudStorageConnector.importDataStateMachineArn,
-    );
-
-    const googleBigQueryImportDataStateMachine = StateMachine.fromStateMachineArn(
-      this,
-      'GoogleBigQueryImportDataStateMachine',
-      staticInfrastructure.googleBigQueryConnector.importDataStateMachineArn,
-    );
-
-    const googleAnalyticsImportDataStateMachine = StateMachine.fromStateMachineArn(
-      this,
-      'GoogleAnalyticsImportDataStateMachine',
-      staticInfrastructure.googleAnalyticsConnector.importDataStateMachineArn,
     );
 
     const athenaUtilitiesLambdaName = staticInfrastructure.lambdas.athenaUtilitiesLambdaName;
@@ -174,6 +108,7 @@ export default class StaticInfrastructureReferences extends Construct {
       staticInfrastructure.lambdas.getPiiQueryResultLambdaArn,
     );
 
+    // NB: Connectors.Infra.Static.withStaticInfraRefs will apply additional refs
     this.staticInfrastructureReferences = {
       counterTable,
       notificationBus,
@@ -186,25 +121,28 @@ export default class StaticInfrastructureReferences extends Construct {
       crawlerStateMachine,
       executeGeneratedQueryStateMachine,
       getCrawledTableDetailsLambda,
-      discoverTransformsLambda,
+      prepareTransformChainLambda,
       prepareNextTransformLambda,
-      prepareCtasQueryLambda,
       validateS3PathLambda,
       startDataImportLambda,
       prepareExternalImportLambda,
-      googleCloudStorageConnector: {
-        importDataStateMachine: googleStorageImportDataStateMachine,
-      },
-      googleBigQueryConnector: {
-        importDataStateMachine: googleBigQueryImportDataStateMachine,
-      },
-      googleAnalyticsConnector: {
-        importDataStateMachine: googleAnalyticsImportDataStateMachine,
-      },
       athenaUtilitiesLambdaName,
       generatePIIQueryLambda,
       getPiiQueryResultLambda,
       glueSecurityConfigurationName: staticInfrastructure.glueSecurityConfigurationName,
+      dataIngressVPC: staticInfrastructure.dataIngressVPC,
     };
   }
 }
+
+export const StaticInfrastructureReferences = function StaticInfrastructureReferences(
+  ...args: StaticInfra.Refs.IConstructParameters
+): StaticInfra.Refs.IConstruct {
+  require('@ada/connectors/register-infra');
+
+  const DecoratedClass = Connectors.Infra.Static.withStaticInfraRefs(BaseStaticInfrastructureReferences);
+
+  return new DecoratedClass(...args);
+} as unknown as StaticInfra.Refs.IConstructClass;
+
+export default StaticInfrastructureReferences;

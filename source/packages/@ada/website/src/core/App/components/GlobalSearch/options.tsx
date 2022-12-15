@@ -6,7 +6,7 @@ import { EntityTypes, OperationEntityMeta } from '@ada/api/client/types';
 import { ListItem, ListItemText, createStyles, makeStyles } from '@material-ui/core';
 import { SearchResult } from '$core/provider/IndexingProvider';
 import { SelectOption } from 'aws-northstar/components/Select';
-import { SourceTypeBadge } from '$views/data-product/components';
+import { SourceTypeBadge } from '$connectors/icons';
 import { compact, groupBy, take } from 'lodash';
 import { isEmpty } from '@aws-amplify/core';
 import { useHistory } from 'react-router-dom';
@@ -55,7 +55,7 @@ export const useRenderOption = () => {
               {option.extras && option.extras.map((extra, i) => <Fragment key={i}>{extra}</Fragment>)}
               {option.tags &&
                 option.tags.map((tag, index) => (
-                  <Badge key={index} color="grey" content={tag.value ? `${tag.key}:${tag.value}` : tag.key} />
+                  <Badge key={index} color="grey" content={(tag.value ? `${tag.key}:${tag.value}` : tag.key) as string} />
                 ))}
             </Inline>
           </ColumnLayout>

@@ -44,6 +44,12 @@
       "@ada/api-gateway/*": ["./src/services/api/api-gateway/*"],
       "@ada/microservice-test-common": ["./src/common/services/testing/index.ts"],
       "@ada/microservice-test-common/*": ["./src/common/services/testing/*"],
+      "@ada/connectors": ["./src/connectors"],
+      "@ada/connectors/*": ["./src/connectors/*"],
+      "@ada/services/*": ["./src/services/*"],
+      "@ada/dynamic-infra": ["./src/services/data-product/dynamic-infrastructure"],
+      "@ada/dynamic-infra/*": ["./src/services/data-product/dynamic-infrastructure/*"],
+      "@ada/data-product-infra-types": ["./src/common/services/types/data-product-infra.ts"]
     },
     "plugins": [
       // https://www.npmjs.com/package/typescript-transform-paths

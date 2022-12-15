@@ -14,7 +14,7 @@ const TEST_GLOBS = [
   '**/__mocks__/**',
   '**/*.stories.*',
   '**/cypress/**',
-]
+];
 
 module.exports = {
   root: true,
@@ -23,12 +23,8 @@ module.exports = {
     es2020: true,
   },
   // https://www.npmjs.com/package/eslint-plugin-disable
-  processor: "disable/disable",
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:sonarjs/recommended',
-  ],
+  processor: 'disable/disable',
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:sonarjs/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,
@@ -49,16 +45,19 @@ module.exports = {
     'no-empty-function': 'warn',
     'no-undef': 'off',
     'no-func-assign': 'off',
-    'max-len': ["error", {
-      code: 120,
-      ignoreComments: true,
-      ignoreUrls: true,
-      ignoreTrailingComments: true,
-      ignoreStrings: true,
-      ignoreTemplateLiterals: true,
-      ignoreRegExpLiterals: true,
-      ignorePattern: "NOSONAR",
-    }],
+    'max-len': [
+      'error',
+      {
+        code: 120,
+        ignoreComments: true,
+        ignoreUrls: true,
+        ignoreTrailingComments: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+        ignoreRegExpLiterals: true,
+        ignorePattern: 'NOSONAR',
+      },
+    ],
 
     '@typescript-eslint/no-empty-function': ['warn'],
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_.*', varsIgnorePattern: '^_.*' }],
@@ -67,6 +66,9 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-namespace': ['warn'],
+
+    'sonarjs/cognitive-complexity': 'off',
 
     'padding-line-between-statements': [
       'warn',
@@ -83,7 +85,7 @@ module.exports = {
     {
       files: TEST_GLOBS,
       settings: {
-        'disable/plugins': ['sonarjs']
+        'disable/plugins': ['sonarjs'],
       },
     },
     {

@@ -15,7 +15,7 @@ import { NotificationBus } from '../../../../services/api/components/notificatio
 import { Template } from 'aws-cdk-lib/assertions';
 import { TestApp, TestStack, getRootStack } from '@ada/cdk-core';
 import { omit, uniqBy } from 'lodash';
-import findFreePort from 'find-port-free-sync'
+import findFreePort from 'find-port-free-sync';
 
 // Port to run dynamodb local on - find available port within range
 const DYNAMODB_LOCAL_PORT = findFreePort({
@@ -185,7 +185,7 @@ export const buildCdkEnvironmentForTests = <T extends Microservice, P extends Mi
       : new FederatedRestApi(stack, 'MockFederatedApi', {
           customAuthorizer: new RequestAuthorizer(stack, 'auth', {
             handler: new LambdaFunction(stack, 'MyFunction', {
-              runtime: Runtime.NODEJS_12_X,
+              runtime: Runtime.NODEJS_14_X,
               handler: 'index.handler',
               code: Code.fromInline('console.log(1)'),
             }) as IFunction,
@@ -259,7 +259,9 @@ function resolveSynthedAppReference(ref: string, synthedApp: SynthedApp): string
     }
   }
 
-  console.warn(`[WARNING] (${synthedApp.stackUnderTest.node.id}) Failed to resolve ref: ${ref} - safe to ignore unless testing scope requires this ref`);
+  console.warn(
+    `[WARNING] (${synthedApp.stackUnderTest.node.id}) Failed to resolve ref: ${ref} - safe to ignore unless testing scope requires this ref`,
+  );
 
   return ref;
 }

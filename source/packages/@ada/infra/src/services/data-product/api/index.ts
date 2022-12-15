@@ -23,7 +23,7 @@ import {
   MicroserviceApiProps,
 } from '@ada/microservice-common';
 import { Database } from '@aws-cdk/aws-glue-alpha';
-import { DynamicInfraDeploymentPolicyStatement, TypescriptFunction, TypescriptFunctionProps } from '@ada/infra-common';
+import { DynamicInfraDeploymentPolicyStatement, OperationalMetricsConfig, TypescriptFunction, TypescriptFunctionProps } from '@ada/infra-common';
 import { EntityManagementTables } from '../../api/components/entity/constructs/entity-management-tables';
 import { InternalTokenKey } from '../../../common/constructs/kms/internal-token-key';
 import { JsonSchemaType, LambdaIntegration } from 'aws-cdk-lib/aws-apigateway';
@@ -37,13 +37,11 @@ import { StringParameter } from 'aws-cdk-lib/aws-ssm';
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
 import { addCfnNagSuppressionsToRolePolicy } from '@ada/cdk-core';
 import { asEntity, asInput } from '../../../common/constructs/api';
+import { configOperationalMetricsClientForLambda } from '../../api/components/operational-metrics/client';
 import AthenaQueryExecutorStateMachine from '../../query/components/athena-query-executor-step-function';
 import CrawlerPollerStateMachine from '../components/crawler-poller-state-machine';
 import DataProductCreationStateMachine from '../components/creation-state-machine';
 import DataProductInfraLambdas from '../dynamic-infrastructure/lambdas';
-import GoogleAnalyticsImportDataStateMachine from '../components/google-analytics-import-data-state-machine';
-import GoogleBigQueryImportDataStateMachine from '../components/google-bigquery-import-data-state-machine';
-import GoogleStorageImportDataStateMachine from '../components/google-storage-import-data-state-machine';
 import path from 'path';
 
 export interface DataProductServiceApiProps extends MicroserviceApiProps {
@@ -65,14 +63,12 @@ export interface DataProductServiceApiProps extends MicroserviceApiProps {
   readonly entityManagementTables: EntityManagementTables;
   readonly glueKey: Key;
   readonly glueSecurityConfigurationName: string;
-  readonly googleStorageImportDataStateMachine: GoogleStorageImportDataStateMachine;
-  readonly googleBigQueryImportDataStateMachine: GoogleBigQueryImportDataStateMachine;
-  readonly googleAnalyticsImportDataStateMachine: GoogleAnalyticsImportDataStateMachine;
   readonly dataProductInfraLambdas: DataProductInfraLambdas;
   readonly athenaOutputBucket: Bucket;
   readonly scriptBucket: Bucket;
   readonly staticInfraParameter: StringParameter;
   readonly accessLogsBucket: Bucket;
+  readonly operationalMetricsConfig: OperationalMetricsConfig;
 }
 
 export interface BuiltLambdaFunctions {
@@ -212,6 +208,8 @@ export default class DataProductApi extends MicroserviceApi {
       }),
     );
 
+    configOperationalMetricsClientForLambda(postDataProductLambda, props.operationalMetricsConfig);
+
     const getDataProductLambda = buildLambda('get-data-product');
     props.dataProductTable.grantReadData(getDataProductLambda);
     getDataProductLambda.addToRolePolicy(
@@ -238,6 +236,20 @@ export default class DataProductApi extends MicroserviceApi {
         resources: props.dataProductCreationStateMachine.cloudformationResourceArns,
       }),
     );
+    deleteDataProductLambda.addToRolePolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ['states:ListExecutions'],
+        resources: [
+          Stack.of(this).formatArn({
+            resource: 'stateMachine',
+            service: 'states',
+            resourceName: 'StateMachine*',
+            arnFormat: ArnFormat.COLON_RESOURCE_NAME,
+          }),
+        ],
+      }),
+    );
     deleteDataProductLambda.addToRolePolicy(DynamicInfraDeploymentPolicyStatement);
     deleteDataProductLambda.addToRolePolicy(
       new PolicyStatement({
@@ -253,6 +265,8 @@ export default class DataProductApi extends MicroserviceApi {
         ],
       }),
     );
+
+    configOperationalMetricsClientForLambda(deleteDataProductLambda, props.operationalMetricsConfig);
 
     (deleteDataProductLambda.role!.node.findChild('DefaultPolicy').node.defaultChild as CfnPolicy).addMetadata(
       'cfn_nag',
@@ -322,6 +336,7 @@ export default class DataProductApi extends MicroserviceApi {
         type: [
           DataProductEventDetailTypes.DATA_PRODUCT_IMPORT_SUCCESS,
           DataProductEventDetailTypes.DATA_PRODUCT_IMPORT_ERROR,
+          DataProductEventDetailTypes.DATA_PRODUCT_IMPORT_SUCCESS_NO_UPDATE,
         ],
       },
     });

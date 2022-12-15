@@ -24,8 +24,10 @@ For more information on the solution’s architecture, refer to the [implementat
 - The computer used to build the solution must be able to access the internet.
 
 ### AWS Account
+
 - A CDK bootstrapped AWS account.
-  - https://docs.aws.amazon.com/cdk/latest/guide/bootstrapping.html  
+
+  - https://docs.aws.amazon.com/cdk/latest/guide/bootstrapping.html
 
 - Sufficient AWS Lambda Concurrent executions limit
   - Please use AWS Service Quotas to verify AWS Lambda Concurrent exeuctions `Applied quota value` in your account is greater or equal to the `AWS default quota value` (which is 1000). Click this [link](https://console.aws.amazon.com/servicequotas/home/services/lambda/quotas/L-B99A9384) to check it in your AWS Console. If `Applied quota value` is less than 1000, please use `Request quota increase` button to make a request to increase it to at least 1000 before deploying the solution. For more details, please refer to [AWS Lambda Developer Guide](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html).
@@ -33,17 +35,61 @@ For more information on the solution’s architecture, refer to the [implementat
 ### Tools
 
 - The latest version of the AWS CLI, installed and configured.
-  - https://aws.amazon.com/cli/
-- node.js version 14 or newer.
+  - https://aws.amazon.com/cli/ .
+- node.js version 14.
   - https://docs.npmjs.com/getting-started
-- install yarn (
-  - `npm install --global yarn`
-- Python 3.9 (
+  - Below are the example commands for installing nvm and node 14, please make sure those commands fit your build environment before using them.
+    ```
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+    exec $SHELL -l
+    nvm install 14
+    ```
+- install yarn
+  ```
+  npm install --global yarn
+  ```
+- Python 3.9
+
   - We recommend creating a python virtual env using `pipenv` to avoid version conflicts
+  - Below are the example commands for installing python 3.9 on Amazon Linux 2 and configure the virtual env, please make sure those commands fit your build environment before using them.
+
+    ```
+    pip3 install --user pipenv
+    export PATH="/home/<YOUR_USERNAME>/.local/bin:$PATH"
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+    export PATH="/home/<YOUR_USERNAME>/.pyenv/bin:$PATH"
+    sudo yum-builddep python3
+    pipenv --python 3.9
+
+    # after clone the Ada repository, navigate to the Ada directory and run the following commands
+    cd <Ada directory>
+    pyenv local 3.9
+    eval "$(pyenv init -)"
+    ```
+
 - Java Runtime
+
   - The solution requires a Java 8 Runtime. We strongly recommend using [Amazon Corretto 8](https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html). Alternatively, you can also use other OpenJDKs such as [Eclipse Temurin](https://adoptium.net/en-GB/temurin/releases/?version=8).
+
+  - Below are the example commands for installing Amazon Corretto 8 on Amazon Linux 2, please make sure those commands fit your build environment before using them.
+    ```
+    wget https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.rpm
+    sudo yum localinstall amazon-corretto-8-x64-linux-jdk.rpm
+    ```
+
 - Maven (>=3.5.2)
+
   - https://maven.apache.org/install.html. We recommend configuring Maven to use an OpenJDK8 compatible JAVA version, such as Amazon Corretto 8.
+
+  - Below are the example commands for installing Maven, please make sure those commands fit your build environment before using them.
+    ```
+    mkdir maven
+    cd maven
+    wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
+    tar xzvf apache-maven-3.8.6-bin.tar.gz
+    export PATH="/home/<YOUR_USERNAME>/maven/apache-maven-3.8.6/bin:$PATH"
+    ```
+
 - Docker Desktop (>= v20.10)
   - https://www.docker.com/get-started/
 
@@ -57,10 +103,10 @@ For more information on the solution’s architecture, refer to the [implementat
 2. Open the terminal and navigate to the source folder created in step 1. `cd automated-data-analytics-on-aws/source`
 3. Run the following command.
 
-    ```
-    chmod +x ./run-all-tests.sh
-    ./run-all-tests.sh
-    ```
+   ```
+   chmod +x ./run-all-tests.sh
+   ./run-all-tests.sh
+   ```
 
 The `/source/run-all-tests.sh` script is the centralized script to install all dependencies, build the solution from source code and execute all unit tests.
 

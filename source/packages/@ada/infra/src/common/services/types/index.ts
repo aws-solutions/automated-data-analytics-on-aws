@@ -21,3 +21,5 @@ export * from './machine';
 export * from './ontology';
 
 export { EventSource } from '../../../services/api/components/notification/common';
+
+export * from './data-product-infra';

@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-ApiStack) - Automated Data Analytics on AWS. Version v1.0.2",
+  "Description": "(SO0190-ApiStack) - Automated Data Analytics on AWS. Version v1.1.0",
   "Outputs": Object {
     "AdaDataProductServiceApiStackApiLambdaEventBridgeUpdateDataProductE054F2A1Arn": Object {
       "Value": Object {
@@ -144,7 +144,13 @@ Object {
     "referencetoAdaLayer6FB4FEF4Ref": Object {
       "Type": "String",
     },
+    "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID": Object {
+      "Type": "String",
+    },
     "referencetoAdaSharedEvntBus3C45F515Arn": Object {
+      "Type": "String",
+    },
+    "referencetoAdasendAnonymousData25711742Ref": Object {
       "Type": "String",
     },
   },
@@ -624,6 +630,11 @@ Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DRef",
             },
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "AWS_SOLUTION_DEPLOYMENT_ID": Object {
+              "Ref": "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID",
+            },
+            "AWS_SOLUTION_ID": "SO0190",
+            "AWS_SOLUTION_VERSION": "v1.1.0",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
             },
@@ -675,6 +686,9 @@ Object {
             },
             "SCRIPT_TABLE_NAME": Object {
               "Ref": "referencetoAdaDataProductServiceScriptsTable931159EFRef",
+            },
+            "SEND_ANONYMOUS_DATA": Object {
+              "Ref": "referencetoAdasendAnonymousData25711742Ref",
             },
           },
         },
@@ -963,6 +977,22 @@ Object {
                   ],
                 },
               ],
+            },
+            Object {
+              "Action": "states:ListExecutions",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":states:ap-southeast-1:1111111111:stateMachine:StateMachine*",
+                  ],
+                ],
+              },
             },
             Object {
               "Action": Array [
@@ -4964,6 +4994,11 @@ Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAthenaOutputBucketFB25B94DRef",
             },
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "AWS_SOLUTION_DEPLOYMENT_ID": Object {
+              "Ref": "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID",
+            },
+            "AWS_SOLUTION_ID": "SO0190",
+            "AWS_SOLUTION_VERSION": "v1.1.0",
             "BUILD_DATA_PRODUCT_LAMBDA_ARN": Object {
               "Fn::GetAtt": Array [
                 "ApiLambdaBuildDataProductEDA86792",
@@ -5021,6 +5056,9 @@ Object {
             },
             "SCRIPT_TABLE_NAME": Object {
               "Ref": "referencetoAdaDataProductServiceScriptsTable931159EFRef",
+            },
+            "SEND_ANONYMOUS_DATA": Object {
+              "Ref": "referencetoAdasendAnonymousData25711742Ref",
             },
           },
         },
@@ -7703,9 +7741,6 @@ Object {
     "ApiRestApiRefdataproductOPTIONS4912AC11": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -8066,9 +8101,6 @@ Object {
     "ApiRestApiRefdataproductdomainOPTIONS55368555": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -8629,9 +8661,6 @@ Object {
     "ApiRestApiRefdataproductdomaindomainIdOPTIONSE2E7F9B4": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -9877,124 +9906,6 @@ Object {
               "description": "Map of datasets by id",
               "type": "object",
             },
-            "GSLocation": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "GoogleAnalyticsIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "viewId",
-                "dimensions",
-                "metrics",
-              ],
-              "type": "object",
-            },
-            "GoogleBigQueryTableIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "query": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "GoogleServiceAccountAuth": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "projectId",
-                "clientEmail",
-                "clientId",
-                "privateKeyId",
-              ],
-              "type": "object",
-            },
             "PaginatedResponse": Object {
               "properties": Object {
                 "nextToken": Object {
@@ -10004,28 +9915,6 @@ Object {
                   "type": "number",
                 },
               },
-              "type": "object",
-            },
-            "S3Location": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
               "type": "object",
             },
             "ScriptIdentifier": Object {
@@ -10053,196 +9942,21 @@ Object {
               "type": "object",
             },
             "SouceDetailsSchema": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-                "query": Object {
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "SourceDetailsFileUpload": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleAnalytics": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleAnalyticsIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleBigQuery": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleBigQueryTableIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleStorage": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GSLocation",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsKinesis": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "kinesisStreamArn",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsS3": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
               "type": "object",
             },
             "SourceTypeEnum": Object {
               "description": "Source type value",
               "enum": Array [
                 "UPLOAD",
-                "QUERY",
                 "S3",
                 "KINESIS",
                 "GOOGLE_ANALYTICS",
                 "GOOGLE_BIGQUERY",
                 "GOOGLE_STORAGE",
+                "CLOUDWATCH",
+                "MYSQL5",
+                "POSTGRESQL",
+                "SQLSERVER",
               ],
               "type": "string",
             },
@@ -10252,13 +9966,11 @@ Object {
                   "maxLength": 128,
                   "minLength": 1,
                   "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                  "type": "string",
                 },
                 "value": Object {
                   "maxLength": 256,
                   "minLength": 0,
                   "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                  "type": "string",
                 },
               },
               "required": Array [
@@ -10299,9 +10011,6 @@ Object {
     "ApiRestApiRefdataproductdomaindomainIddataproductOPTIONSBF9E7128": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -11061,146 +10770,6 @@ Object {
               "description": "Map of datasets by id",
               "type": "object",
             },
-            "GSLocation": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "GoogleAnalyticsIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "viewId",
-                "dimensions",
-                "metrics",
-              ],
-              "type": "object",
-            },
-            "GoogleBigQueryTableIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "query": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "GoogleServiceAccountAuth": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "projectId",
-                "clientEmail",
-                "clientId",
-                "privateKeyId",
-              ],
-              "type": "object",
-            },
-            "S3Location": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
             "ScriptIdentifier": Object {
               "description": "Uniquely identifies the script. Used to calculate the script path in s3",
               "properties": Object {
@@ -11226,196 +10795,21 @@ Object {
               "type": "object",
             },
             "SouceDetailsSchema": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-                "query": Object {
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "SourceDetailsFileUpload": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleAnalytics": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleAnalyticsIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleBigQuery": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleBigQueryTableIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleStorage": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GSLocation",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsKinesis": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "kinesisStreamArn",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsS3": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
               "type": "object",
             },
             "SourceTypeEnum": Object {
               "description": "Source type value",
               "enum": Array [
                 "UPLOAD",
-                "QUERY",
                 "S3",
                 "KINESIS",
                 "GOOGLE_ANALYTICS",
                 "GOOGLE_BIGQUERY",
                 "GOOGLE_STORAGE",
+                "CLOUDWATCH",
+                "MYSQL5",
+                "POSTGRESQL",
+                "SQLSERVER",
               ],
               "type": "string",
             },
@@ -11425,13 +10819,11 @@ Object {
                   "maxLength": 128,
                   "minLength": 1,
                   "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                  "type": "string",
                 },
                 "value": Object {
                   "maxLength": 256,
                   "minLength": 0,
                   "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                  "type": "string",
                 },
               },
               "required": Array [
@@ -12202,124 +11594,6 @@ Object {
               "description": "Map of datasets by id",
               "type": "object",
             },
-            "GSLocation": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "GoogleAnalyticsIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "viewId",
-                "dimensions",
-                "metrics",
-              ],
-              "type": "object",
-            },
-            "GoogleBigQueryTableIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "query": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "GoogleServiceAccountAuth": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "projectId",
-                "clientEmail",
-                "clientId",
-                "privateKeyId",
-              ],
-              "type": "object",
-            },
             "GovernedColumnMetadata": Object {
               "properties": Object {
                 "dataType": Object {
@@ -12567,28 +11841,6 @@ Object {
               ],
               "type": "string",
             },
-            "S3Location": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
             "ScriptIdentifier": Object {
               "description": "Uniquely identifies the script. Used to calculate the script path in s3",
               "properties": Object {
@@ -12614,196 +11866,21 @@ Object {
               "type": "object",
             },
             "SouceDetailsSchema": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-                "query": Object {
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "SourceDetailsFileUpload": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleAnalytics": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleAnalyticsIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleBigQuery": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleBigQueryTableIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleStorage": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GSLocation",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsKinesis": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "kinesisStreamArn",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsS3": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
               "type": "object",
             },
             "SourceTypeEnum": Object {
               "description": "Source type value",
               "enum": Array [
                 "UPLOAD",
-                "QUERY",
                 "S3",
                 "KINESIS",
                 "GOOGLE_ANALYTICS",
                 "GOOGLE_BIGQUERY",
                 "GOOGLE_STORAGE",
+                "CLOUDWATCH",
+                "MYSQL5",
+                "POSTGRESQL",
+                "SQLSERVER",
               ],
               "type": "string",
             },
@@ -12813,13 +11890,11 @@ Object {
                   "maxLength": 128,
                   "minLength": 1,
                   "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                  "type": "string",
                 },
                 "value": Object {
                   "maxLength": 256,
                   "minLength": 0,
                   "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                  "type": "string",
                 },
               },
               "required": Array [
@@ -12996,9 +12071,6 @@ Object {
     "ApiRestApiRefdataproductdomaindomainIddataproductdataProductIdOPTIONS9D816CD4": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -13748,146 +12820,6 @@ Object {
               "description": "Map of datasets by id",
               "type": "object",
             },
-            "GSLocation": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "GoogleAnalyticsIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "viewId",
-                "dimensions",
-                "metrics",
-              ],
-              "type": "object",
-            },
-            "GoogleBigQueryTableIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "query": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "GoogleServiceAccountAuth": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "projectId",
-                "clientEmail",
-                "clientId",
-                "privateKeyId",
-              ],
-              "type": "object",
-            },
-            "S3Location": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
             "ScriptIdentifier": Object {
               "description": "Uniquely identifies the script. Used to calculate the script path in s3",
               "properties": Object {
@@ -13913,196 +12845,21 @@ Object {
               "type": "object",
             },
             "SouceDetailsSchema": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-                "query": Object {
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "SourceDetailsFileUpload": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleAnalytics": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleAnalyticsIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleBigQuery": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleBigQueryTableIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleStorage": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GSLocation",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsKinesis": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "kinesisStreamArn",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsS3": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
               "type": "object",
             },
             "SourceTypeEnum": Object {
               "description": "Source type value",
               "enum": Array [
                 "UPLOAD",
-                "QUERY",
                 "S3",
                 "KINESIS",
                 "GOOGLE_ANALYTICS",
                 "GOOGLE_BIGQUERY",
                 "GOOGLE_STORAGE",
+                "CLOUDWATCH",
+                "MYSQL5",
+                "POSTGRESQL",
+                "SQLSERVER",
               ],
               "type": "string",
             },
@@ -14112,13 +12869,11 @@ Object {
                   "maxLength": 128,
                   "minLength": 1,
                   "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                  "type": "string",
                 },
                 "value": Object {
                   "maxLength": 256,
                   "minLength": 0,
                   "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                  "type": "string",
                 },
               },
               "required": Array [
@@ -14851,146 +13606,6 @@ Object {
               "description": "Map of datasets by id",
               "type": "object",
             },
-            "GSLocation": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "GoogleAnalyticsIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "viewId",
-                "dimensions",
-                "metrics",
-              ],
-              "type": "object",
-            },
-            "GoogleBigQueryTableIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "query": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "GoogleServiceAccountAuth": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "projectId",
-                "clientEmail",
-                "clientId",
-                "privateKeyId",
-              ],
-              "type": "object",
-            },
-            "S3Location": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
             "ScriptIdentifier": Object {
               "description": "Uniquely identifies the script. Used to calculate the script path in s3",
               "properties": Object {
@@ -15016,196 +13631,21 @@ Object {
               "type": "object",
             },
             "SouceDetailsSchema": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-                "query": Object {
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "SourceDetailsFileUpload": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleAnalytics": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleAnalyticsIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleBigQuery": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleBigQueryTableIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleStorage": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GSLocation",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsKinesis": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "kinesisStreamArn",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsS3": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
               "type": "object",
             },
             "SourceTypeEnum": Object {
               "description": "Source type value",
               "enum": Array [
                 "UPLOAD",
-                "QUERY",
                 "S3",
                 "KINESIS",
                 "GOOGLE_ANALYTICS",
                 "GOOGLE_BIGQUERY",
                 "GOOGLE_STORAGE",
+                "CLOUDWATCH",
+                "MYSQL5",
+                "POSTGRESQL",
+                "SQLSERVER",
               ],
               "type": "string",
             },
@@ -15215,13 +13655,11 @@ Object {
                   "maxLength": 128,
                   "minLength": 1,
                   "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                  "type": "string",
                 },
                 "value": Object {
                   "maxLength": 256,
                   "minLength": 0,
                   "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                  "type": "string",
                 },
               },
               "required": Array [
@@ -15813,146 +14251,6 @@ Object {
               "description": "Map of datasets by id",
               "type": "object",
             },
-            "GSLocation": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "GoogleAnalyticsIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "viewId",
-                "dimensions",
-                "metrics",
-              ],
-              "type": "object",
-            },
-            "GoogleBigQueryTableIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "query": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "GoogleServiceAccountAuth": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "projectId",
-                "clientEmail",
-                "clientId",
-                "privateKeyId",
-              ],
-              "type": "object",
-            },
-            "S3Location": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
             "ScriptIdentifier": Object {
               "description": "Uniquely identifies the script. Used to calculate the script path in s3",
               "properties": Object {
@@ -15978,196 +14276,21 @@ Object {
               "type": "object",
             },
             "SouceDetailsSchema": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-                "query": Object {
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "SourceDetailsFileUpload": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleAnalytics": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleAnalyticsIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleBigQuery": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleBigQueryTableIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleStorage": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GSLocation",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsKinesis": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "kinesisStreamArn",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsS3": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
               "type": "object",
             },
             "SourceTypeEnum": Object {
               "description": "Source type value",
               "enum": Array [
                 "UPLOAD",
-                "QUERY",
                 "S3",
                 "KINESIS",
                 "GOOGLE_ANALYTICS",
                 "GOOGLE_BIGQUERY",
                 "GOOGLE_STORAGE",
+                "CLOUDWATCH",
+                "MYSQL5",
+                "POSTGRESQL",
+                "SQLSERVER",
               ],
               "type": "string",
             },
@@ -16177,13 +14300,11 @@ Object {
                   "maxLength": 128,
                   "minLength": 1,
                   "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                  "type": "string",
                 },
                 "value": Object {
                   "maxLength": 256,
                   "minLength": 0,
                   "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                  "type": "string",
                 },
               },
               "required": Array [
@@ -16921,146 +15042,6 @@ Object {
               "description": "Map of datasets by id",
               "type": "object",
             },
-            "GSLocation": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "GoogleAnalyticsIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "viewId",
-                "dimensions",
-                "metrics",
-              ],
-              "type": "object",
-            },
-            "GoogleBigQueryTableIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "query": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "GoogleServiceAccountAuth": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "projectId",
-                "clientEmail",
-                "clientId",
-                "privateKeyId",
-              ],
-              "type": "object",
-            },
-            "S3Location": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
             "ScriptIdentifier": Object {
               "description": "Uniquely identifies the script. Used to calculate the script path in s3",
               "properties": Object {
@@ -17086,196 +15067,21 @@ Object {
               "type": "object",
             },
             "SouceDetailsSchema": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-                "query": Object {
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "SourceDetailsFileUpload": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleAnalytics": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleAnalyticsIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleBigQuery": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleBigQueryTableIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleStorage": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GSLocation",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsKinesis": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "kinesisStreamArn",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsS3": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
               "type": "object",
             },
             "SourceTypeEnum": Object {
               "description": "Source type value",
               "enum": Array [
                 "UPLOAD",
-                "QUERY",
                 "S3",
                 "KINESIS",
                 "GOOGLE_ANALYTICS",
                 "GOOGLE_BIGQUERY",
                 "GOOGLE_STORAGE",
+                "CLOUDWATCH",
+                "MYSQL5",
+                "POSTGRESQL",
+                "SQLSERVER",
               ],
               "type": "string",
             },
@@ -17285,13 +15091,11 @@ Object {
                   "maxLength": 128,
                   "minLength": 1,
                   "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                  "type": "string",
                 },
                 "value": Object {
                   "maxLength": 256,
                   "minLength": 0,
                   "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                  "type": "string",
                 },
               },
               "required": Array [
@@ -17480,9 +15284,6 @@ Object {
     "ApiRestApiRefdataproductdomaindomainIddataproductdataProductIdfileOPTIONSBE56ECDF": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -17548,9 +15349,6 @@ Object {
     "ApiRestApiRefdataproductdomaindomainIddataproductdataProductIdfileuploadOPTIONSF3817AE6": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -17772,9 +15570,6 @@ Object {
     "ApiRestApiRefdataproductdomaindomainIddataproductdataProductIdfileuploadfileNameOPTIONS5664F39A": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -18219,9 +16014,6 @@ Object {
     "ApiRestApiRefdataproductdomaindomainIddataproductdataProductIdstartdataupdateOPTIONS9802E80E": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -18978,146 +16770,6 @@ Object {
               "description": "Map of datasets by id",
               "type": "object",
             },
-            "GSLocation": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "GoogleAnalyticsIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "viewId",
-                "dimensions",
-                "metrics",
-              ],
-              "type": "object",
-            },
-            "GoogleBigQueryTableIdentifier": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "query": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "GoogleServiceAccountAuth": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "projectId",
-                "clientEmail",
-                "clientId",
-                "privateKeyId",
-              ],
-              "type": "object",
-            },
-            "S3Location": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
             "ScriptIdentifier": Object {
               "description": "Uniquely identifies the script. Used to calculate the script path in s3",
               "properties": Object {
@@ -19143,196 +16795,21 @@ Object {
               "type": "object",
             },
             "SouceDetailsSchema": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "clientEmail": Object {
-                  "description": "The email address of the service account",
-                  "pattern": "^[^@]+@[^@]+\\\\.iam\\\\.gserviceaccount\\\\.com$",
-                  "title": "Client Email",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The client id of the Google Service Account",
-                  "title": "Client ID",
-                  "type": "string",
-                },
-                "dimensions": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-                "metrics": Object {
-                  "maxLength": 20480,
-                  "minLength": 4,
-                  "pattern": "^(ga:[a-zA-Z0-9]+,?)+$",
-                  "type": "string",
-                },
-                "privateKey": Object {
-                  "description": "The private key of the service account",
-                  "pattern": "^(-{5}BEGIN PRIVATE KEY-{5}\\\\s(([\\\\w+/=]{63,76}\\\\s){10,30})([\\\\w+/=]{1,76}\\\\s)?-{5}END PRIVATE KEY-{5})\\\\s?$",
-                  "title": "Private Key",
-                  "type": "string",
-                },
-                "privateKeyId": Object {
-                  "description": "The private key id of the Google Service Account",
-                  "title": "Private Key ID",
-                  "type": "string",
-                },
-                "privateKeySecretName": Object {
-                  "type": "string",
-                },
-                "projectId": Object {
-                  "description": "The ID of the Google Cloud Project",
-                  "maxLength": 30,
-                  "minLength": 6,
-                  "pattern": "^[a-z][a-z0-9-]{4,28}[a-z0-9]$",
-                  "title": "Project Id",
-                  "type": "string",
-                },
-                "query": Object {
-                  "type": "string",
-                },
-                "scheduleRate": Object {
-                  "type": "string",
-                },
-                "since": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "until": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "viewId": Object {
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "SourceDetailsFileUpload": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleAnalytics": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleAnalyticsIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleBigQuery": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GoogleBigQueryTableIdentifier",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsGoogleStorage": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/GSLocation",
-                },
-                Object {
-                  "$ref": "#/definitions/GoogleServiceAccountAuth",
-                },
-              ],
-              "type": "object",
-            },
-            "SourceDetailsKinesis": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "kinesisStreamArn": Object {
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "kinesisStreamArn",
-              ],
-              "type": "object",
-            },
-            "SourceDetailsS3": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "bucket": Object {
-                  "maxLength": 63,
-                  "minLength": 3,
-                  "pattern": "^[a-z0-9]+[a-z0-9-]+[a-z0-9]+$",
-                  "type": "string",
-                },
-                "key": Object {
-                  "maxLength": 1024,
-                  "minLength": 1,
-                  "pattern": "^[a-zA-Z0-9!_.*'()-]+(/[a-zA-Z0-9!_.*'()-]+)*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "bucket",
-                "key",
-              ],
               "type": "object",
             },
             "SourceTypeEnum": Object {
               "description": "Source type value",
               "enum": Array [
                 "UPLOAD",
-                "QUERY",
                 "S3",
                 "KINESIS",
                 "GOOGLE_ANALYTICS",
                 "GOOGLE_BIGQUERY",
                 "GOOGLE_STORAGE",
+                "CLOUDWATCH",
+                "MYSQL5",
+                "POSTGRESQL",
+                "SQLSERVER",
               ],
               "type": "string",
             },
@@ -19342,13 +16819,11 @@ Object {
                   "maxLength": 128,
                   "minLength": 1,
                   "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                  "type": "string",
                 },
                 "value": Object {
                   "maxLength": 256,
                   "minLength": 0,
                   "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                  "type": "string",
                 },
               },
               "required": Array [
@@ -19805,9 +17280,6 @@ Object {
     "ApiRestApiRefdataproductscriptsOPTIONS34DDDA98": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -19861,9 +17333,6 @@ Object {
     "ApiRestApiRefdataproductscriptsnamespaceOPTIONSA3D4D309": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -19905,9 +17374,6 @@ Object {
     "ApiRestApiRefdataproductscriptsnamespacenamespaceOPTIONS747ACF03": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -19949,9 +17415,6 @@ Object {
     "ApiRestApiRefdataproductscriptsnamespacenamespacescriptOPTIONSC8C8083C": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -20682,9 +18145,6 @@ Object {
     "ApiRestApiRefdataproductscriptsnamespacenamespacescriptscriptIdOPTIONSB4B12B71": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -21167,9 +18627,6 @@ Object {
     "ApiRestApiRefdataproductscriptsvalidateOPTIONSC1123C3E": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -21639,6 +19096,29 @@ Object {
         ],
       },
       "Type": "AWS::IAM::Role",
+    },
+    "AppRegistryAssociation": Object {
+      "Properties": Object {
+        "Application": Object {
+          "Fn::Join": Array [
+            "-",
+            Array [
+              "Automated-Data-Analysis-on-AWS",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+            ],
+          ],
+        },
+        "Resource": Object {
+          "Ref": "AWS::StackId",
+        },
+        "ResourceType": "CFN_STACK",
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
     },
   },
 }

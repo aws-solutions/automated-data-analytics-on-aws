@@ -53,6 +53,56 @@ Object {
         ],
       },
     },
+    "DataIngressNetworkCIDR": Object {
+      "Export": Object {
+        "Name": "DataIngressNetworkCIDR",
+      },
+      "Value": "192.168.0.0/16",
+    },
+    "DataIngressTransitGatewayId": Object {
+      "Export": Object {
+        "Name": "DataIngressTransitGatewayId",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "DataProductServiceStack752CB910",
+          "Outputs.AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressGatewayDataIngressTransitGateway196F0E44Id",
+        ],
+      },
+    },
+    "DataIngressVPCCIDR": Object {
+      "Export": Object {
+        "Name": "DataIngressVPCCIDR",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "DataProductServiceStack752CB910",
+          "Outputs.AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressVpcDataIngressVPCCFF11DA8CidrBlock",
+        ],
+      },
+    },
+    "DataSourceVPCAttachmentPropogationRouteTableId": Object {
+      "Export": Object {
+        "Name": "DataSourceVPCAttachmentPropogationRouteTableId",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "DataProductServiceStack752CB910",
+          "Outputs.AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressGatewayDataIngressVPCAttachmentRouteTable903EB9C8Ref",
+        ],
+      },
+    },
+    "DataSourceVPCAttachmentRouteTableId": Object {
+      "Export": Object {
+        "Name": "DataSourceVPCAttachmentRouteTableId",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "DataProductServiceStack752CB910",
+          "Outputs.AdaDataProductServiceStaticInfrastructureNestedStackStaticInfrastructureNestedStackResourceCCEA4A1BOutputsAdaDataProductServiceStaticInfrastructureDataIngressGatewayDataSourceVPCAttachmentRouteTable76F28C73Ref",
+        ],
+      },
+    },
     "ExportNamespaceGlobalUUID": Object {
       "Export": Object {
         "Name": "NamespaceGlobalUUID",
@@ -148,9 +198,9 @@ Object {
   "Parameters": Object {
     "adminEmail": Object {
       "AllowedPattern": "^[^\\\\s@]+@[^\\\\s@]+\\\\.[^\\\\s@]+$",
+      "ConstraintDescription": " must be a valid email address.",
       "Default": "test@example.com",
       "Description": "The email address of the administrator. This has to be a valid address, you will receive the temporary password to this address.",
-      "NoEcho": true,
       "Type": "String",
     },
     "adminMFA": Object {
@@ -163,10 +213,10 @@ Object {
       "Type": "String",
     },
     "adminPhoneNumber": Object {
-      "AllowedPattern": "[\\\\+0-9]+",
+      "AllowedPattern": "^\\\\+[1-9]\\\\d{1,14}$",
+      "ConstraintDescription": " must be a valid phone number in E.164 format, e.g. +15555550123",
       "Default": "+1234567890",
-      "Description": "The phone number of the administrator. Must be a valid phone number that can receive OTP messages if MFA is enabled. Change the default value to your phone number if you want to enable this functionality",
-      "NoEcho": true,
+      "Description": "The phone number of the administrator. Must be a valid phone number in E.164 format (e.g. +15555550123) that can receive OTP messages if MFA is enabled. Change the default value to your phone number if you want to enable this functionality",
       "Type": "String",
     },
     "advancedSecurityMode": Object {
@@ -266,6 +316,7 @@ Object {
     "AdministrationServiceStackC56DA5ED": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
         "OntologyServiceStackD2BEF838",
       ],
       "Properties": Object {
@@ -431,7 +482,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -453,6 +504,7 @@ Object {
     "ApiServiceStack970277D1": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
         "KMSStack7F65AEC0",
       ],
       "Properties": Object {
@@ -588,7 +640,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -609,6 +661,16 @@ Object {
     },
     "ApiWafDeploymentSecret5FECB872": Object {
       "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W77",
+              "reason": "The secret is not considered highly sensitive as they just identity unique deployment",
+            },
+          ],
+        },
+      },
       "Properties": Object {
         "Description": "Secret used to enable internal calls to bypass IPSet rule in WAF.",
         "GenerateSecretString": Object {},
@@ -721,8 +783,772 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
+    "AppRegistryAppAttributesF8874F2D": Object {
+      "Properties": Object {
+        "Attributes": Object {
+          "applicationType": "AWS-Solutions",
+          "solutionID": "SO0190",
+          "solutionName": "Automated Data Analytics on AWS",
+          "version": "v1.1.0",
+        },
+        "Description": "Attributes for Solutions Metadata",
+        "Name": Object {
+          "Ref": "AWS::StackName",
+        },
+        "Tags": Object {
+          "Application": "Ada",
+        },
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::AttributeGroup",
+    },
+    "AppRegistryAppInsightsSetupAD820752": Object {
+      "DependsOn": Array [
+        "AppRegistryCustomResource3F7EBBE3",
+      ],
+      "Properties": Object {
+        "AutoConfigurationEnabled": true,
+        "CWEMonitorEnabled": true,
+        "OpsCenterEnabled": true,
+        "ResourceGroupName": Object {
+          "Fn::Join": Array [
+            "-",
+            Array [
+              "AWS_AppRegistry_Application-Automated-Data-Analysis-on-AWS",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+            ],
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::ApplicationInsights::Application",
+    },
+    "AppRegistryAssociation": Object {
+      "Properties": Object {
+        "Application": Object {
+          "Fn::GetAtt": Array [
+            "AppRegistryRegistrySetup9C75F927",
+            "Id",
+          ],
+        },
+        "Resource": Object {
+          "Ref": "AWS::StackId",
+        },
+        "ResourceType": "CFN_STACK",
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
+    },
+    "AppRegistryCustomResource3F7EBBE3": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "AppRegistryProviderFrameworkOnEvent1C8F1CA3",
+            "Arn",
+          ],
+        },
+        "applicationId": Object {
+          "Fn::GetAtt": Array [
+            "AppRegistryRegistrySetup9C75F927",
+            "Id",
+          ],
+        },
+        "applicationName": Object {
+          "Fn::Join": Array [
+            "-",
+            Array [
+              "Automated-Data-Analysis-on-AWS",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "AppRegistryEventHandlerLambda7CE393E5": Object {
+      "DependsOn": Array [
+        "AppRegistryEventHandlerLambdaServiceRoleDefaultPolicyEDEAC460",
+        "AppRegistryEventHandlerLambdaServiceRole941F5CAF",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "Lambda for checking the state of AppRegistry Application Resource Group state",
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "AppRegistryEventHandlerLambdaServiceRole941F5CAF",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AppRegistryEventHandlerLambdaServiceRole941F5CAF": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "AppRegistryEventHandlerLambdaServiceRoleDefaultPolicyEDEAC460": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "servicecatalog:GetApplication",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":servicecatalog:ap-southeast-1:1111111111:application/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "AppRegistryRegistrySetup9C75F927",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "AppRegistryEventHandlerLambdaServiceRoleDefaultPolicyEDEAC460",
+        "Roles": Array [
+          Object {
+            "Ref": "AppRegistryEventHandlerLambdaServiceRole941F5CAF",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "AppRegistryProviderFrameworkIsComplete4D522877": Object {
+      "DependsOn": Array [
+        "AppRegistryProviderframeworkisCompleteServiceRoleDefaultPolicy65B9F077",
+        "AppRegistryProviderframeworkisCompleteServiceRoleA45F6FBA",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "AWS CDK resource provider framework - isComplete (Ada/AppRegistry/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "AppRegistryEventHandlerLambda7CE393E5",
+                "Arn",
+              ],
+            },
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "AppRegistryEventHandlerLambda7CE393E5",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.isComplete",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "AppRegistryProviderframeworkisCompleteServiceRoleA45F6FBA",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AppRegistryProviderFrameworkOnEvent1C8F1CA3": Object {
+      "DependsOn": Array [
+        "AppRegistryProviderframeworkonEventServiceRoleDefaultPolicyE169F133",
+        "AppRegistryProviderframeworkonEventServiceRoleD5B6D5CC",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (Ada/AppRegistry/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "AppRegistryEventHandlerLambda7CE393E5",
+                "Arn",
+              ],
+            },
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "AppRegistryEventHandlerLambda7CE393E5",
+                "Arn",
+              ],
+            },
+            "WAITER_STATE_MACHINE_ARN": Object {
+              "Ref": "AppRegistryProviderWaiterStateMachineCCA7F73D",
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "AppRegistryProviderframeworkonEventServiceRoleD5B6D5CC",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AppRegistryProviderFrameworkOnTimeoutE87CF662": Object {
+      "DependsOn": Array [
+        "AppRegistryProviderframeworkonTimeoutServiceRoleDefaultPolicyA0F7BFE4",
+        "AppRegistryProviderframeworkonTimeoutServiceRoleE550CD2F",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onTimeout (Ada/AppRegistry/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "AppRegistryEventHandlerLambda7CE393E5",
+                "Arn",
+              ],
+            },
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "AppRegistryEventHandlerLambda7CE393E5",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onTimeout",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "AppRegistryProviderframeworkonTimeoutServiceRoleE550CD2F",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AppRegistryProviderWaiterStateMachineCCA7F73D": Object {
+      "DependsOn": Array [
+        "AppRegistryProviderwaiterstatemachineRoleDefaultPolicy03CF399C",
+        "AppRegistryProviderwaiterstatemachineRole2C9BFCE4",
+      ],
+      "Properties": Object {
+        "DefinitionString": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"StartAt\\":\\"framework-isComplete-task\\",\\"States\\":{\\"framework-isComplete-task\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"IntervalSeconds\\":1,\\"MaxAttempts\\":300,\\"BackoffRate\\":1}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"framework-onTimeout-task\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AppRegistryProviderFrameworkIsComplete4D522877",
+                  "Arn",
+                ],
+              },
+              "\\"},\\"framework-onTimeout-task\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AppRegistryProviderFrameworkOnTimeoutE87CF662",
+                  "Arn",
+                ],
+              },
+              "\\"}}}",
+            ],
+          ],
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "AppRegistryProviderwaiterstatemachineRole2C9BFCE4",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::StepFunctions::StateMachine",
+    },
+    "AppRegistryProviderframeworkisCompleteServiceRoleA45F6FBA": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "AppRegistryProviderframeworkisCompleteServiceRoleDefaultPolicy65B9F077": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "AppRegistryEventHandlerLambda7CE393E5",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AppRegistryEventHandlerLambda7CE393E5",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "AppRegistryProviderframeworkisCompleteServiceRoleDefaultPolicy65B9F077",
+        "Roles": Array [
+          Object {
+            "Ref": "AppRegistryProviderframeworkisCompleteServiceRoleA45F6FBA",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "AppRegistryProviderframeworkonEventServiceRoleD5B6D5CC": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "AppRegistryProviderframeworkonEventServiceRoleDefaultPolicyE169F133": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "AppRegistryEventHandlerLambda7CE393E5",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AppRegistryEventHandlerLambda7CE393E5",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "states:StartExecution",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "AppRegistryProviderWaiterStateMachineCCA7F73D",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "AppRegistryProviderframeworkonEventServiceRoleDefaultPolicyE169F133",
+        "Roles": Array [
+          Object {
+            "Ref": "AppRegistryProviderframeworkonEventServiceRoleD5B6D5CC",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "AppRegistryProviderframeworkonTimeoutServiceRoleDefaultPolicyA0F7BFE4": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "AppRegistryEventHandlerLambda7CE393E5",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AppRegistryEventHandlerLambda7CE393E5",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "AppRegistryProviderframeworkonTimeoutServiceRoleDefaultPolicyA0F7BFE4",
+        "Roles": Array [
+          Object {
+            "Ref": "AppRegistryProviderframeworkonTimeoutServiceRoleE550CD2F",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "AppRegistryProviderframeworkonTimeoutServiceRoleE550CD2F": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "AppRegistryProviderwaiterstatemachineRole2C9BFCE4": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "states.ap-southeast-1.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "AppRegistryProviderwaiterstatemachineRoleDefaultPolicy03CF399C": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "AppRegistryProviderFrameworkIsComplete4D522877",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AppRegistryProviderFrameworkIsComplete4D522877",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "AppRegistryProviderFrameworkOnTimeoutE87CF662",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AppRegistryProviderFrameworkOnTimeoutE87CF662",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "AppRegistryProviderwaiterstatemachineRoleDefaultPolicy03CF399C",
+        "Roles": Array [
+          Object {
+            "Ref": "AppRegistryProviderwaiterstatemachineRole2C9BFCE4",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "AppRegistryRegistrySetup9C75F927": Object {
+      "Properties": Object {
+        "Description": "Service Catalog application to track and manage all your resources for the solution Automated Data Analytics on AWS",
+        "Name": Object {
+          "Fn::Join": Array [
+            "-",
+            Array [
+              "Automated-Data-Analysis-on-AWS",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+            ],
+          ],
+        },
+        "Tags": Object {
+          "Application": "Ada",
+          "Solutions:ApplicationType": "AWS-Solutions",
+          "Solutions:SolutionID": "SO0190",
+          "Solutions:SolutionName": "Automated Data Analytics on AWS",
+          "Solutions:SolutionVersion": "v1.1.0",
+        },
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::Application",
+    },
+    "AppRegistryRegistrySetupAttributeGroupAssociation2B989F9A7714E7E547F6": Object {
+      "Properties": Object {
+        "Application": Object {
+          "Fn::GetAtt": Array [
+            "AppRegistryRegistrySetup9C75F927",
+            "Id",
+          ],
+        },
+        "AttributeGroup": Object {
+          "Fn::GetAtt": Array [
+            "AppRegistryAppAttributesF8874F2D",
+            "Id",
+          ],
+        },
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::AttributeGroupAssociation",
+    },
     "CognitoAuthStack962632B3": Object {
       "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
+      ],
       "Properties": Object {
         "Parameters": Object {
           "referencetoAdaadminEmail7EA005BFRef": Object {
@@ -745,7 +1571,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -767,6 +1593,7 @@ Object {
     "CommonStackA8F9EE77": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
         "KMSStack7F65AEC0",
       ],
       "Properties": Object {
@@ -809,7 +1636,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -831,6 +1658,7 @@ Object {
     "DataProductServiceStack752CB910": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
         "KMSStack7F65AEC0",
         "QueryParseRenderServiceStackD4D96F94",
       ],
@@ -1004,6 +1832,12 @@ Object {
           "referencetoAdaLayer6FB4FEF4Ref": Object {
             "Ref": "LayerB20D2F06",
           },
+          "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID": Object {
+            "Fn::GetAtt": Array [
+              "OpMetricsCustomResource7D989163",
+              "anonymousDataUUID",
+            ],
+          },
           "referencetoAdaSharedEvntBus3C45F515Arn": Object {
             "Fn::GetAtt": Array [
               "SharedEvntBusF5797523",
@@ -1013,6 +1847,9 @@ Object {
           "referencetoAdaSharedEvntBus3C45F515Ref": Object {
             "Ref": "SharedEvntBusF5797523",
           },
+          "referencetoAdasendAnonymousData25711742Ref": Object {
+            "Ref": "sendAnonymousData",
+          },
         },
         "Tags": Array [
           Object {
@@ -1021,7 +1858,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -1044,6 +1881,7 @@ Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "AdministrationServiceStackC56DA5ED",
+        "AppRegistryRegistrySetup9C75F927",
         "DataProductServiceStack752CB910",
         "GovernanceServiceStackBF86CD70",
         "IdentityServiceStack20E75786",
@@ -1081,7 +1919,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -1103,6 +1941,7 @@ Object {
     "GovernanceServiceStackBF86CD70": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
         "DataProductServiceStack752CB910",
         "KMSStack7F65AEC0",
       ],
@@ -1236,7 +2075,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -1258,6 +2097,7 @@ Object {
     "IdentityServiceStack20E75786": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
         "KMSStack7F65AEC0",
       ],
       "Properties": Object {
@@ -1480,7 +2320,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -1501,6 +2341,9 @@ Object {
     },
     "KMSStack7F65AEC0": Object {
       "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
+      ],
       "Properties": Object {
         "Tags": Array [
           Object {
@@ -1509,7 +2352,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -1751,6 +2594,7 @@ Object {
           "detail-type": Array [
             "DataProductImportSuccess",
             "DataProductImportError",
+            "DataProductImportSuccessNoUpdate",
           ],
           "source": Array [
             "ada.data-products",
@@ -1838,6 +2682,7 @@ Object {
     "NotificationServiceStackDC04495F": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
         "KMSStack7F65AEC0",
       ],
       "Properties": Object {
@@ -1952,7 +2797,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -1974,6 +2819,7 @@ Object {
     "OntologyServiceStackD2BEF838": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
         "GovernanceServiceStackBF86CD70",
         "KMSStack7F65AEC0",
       ],
@@ -2095,7 +2941,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -2127,7 +2973,7 @@ Object {
           "Ref": "AWS::Region",
         },
         "awsSolutionId": "SO0190",
-        "awsSolutionVersion": "v1.0.2",
+        "awsSolutionVersion": "v1.1.0",
         "sendAnonymousData": Object {
           "Ref": "sendAnonymousData",
         },
@@ -2144,7 +2990,7 @@ Object {
           "S3Bucket": "cdk-#####",
           "S3Key": "cdkhash######.zip",
         },
-        "Description": "Lambda for Operational Metrics collection",
+        "Description": "Lambda for Deployment Metrics collection",
         "Environment": Object {
           "Variables": Object {
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
@@ -2325,6 +3171,7 @@ Object {
     "QueryParseRenderServiceStackD4D96F94": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
         "NotificationServiceStackDC04495F",
       ],
       "Properties": Object {
@@ -2373,7 +3220,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -2395,6 +3242,7 @@ Object {
     "QueryServiceStack09226509": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
         "KMSStack7F65AEC0",
       ],
       "Properties": Object {
@@ -2585,6 +3433,15 @@ Object {
           "referencetoAdaLayer6FB4FEF4Ref": Object {
             "Ref": "LayerB20D2F06",
           },
+          "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID": Object {
+            "Fn::GetAtt": Array [
+              "OpMetricsCustomResource7D989163",
+              "anonymousDataUUID",
+            ],
+          },
+          "referencetoAdasendAnonymousData25711742Ref": Object {
+            "Ref": "sendAnonymousData",
+          },
         },
         "Tags": Array [
           Object {
@@ -2593,7 +3450,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -2978,6 +3835,9 @@ Object {
     },
     "WebsiteStack290432DE": Object {
       "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "AppRegistryRegistrySetup9C75F927",
+      ],
       "Properties": Object {
         "Parameters": Object {
           "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref": Object {
@@ -3060,7 +3920,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.0.2",
+            "Value": "ada@1.1.0",
           },
         ],
         "TemplateURL": Object {
@@ -3079,7 +3939,1344 @@ Object {
       "Type": "AWS::CloudFormation::Stack",
       "UpdateReplacePolicy": "Delete",
     },
+    "dashboardCwDashboardE8394D93": Object {
+      "Properties": Object {
+        "DashboardBody": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"widgets\\":[{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":0,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"Data Product Table - Capacity\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/DynamoDB\\",\\"ProvisionedReadCapacityUnits\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Provisioned Read\\"}],[\\"AWS/DynamoDB\\",\\"ConsumedReadCapacityUnits\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Consumed Read\\"}],[\\"AWS/DynamoDB\\",\\"ProvisionedWriteCapacityUnits\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Provisioned Write\\"}],[\\"AWS/DynamoDB\\",\\"ConsumedWriteCapacityUnits\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Consumed Write\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":0,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"Data Product Table - Latency\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/DynamoDB\\",\\"SuccessfulRequestLatency\\",\\"Operation\\",\\"GetItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Get Latency\\"}],[\\"AWS/DynamoDB\\",\\"SuccessfulRequestLatency\\",\\"Operation\\",\\"PutItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Put Latency\\"}],[\\"AWS/DynamoDB\\",\\"SuccessfulRequestLatency\\",\\"Operation\\",\\"Scan\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Scan Latency\\"}],[\\"AWS/DynamoDB\\",\\"SuccessfulRequestLatency\\",\\"Operation\\",\\"Query\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Query Latency\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":12,\\"y\\":0,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"Data Product Table - Errors\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"GetItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Get\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"BatchGetItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Batch Get\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"Scan\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Scan\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"Query\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Query\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"PutItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Put\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"BatchWriteItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Batch Write\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"UpdateItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Update\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"DeleteItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Delete\\",\\"stat\\":\\"Sum\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":18,\\"y\\":0,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"Data Product Table - Throttled Requests\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/DynamoDB\\",\\"ThrottledRequests\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDataProductTableC1CE90D5Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Throttled Requests\\",\\"stat\\":\\"Sum\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":6,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"Domain Table - Capacity\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/DynamoDB\\",\\"ProvisionedReadCapacityUnits\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Provisioned Read\\"}],[\\"AWS/DynamoDB\\",\\"ConsumedReadCapacityUnits\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Consumed Read\\"}],[\\"AWS/DynamoDB\\",\\"ProvisionedWriteCapacityUnits\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Provisioned Write\\"}],[\\"AWS/DynamoDB\\",\\"ConsumedWriteCapacityUnits\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Consumed Write\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":6,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"Domain Table - Latency\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/DynamoDB\\",\\"SuccessfulRequestLatency\\",\\"Operation\\",\\"GetItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Get Latency\\"}],[\\"AWS/DynamoDB\\",\\"SuccessfulRequestLatency\\",\\"Operation\\",\\"PutItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Put Latency\\"}],[\\"AWS/DynamoDB\\",\\"SuccessfulRequestLatency\\",\\"Operation\\",\\"Scan\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Scan Latency\\"}],[\\"AWS/DynamoDB\\",\\"SuccessfulRequestLatency\\",\\"Operation\\",\\"Query\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Query Latency\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":12,\\"y\\":6,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"Domain Table - Errors\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"GetItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Get\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"BatchGetItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Batch Get\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"Scan\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Scan\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"Query\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Query\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"PutItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Put\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"BatchWriteItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Batch Write\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"UpdateItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Update\\",\\"stat\\":\\"Sum\\"}],[\\"AWS/DynamoDB\\",\\"SystemErrors\\",\\"Operation\\",\\"DeleteItem\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Delete\\",\\"stat\\":\\"Sum\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":18,\\"y\\":6,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"Domain Table - Throttled Requests\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/DynamoDB\\",\\"ThrottledRequests\\",\\"TableName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataProductServiceStack752CB910",
+                  "Outputs.AdaDataProductServiceDomainTableE30344A2Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Throttled Requests\\",\\"stat\\":\\"Sum\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":12,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownDestroyDataC06606E1Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownDestroyDataC06606E1Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownDestroyDataC06606E1Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownDestroyDataC06606E1Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":12,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownDestroyDataC06606E1Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownDestroyDataC06606E1Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownDestroyDataC06606E1Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":12,\\"y\\":12,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownRetainData4C6CD602Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownRetainData4C6CD602Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownRetainData4C6CD602Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownRetainData4C6CD602Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":18,\\"y\\":12,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownRetainData4C6CD602Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownRetainData4C6CD602Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaStartTearDownRetainData4C6CD602Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":18,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaTearDown83BCD058Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaTearDown83BCD058Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaTearDown83BCD058Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaTearDown83BCD058Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":18,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaTearDown83BCD058Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaTearDown83BCD058Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "AdministrationServiceStackC56DA5ED",
+                  "Outputs.AdaAdministrationServiceApiLambdaTearDown83BCD058Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":24,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":24,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":12,\\"y\\":24,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":18,\\"y\\":24,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaStartQueryExecutionSync15B7A49FRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":30,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetAthenaQueryResult40B42785Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetAthenaQueryResult40B42785Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetAthenaQueryResult40B42785Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetAthenaQueryResult40B42785Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":30,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetAthenaQueryResult40B42785Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetAthenaQueryResult40B42785Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetAthenaQueryResult40B42785Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":12,\\"y\\":30,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQuerySyncResult0248D89ARef",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQuerySyncResult0248D89ARef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQuerySyncResult0248D89ARef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQuerySyncResult0248D89ARef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":18,\\"y\\":30,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQuerySyncResult0248D89ARef",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQuerySyncResult0248D89ARef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQuerySyncResult0248D89ARef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":36,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQueryResultAsAthenaResult5B601C00Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQueryResultAsAthenaResult5B601C00Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQueryResultAsAthenaResult5B601C00Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQueryResultAsAthenaResult5B601C00Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":36,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQueryResultAsAthenaResult5B601C00Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQueryResultAsAthenaResult5B601C00Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryServiceStack09226509",
+                  "Outputs.AdaQueryServiceApiLambdaGetQueryResultAsAthenaResult5B601C00Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":42,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiGovernanceAthenaLensLambda2872E629Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiGovernanceAthenaLensLambda2872E629Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiGovernanceAthenaLensLambda2872E629Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiGovernanceAthenaLensLambda2872E629Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":42,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiGovernanceAthenaLensLambda2872E629Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiGovernanceAthenaLensLambda2872E629Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiGovernanceAthenaLensLambda2872E629Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":12,\\"y\\":42,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderDiscoverLambda4CE9EE10Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderDiscoverLambda4CE9EE10Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderDiscoverLambda4CE9EE10Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderDiscoverLambda4CE9EE10Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":18,\\"y\\":42,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderDiscoverLambda4CE9EE10Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderDiscoverLambda4CE9EE10Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderDiscoverLambda4CE9EE10Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":48,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderRewriteLambda462290F3Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderRewriteLambda462290F3Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderRewriteLambda462290F3Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderRewriteLambda462290F3Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":48,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderRewriteLambda462290F3Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderRewriteLambda462290F3Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "QueryParseRenderServiceStackD4D96F94",
+                  "Outputs.AdaQueryParseRenderServiceApiQueryParseRenderRewriteLambda462290F3Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":54,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDefaultLensPolicyFBD0C25DRef",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDefaultLensPolicyFBD0C25DRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDefaultLensPolicyFBD0C25DRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDefaultLensPolicyFBD0C25DRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":54,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDefaultLensPolicyFBD0C25DRef",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDefaultLensPolicyFBD0C25DRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDefaultLensPolicyFBD0C25DRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":12,\\"y\\":54,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributePolicy49F83004Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributePolicy49F83004Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributePolicy49F83004Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributePolicy49F83004Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":18,\\"y\\":54,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributePolicy49F83004Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributePolicy49F83004Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributePolicy49F83004Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":60,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributeValuePolicyFCF5E1C3Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributeValuePolicyFCF5E1C3Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributeValuePolicyFCF5E1C3Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributeValuePolicyFCF5E1C3Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":60,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributeValuePolicyFCF5E1C3Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributeValuePolicyFCF5E1C3Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetAttributeValuePolicyFCF5E1C3Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":12,\\"y\\":60,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicy8193040BRef",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicy8193040BRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicy8193040BRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicy8193040BRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":18,\\"y\\":60,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicy8193040BRef",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicy8193040BRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicy8193040BRef",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":66,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicyPermissions8C0BEA91Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicyPermissions8C0BEA91Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicyPermissions8C0BEA91Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicyPermissions8C0BEA91Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":66,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicyPermissions8C0BEA91Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicyPermissions8C0BEA91Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "GovernanceServiceStackBF86CD70",
+                  "Outputs.AdaGovernanceServiceApiLambdaGetDataProductPolicyPermissions8C0BEA91Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":0,\\"y\\":72,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaGetOntology5C119448Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaGetOntology5C119448Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaGetOntology5C119448Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaGetOntology5C119448Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":6,\\"y\\":72,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaGetOntology5C119448Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaGetOntology5C119448Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaGetOntology5C119448Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":12,\\"y\\":72,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaListOntology54ED8772Ref",
+                ],
+              },
+              " - Duration\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaListOntology54ED8772Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Minimum\\",\\"stat\\":\\"Minimum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaListOntology54ED8772Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Maximum\\",\\"stat\\":\\"Maximum\\"}],[\\"AWS/Lambda\\",\\"Duration\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaListOntology54ED8772Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Average\\"}]],\\"yAxis\\":{},\\"liveData\\":true}},{\\"type\\":\\"metric\\",\\"width\\":6,\\"height\\":6,\\"x\\":18,\\"y\\":72,\\"properties\\":{\\"view\\":\\"timeSeries\\",\\"title\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaListOntology54ED8772Ref",
+                ],
+              },
+              " -  Success Rate\\",\\"region\\":\\"",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              "\\",\\"metrics\\":[[{\\"label\\":\\"Success rate\\",\\"expression\\":\\"100 - 100 * errors / MAX([errors, invocations])\\"}],[\\"AWS/Lambda\\",\\"Errors\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaListOntology54ED8772Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Error\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"errors\\"}],[\\"AWS/Lambda\\",\\"Invocations\\",\\"FunctionName\\",\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "OntologyServiceStackD2BEF838",
+                  "Outputs.AdaOntologyServiceApiLambdaListOntology54ED8772Ref",
+                ],
+              },
+              "\\",{\\"label\\":\\"Invocations\\",\\"stat\\":\\"Sum\\",\\"visible\\":false,\\"id\\":\\"invocations\\"}]],\\"yAxis\\":{\\"left\\":{\\"max\\":100,\\"min\\":0,\\"label\\":\\"Percent\\",\\"showUnits\\":false}},\\"liveData\\":true}}]}",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudWatch::Dashboard",
+    },
   },
-  "Rules": Object {},
+  "Rules": Object {
+    "adminMFAPhoneNumberRule": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Equals": Array [
+                  Object {
+                    "Ref": "adminPhoneNumber",
+                  },
+                  "+1234567890",
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "When Multi-Factor Authentication (MFA) is enabled, a valid phone number of the administrator must be provided",
+        },
+      ],
+      "RuleCondition": Object {
+        "Fn::Equals": Array [
+          Object {
+            "Ref": "adminMFA",
+          },
+          "ON",
+        ],
+      },
+    },
+  },
 }
 `;

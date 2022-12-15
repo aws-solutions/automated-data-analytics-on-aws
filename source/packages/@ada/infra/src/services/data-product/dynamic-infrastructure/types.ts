@@ -3,6 +3,7 @@ SPDX-License-Identifier: Apache-2.0 */
 export enum JSON_PATH_AT {
   PAYLOAD__TABLE_DETAILS = '$.Payload.tableDetails',
   PAYLOAD__TABLE_PREFIX = '$.Payload.tablePrefix',
+  PAYLOAD__INGESTION_TIMESTAMP = '$.Payload.ingestionTimestamp',
   PAYLOAD__DROP_TABLE_QUERIES = '$.Payload.dropTableQueries',
   PAYLOAD__TRANSFORM_JOBS = '$.Payload.transformJobs',
   PAYLOAD__TRANSFORM_JOB_INDEX = '$.Payload.transformJobIndex',

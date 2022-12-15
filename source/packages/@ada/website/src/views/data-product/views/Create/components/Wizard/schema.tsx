@@ -4,22 +4,25 @@ import { Button, Container, KeyValuePair, Stack } from 'aws-northstar';
 import { CardSelect, CardSelectOption, CustomComponentTypes, CustomWrapper } from '$common/components';
 import { CodeViewer } from '$common/components/CodeViewer';
 import { ConfirmedButton } from '$northstar-plus';
+import { ConnectorBadgeList } from '$connectors/common/ConnectorBadge';
+import { ConnectorIcons } from '$connectors/icons';
+import { Connectors } from '@ada/connectors';
 import { CustomValidatorTypes } from '$common/components/form-renderer/validators';
 import { DataProductSummaryRenderer } from '$views/data-product/components/summary/Summary';
-import { DataProductUpdateTriggerType, SourceType, SourceTypeDefinitions } from '@ada/common';
+import { DataProductUpdateTriggerType } from '@ada/common';
 import { FormData, FormDataSchema, formDataToDataProduct } from '../../utils';
 import { LL } from '$strings';
 import { SchemaPreviewStep } from '../SchemaPreview';
 import { SchemaRenderer } from '$views/data-product/components/schema/SchemaRenderer';
 import { TransformBuilder } from '../TransformsPlanner';
-import { UXDataProductSources } from '$source-type';
 import { ValidatorFunction } from '@data-driven-forms/react-form-renderer/validators';
 import { WizardStep } from '$northstar-plus/layouts/WizardLayout';
 import { componentTypes } from 'aws-northstar/components/FormRenderer/types';
 import { isEmpty, omit } from 'lodash';
+import { sourceTypeSubForm } from '$connectors/common';
 import { validatorTypes } from 'aws-northstar/components/FormRenderer';
 import useFormApi from '@data-driven-forms/react-form-renderer/use-form-api';
-import type { Domain, Group, Script, SourceTypeEnum } from '@ada/api';
+import type { Domain, Group, Script } from '@ada/api';
 
 /* eslint-disable sonarjs/no-duplicate-string */
 
@@ -28,8 +31,8 @@ export const customComponents = {
   'custom-wrapper': CustomWrapper as any,
 };
 
-function isPreviewSupported(sourceType: SourceType | SourceTypeEnum): boolean {
-  return SourceTypeDefinitions[sourceType].CONFIG.supports.preview === true;
+function isPreviewSupported(sourceType: Connectors.ID): boolean {
+  return Connectors.find(sourceType).CONFIG.supports.preview === true;
 }
 
 export const buildSteps = (_domains: Domain[], _groups: Group[], _scripts: Script[]): WizardStep[] => [
@@ -97,18 +100,17 @@ export const buildSteps = (_domains: Domain[], _groups: Group[], _scripts: Scrip
         label: LL.ENTITY['DataProduct@'].sourceType.label(),
         description: LL.ENTITY['DataProduct@'].sourceType.description(),
         isRequired: true,
-        options: Object.values(UXDataProductSources).reduce((_options, _source): CardSelectOption[] => {
-          if (_source.CONFIG.enabled) {
-            return _options.concat([
-              {
-                value: _source.TYPE,
-                icon: <_source.CONTENT.Icon width={40} height={40} />,
-                title: _source.CONTENT.label,
-                subtitle: _source.CONTENT.description,
-              },
-            ]);
-          }
-          return _options;
+        options: Connectors.getAllConnectors().reduce((_options, _connector): CardSelectOption[] => {
+          const ConnectorIcon = ConnectorIcons[_connector.ID];
+          return _options.concat([
+            {
+              value: _connector.ID,
+              icon: <ConnectorIcon width={40} height={40} />,
+              title: _connector.METADATA.label,
+              subtitle: _connector.METADATA.description,
+              content: <ConnectorBadgeList connector={_connector} />
+            },
+          ]);
         }, [] as CardSelectOption[]),
         validate: [
           {
@@ -166,16 +168,8 @@ export const buildSteps = (_domains: Domain[], _groups: Group[], _scripts: Scrip
         },
       },
       // conditionally expose fields for all source type details
-      ...Object.values(UXDataProductSources).flatMap((sourceType) => {
-        return sourceType.WIZARD.CREATE_FIELDS.map((field) => ({
-          ...field,
-          condition: {
-            when: 'sourceType',
-            is: sourceType.TYPE,
-            then: { visible: true },
-            else: { visible: false },
-          },
-        }));
+      ...Connectors.getAllConnectors().flatMap((_connector) => {
+        return sourceTypeSubForm(_connector, _connector.VIEW.Wizard.fields);
       }),
     ],
   },
@@ -360,21 +354,7 @@ export const buildSteps = (_domains: Domain[], _groups: Group[], _scripts: Scrip
   },
 ];
 
-const presetsForUrlParams = (urlParams: URLSearchParams): object => {
-  const query = urlParams.get('query');
-  if (query) {
-    return {
-      sourceType: SourceType.QUERY,
-      sourceDetails: {
-        query,
-        updateType: 'REPLACE',
-      },
-    };
-  }
-  return {};
-};
-
-export const getInitialValues = (urlParams: URLSearchParams, domainId?: string): Partial<FormData> => ({
+export const getInitialValues = (_urlParams: URLSearchParams, domainId?: string): Partial<FormData> => ({
   domainId,
   name: undefined,
   sourceType: undefined,
@@ -396,7 +376,6 @@ export const getInitialValues = (urlParams: URLSearchParams, domainId?: string):
   updateTrigger: {
     triggerType: DataProductUpdateTriggerType.ON_DEMAND,
   },
-  ...presetsForUrlParams(urlParams),
 });
 
 const schemaStepValidator = (_LL: typeof LL) => ((value: FormDataSchema, allValues: FormData) => {

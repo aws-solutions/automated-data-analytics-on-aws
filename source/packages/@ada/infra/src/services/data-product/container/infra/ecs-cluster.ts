@@ -1,6 +1,13 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import { Cluster, Compatibility, ContainerDefinition, LogDriver, NetworkMode, TaskDefinition } from 'aws-cdk-lib/aws-ecs';
+import {
+  Cluster,
+  Compatibility,
+  ContainerDefinition,
+  LogDriver,
+  NetworkMode,
+  TaskDefinition,
+} from 'aws-cdk-lib/aws-ecs';
 import { Construct } from 'constructs';
 import { Effect, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { LogGroup } from '../../../../common/constructs/cloudwatch/log-group';
@@ -8,7 +15,7 @@ import { SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { TarballImageAsset } from '../../../../common/constructs/ecr-assets/tarball-image-asset';
 import { addCfnNagSuppressionsToRolePolicy } from '@ada/cdk-core';
 
-export interface ECSContainerClusterStackProps {
+export interface DataIngressECSClusterProps {
   readonly name: string;
   readonly vpc: Vpc;
   readonly securityGroup: SecurityGroup;
@@ -18,7 +25,7 @@ export interface ECSContainerClusterStackProps {
   readonly imageTarballPath: string;
 }
 
-export default class ECSContainerClusterStack extends Construct {
+export class DataIngressECSCluster extends Construct {
   public readonly taskExecutionRole: Role;
 
   public readonly taskDefinition: TaskDefinition;
@@ -27,7 +34,7 @@ export default class ECSContainerClusterStack extends Construct {
 
   public readonly cluster: Cluster;
 
-  constructor(scope: Construct, id: string, props: ECSContainerClusterStackProps) {
+  constructor(scope: Construct, id: string, props: DataIngressECSClusterProps) {
     super(scope, id);
 
     const { name, vpc, taskDefinitionRole, cpu, memoryMiB, imageTarballPath } = props;

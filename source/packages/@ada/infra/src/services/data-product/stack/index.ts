@@ -15,6 +15,7 @@ import { SchemaPreviewStack } from './schema-preview-stack';
 import { StaticInfrastructureStack, StaticInfrastructureStackProps } from './static-infrastructure-stack';
 import { getUniqueKmsKeyAlias } from '@ada/cdk-core';
 import BuiltInTransformationStack from './built-in-transformation-statck';
+import DataIngressGateway from '../core/network/transit-gateway';
 import DataProductApi from '../api';
 import DataProductApiStack from './api-stack';
 import DataProductCreationStateMachine from '../components/creation-state-machine';
@@ -38,6 +39,9 @@ export class DataProductServiceStack extends Microservice {
   readonly domainTable: Table;
 
   readonly glueKmsKey: Key;
+
+  // Data Ingress Gateway need to be exposed to Ada stack
+  readonly dataIngressGateway: DataIngressGateway;
 
   constructor(scope: Construct, id: string, props: DataProductServiceStackProps) {
     super(scope, id, { ...props, ...serviceConfig });
@@ -70,21 +74,22 @@ export class DataProductServiceStack extends Microservice {
       executeGeneratedQueryStateMachine,
       dataBucket,
       glueSecurityConfigurationName,
-      googleBigQueryImportDataStateMachine,
-      googleStorageImportDataStateMachine,
-      googleAnalyticsImportDataStateMachine,
       dataProductInfraLambdas,
       scriptBucket,
       staticInfraParameter,
+      dataIngressVPC,
+      dataIngressGateway,
     } = new StaticInfrastructureStack(this, 'StaticInfrastructure', {
       ...props,
       glueKmsKey: this.glueKmsKey,
     });
     this.dataProductCreationStateMachine = dataProductCreationStateMachine;
+    this.dataIngressGateway = dataIngressGateway;
 
     new SchemaPreviewStack(this, 'SchemaPreview', {
       dataBucket,
       scriptBucket,
+      dataIngressVPC,
       ...props,
     });
 
@@ -178,14 +183,12 @@ export class DataProductServiceStack extends Microservice {
       entityManagementTables: props.entityManagementTables,
       glueKey: this.glueKmsKey,
       glueSecurityConfigurationName,
-      googleBigQueryImportDataStateMachine,
-      googleStorageImportDataStateMachine,
-      googleAnalyticsImportDataStateMachine,
       dataProductInfraLambdas,
       athenaOutputBucket: props.athenaOutputBucket,
       scriptBucket,
       staticInfraParameter,
       accessLogsBucket: props.accessLogsBucket,
+      operationalMetricsConfig: props.operationalMetricsConfig,
     });
     this.api = apiStack.api;
     this.dataBuckets = [dataBucket, this.fileUploadBucket];

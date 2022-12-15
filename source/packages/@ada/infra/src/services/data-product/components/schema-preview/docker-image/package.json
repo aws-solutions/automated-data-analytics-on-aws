@@ -1,0 +1,13 @@
+{
+  "name": "@ada/schema-preview-docker-image",
+  "version": "0.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "scripts": {
+    "prebuild": "rm -rf ./handlers/connectors",
+    "build": "copyfiles --verbose --up 6 \"../../../../../connectors/**/*.py\" handlers/connectors"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1"
+  }
+}

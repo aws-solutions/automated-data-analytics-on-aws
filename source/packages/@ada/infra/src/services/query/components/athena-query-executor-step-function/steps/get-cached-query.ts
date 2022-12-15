@@ -22,7 +22,7 @@ export interface GetCachedQueryResult extends CachedGeneratedQuery {
  */
 export const handler = async (
   event: StepFunctionLambdaEvent<GetCachedQueryInput>,
-  _context: any,
+  _context: unknown,
 ): Promise<GetCachedQueryResult> => {
   const { query, originalQuery, callingUser } = event.Payload;
   const cacheId = computeUniqueHash(query);
@@ -32,9 +32,10 @@ export const handler = async (
   // if is not already expired (eg. not existing yet)
   // verify whether the data product have been updated after the cache has been created
   if (!expired) {
-    const latestDataUpdateTimestamp = await getLastUpdatedDataProductDate(callingUser, originalQuery!);
+    const latestDataUpdateTimestamp = await getLastUpdatedDataProductDate(callingUser, originalQuery ?? '');
 
-    expired = latestDataUpdateTimestamp !== undefined && latestDataUpdateTimestamp > cachedQuery!.updatedTimestamp!;
+    expired =
+      latestDataUpdateTimestamp !== undefined && latestDataUpdateTimestamp > (cachedQuery?.updatedTimestamp ?? 0);
   }
 
   return {

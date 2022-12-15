@@ -169,8 +169,8 @@ const REACT_MARKDOWN_OPTIONS: Omit<ReactMarkdownOptions, 'children'> = {
   className: 'MuiTypography-root',
   components: {
     /* eslint-disable */
-    h1: ({ node, ...props }) => <h1 {...props} />,
-    code({ node, inline, className, children, ...props }) {
+    h1: ({ node: _node, ...props }) => <h1 {...props} />,
+    code({ node: _node, inline, className, children, ...props }) {
       const match = /language-(\w+)/.exec(className || '');
       return !inline && match ? (
         <SyntaxHighlighter

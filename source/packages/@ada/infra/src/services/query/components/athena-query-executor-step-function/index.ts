@@ -25,10 +25,11 @@ import { JSON_PATH_AT } from '../../../data-product/dynamic-infrastructure/types
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { LogGroup } from '../../../../common/constructs/cloudwatch/log-group';
 import { MicroserviceApi } from '@ada/infra-common/services';
+import { OperationalMetricsConfig, TypescriptFunction } from '@ada/infra-common';
 import { Stream } from 'aws-cdk-lib/aws-kinesis';
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
-import { TypescriptFunction } from '@ada/infra-common';
 import { addCfnNagSuppressions, getUniqueStateMachineLogGroupName } from '@ada/cdk-core';
+import { configOperationalMetricsClientForLambda } from '../../../api/components/operational-metrics/client';
 
 export interface AthenaQueryExecutorStateMachineProps {
   counterTable: CounterTable;
@@ -45,12 +46,13 @@ export interface AthenaQueryExecutorStateMachineProps {
   entityManagementTables: EntityManagementTables;
   glueKmsKey: Key;
   queryEventsStream?: Stream;
+  operationalMetricsConfig: OperationalMetricsConfig;
 }
 
 /**
  * Construct to create a state machine to be used to execute queries in athena
  */
-export default class AthenaQueryExecutorStateMachine extends Construct {
+export class AthenaQueryExecutorStateMachine extends Construct {
   public readonly stateMachine: StateMachine;
 
   private getAthenaAccessPolicyStatement(): PolicyStatement {
@@ -270,6 +272,19 @@ export default class AthenaQueryExecutorStateMachine extends Construct {
         }),
       );
 
+      if(queryEventsStream.encryptionKey) {
+        logQueryExecutionLambdaRole.addToPolicy(
+          new PolicyStatement({
+            actions: [
+              'kms:Encrypt',
+              'kms:ReEncrypt*',
+              'kms:GenerateDataKey*',
+            ],
+            resources: [queryEventsStream.encryptionKey.keyArn],
+          }),
+        );
+      }
+
       logQueryExecutionLambdaRole.addToPolicy(
         new PolicyStatement({
           actions: ['logs:CreateLogGroup', 'logs:CreateLogStream', 'logs:PutLogEvents', 'logs:DescribeLogStreams'],
@@ -291,6 +306,8 @@ export default class AthenaQueryExecutorStateMachine extends Construct {
         internalTokenKey: props.internalTokenKey,
         entityManagementTables: props.entityManagementTables,
       });
+
+      configOperationalMetricsClientForLambda(logQueryExecutionLambda, props.operationalMetricsConfig);
 
       putQueryEventsStream = new LambdaInvoke(this, 'LogQueryExecution', {
         lambdaFunction: logQueryExecutionLambda,
@@ -359,3 +376,5 @@ export default class AthenaQueryExecutorStateMachine extends Construct {
     });
   }
 }
+
+export default AthenaQueryExecutorStateMachine;

@@ -8,8 +8,6 @@ import {
   DataProductAccess,
   DataProductDataStatus,
   DataProductInfrastructureStatus,
-  SourceDetailsGoogleBigQuery,
-  SourceType,
 } from '@ada/common';
 import { CreateAndUpdateDetails, DataProduct } from '@ada/api';
 import {
@@ -18,6 +16,7 @@ import {
   getLocalDynamoDocumentClient,
   recreateAllTables,
 } from '@ada/microservice-test-common';
+import { METRICS_EVENT_TYPE, OperationalMetricsClient } from '@ada/services/api/components/operational-metrics/client';
 import { DataProductStore } from '../../../components/ddb/data-product';
 import { IRelationshipClient } from '../../../../api/components/entity/relationships/client';
 import { buildApiRequest } from '@ada/api-gateway';
@@ -25,11 +24,16 @@ import { entityIdentifier } from '@ada/api/client/types';
 import { handler } from '../delete-data-product';
 import { localDynamoLockClient } from '../../../../api/components/entity/locks/mock';
 import { localDynamoRelationshipClient } from '../../../../api/components/entity/relationships/mock';
+import { Connectors } from '@ada/connectors';
+import { ISourceDetails__GOOGLE_BIGQUERY } from '@ada/connectors/sources/google_bigquery';
 
 jest.mock('@ada/api-client-lambda');
 
 const mockDeleteStack = jest.fn();
 const mockDeleteSecret = jest.fn();
+const mockListExecutions = jest.fn();
+const mockSendOperationalMetrics = jest.fn();
+
 jest.mock('@ada/aws-sdk', () => ({
   ...(jest.requireActual('@ada/aws-sdk') as any),
   AwsCloudFormationInstance: jest.fn().mockImplementation(() => ({
@@ -40,6 +44,11 @@ jest.mock('@ada/aws-sdk', () => ({
   AwsSecretsManagerInstance: jest.fn().mockImplementation(() => ({
     deleteSecret: (...args: any[]) => ({
       promise: jest.fn(() => Promise.resolve(mockDeleteSecret(...args))),
+    }),
+  })),
+  AwsStepFunctionsInstance: jest.fn().mockImplementation(() => ({
+    listExecutions: (...args: any[]) => ({
+      promise: jest.fn(() => Promise.resolve(mockListExecutions(...args))),
     }),
   })),
 }));
@@ -88,6 +97,10 @@ describe('delete-data-product', () => {
       DEFAULT_CALLER.userId,
       dataProduct,
     );
+
+    OperationalMetricsClient.getInstance = jest.fn(() => ({
+      send: mockSendOperationalMetrics
+    }));
   });
 
   afterEach(async () => {
@@ -122,14 +135,48 @@ describe('delete-data-product', () => {
     ).toBe(403);
   });
 
-  it('should not permit deleting a data product that is currently importing data', async () => {
+  it('should not permit deleting a data product that is currently importing data and there is not dataImportStateMachineArn associated with it', async () => {
     await testDataProductStore.putDataProduct(domainId, dataProductId, DEFAULT_CALLER.userId, {
       ...currentDataProduct,
       dataStatus: DataProductDataStatus.UPDATING,
     });
+
+    mockListExecutions.mockReturnValue({ executions: [{ status: 'FAILED' }] });
+
     const response = await deleteDataProductHandler(dataProductId);
     expect(response.statusCode).toBe(400);
   });
+
+  it.each(['RUNNING', 'SUCCEEDED'])(
+    'should not permit deleting a data product that is currently importing data and the import state machine is %s',
+    async (status) => {
+      await testDataProductStore.putDataProduct(domainId, dataProductId, DEFAULT_CALLER.userId, {
+        ...currentDataProduct,
+        dataStatus: DataProductDataStatus.UPDATING,
+        dataImportStateMachineArn: 'my:import:state:machine',
+      });
+
+      mockListExecutions.mockReturnValue({ executions: [{ status }] });
+
+      const response = await deleteDataProductHandler(dataProductId);
+      expect(response.statusCode).toBe(400);
+    });
+
+  it.each(['FAILED', 'TIMED_OUT', 'ABORTED'])(
+    'should permit deleting a data product that is currently importing data but the import state machine is %s',
+    async (status) => {
+      await testDataProductStore.putDataProduct(domainId, dataProductId, DEFAULT_CALLER.userId, {
+        ...currentDataProduct,
+        dataStatus: DataProductDataStatus.UPDATING,
+        dataImportStateMachineArn: 'my:import:state:machine',
+      });
+
+      mockListExecutions.mockReturnValue({ executions: [{ status }] });
+
+      const response = await deleteDataProductHandler(dataProductId);
+      expect(response.statusCode).toBe(200);
+    });
+
 
   it('should not permit deleting a data product that is currently building', async () => {
     await testDataProductStore.putDataProduct(domainId, dataProductId, DEFAULT_CALLER.userId, {
@@ -176,6 +223,11 @@ describe('delete-data-product', () => {
     expect(API.deleteGovernancePolicyDefaultLensDomainDataProduct).toHaveBeenCalledWith(dataProductIdentifier);
 
     expect(mockDeleteStack).toHaveBeenCalledWith({ StackName: 'data-product-infra-stack' });
+
+    expect(mockSendOperationalMetrics).toHaveBeenCalledWith({
+      event: METRICS_EVENT_TYPE.DATA_PRODUCTS_DELETED,
+      connector: dataProduct.sourceType,
+    });
   });
 
   it('should update parent data products child references', async () => {
@@ -233,8 +285,8 @@ describe('delete-data-product', () => {
     await testDataProductStore.putDataProduct(domainId, dataProductId, DEFAULT_CALLER.userId, {
       ...dataProduct,
       dataProductId,
-      sourceType: SourceType.GOOGLE_BIGQUERY,
-      sourceDetails: <SourceDetailsGoogleBigQuery>{
+      sourceType: Connectors.Id.GOOGLE_BIGQUERY,
+      sourceDetails: <ISourceDetails__GOOGLE_BIGQUERY>{
         projectId: 'test',
         clientEmail: 'test',
         clientId: 'test',

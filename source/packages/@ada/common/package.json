@@ -20,6 +20,8 @@
     "mime-types": "^2.1.35"
   },
   "devDependencies": {
-    "@types/mime-types": "^2.1.1"
+    "@rjsf/core": "^4.2.0",
+    "@types/mime-types": "^2.1.1",
+    "@types/json-schema": "^7.0.9"
   }
 }

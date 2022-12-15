@@ -2,21 +2,22 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { CreateDataProductView } from '../../../index';
-import { DataProductUpdateTriggerType, SourceDetailsGoogleStorage, SourceType } from '@ada/common';
+import { DataProductUpdateTriggerType } from '@ada/common';
 import { act } from '@testing-library/react';
 import { assertReview, assertSubmit, clickNext, gotoSourceTypeDetails, selectUpdateTriggerType, useSourceTypeTestApiMocks } from '../../helpers';
 import { GOOGLE_SOURCE_DETAILS, selectMostRecentAuth, useGoogleSourceTypeTestSetup } from './helpers';
 import { userEvent, within } from '@storybook/testing-library';
 import { DELAY } from '$testing/interaction';
+import * as Connectors from '@ada/connectors';
 
-const SOURCE_DETAILS: SourceDetailsGoogleStorage = {
+const SOURCE_DETAILS: Connectors.GoogleStorage.ISourceDetails = {
   ...GOOGLE_SOURCE_DETAILS,
   bucket: 'test-bucket',
   key: 'test-key',
 }
 
 export default {
-  title: `Views/DataProduct/Create/${SourceType.GOOGLE_STORAGE}`,
+  title: `Views/DataProduct/Create/${Connectors.GoogleStorage.ID}`,
   component: CreateDataProductView,
 } as ComponentMeta<typeof CreateDataProductView>;
 
@@ -29,7 +30,7 @@ const Template: ComponentStory<typeof CreateDataProductView> = (args) => {
 
 export const Primary = Template.bind({});
 Primary.play = async ({ canvasElement }) => {
-  await gotoSourceTypeDetails(canvasElement, SourceType.GOOGLE_STORAGE);
+  await gotoSourceTypeDetails(canvasElement, Connectors.GoogleStorage.ID);
 
   const { getByLabelText } = within(canvasElement);
 
@@ -44,7 +45,7 @@ Primary.play = async ({ canvasElement }) => {
 
   await clickNext(canvasElement);
 
-  await assertReview(canvasElement, {
+  await assertReview(canvasElement, Connectors.GoogleStorage.ID, {
     ...SOURCE_DETAILS,
     privateKeyId: '**********',
     privateKey: '**********',
@@ -52,7 +53,7 @@ Primary.play = async ({ canvasElement }) => {
 
   await act(async () => {
     await assertSubmit(canvasElement, {
-      sourceType: SourceType.GOOGLE_STORAGE,
+      sourceType: Connectors.GoogleStorage.ID,
       sourceDetails: SOURCE_DETAILS,
     });
   })

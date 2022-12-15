@@ -1,20 +1,29 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import * as Connectors from '@ada/connectors';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { CreateDataProductView } from '../../index';
-import { DataProductUpdateTriggerType, SourceDetailsS3, SourceType } from '@ada/common';
-import { act } from '@testing-library/react';
-import { userEvent, within } from '@storybook/testing-library';
-import { assertReview, assertSubmit, clickNext, gotoSourceTypeDetails, selectUpdateTriggerType, useSourceTypeTestApiMocks } from '../helpers';
 import { DELAY } from '$testing/interaction';
+import { DataProductUpdatePolicy, DataProductUpdateTriggerType } from '@ada/common';
+import { act } from '@testing-library/react';
+import {
+  assertReview,
+  assertSubmit,
+  clickNext,
+  gotoSourceTypeDetails,
+  selectUpdatePolicy,
+  selectUpdateTriggerType,
+  useSourceTypeTestApiMocks,
+} from '../helpers';
+import { userEvent, within } from '@storybook/testing-library';
 
-const SOURCE_DETAILS: SourceDetailsS3 = {
+const SOURCE_DETAILS: Connectors.AmazonS3.ISourceDetails = {
   key: 'test-key',
   bucket: 'test-bucket',
-}
+};
 
 export default {
-  title: `Views/DataProduct/Create/${SourceType.S3}`,
+  title: `Views/DataProduct/Create/${Connectors.AmazonS3.ID}`,
   component: CreateDataProductView,
 } as ComponentMeta<typeof CreateDataProductView>;
 
@@ -25,8 +34,9 @@ const Template: ComponentStory<typeof CreateDataProductView> = (args) => {
 };
 
 export const Primary = Template.bind({});
+
 Primary.play = async ({ canvasElement }) => {
-  await gotoSourceTypeDetails(canvasElement, SourceType.S3);
+  await gotoSourceTypeDetails(canvasElement, Connectors.AmazonS3.ID);
 
   const { getByLabelText } = within(canvasElement);
 
@@ -37,14 +47,16 @@ Primary.play = async ({ canvasElement }) => {
 
   await selectUpdateTriggerType(canvasElement, DataProductUpdateTriggerType.AUTOMATIC);
 
+  await selectUpdatePolicy(canvasElement, DataProductUpdatePolicy.REPLACE);
+
   await clickNext(canvasElement);
 
-  await assertReview(canvasElement, SOURCE_DETAILS as any);
+  await assertReview(canvasElement, Connectors.AmazonS3.ID, SOURCE_DETAILS as any);
 
   await act(async () => {
     await assertSubmit(canvasElement, {
-      sourceType: SourceType.S3,
+      sourceType: Connectors.AmazonS3.ID,
       sourceDetails: SOURCE_DETAILS,
     });
-  })
+  });
 };

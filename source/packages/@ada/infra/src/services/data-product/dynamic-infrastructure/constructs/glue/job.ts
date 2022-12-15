@@ -15,6 +15,8 @@ export interface JobProps {
   readonly scriptBucket: IBucket;
   readonly glueSecurityConfigurationName: string;
   readonly sourceAccessRole: ExternalFacingRole;
+  readonly glueConnectionNames?: string[];
+  readonly extraJobArgs?: { [key: string]: string };
 }
 
 /**
@@ -27,7 +29,15 @@ export default class Job extends Construct implements IGrantable {
   constructor(
     scope: Construct,
     id: string,
-    { name, scriptBucket, transform, glueSecurityConfigurationName, sourceAccessRole }: JobProps,
+    {
+      name,
+      scriptBucket,
+      transform,
+      glueSecurityConfigurationName,
+      sourceAccessRole,
+      glueConnectionNames,
+      extraJobArgs,
+    }: JobProps,
   ) {
     super(scope, id);
 
@@ -41,7 +51,8 @@ export default class Job extends Construct implements IGrantable {
       defaultArguments: {
         '--extra-py-files': getScriptS3Path(scriptBucket.bucketName, transform),
         '--INPUT_ARGS': transform.inputArgs ? JSON.stringify(transform.inputArgs) : '{}',
-        '--additional-python-modules': "awswrangler",
+        '--additional-python-modules': 'awswrangler',
+        ...extraJobArgs,
       },
       // NOTE: Upgrade Glue to version 3.0 (preview is only concern)
       glueVersion: '2.0',
@@ -51,6 +62,8 @@ export default class Job extends Construct implements IGrantable {
         maxConcurrentRuns: 1000,
       },
       securityConfiguration: glueSecurityConfigurationName,
+      connections:
+        glueConnectionNames && glueConnectionNames.length > 0 ? { connections: glueConnectionNames } : undefined,
     });
   }
 

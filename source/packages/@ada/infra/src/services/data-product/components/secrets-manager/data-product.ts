@@ -1,8 +1,8 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
 import { AWSError, AwsSecretsManagerInstance, PromiseResult, SecretsManager } from '@ada/aws-sdk';
-import { DataProduct, SourceTypeEnum } from '@ada/api';
-import { GoogleServiceAccountAuth, SourceDetailsGoogleStorage, SourceType } from '@ada/common';
+import { Connectors } from '@ada/connectors';
+import { DataProduct } from '@ada/api';
 import { KeyValuePair } from '@ada/microservice-common';
 import { VError } from 'verror';
 import { getFriendlyHash } from '@ada/cdk-core';
@@ -33,12 +33,9 @@ export const createSecret = (
  * @param dataProduct the data product to write/update
  * @returns true if the data product require to store a secret, false otherwise
  */
-export const requireSecret = (dataProduct: DataProduct): boolean =>
-  [
-    SourceType.GOOGLE_STORAGE as SourceTypeEnum,
-    SourceType.GOOGLE_BIGQUERY as SourceTypeEnum,
-    SourceType.GOOGLE_ANALYTICS as SourceTypeEnum,
-  ].includes(dataProduct.sourceType);
+export const requireSecret = (dataProduct: DataProduct): boolean => {
+  return Connectors.getManagedSecretConfig(dataProduct.sourceType as Connectors.ID)?.enabled === true;
+}
 
 /**
  *
@@ -46,14 +43,23 @@ export const requireSecret = (dataProduct: DataProduct): boolean =>
  * @returns the value of the secret to store with the prefix to use
  */
 export const getSecretToStore = (dataProduct: DataProduct): KeyValuePair<string, string> => {
-  if (requireSecret(dataProduct)) {
-    return {
-      key: `${DATA_PRODUCT_SECRET_PREFIX}-data-product-${getUniqueSecretKeyForDataProduct(
-        dataProduct.domainId,
-        dataProduct.dataProductId,
-      )}`.replace(/_/g, '-'),
-      value: (dataProduct.sourceDetails as SourceDetailsGoogleStorage).privateKey as string,
-    };
+  const config = Connectors.getManagedSecretConfig(dataProduct.sourceType as Connectors.ID);
+  if (config?.enabled) {
+    if (dataProduct.sourceDetails && config.secretValueProperty in dataProduct.sourceDetails) {
+      return {
+        key: `${DATA_PRODUCT_SECRET_PREFIX}-data-product-${getUniqueSecretKeyForDataProduct(
+          dataProduct.domainId,
+          dataProduct.dataProductId,
+        )}`.replace(/_/g, '-'),
+        value: (dataProduct.sourceDetails as any)[config.secretValueProperty],
+      };
+    } else {
+      throw new VError(
+        { name: 'SecretValuePropertyMissingError' },
+        `The provided data product does not define secret value property of "${config.secretValueProperty}"`,
+        { config },
+      );
+    }
   } else {
     throw new VError(
       { name: 'SecretNotRequiredError' },
@@ -72,12 +78,11 @@ const getUniqueSecretKeyForDataProduct = (domainId: string, dataProductId: strin
  * @returns updated data product
  */
 export const updateDataProductSecretDetails = (secretName: string, dataProduct: DataProduct): DataProduct => {
-  if (requireSecret(dataProduct)) {
-    delete (dataProduct.sourceDetails as SourceDetailsGoogleStorage).privateKey;
-    const secretPropertyName = getSourceDetailsSecretProperty(dataProduct);
-    if (secretPropertyName) {
-      (dataProduct.sourceDetails as SourceDetailsGoogleStorage)[secretPropertyName] = secretName;
-    }
+  const config = Connectors.getManagedSecretConfig(dataProduct.sourceType as Connectors.ID);
+  if (config?.enabled && dataProduct.sourceDetails) {
+    delete (dataProduct.sourceDetails as any)[config.secretValueProperty];
+
+    (dataProduct.sourceDetails as any)[config.secretNameProperty] = secretName;
   }
   return dataProduct;
 };
@@ -85,5 +90,6 @@ export const updateDataProductSecretDetails = (secretName: string, dataProduct: 
 /**
  * Get the property in which the data product secret is stored (if any)
  */
-export const getSourceDetailsSecretProperty = (dataProduct: DataProduct): keyof GoogleServiceAccountAuth | undefined =>
-  requireSecret(dataProduct) ? 'privateKeySecretName' : undefined;
+export const getSourceDetailsSecretProperty = <T extends DataProduct>(dataProduct: T): keyof T['sourceDetails'] => {
+  return Connectors.getManagedSecretConfig(dataProduct.sourceType as Connectors.ID)?.secretNameProperty as keyof T['sourceDetails'];
+}

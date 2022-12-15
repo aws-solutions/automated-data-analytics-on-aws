@@ -77,27 +77,32 @@ except Py4JJavaError as e:
         df_spark = spark.createDataFrame(df)
         input_frame = DynamicFrame.fromDF(df_spark, glue_context, args["INPUT_TABLE_NAME"])
 
-# Apply the transform
-output_frames = apply_transform(
-    spark_context=sc,
-    glue_context=glue_context,
-    input_frame=input_frame,
-    data_product_id=args["DATA_PRODUCT_ID"],
-    temp_s3_path=args["TEMP_S3_PATH"],
-    transformation_ctx="transform",
-    input_args=json.loads(args["INPUT_ARGS"]),
-)
 
-# Write the result to s3
-for output_frame in output_frames:
-    print("Writing to s3 table: ", output_frame.name)
-    s3_path = args["OUTPUT_S3_PATH"] + output_frame.name
-    glue_context.write_dynamic_frame.from_options(
-        frame=output_frame,
-        connection_type="s3",
-        connection_options={"path": s3_path},
-        format="parquet",
-        transformation_ctx=f"output_frame_{output_frame.name}",
+spark_input_frame = input_frame.toDF()
+
+if not spark_input_frame.rdd.isEmpty():
+    print("Applying transforms")
+    # Apply the transform
+    output_frames = apply_transform(
+        spark_context=sc,
+        glue_context=glue_context,
+        input_frame=input_frame,
+        data_product_id=args["DATA_PRODUCT_ID"],
+        temp_s3_path=args["TEMP_S3_PATH"],
+        transformation_ctx="transform",
+        input_args=json.loads(args["INPUT_ARGS"]),
     )
+
+    # Write the result to s3
+    for output_frame in output_frames:
+        print("Writing to s3 table: ", output_frame.name)
+        s3_path = args["OUTPUT_S3_PATH"] + output_frame.name
+        glue_context.write_dynamic_frame.from_options(
+            frame=output_frame,
+            connection_type="s3",
+            connection_options={"path": s3_path},
+            format="parquet",
+            transformation_ctx=f"output_frame_{output_frame.name}",
+        )
 
 job.commit()

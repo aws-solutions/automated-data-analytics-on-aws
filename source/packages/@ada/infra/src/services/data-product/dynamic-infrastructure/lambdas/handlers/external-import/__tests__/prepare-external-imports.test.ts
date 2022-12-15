@@ -4,9 +4,9 @@ import {
   DATA_PRODUCT_APPEND_DATA_PARTITION_KEY,
   DataProductUpdateTriggerType,
   DataSetIds,
-  SourceType,
   SourceUpdatePolicy,
 } from '@ada/common';
+import { Connectors } from '@ada/connectors';
 import { DEFAULT_S3_SOURCE_DATA_PRODUCT } from '@ada/microservice-test-common';
 import { handler } from '../prepare-external-import';
 
@@ -43,7 +43,7 @@ describe('prepare-external-imports', () => {
           crawlerName: 'test-crawler',
           dataProduct: {
             ...DEFAULT_S3_SOURCE_DATA_PRODUCT,
-            sourceType: SourceType.GOOGLE_ANALYTICS,
+            sourceType: Connectors.Id.GOOGLE_ANALYTICS,
             sourceDetails: {
               viewId: '12345678',
               since: '',
@@ -80,7 +80,7 @@ describe('prepare-external-imports', () => {
     const result = await prepareGoogleAnalyticsImports(DataProductUpdateTriggerType.SCHEDULE, 'REPLACE');
 
     expect(result.tablePrefix).toBe(`table-prefix-${Date.now()}`);
-    expect(result.outputS3Path).toBe(`s3://output/path/${Date.now()}/${DataSetIds.DEFAULT}`);
+    expect(result.outputS3Path).toBe(`s3://output/path/${Date.now()}/${DataSetIds.DEFAULT}/`);
   });
 
   it('should prepare ga import for an on-demand replace update type', async () => {
@@ -90,15 +90,16 @@ describe('prepare-external-imports', () => {
     const result = await prepareGoogleAnalyticsImports(DataProductUpdateTriggerType.ON_DEMAND, 'REPLACE');
 
     expect(result.tablePrefix).toBe(`table-prefix-${Date.now()}`);
-    expect(result.outputS3Path).toBe(`s3://output/path/${Date.now()}/${DataSetIds.DEFAULT}`);
+    expect(result.outputS3Path).toBe(`s3://output/path/${Date.now()}/${DataSetIds.DEFAULT}/`);
   });
 
-  it('should not support ga import for an on-demand append update type', async () => {
+  it('should support ga import for an on-demand append update type', async () => {
     mockGetTables.mockReturnValue({
       TableList: [{ Name: 'old-table-1' }, { Name: 'old-table-2' }],
     });
-    await expect(
-      prepareGoogleAnalyticsImports(DataProductUpdateTriggerType.ON_DEMAND, 'APPEND'),
-    ).rejects.toThrowError();
+    const result = await prepareGoogleAnalyticsImports(DataProductUpdateTriggerType.ON_DEMAND, 'APPEND');
+
+    expect(result.tablePrefix).toBe(`table-prefix-`);
+    expect(result.outputS3Path).toBe(`s3://output/path/${DataSetIds.DEFAULT}/ada_____partition=${Date.now()}`);
   });
 });

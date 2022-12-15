@@ -29,7 +29,13 @@ export const generateEnvironmentForTests = () => {
   };
 
   const stack = new TestStackWithMockedApiService(new TestApp());
-  const { accessLogsBucket, federatedApi, internalTokenKey, notificationBus, entityManagementTables } = stack;
+  const { accessLogsBucket, 
+    federatedApi, 
+    internalTokenKey, 
+    notificationBus, 
+    entityManagementTables,
+    operationalMetricsConfig,
+  } = stack;
 
   const resource = federatedApi.addRootResource('resource');
   resource.addRoutes({
@@ -82,6 +88,7 @@ export const generateEnvironmentForTests = () => {
         athenaOutputBucket: new Bucket(stack, 'AthenaOutputBucket', {}),
         accessLogsBucket,
         notificationBus,
+        operationalMetricsConfig,
       },
       stack,
     ),

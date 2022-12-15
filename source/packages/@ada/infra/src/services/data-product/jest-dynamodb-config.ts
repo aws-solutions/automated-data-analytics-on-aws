@@ -27,8 +27,13 @@ export const generateEnvironmentForTests = () => {
     required: ['mockId'],
   };
   const stack = new TestStackWithMockedApiService(new TestApp());
-  const { federatedApi, accessLogsBucket, counterTable, notificationBus, entityManagementTables, internalTokenKey } =
-    stack;
+  const { federatedApi, 
+    accessLogsBucket, 
+    counterTable, 
+    notificationBus, 
+    entityManagementTables, 
+    internalTokenKey, 
+    operationalMetricsConfig } = stack;
 
   const resource = federatedApi.addRootResource('resource');
   resource.addRoutes({
@@ -75,6 +80,7 @@ export const generateEnvironmentForTests = () => {
           },
           counterTable,
         }),
+        operationalMetricsConfig,
       },
       stack,
     ),

@@ -5,7 +5,7 @@ import { DataProductEntity } from '@ada/api-client';
 import { ENTITY_COLUMNS, TruncatedCellLinkWithTooltip } from '$common/components/tables/columns';
 import { KeyValuePairStack } from '$northstar-plus';
 import { LL } from '$strings';
-import { SourceTypeBadge } from '../SourceTypeBadge';
+import { SourceTypeBadge } from '$connectors/icons';
 import { Status } from '../Status';
 import { UserLink } from '$common/entity/user';
 import { getDataProductSQLIdentitier } from '$common/utils/data-product';

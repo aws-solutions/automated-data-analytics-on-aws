@@ -1,7 +1,7 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import * as Connectors from '@ada/connectors';
 import * as stories from './s3.stories';
-import { SourceType } from '@ada/common';
 import { act, render } from '@testing-library/react';
 import { composeStories } from '@storybook/testing-react';
 
@@ -12,9 +12,9 @@ jest.mock('@ada/api-client');
 
 const { Primary } = composeStories(stories);
 
-describe(`CreateDataProductView/${SourceType.S3}`, () => {
+describe.skip(`CreateDataProductView/${Connectors.AmazonS3.ID}`, () => {
   describe('storybook', () => {
-    it(SourceType.S3, async () => {
+    it(Connectors.AmazonS3.ID, async () => {
       const { container } = render(<Primary {...(Primary.args as any)} />);
 
       await act(async () => {

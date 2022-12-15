@@ -2,6 +2,7 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { AwsGlueInstance } from '@ada/infra-common/aws-sdk';
 import { CrawledTableDetail, StepFunctionLambdaEvent } from '@ada/microservice-common';
+import { DATA_PRODUCT_APPEND_DATA_PARTITION_KEY } from '@ada/common';
 import { Glue } from 'aws-sdk';
 import { GlueDataProduct } from '../../../core/glue/data.product';
 import { Logger } from '@ada/infra-common/constructs/lambda/lambda-logger';
@@ -15,16 +16,27 @@ export interface GetGlueCrawledTableResult extends GetGlueCrawledTableEvent {
 export interface GetGlueCrawledTableEvent {
   readonly databaseName: string;
   readonly tablePrefix: string;
+  readonly ingestionTimestamp?: string;
 }
 
 // list of all allowed TableInput keys
 export const UPDATE_TABLE_KEYS: Array<keyof Glue.TableInput> = [
-  'Description', 'LastAccessTime', 'LastAnalyzedTime', 'Name',
-  'Owner', 'Parameters', 'PartitionKeys', 'Retention', 'StorageDescriptor',
-  'TableType', 'TargetTable', 'ViewExpandedText', 'ViewOriginalText',
-]
+  'Description',
+  'LastAccessTime',
+  'LastAnalyzedTime',
+  'Name',
+  'Owner',
+  'Parameters',
+  'PartitionKeys',
+  'Retention',
+  'StorageDescriptor',
+  'TableType',
+  'TargetTable',
+  'ViewExpandedText',
+  'ViewOriginalText',
+];
 
-const EXTRANEOUS_PARTITION_KEY_PATTERN = /^partition_\d+$/
+const EXTRANEOUS_PARTITION_KEY_PATTERN = /^partition_\d+$/;
 
 /**
  * Get the information about the crawled table
@@ -42,7 +54,7 @@ export const handler = async (
     },
   });
 
-  const { databaseName, tablePrefix } = event.Payload;
+  const { databaseName, tablePrefix, ingestionTimestamp } = event.Payload;
   const glue = AwsGlueInstance();
 
   const glueDataProduct = GlueDataProduct.getInstance(databaseName);
@@ -65,26 +77,25 @@ export const handler = async (
    */
   for (const table of tables) {
     if (table.PartitionKeys?.length) {
-
       // List of partition key names that glue generates that will be dropped
-      const partitionKeysToDrop = table.PartitionKeys
-      .filter(_key => EXTRANEOUS_PARTITION_KEY_PATTERN.test(_key.Name))
-      .map(({ Name }) => Name);
+      const partitionKeysToDrop = table.PartitionKeys.filter(
+        (_key) =>
+          EXTRANEOUS_PARTITION_KEY_PATTERN.test(_key.Name) || _key.Name === DATA_PRODUCT_APPEND_DATA_PARTITION_KEY,
+      ).map(({ Name }) => Name);
 
       // List of partition key names we want to preserve (such as year,month,day for kinesis)
-      const partitionKeysToPreserve = table.PartitionKeys
-      .filter(_key => !partitionKeysToDrop.includes(_key.Name))
-      .map(({ Name }) => Name);
+      const partitionKeysToPreserve = table.PartitionKeys.filter(
+        (_key) => !partitionKeysToDrop.includes(_key.Name),
+      ).map(({ Name }) => Name);
 
       // Table PartitionKeys that should remain and be updated on the table
-      const partitionKeys = table.PartitionKeys
-      .filter(_key => partitionKeysToPreserve.includes(_key.Name));
+      const partitionKeys = table.PartitionKeys.filter((_key) => partitionKeysToPreserve.includes(_key.Name));
 
       if (partitionKeys.length === table.PartitionKeys.length) {
         log.info(`Preserving partition keys ${partitionKeysToPreserve.join(',')}`, {
           table: pick(table, ['DatabaseName', 'Name'] as (keyof Glue.Table)[]),
           partitionKeys,
-        })
+        });
         // No partition keys to drop for this table, so ignore any changes
         continue;
       }
@@ -95,30 +106,34 @@ export const handler = async (
           original: table.PartitionKeys,
           updated: partitionKeys,
         },
-      })
+      });
 
       // remove dropped partition keys from columns
-      const columns = table.StorageDescriptor?.Columns && table.StorageDescriptor.Columns.filter((_column) => {
-        return !partitionKeysToDrop.includes(_column.Name);
-      })
+      const columns =
+        table.StorageDescriptor?.Columns &&
+        table.StorageDescriptor.Columns.filter((_column) => {
+          return !partitionKeysToDrop.includes(_column.Name);
+        });
 
       try {
-        await glue.updateTable({
-          CatalogId: table.CatalogId,
-          DatabaseName: databaseName,
-          TableInput: {
-            ...pick(table, UPDATE_TABLE_KEYS),
-            // replace partition keys with only preservered keys
-            PartitionKeys: partitionKeys,
-            // filter out partition columns (they should not exist here)
-            StorageDescriptor: {
-              ...table.StorageDescriptor,
-              Columns: columns,
-            }
-          },
-        }).promise();
+        await glue
+          .updateTable({
+            CatalogId: table.CatalogId,
+            DatabaseName: databaseName,
+            TableInput: {
+              ...pick(table, UPDATE_TABLE_KEYS),
+              // replace partition keys with only preservered keys
+              PartitionKeys: partitionKeys,
+              // filter out partition columns (they should not exist here)
+              StorageDescriptor: {
+                ...table.StorageDescriptor,
+                Columns: columns,
+              },
+            },
+          })
+          .promise();
       } catch (error: any) {
-        log.error(error, { databaseName, tableName: table.Name })
+        log.error(error, { databaseName, tableName: table.Name });
       }
 
       if (columns) {
@@ -130,6 +145,10 @@ export const handler = async (
 
   return {
     ...event.Payload,
+    // if there is no ingestion timestamp from the input, it means that the prepareImportExternal is not used and
+    // the start crawler is not reading from the S3 location (could be JDBC connection), therefore there is no ingestion time
+    // supplied from the previous step. In this case, set the ingestion timestamp to current time and pass it down the transform chain
+    ingestionTimestamp: ingestionTimestamp ?? Date.now().toString(),
     tableDetails: tables.map((table) => ({
       tableName: table.Name,
       tableNameSuffix: table.Name.replace(tablePrefix, ''),

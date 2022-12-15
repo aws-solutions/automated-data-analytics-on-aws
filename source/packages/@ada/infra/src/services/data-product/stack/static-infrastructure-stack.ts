@@ -1,40 +1,32 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Bucket } from '../../../common/constructs/s3/bucket';
+import { CfnResource, Lazy, RemovalPolicy } from 'aws-cdk-lib';
+import { Connectors } from '@ada/connectors';
 import { Construct } from 'constructs';
 import { Database, JobBookmarksEncryptionMode, S3EncryptionMode, SecurityConfiguration } from '@aws-cdk/aws-glue-alpha';
-import { ExtendedNestedStack, getUniqueName, globalHash } from '@ada/cdk-core';
+import { ExtendedNestedStack, addCfnNagSuppressions, getUniqueName, globalHash } from '@ada/cdk-core';
 import { Key } from 'aws-cdk-lib/aws-kms';
-import { MicroserviceApi, MicroserviceProps, StaticInfrastructure } from '@ada/microservice-common';
 import { Role } from 'aws-cdk-lib/aws-iam';
+import { StaticInfra } from '@ada/microservice-common';
 import { StringParameter } from 'aws-cdk-lib/aws-ssm';
-import { Table } from 'aws-cdk-lib/aws-dynamodb';
 import AthenaQueryExecutorStateMachine from '../../query/components/athena-query-executor-step-function';
-import ContainerInfraStack from '../container/infra';
 import CrawlerPollerStateMachine from '../components/crawler-poller-state-machine';
+import DataIngressGateway from '../core/network/transit-gateway';
+import DataIngressVPC from '../core/network/vpc';
 import DataProductCreationStateMachine from '../components/creation-state-machine';
 import DataProductInfraLambdas from '../dynamic-infrastructure/lambdas';
-import GoogleAnalyticsImportDataStateMachine from '../components/google-analytics-import-data-state-machine';
-import GoogleBigQueryImportDataStateMachine from '../components/google-bigquery-import-data-state-machine';
-import GoogleStorageImportDataStateMachine from '../components/google-storage-import-data-state-machine';
+import IngressContainerInfra from '../container/infra';
 import Transforms from '../components/transforms';
 import serviceConfig from '../service-config';
 
-export interface StaticInfrastructureStackProps extends MicroserviceProps {
-  glueKmsKey: Key;
-  executeAthenaQueryLambdaRoleArn: string;
-  governanceApi: MicroserviceApi;
-  ontologyApi: MicroserviceApi;
-  queryParseRenderApi: MicroserviceApi;
-  cachedQueryTable: Table;
-  athenaOutputBucket: Bucket;
-  accessLogsBucket: Bucket;
-}
+export type StaticInfrastructureStackProps = StaticInfra.Stack.IConstructProps;
 
 /**
  * Nested stack for static infrastructure for data products
  */
-export class StaticInfrastructureStack extends ExtendedNestedStack {
+class BaseStaticInfrastructureStack extends ExtendedNestedStack implements StaticInfra.Stack.IBaseConstruct {
   public readonly glueKmsKey: Key;
   public readonly executeGeneratedQueryStateMachine: AthenaQueryExecutorStateMachine;
   public readonly crawlerPollerStateMachine: CrawlerPollerStateMachine;
@@ -43,13 +35,17 @@ export class StaticInfrastructureStack extends ExtendedNestedStack {
   public readonly dataBucket: Bucket;
   public readonly scriptBucket: Bucket;
   public readonly glueSecurityConfigurationName: string;
-  public readonly googleStorageImportDataStateMachine: GoogleStorageImportDataStateMachine;
-  public readonly googleBigQueryImportDataStateMachine: GoogleBigQueryImportDataStateMachine;
-  public readonly googleAnalyticsImportDataStateMachine: GoogleBigQueryImportDataStateMachine;
   public readonly dataProductInfraLambdas: DataProductInfraLambdas;
-  public readonly staticInfraParameter: StringParameter;
+  public readonly lastUpdatedDetailTable: Table;
 
-  constructor(scope: Construct, id: string, props: StaticInfrastructureStackProps) {
+  public readonly staticInfraParameter: StringParameter;
+  public readonly dataIngressVPC: DataIngressVPC;
+  public readonly ingressContainerInfra: IngressContainerInfra;
+  public readonly dataIngressGateway: DataIngressGateway;
+
+  public readonly staticInfraParameterValue: StaticInfra.IStaticParamsBase;
+
+  constructor(scope: Construct, id: string, props: StaticInfra.Stack.IConstructProps) {
     super(scope, id, props);
 
     this.glueKmsKey = props.glueKmsKey;
@@ -94,6 +90,7 @@ export class StaticInfrastructureStack extends ExtendedNestedStack {
         counterTable: props.counterTable,
         internalTokenKey: props.internalTokenKey,
         entityManagementTables: props.entityManagementTables,
+        operationalMetricsConfig: props.operationalMetricsConfig,
       },
     );
 
@@ -112,48 +109,20 @@ export class StaticInfrastructureStack extends ExtendedNestedStack {
         internalTokenKey: props.internalTokenKey,
         entityManagementTables: props.entityManagementTables,
         glueKmsKey: this.glueKmsKey,
+        operationalMetricsConfig: props.operationalMetricsConfig,
       },
     );
 
-    const containerStack = new ContainerInfraStack(this, 'ECSContainers', {
-      dataBucket: this.dataBucket,
+    this.dataIngressVPC = new DataIngressVPC(this, 'DataIngressVpc');
+
+    this.dataIngressGateway = new DataIngressGateway(this, 'DataIngressGateway', {
+      dataIngressVPC: this.dataIngressVPC,
     });
 
-    this.googleStorageImportDataStateMachine = new GoogleStorageImportDataStateMachine(
-      this,
-      'GCPImportDataStateMachine',
-      {
-        cluster: containerStack.googleStorageECSCluster.cluster,
-        taskDefinition: containerStack.googleStorageECSCluster.taskDefinition,
-        containerDefinition: containerStack.googleStorageECSCluster.containerDefinition,
-        securityGroup: containerStack.ecsVpc.securityGroup,
-        vpc: containerStack.ecsVpc.vpc,
-      },
-    );
-
-    this.googleBigQueryImportDataStateMachine = new GoogleBigQueryImportDataStateMachine(
-      this,
-      'GCBigQueryImportDataStateMachine',
-      {
-        cluster: containerStack.googleBigQueryECSCluster.cluster,
-        taskDefinition: containerStack.googleBigQueryECSCluster.taskDefinition,
-        containerDefinition: containerStack.googleBigQueryECSCluster.containerDefinition,
-        securityGroup: containerStack.ecsVpc.securityGroup,
-        vpc: containerStack.ecsVpc.vpc,
-      },
-    );
-
-    this.googleAnalyticsImportDataStateMachine = new GoogleAnalyticsImportDataStateMachine(
-      this,
-      'GAImportDataStateMachine',
-      {
-        cluster: containerStack.googleAnalyticsECSCluster.cluster,
-        taskDefinition: containerStack.googleAnalyticsECSCluster.taskDefinition,
-        containerDefinition: containerStack.googleAnalyticsECSCluster.containerDefinition,
-        securityGroup: containerStack.ecsVpc.securityGroup,
-        vpc: containerStack.ecsVpc.vpc,
-      },
-    );
+    this.ingressContainerInfra = new IngressContainerInfra(this, 'ECSContainers', {
+      dataBucket: this.dataBucket,
+      dataIngressVpc: this.dataIngressVPC,
+    });
 
     this.dataProductInfraLambdas = new DataProductInfraLambdas(this, 'DataProductInfraLambdas', {
       database: this.database,
@@ -171,7 +140,34 @@ export class StaticInfrastructureStack extends ExtendedNestedStack {
     });
     new Transforms(this, 'Transforms', { scriptBucket: this.scriptBucket });
 
-    const staticInfra: StaticInfrastructure = {
+    this.lastUpdatedDetailTable = new Table(this, 'LastUpdatedDetail', {
+      billingMode: BillingMode.PAY_PER_REQUEST,
+      removalPolicy: RemovalPolicy.DESTROY,
+      partitionKey: { name: 'dataProductId', type: AttributeType.STRING },
+      sortKey: { name: 'domainId', type: AttributeType.STRING },
+      pointInTimeRecovery: true,
+    });
+
+    addCfnNagSuppressions(this.lastUpdatedDetailTable.node.defaultChild as CfnResource, [{
+      id: 'W74',
+      reason: 'Table with no sensitive data and using AWS_MANAGED encryption',
+    }])
+
+    // collect subnet info from DataIngressVPC
+    const subnetIds: string[] = [];
+    const availabilityZones: string[] = [];
+    for (const subnet of this.dataIngressVPC.vpc.privateSubnets) {
+      subnetIds.push(subnet.subnetId);
+      availabilityZones.push(subnet.availabilityZone);
+    }
+    // collect security groups info from DataIngressVPC
+    const securityGroupIds = [
+      this.dataIngressVPC.glueConnectionSecurityGroup,
+      this.dataIngressVPC.glueJDBCTargetSecurityGroup,
+    ].map((securityGroup) => securityGroup.securityGroupId);
+
+    // NB: Parameter value here is "base" value, connectors will apply missing props
+    this.staticInfraParameterValue = {
       globalHash: globalHash(this),
       counterTableName: props.counterTable.tableName,
       glueKmsKeyArn: this.glueKmsKey.keyArn,
@@ -184,20 +180,23 @@ export class StaticInfrastructureStack extends ExtendedNestedStack {
       dataBucketName: this.dataBucket.bucketName,
       lambdas: this.dataProductInfraLambdas.lambdas,
       executeAthenaQueryLambdaRoleArn: props.executeAthenaQueryLambdaRoleArn,
-      googleCloudStorageConnector: {
-        importDataStateMachineArn: this.googleStorageImportDataStateMachine.stateMachine.stateMachineArn,
-      },
-      googleBigQueryConnector: {
-        importDataStateMachineArn: this.googleBigQueryImportDataStateMachine.stateMachine.stateMachineArn,
-      },
-      googleAnalyticsConnector: {
-        importDataStateMachineArn: this.googleAnalyticsImportDataStateMachine.stateMachine.stateMachineArn,
+      dataIngressVPC: {
+        subnetIds,
+        availabilityZones,
+        securityGroupIds,
       },
     };
 
     // Move static infra configuration to parameter to avoid exceeding 4KB max environment size
     this.staticInfraParameter = new StringParameter(this, 'StaticInfraConfig', {
-      stringValue: JSON.stringify(staticInfra),
+      // Resolve the `staticInfraParams` value after connectors have been applied.
+      // This will be modified to become `StaticInfra.IStaticParams` which includes all
+      // connector parameters rather than `StaticInfra.IStaticParamsBase` in this construct.
+      stringValue: Lazy.string({
+        produce: () => {
+          return JSON.stringify(this.staticInfraParameterValue);
+        },
+      }),
     });
 
     this.dataProductCreationStateMachine.stepLambdas.forEach((lambda) => {
@@ -209,5 +208,15 @@ export class StaticInfrastructureStack extends ExtendedNestedStack {
     });
   }
 }
+
+export const StaticInfrastructureStack = function StaticInfrastructureStack(
+  ...args: StaticInfra.Stack.IConstructParameters
+): StaticInfra.Stack.IConstruct {
+  require('@ada/connectors/register-infra');
+
+  const DecoratedClass = Connectors.Infra.Static.withStaticInfra(BaseStaticInfrastructureStack);
+
+  return new DecoratedClass(...args);
+} as unknown as StaticInfra.Stack.IConstructClass;
 
 export default StaticInfrastructureStack;

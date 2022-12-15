@@ -1,5 +1,6 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import * as Connectors from '@ada/connectors';
 import { COMMON_CLIENT_FIELD_DEFAULTS } from '$views/identity-provider/components/IdpWizard/schema/provider-types/common';
 import {
   ColumnsMetadata,
@@ -30,7 +31,6 @@ import {
   OntologyNamespace,
   ROOT_ADMIN_ID,
   SAMLProvider,
-  SourceType,
 } from '@ada/common';
 import { DataProductWithCreateAndUpdateDetails } from '$api/data-product';
 import { SYSTEM_USER, TEST_USER } from '$common/entity/user';
@@ -41,8 +41,6 @@ export * from './data-product/preview';
 export * from './notifications';
 
 export * from './api-access-policies';
-
-export * from './google-service-account';
 
 /// ///////////////////////////////////////////////
 // Common
@@ -250,7 +248,7 @@ export const DATA_PRODUCT: DataProductEntity = {
   createdTimestamp: '2021-01-01T00:00:00Z',
   updatedBy: 'updater',
   updatedTimestamp: '2021-01-01T00:00:01Z',
-  sourceType: SourceType.S3,
+  sourceType: Connectors.AmazonS3.ID,
   sourceDetails: { bucket: 'bucket', key: 'key' },
   dataSets: {
     [DataSetIds.DEFAULT]: DATA_SET_1,

@@ -7,7 +7,7 @@ import { EntityCreatedKV } from '$common/components';
 import { NO_REFRESH_OPTIONS, apiHooks } from '$api';
 import { RelativeDate, TagGroup, useNotificationContext } from '$northstar-plus';
 import { SourceDetailsRenderer } from '../SourceDetailsRenderer';
-import { SourceTypeBadge } from '../SourceTypeBadge';
+import { SourceTypeBadge } from '$connectors/icons';
 import { Status } from '../Status';
 import { SummaryRenderer } from '$northstar-plus/components/SummaryRenderer';
 import { getDataProductSQLIdentitier } from '$common/utils';
@@ -180,7 +180,7 @@ export const DataProductSummaryRenderer: React.FC<DataProductSummaryRendererProp
                 },
                 {
                   label: LL.ENTITY['DataProduct@'].tags.label(),
-                  value: <TagGroup tags={tags} />,
+                  value: <TagGroup tags={tags as any} />,
                 },
               ],
               // column 3
@@ -201,7 +201,7 @@ export const DataProductSummaryRenderer: React.FC<DataProductSummaryRendererProp
                     ] as any)),
                 {
                   label: LL.ENTITY['DataProduct@'].tags.label(),
-                  value: <TagGroup tags={tags} />,
+                  value: <TagGroup tags={tags as any} />,
                 },
               ],
             ],

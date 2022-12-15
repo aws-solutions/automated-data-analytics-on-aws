@@ -1,0 +1,3 @@
+# Actual dependencies and poetry.lock file are maintained in the schema-preview docker image
+# ../services/data-product/components/schema-preview/docker-image
+poetry.lock

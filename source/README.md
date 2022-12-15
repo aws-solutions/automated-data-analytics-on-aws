@@ -51,6 +51,6 @@ This function is referenced in the stack (the `packages/@ada/infra` file) as:
 
 ```
   code: lambda.Code.fromAsset('../ontology-service-lambdas'),
-  runtime: lambda.Runtime.NODEJS_12_X,
+  runtime: lambda.Runtime.NODEJS_14_X,
   handler: 'index.doSomethingHandler'
 ```

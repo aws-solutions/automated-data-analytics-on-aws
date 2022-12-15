@@ -1,17 +1,17 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import * as fixtures from '$testing/__fixtures__';
-import { DataProductUpdatePolicy, DataProductUpdateTriggerType, SourceType, SourceTypeDefinitions } from '@ada/common';
-import { Schema, Validator } from 'jsonschema';
+import { Connectors } from '@ada/connectors';
+import { DataProductUpdatePolicy, DataProductUpdateTriggerType } from '@ada/common';
+import { MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT } from '$connectors/google/common/testing';
 import { formDataToDataProduct, marshalSourceDetails } from './';
 
-const SchemaValidator = new Validator();
+// TODO: co-locate connector specific tests with connectors when finalizing interface
 
 describe('data-product/create/utils', () => {
   describe('marshalSourceDetails', () => {
-    it(SourceType.S3, () => {
+    it(Connectors.Id.S3, () => {
       const sourceDetails = marshalSourceDetails(
-        SourceType.S3,
+        Connectors.Id.S3,
         {
           s3Path: 's3://bucket/key',
         },
@@ -24,12 +24,12 @@ describe('data-product/create/utils', () => {
         key: 'key',
       });
       // validate output matches schema so will be accepable to api validation
-      expect(SchemaValidator.validate(sourceDetails, SourceTypeDefinitions.S3.SCHEMA as Schema).errors).toEqual([]);
+      expect(Connectors.Schema.validate(Connectors.Id.S3, sourceDetails).errors).toEqual([]);
     });
 
-    it(SourceType.KINESIS, () => {
+    it(Connectors.Id.KINESIS, () => {
       const sourceDetails = marshalSourceDetails(
-        SourceType.KINESIS,
+        Connectors.Id.KINESIS,
         {
           kinesisStreamArn: 'arn:aws:kinesis:region:1234567890:stream/stream-name',
         },
@@ -41,14 +41,12 @@ describe('data-product/create/utils', () => {
         kinesisStreamArn: 'arn:aws:kinesis:region:1234567890:stream/stream-name',
       });
       // validate output matches schema so will be accepable to api validation
-      expect(SchemaValidator.validate(sourceDetails, SourceTypeDefinitions.KINESIS.SCHEMA as Schema).errors).toEqual(
-        [],
-      );
+      expect(Connectors.Schema.validate(Connectors.Id.KINESIS, sourceDetails).errors).toEqual([]);
     });
 
-    it(SourceType.UPLOAD, () => {
+    it(Connectors.Id.UPLOAD, () => {
       const sourceDetails = marshalSourceDetails(
-        SourceType.UPLOAD,
+        Connectors.Id.UPLOAD,
         {
           bucket: 'bucket',
           key: 'key',
@@ -62,14 +60,14 @@ describe('data-product/create/utils', () => {
         key: 'key',
       });
       // validate output matches schema so will be accepable to api validation
-      expect(SchemaValidator.validate(sourceDetails, SourceTypeDefinitions.UPLOAD.SCHEMA as Schema).errors).toEqual([]);
+      expect(Connectors.Schema.validate(Connectors.Id.UPLOAD, sourceDetails).errors).toEqual([]);
     });
 
-    it(SourceType.GOOGLE_STORAGE + ' storage path', () => {
+    it(Connectors.Id.GOOGLE_STORAGE + ' storage path', () => {
       const sourceDetails = marshalSourceDetails(
-        SourceType.GOOGLE_STORAGE,
+        Connectors.Id.GOOGLE_STORAGE,
         {
-          ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+          ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
           googleStoragePath: 'gs://bucket/some/key',
         },
         {
@@ -79,19 +77,18 @@ describe('data-product/create/utils', () => {
       expect(sourceDetails).toMatchObject({
         bucket: 'bucket',
         key: 'some/key',
-        ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+        ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
       });
       // validate output matches schema so will be accepable to api validation
-      expect(
-        SchemaValidator.validate(sourceDetails, SourceTypeDefinitions.GOOGLE_STORAGE.SCHEMA as Schema).errors,
-      ).toEqual([]);
+      expect(Connectors.Schema.validate(Connectors.Id.GOOGLE_STORAGE, sourceDetails).errors).toEqual([]);
+
     });
 
-    it(SourceType.GOOGLE_BIGQUERY, () => {
+    it(Connectors.Id.GOOGLE_BIGQUERY, () => {
       const sourceDetails = marshalSourceDetails(
-        SourceType.GOOGLE_BIGQUERY,
+        Connectors.Id.GOOGLE_BIGQUERY,
         {
-          ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+          ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
           query: 'SELECT * FROM foo',
         },
         {
@@ -100,18 +97,16 @@ describe('data-product/create/utils', () => {
       );
       expect(sourceDetails).toMatchObject({
         query: 'SELECT * FROM foo',
-        ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+        ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
       });
       // validate output matches schema so will be accepable to api validation
-      expect(
-        SchemaValidator.validate(sourceDetails, SourceTypeDefinitions.GOOGLE_BIGQUERY.SCHEMA as Schema).errors,
-      ).toEqual([]);
+      expect(Connectors.Schema.validate(Connectors.Id.GOOGLE_BIGQUERY, sourceDetails).errors).toEqual([]);
     });
-    it(SourceType.GOOGLE_ANALYTICS, () => {
+    it(Connectors.Id.GOOGLE_ANALYTICS, () => {
       const sourceDetails = marshalSourceDetails(
-        SourceType.GOOGLE_ANALYTICS,
+        Connectors.Id.GOOGLE_ANALYTICS,
         {
-          ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+          ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
           viewId: '1234567891',
           since: '2020-12-31T10:29:28.094Z',
           until: '2021-11-26T10:29:28.094Z',
@@ -129,7 +124,7 @@ describe('data-product/create/utils', () => {
         },
       );
       expect(sourceDetails).toMatchObject({
-        ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+        ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
         viewId: '1234567891',
         since: '2020-12-31',
         until: '2021-11-26',
@@ -137,9 +132,7 @@ describe('data-product/create/utils', () => {
         metrics: 'ga:sessions,ga:users',
       });
       // validate output matches schema so will be accepable to api validation
-      expect(
-        SchemaValidator.validate(sourceDetails, SourceTypeDefinitions.GOOGLE_ANALYTICS.SCHEMA as Schema).errors,
-      ).toEqual([]);
+      expect(Connectors.Schema.validate(Connectors.Id.GOOGLE_STORAGE, sourceDetails).errors).toEqual([]);
     });
   });
 
@@ -149,7 +142,7 @@ describe('data-product/create/utils', () => {
         formDataToDataProduct({
           name: 'SomeName',
           domainId: 'test',
-          sourceType: SourceType.S3,
+          sourceType: Connectors.Id.S3,
           sourceDetails: {
             s3Path: 's3://bucket/some/key',
           },
@@ -161,7 +154,7 @@ describe('data-product/create/utils', () => {
         name: 'SomeName',
         domainId: 'test',
         dataProductId: 'some_name',
-        sourceType: SourceType.S3,
+        sourceType: Connectors.Id.S3,
         sourceDetails: {
           bucket: 'bucket',
           key: 'some/key',
@@ -185,7 +178,7 @@ describe('data-product/create/utils', () => {
         formDataToDataProduct({
           name: 'SomeName',
           domainId: 'test',
-          sourceType: SourceType.S3,
+          sourceType: Connectors.Id.S3,
           sourceDetails: {
             s3Path: 's3://bucket/some/key',
           },
@@ -199,7 +192,7 @@ describe('data-product/create/utils', () => {
         name: 'SomeName',
         domainId: 'test',
         dataProductId: 'some_name',
-        sourceType: SourceType.S3,
+        sourceType: Connectors.Id.S3,
         sourceDetails: {
           bucket: 'bucket',
           key: 'some/key',
@@ -222,9 +215,9 @@ describe('data-product/create/utils', () => {
         formDataToDataProduct({
           name: 'some name',
           domainId: 'test',
-          sourceType: SourceType.GOOGLE_BIGQUERY,
+          sourceType: Connectors.Id.GOOGLE_BIGQUERY,
           sourceDetails: {
-            ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+            ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
             query: 'SELECT * FROM foo',
           },
           updateTrigger: {
@@ -252,9 +245,9 @@ describe('data-product/create/utils', () => {
         formDataToDataProduct({
           name: 'some name',
           domainId: 'test',
-          sourceType: SourceType.GOOGLE_BIGQUERY,
+          sourceType: Connectors.Id.GOOGLE_BIGQUERY,
           sourceDetails: {
-            ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+            ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
             query: 'SELECT * FROM foo',
           },
           updateTrigger: {
@@ -282,9 +275,9 @@ describe('data-product/create/utils', () => {
         formDataToDataProduct({
           name: 'some name',
           domainId: 'test',
-          sourceType: SourceType.GOOGLE_BIGQUERY,
+          sourceType: Connectors.Id.GOOGLE_BIGQUERY,
           sourceDetails: {
-            ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+            ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
             query: 'SELECT * FROM foo',
           },
           updateTrigger: {
@@ -310,9 +303,9 @@ describe('data-product/create/utils', () => {
         formDataToDataProduct({
           name: 'some name',
           domainId: 'test',
-          sourceType: SourceType.GOOGLE_BIGQUERY,
+          sourceType: Connectors.Id.GOOGLE_BIGQUERY,
           sourceDetails: {
-            ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+            ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
             query: 'SELECT * FROM foo',
           },
           updateTrigger: {
@@ -350,7 +343,7 @@ describe('data-product/create/utils', () => {
         formDataToDataProduct({
           name: 'some name',
           domainId: 'test',
-          sourceType: SourceType.KINESIS,
+          sourceType: Connectors.Id.KINESIS,
           sourceDetails: {
             kinesisArn: 'test-arn',
           },
@@ -384,10 +377,10 @@ describe('data-product/create/utils', () => {
           name: 'ga import',
           domainId: 'test',
           description: 'google analytics import',
-          sourceType: SourceType.GOOGLE_ANALYTICS,
+          sourceType: Connectors.Id.GOOGLE_ANALYTICS,
           enableAutomaticPii: false,
           sourceDetails: {
-            ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+            ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
             viewId: '1234567891',
             dimensions: [
               { label: 'ga:country', value: 'ga:country' },
@@ -410,9 +403,9 @@ describe('data-product/create/utils', () => {
         dataProductId: 'ga_import',
         description: 'google analytics import',
         enableAutomaticPii: false,
-        sourceType: SourceType.GOOGLE_ANALYTICS,
+        sourceType: Connectors.Id.GOOGLE_ANALYTICS,
         sourceDetails: {
-          ...fixtures.GOOGLE_SERVICE_ACCOUNT,
+          ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
           viewId: '1234567891',
           dimensions: 'ga:country,ga:userType',
           metrics: 'ga:sessions,ga:users',

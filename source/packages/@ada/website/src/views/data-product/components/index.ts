@@ -5,6 +5,5 @@ export * from './DefaultLenses';
 export * from './RelatedResources';
 export * from './Permissions';
 export * from './RelationshipMapping';
-export * from './SourceTypeBadge';
 export * from './Status';
 export * from './tables/DomainTable';

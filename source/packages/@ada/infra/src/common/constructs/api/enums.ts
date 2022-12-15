@@ -1,6 +1,7 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import { DataIntegrity, DataProductAccess, LensIds, SourceType } from '@ada/common';
+import { Connectors } from '@ada/connectors';
+import { DataIntegrity, DataProductAccess, LensIds } from '@ada/common';
 import { JsonSchema, JsonSchemaType } from 'aws-cdk-lib/aws-apigateway';
 
 export const LensProperty: JsonSchema = {
@@ -21,7 +22,7 @@ export const SourceTypeProperty: JsonSchema = {
   id: `${__filename}/SourceTypeEnum`,
   type: JsonSchemaType.STRING,
   description: 'Source type value',
-  enum: Object.values(SourceType),
+  enum: Object.values(Connectors.Id),
 };
 
 export const DataIntegrityProperty: JsonSchema = {

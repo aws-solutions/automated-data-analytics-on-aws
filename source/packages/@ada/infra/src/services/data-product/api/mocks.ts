@@ -1,11 +1,11 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
 
+import { Connectors } from '@ada/connectors';
 import {
   DataProductDataStatus,
   DataProductInfrastructureStatus,
   DataProductUpdateTriggerType,
-  SourceType,
 } from '@ada/common';
 
 export const MOCK_DOMAIN = {
@@ -24,7 +24,7 @@ export const MOCK_DATA_PRODUCT = {
   name: 'Customers',
   description: 'Full record of all customers',
   owningGroups: ['group1', 'group2'],
-  sourceType: SourceType.S3,
+  sourceType: Connectors.Id.S3,
   sourceDetails: {
     bucket: 'examplebucket',
     key: 'mydata',

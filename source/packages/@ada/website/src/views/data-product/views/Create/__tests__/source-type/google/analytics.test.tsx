@@ -1,7 +1,7 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import * as Connectors from '@ada/connectors';
 import * as stories from './analytics.stories';
-import { SourceType } from '@ada/common';
 import { act, render } from '@testing-library/react';
 import { composeStories } from '@storybook/testing-react';
 
@@ -12,9 +12,9 @@ jest.mock('@ada/api-client');
 
 const { Primary } = composeStories(stories);
 
-describe(`CreateDataProductView/${SourceType.GOOGLE_ANALYTICS}`, () => {
+describe.skip(`CreateDataProductView/${Connectors.GoogleAnalytics.ID}`, () => {
   describe('storybook', () => {
-    it(SourceType.GOOGLE_ANALYTICS, async () => {
+    it(Connectors.GoogleAnalytics.ID, async () => {
       const { container } = render(<Primary {...(Primary.args as any)} />);
 
       await act(async () => {

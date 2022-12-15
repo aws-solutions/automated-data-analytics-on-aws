@@ -2,6 +2,7 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { ApiClient } from '@ada/api-client-lambda';
 import { ApiLambdaHandler, ApiResponse } from '@ada/api-gateway';
+import { Connectors } from '@ada/connectors';
 import { DataProduct } from '@ada/api';
 import {
   DataProductAccess,
@@ -13,6 +14,7 @@ import {
   ReservedDomains,
 } from '@ada/common';
 import { DataProductStore } from '../../components/ddb/data-product';
+import { METRICS_EVENT_TYPE, OperationalMetricsClient } from '@ada/services/api/components/operational-metrics/client';
 import {
   createSecret,
   getSecretToStore,
@@ -20,7 +22,7 @@ import {
   updateDataProductSecretDetails,
 } from '../../components/secrets-manager/data-product';
 import { entityIdentifier } from '@ada/api-client/types';
-import { isEqual, uniqWith } from 'lodash';
+import { isEqual, merge, uniqWith } from 'lodash';
 import { isRawSourceSupported, startBuildDataProductSchemaAndSource } from './build-data-product';
 import { relateDataProductWithOntologies } from './event-bridge/utils/data-set';
 import { startDynamicInfrastructureCreation } from '../../dynamic-infrastructure/state-machine';
@@ -37,7 +39,7 @@ export const handler = ApiLambdaHandler.for(
     { requestParameters, requestArrayParameters, body: dataProductInput },
     callingUser,
     _event,
-    { relationshipClient, lockClient },
+    { relationshipClient, lockClient, log },
   ) => {
     const { domainId, dataProductId } = requestParameters;
     const { initialFullAccessGroups } = requestArrayParameters;
@@ -52,6 +54,18 @@ export const handler = ApiLambdaHandler.for(
       dataProductId,
       dataSets: dataProductInput.dataSets || {},
     };
+
+    // Validate the input against the connector schema
+    const validation = Connectors.Schema.validateDataProductInput(dataProductInput);
+    if (!validation.valid) {
+      log.warn('DataProductInputValidationError', { domainId, dataProductId, validation });
+      log.debug('DataProductInputValidationError details', { domainId, dataProductId, dataProductInput, validation });
+      return ApiResponse.badRequest({
+        name: 'DataProductInputValidationError',
+        message: `Invalid input for data product of type ${dataProductInput.sourceType}`,
+        details: JSON.stringify(validation.errors),
+      });
+    }
 
     const api = ApiClient.create(callingUser);
 
@@ -179,8 +193,16 @@ export const handler = ApiLambdaHandler.for(
 
     // Kick off the final schema discovery and preparation of raw source tables
     await startBuildDataProductSchemaAndSource({
-      dataProduct: writtenDataProduct,
+      dataProduct: merge({}, writtenDataProduct, {
+        // schema preview requires raw sourceDetails for properties like privateKey as it does not fetch
+        sourceDetails: dataProductInput.sourceDetails || {},
+      }),
       callingUser,
+    });
+
+    await OperationalMetricsClient.getInstance().send({
+      event: METRICS_EVENT_TYPE.DATA_PRODUCTS_CREATED,
+      connector: dataProductToWrite.sourceType,
     });
 
     return ApiResponse.success(writtenDataProduct);

@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-IdentityService) - Automated Data Analytics on AWS. Version v1.0.2",
+  "Description": "(SO0190-IdentityService) - Automated Data Analytics on AWS. Version v1.1.0",
   "Outputs": Object {
     "AdaIdentityServiceUserPoolClient300BB0C2Ref": Object {
       "Value": Object {
@@ -9576,9 +9576,6 @@ Object {
     "ApiRestApiRefidentityOPTIONS5DA96F0F": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -9841,9 +9838,6 @@ Object {
     "ApiRestApiRefidentityattributesOPTIONS771152C3": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -10254,9 +10248,6 @@ Object {
     "ApiRestApiRefidentitygroupOPTIONSDB29DBC4": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -10985,9 +10976,6 @@ Object {
     "ApiRestApiRefidentitygroupgroupIdOPTIONS201BBC23": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -11482,9 +11470,6 @@ Object {
     "ApiRestApiRefidentitygroupgroupIdmembersOPTIONS5464AD55": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -12187,9 +12172,6 @@ Object {
     "ApiRestApiRefidentitymachineOPTIONS4486C7C8": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -12740,9 +12722,6 @@ Object {
     "ApiRestApiRefidentitymachinemachineIdOPTIONS871B53D3": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -13476,9 +13455,6 @@ Object {
     "ApiRestApiRefidentitymachinemachineIdtokenOPTIONSAA03C9EB": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -14233,9 +14209,6 @@ Object {
     "ApiRestApiRefidentitymachinemachineIdtokentokenIdOPTIONS812A5FED": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -15111,9 +15084,6 @@ Object {
     "ApiRestApiRefidentityproviderOPTIONSBC900877": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -15844,9 +15814,6 @@ Object {
     "ApiRestApiRefidentityprovideridentityProviderIdOPTIONS705D1BF9": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -16659,9 +16626,6 @@ Object {
     "ApiRestApiRefidentityrequestOPTIONS9C24B84E": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -16703,9 +16667,6 @@ Object {
     "ApiRestApiRefidentityrequestgroupIdOPTIONS7C49ED94": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -17324,9 +17285,6 @@ Object {
     "ApiRestApiRefidentityrequestgroupIduserIdOPTIONS86E7887C": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -17723,9 +17681,6 @@ Object {
     "ApiRestApiRefidentityrequestgroupIduserIdactionOPTIONSD79E6E9A": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -18308,9 +18263,6 @@ Object {
     "ApiRestApiRefidentityuserOPTIONSA312304F": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
-        "AuthorizerId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
-        },
         "HttpMethod": "OPTIONS",
         "Integration": Object {
           "IntegrationResponses": Array [
@@ -18348,6 +18300,29 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Method",
+    },
+    "AppRegistryAssociation": Object {
+      "Properties": Object {
+        "Application": Object {
+          "Fn::Join": Array [
+            "-",
+            Array [
+              "Automated-Data-Analysis-on-AWS",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+            ],
+          ],
+        },
+        "Resource": Object {
+          "Ref": "AWS::StackId",
+        },
+        "ResourceType": "CFN_STACK",
+      },
+      "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
     },
     "IdentityProviderTable": Object {
       "DeletionPolicy": "Delete",

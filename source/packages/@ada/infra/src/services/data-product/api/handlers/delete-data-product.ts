@@ -2,9 +2,11 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { ApiClient } from '@ada/api-client-lambda';
 import { ApiLambdaHandler, ApiResponse } from '@ada/api-gateway';
-import { AwsCloudFormationInstance, AwsSecretsManagerInstance } from '@ada/aws-sdk';
+import { AwsCloudFormationInstance, AwsSecretsManagerInstance, AwsStepFunctionsInstance } from '@ada/aws-sdk';
+import { DataProduct } from '@ada/api';
 import { DataProductDataStatus, DataProductInfrastructureStatus } from '@ada/common';
 import { DataProductStore } from '../../components/ddb/data-product';
+import { METRICS_EVENT_TYPE, OperationalMetricsClient } from '@ada/services/api/components/operational-metrics/client';
 import { entityIdentifier } from '@ada/api-client/types';
 import { filterRelatedEntitiesOfType } from '../../../api/components/entity/relationships/client';
 import { getSourceDetailsSecretProperty, requireSecret } from '../../components/secrets-manager/data-product';
@@ -12,6 +14,27 @@ import { isPermittedForFullAccessByDataProductPolicy } from '@ada/microservice-c
 
 const cfn = AwsCloudFormationInstance();
 const secrets = AwsSecretsManagerInstance();
+const sfn = AwsStepFunctionsInstance();
+
+const getDataProductDataUpdatingStatus = async (dataProduct: DataProduct) => {
+  if (dataProduct.dataImportStateMachineArn) {
+    const executions = await sfn
+      .listExecutions({
+        stateMachineArn: dataProduct.dataImportStateMachineArn,
+        maxResults: 1,
+      })
+      .promise();
+
+    const latestExecution =
+      executions.executions.length > 0 ? executions.executions[executions.executions.length - 1] : null;
+
+    if (latestExecution && new Set(['FAILED', 'TIMED_OUT', 'ABORTED']).has(latestExecution.status)) {
+      return DataProductDataStatus.FAILED;
+    }
+  }
+
+  return dataProduct.dataStatus;
+};
 
 /**
  * Handler for deleting a data product
@@ -47,9 +70,14 @@ export const handler = ApiLambdaHandler.for(
     }
 
     if (dataProduct.dataStatus === DataProductDataStatus.UPDATING) {
-      return ApiResponse.badRequest({
-        message: `${domainId}.${dataProductId} is currently importing data and cannot be deleted`,
-      });
+      // Add extra logic to handle pre-existing issue where existing data products (created before GA 1.1) cannot be removed if it's in a importing failed state.
+      // The cause of the issue has been fixed in GA 1.1.
+      const status = await getDataProductDataUpdatingStatus(dataProduct);
+      if (status === DataProductDataStatus.UPDATING) {
+        return ApiResponse.badRequest({
+          message: `${domainId}.${dataProductId} is currently importing data and cannot be deleted`,
+        });
+      }
     }
 
     if (dataProduct.infrastructureStatus === DataProductInfrastructureStatus.PROVISIONING) {
@@ -72,7 +100,9 @@ export const handler = ApiLambdaHandler.for(
 
     const relatedSavedQueries = filterRelatedEntitiesOfType(relatedEntities, 'QuerySavedQuery');
     if (relatedSavedQueries.length > 0) {
-      const relatedSaveQueriesStr = relatedSavedQueries.map(({ namespace, queryId }) => `${namespace}.${queryId}`).join(', ')
+      const relatedSaveQueriesStr = relatedSavedQueries
+        .map(({ namespace, queryId }) => `${namespace}.${queryId}`)
+        .join(', ');
       return ApiResponse.badRequest({
         message: `Cannot delete this data product as it is referenced by the following saved queries: ${relatedSaveQueriesStr}`,
       });
@@ -116,7 +146,7 @@ export const handler = ApiLambdaHandler.for(
           ? [
               secrets
                 .deleteSecret({
-                  SecretId: (dataProduct.sourceDetails as any)[getSourceDetailsSecretProperty(dataProduct)!],
+                  SecretId: (dataProduct.sourceDetails as object)[getSourceDetailsSecretProperty(dataProduct)],
                   ForceDeleteWithoutRecovery: true,
                 })
                 .promise(),
@@ -127,7 +157,9 @@ export const handler = ApiLambdaHandler.for(
       // Ensure cfn stack was actually created before attempting to delete. Rare cases can cause build to
       // fail prior to creating the cfn stack and the UI delete action reports an error at this step in deletion.
       // NOTE: Consider providing a way to track data product deletion and surface failures etc in the UI. For now, must look at cfn console.
-      dataProduct.cloudFormationStackId ? cfn.deleteStack({ StackName: dataProduct.cloudFormationStackId }).promise() : Promise.resolve('Stack does not exist for data product'),
+      dataProduct.cloudFormationStackId
+        ? cfn.deleteStack({ StackName: dataProduct.cloudFormationStackId }).promise()
+        : Promise.resolve('Stack does not exist for data product'),
       // Delete the data product policy
       ...relatedDataProductPolicies.map((_policy) => api.deleteGovernancePolicyDomainDataProduct(_policy)),
       // Delete the default lens policy (if any)
@@ -136,6 +168,12 @@ export const handler = ApiLambdaHandler.for(
       relationshipClient.removeAllRelationships(dataProductEntity),
     ]);
     log.info(`Deleted data product with id: ${dataProductIdentifier}`);
+
+    await OperationalMetricsClient.getInstance().send({
+      event: METRICS_EVENT_TYPE.DATA_PRODUCTS_DELETED,
+      connector: dataProduct.sourceType,
+    });
+
     return ApiResponse.success(dataProduct);
   },
 );

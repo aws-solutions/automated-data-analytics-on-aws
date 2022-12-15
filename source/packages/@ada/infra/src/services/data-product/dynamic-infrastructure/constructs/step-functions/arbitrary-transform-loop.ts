@@ -21,8 +21,7 @@ import {
 } from 'aws-cdk-lib/aws-stepfunctions-tasks';
 import { ExternalFacingRole } from '@ada/infra-common/constructs/iam/external-facing-role';
 import { JSON_PATH_AT } from '../../types';
-import { StaticInfrastructureRefs } from '../static-infrastructure-references';
-import { s3PathJoin, toS3Path } from '@ada/microservice-common';
+import { StaticInfra, s3PathJoin, toS3Path } from '@ada/microservice-common';
 import TransformJobsAndCrawlers from '../glue/transform-jobs-and-crawlers';
 
 export interface ArbitraryTransformLoopProps {
@@ -30,10 +29,12 @@ export interface ArbitraryTransformLoopProps {
   readonly dataBucketPath: string;
   readonly dataProduct: DataProduct;
   readonly callingUser: CallingUser;
-  readonly staticInfrastructureReferences: StaticInfrastructureRefs;
+  readonly staticInfrastructureReferences: StaticInfra.Refs.IRecord;
   readonly putSuccessEventOnEventBridge: EventBridgePutEvents;
   readonly putErrorEventOnEventBridge: EventBridgePutEvents;
   readonly sourceAccessRole: ExternalFacingRole;
+  readonly glueConnectionNames?: string[];
+  readonly extraJobArgs?: { [key: string]: string };
 }
 
 /**
@@ -65,6 +66,8 @@ export default class ArbitraryTransformLoop extends Construct {
       glueKmsKey,
       glueSecurityConfigurationName,
       sourceAccessRole: props.sourceAccessRole,
+      glueConnectionNames: props.glueConnectionNames,
+      extraJobArgs: props.extraJobArgs,
     });
   }
 
@@ -87,7 +90,7 @@ export default class ArbitraryTransformLoop extends Construct {
       this.props;
 
     const {
-      discoverTransformsLambda,
+      prepareTransformChainLambda,
       glueDBArn,
       prepareNextTransformLambda,
       crawlerStateMachine,
@@ -99,13 +102,14 @@ export default class ArbitraryTransformLoop extends Construct {
       dataBucket,
     } = staticInfrastructureReferences;
 
-    const discoverTransforms = new LambdaInvoke(this, 'DiscoverTransforms', {
-      lambdaFunction: discoverTransformsLambda,
+    const prepareTransformChain = new LambdaInvoke(this, 'PrepareTransformChain', {
+      lambdaFunction: prepareTransformChainLambda,
       payload: TaskInput.fromObject({
         Payload: {
           databaseName: glueDBArn.resourceName,
           tableDetails: TaskInput.fromJsonPathAt(JSON_PATH_AT.PAYLOAD__TABLE_DETAILS).value,
           tablePrefix: TaskInput.fromJsonPathAt(JSON_PATH_AT.PAYLOAD__TABLE_PREFIX).value,
+          ingestionTimestamp: TaskInput.fromJsonPathAt(JSON_PATH_AT.PAYLOAD__INGESTION_TIMESTAMP).value,
           transformJobs: this.transformJobsAndCrawlers.transformJobs,
           dataProduct,
           ...additionalPayload,
@@ -125,6 +129,7 @@ export default class ArbitraryTransformLoop extends Construct {
       transformJobCount: TaskInput.fromJsonPathAt(JSON_PATH_AT.PAYLOAD__TRANSFORM_JOB_COUNT).value,
       currentTransformJob: TaskInput.fromJsonPathAt(JSON_PATH_AT.PAYLOAD__CURRENT_TRANSFORM_JOB).value,
       tableDetails: TaskInput.fromJsonPathAt(JSON_PATH_AT.PAYLOAD__TABLE_DETAILS).value,
+      ingestionTimestamp: TaskInput.fromJsonPathAt(JSON_PATH_AT.PAYLOAD__INGESTION_TIMESTAMP).value,
       dataProduct,
       ...additionalPayload,
     };
@@ -147,7 +152,7 @@ export default class ArbitraryTransformLoop extends Construct {
       payloadResponseOnly: true,
     });
 
-    return discoverTransforms.next(
+    return prepareTransformChain.next(
       transformationsIterator.next(
         new Choice(this, 'IsTransformRemaining?')
           .when(

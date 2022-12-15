@@ -4,87 +4,36 @@ import { ArnFormat, Stack } from 'aws-cdk-lib';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 import { DATA_PRODUCT_SECRET_PREFIX } from '../../components/secrets-manager/data-product';
+import { DataIngressECSCluster, DataIngressECSClusterProps } from './ecs-cluster';
 import { Effect, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
-import { SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
-import { getDockerImagePath } from '@ada/infra-common';
-import ECSContainerClusterStack from './ecs-cluster';
-import ECSVpcConstructStack from './vpc';
+import { addCfnNagSuppressionsToRolePolicy } from '@ada/cdk-core';
+import DataIngressVPC from '../../core/network/vpc';
 
-export interface ContainerInfraStackProps {
+export interface IngressContainerInfraProps {
+  readonly dataIngressVpc: DataIngressVPC;
   readonly dataBucket: Bucket;
 }
 
-export default class ContainerInfraStack extends Construct {
-  public readonly googleStorageECSCluster: ECSContainerClusterStack;
+export class IngressContainerInfra extends Construct {
+  private readonly dataBucket: Bucket;
+  public readonly dataIngressVPC: DataIngressVPC;
 
-  public readonly googleBigQueryECSCluster: ECSContainerClusterStack;
-
-  public readonly googleAnalyticsECSCluster: ECSContainerClusterStack;
-
-  public readonly ecsVpc: ECSVpcConstructStack;
-
-  constructor(scope: Construct, id: string, props: ContainerInfraStackProps) {
+  constructor(scope: Construct, id: string, props: IngressContainerInfraProps) {
     super(scope, id);
 
-    const { dataBucket } = props;
-
-    this.ecsVpc = new ECSVpcConstructStack(this, 'ContainersVpc');
-
-    this.googleStorageECSCluster = this.createGoogleStorageECSCluster(
-      this.ecsVpc.vpc,
-      this.ecsVpc.securityGroup,
-      dataBucket,
-    );
-
-    this.googleBigQueryECSCluster = this.createGoogleBigQueryECSCluster(
-      this.ecsVpc.vpc,
-      this.ecsVpc.securityGroup,
-      dataBucket,
-    );
-
-    this.googleAnalyticsECSCluster = this.createGoogleAnalyticsECSCluster(
-      this.ecsVpc.vpc,
-      this.ecsVpc.securityGroup,
-      dataBucket,
-    );
+    this.dataBucket = props.dataBucket;
+    this.dataIngressVPC = props.dataIngressVpc;
   }
 
-  private createGoogleStorageECSCluster(vpc: Vpc, securityGroup: SecurityGroup, dataBuket: Bucket) {
-    return new ECSContainerClusterStack(this, 'GCPStorage', {
-      vpc,
-      securityGroup,
-      // NOTE: consider resizing
-      cpu: 512,
-      memoryMiB: 1024,
-      name: 'gcp-storage',
-      taskDefinitionRole: this.createECSRole('GCPStorageRole', dataBuket),
-      imageTarballPath: getDockerImagePath('google-storage-connector'),
-    });
-  }
-
-  private createGoogleBigQueryECSCluster(vpc: Vpc, securityGroup: SecurityGroup, dataBuket: Bucket) {
-    return new ECSContainerClusterStack(this, 'GCPBigQuery', {
-      vpc,
-      securityGroup,
-      // NOTE: consider resizing
-      cpu: 2048, // 2GB
-      memoryMiB: 16384, // 16GB
-      name: 'gcp-big-query',
-      taskDefinitionRole: this.createECSRole('GCPBigQueryRole', dataBuket),
-      imageTarballPath: getDockerImagePath('google-bigquery-connector'),
-    });
-  }
-
-  private createGoogleAnalyticsECSCluster(vpc: Vpc, securityGroup: SecurityGroup, dataBuket: Bucket) {
-    return new ECSContainerClusterStack(this, 'GoogleAnalytics', {
-      vpc,
-      securityGroup,
-      // NOTE: consider resizing
-      cpu: 2048, // 2GB
-      memoryMiB: 16384, // 16GB
-      name: 'google-analytics',
-      taskDefinitionRole: this.createECSRole('GCPAnalyticsRole', dataBuket),
-      imageTarballPath: getDockerImagePath('google-analytics-connector'),
+  public createCluster(
+    id: string,
+    props: Omit<DataIngressECSClusterProps, 'vpc' | 'securityGroup' | 'taskDefinitionRole'>,
+  ): DataIngressECSCluster {
+    return new DataIngressECSCluster(this, id, {
+      vpc: this.dataIngressVPC.vpc,
+      securityGroup: this.dataIngressVPC.ecsSecurityGroup,
+      taskDefinitionRole: this.createECSRole(`${id}Role`, this.dataBucket),
+      ...props,
     });
   }
 
@@ -120,6 +69,12 @@ export default class ContainerInfraStack extends Construct {
         ],
       }),
     );
+    addCfnNagSuppressionsToRolePolicy(role, [
+      {
+        id: 'W12',
+        reason: '* resource required to create log streams'
+      }]);
+      
     if (dataBucket.encryptionKey) {
       role.addToPolicy(
         new PolicyStatement({
@@ -133,3 +88,5 @@ export default class ContainerInfraStack extends Construct {
     return role;
   }
 }
+
+export default IngressContainerInfra;

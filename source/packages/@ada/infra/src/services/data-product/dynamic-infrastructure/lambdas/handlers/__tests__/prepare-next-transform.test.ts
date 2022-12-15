@@ -44,6 +44,13 @@ describe('prepare-next-transform', () => {
           transformJobs,
           transformJobCount: transformJobs.length,
           transformJobIndex,
+          dataProduct: {
+            updateTrigger: {
+              triggerType: 'SCHEDULE',
+              updatePolicy: 'REPLACE',
+            },
+          },
+          ingestionTimestamp: '1670629751900',
         },
       },
       null,

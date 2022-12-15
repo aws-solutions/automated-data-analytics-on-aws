@@ -2,7 +2,7 @@
 SPDX-License-Identifier: Apache-2.0 */
 import 'jest-extended';
 import { MOCK_API_CLIENT as API } from '@ada/api-client/mock';
-import { AthenaQueryExecutionState, CallingUser, DataProductSourceDataStatus, SourceType } from '@ada/common';
+import { AthenaQueryExecutionState, CallingUser, DataProductSourceDataStatus } from '@ada/common';
 import { ColumnsMetadata, CreateAndUpdateDetails, DataProduct, DataSetPreview } from '@ada/api-client';
 import {
   DEFAULT_CALLER,
@@ -16,6 +16,7 @@ import { LambdaLog } from 'lambda-log';
 import { handler } from '../build-data-product';
 import { localDynamoLockClient } from '../../../../api/components/entity/locks/mock';
 import { localDynamoRelationshipClient } from '../../../../api/components/entity/relationships/mock';
+import { Connectors } from '@ada/connectors';
 
 jest.mock('@ada/api-client-lambda');
 
@@ -114,9 +115,10 @@ const columnMetadata: ColumnsMetadata = {
     sortOrder: 2,
   },
 };
+
 const uploadDataProduct = {
   ...MOCK_BASE_DATAPRODUCT,
-  sourceType: SourceType.UPLOAD,
+  sourceType: Connectors.Id.UPLOAD,
   sourceDetails: {
     bucket: 'some-bucket',
     key: 'some-s3-key',
@@ -180,7 +182,7 @@ describe('build-data-product', () => {
     const notSupportedDataProduct: DataProduct & CreateAndUpdateDetails = {
       ...dataProduct,
       updatedTimestamp: currentDataProduct.updatedTimestamp,
-      sourceType: SourceType.GOOGLE_STORAGE,
+      sourceType: Connectors.Id.GOOGLE_STORAGE,
     };
     await testDataProductStore.putDataProduct(domainId, dataProductId, 'test-user', notSupportedDataProduct);
 
@@ -201,36 +203,36 @@ describe('build-data-product', () => {
     mockListObjectsV2.mockReturnValue({
       Contents: [
          {
-        ETag: "\"70ee1738b6b21e2c8a43f3a5ab0eee71\"", 
-        Key: "happyface.jpg", 
-        LastModified: "<Date Representation>", 
-        Size: 11, 
+        ETag: "\"70ee1738b6b21e2c8a43f3a5ab0eee71\"",
+        Key: "happyface.jpg",
+        LastModified: "<Date Representation>",
+        Size: 11,
         StorageClass: "STANDARD"
-       }, 
+       },
          {
-        ETag: "\"becf17f89c30367a9a44495d62ed521a-1\"", 
-        Key: "test.jpg", 
-        LastModified: "<Date Representation>", 
-        Size: 4192256, 
+        ETag: "\"becf17f89c30367a9a44495d62ed521a-1\"",
+        Key: "test.jpg",
+        LastModified: "<Date Representation>",
+        Size: 4192256,
         StorageClass: "STANDARD"
        }
-      ], 
-      IsTruncated: true, 
-      KeyCount: 2, 
-      MaxKeys: 2, 
-      Name: "some-bucket", 
-      NextContinuationToken: "1w41l63U0xa8q7smH50vCxyTQqdxo69O3EmK28Bi5PcROI4wI/EyIJg==", 
+      ],
+      IsTruncated: true,
+      KeyCount: 2,
+      MaxKeys: 2,
+      Name: "some-bucket",
+      NextContinuationToken: "1w41l63U0xa8q7smH50vCxyTQqdxo69O3EmK28Bi5PcROI4wI/EyIJg==",
       Prefix: ""
      });
 
      mockDeleteObjects.mockResolvedValue({
       Deleted: [
         {
-       Key: "happyface.jpg", 
+       Key: "happyface.jpg",
        VersionId: "yoz3HB.ZhCS_tKVEmIOr7qYyyAaZSKVd"
-      }, 
+      },
         {
-       Key: "test.jpg", 
+       Key: "test.jpg",
        VersionId: "2LWg7lQLnY41.maGB5Z6SWW.dcq0vx7b"
       }
      ]

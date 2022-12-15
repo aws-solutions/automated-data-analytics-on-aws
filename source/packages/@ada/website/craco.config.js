@@ -45,8 +45,27 @@ module.exports = {
             return {
               ...rule,
               oneOf: rule.oneOf.map((ruleObject) => {
-                if (!new RegExp(ruleObject.test).test('.ts') || !ruleObject.include) return ruleObject;
-                return { ...ruleObject, include: path.resolve(__dirname, '..') };
+                if (typeof ruleObject.loader === 'string' && ruleObject.loader.includes('babel-loader') && ruleObject.include) {
+                  return {
+                    ...ruleObject,
+                    options: {
+                      ...ruleObject.options,
+                      plugins: [
+                        ...ruleObject.options.plugins,
+                        // prevent "exports is not defined" error
+                        '@babel/plugin-transform-modules-commonjs',
+                      ],
+                    },
+                    include: (input) => {
+                      if (/@ada\/(website|infra|connectors|common)\/(src|dist)\//.test(input)) {
+                        return true;
+                      }
+                      return false;
+                    }
+                  }
+                } else {
+                  return ruleObject;
+                }
               }),
             };
           }),
