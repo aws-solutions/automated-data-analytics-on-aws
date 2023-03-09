@@ -58,7 +58,7 @@
     "@aws-cdk/aws-kinesisfirehose-destinations-alpha": "^2.53.0-alpha.0",
     "@aws-cdk/aws-lambda-python-alpha": "^2.53.0-alpha.0",
     "find-up": "^6.0.0",
-    "json5": "^2.2.0",
+    "json5": "^2.2.2",
     "lodash": "^4.17.21",
     "openapi-types": "^9.3.0",
     "short-unique-id": "^4.4.0",
@@ -155,7 +155,9 @@
     "minimatch": "^3.0.5",
     "decode-uri-component": "0.2.1",
     "qs": "^6.7.3",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "http-cache-semantics": "^4.1.1",
+    "json5": "~2.2.2"
   },
   "workspaces": {
     "packages": [
