@@ -34,74 +34,214 @@ For more information on the solution’s architecture, refer to the [implementat
 
 ### Tools
 
-- The latest version of the AWS CLI, installed and configured.
-  - https://aws.amazon.com/cli/ .
-- node.js version 14.
-  - https://docs.npmjs.com/getting-started
-  - Below are the example commands for installing nvm and node 14, please make sure those commands fit your build environment before using them.
-    ```
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
-    exec $SHELL -l
-    nvm install 14
-    ```
-- install yarn
-  ```
-  npm install --global yarn
-  ```
-- Python 3.9
-
-  - We recommend creating a python virtual env using `pipenv` to avoid version conflicts
-  - Below are the example commands for installing python 3.9 on Amazon Linux 2 and configure the virtual env, please make sure those commands fit your build environment before using them.
-
-    ```
-    pip3 install --user pipenv
-    export PATH="/home/<YOUR_USERNAME>/.local/bin:$PATH"
-    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-    export PATH="/home/<YOUR_USERNAME>/.pyenv/bin:$PATH"
-    sudo yum-builddep python3
-    pipenv --python 3.9
-
-    # after clone the Ada repository, navigate to the Ada directory and run the following commands
-    cd <Ada directory>
-    pyenv local 3.9
-    eval "$(pyenv init -)"
-    ```
-
+- [AWS CLI](https://aws.amazon.com/cli/)
+- [Node.js](https://docs.npmjs.com/getting-started) (version 14)
+- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
+- Python 3.9 (we recommend using `virtualenv` to avoid version conflicts)
 - Java Runtime
-
   - The solution requires a Java 8 Runtime. We strongly recommend using [Amazon Corretto 8](https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html). Alternatively, you can also use other OpenJDKs such as [Eclipse Temurin](https://adoptium.net/en-GB/temurin/releases/?version=8).
-
-  - Below are the example commands for installing Amazon Corretto 8 on Amazon Linux 2, please make sure those commands fit your build environment before using them.
-    ```
-    wget https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.rpm
-    sudo yum localinstall amazon-corretto-8-x64-linux-jdk.rpm
-    ```
-
-- Maven (>=3.5.2)
-
-  - https://maven.apache.org/install.html. We recommend configuring Maven to use an OpenJDK8 compatible JAVA version, such as Amazon Corretto 8.
-
-  - Below are the example commands for installing Maven, please make sure those commands fit your build environment before using them.
-    ```
-    mkdir maven
-    cd maven
-    wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
-    tar xzvf apache-maven-3.8.6-bin.tar.gz
-    export PATH="/home/<YOUR_USERNAME>/maven/apache-maven-3.8.6/bin:$PATH"
-    ```
-
-- Docker Desktop (>= v20.10)
-  - https://www.docker.com/get-started/
+- [Maven](https://maven.apache.org/install.html) (>=3.5.2)
+  - We recommend configuring Maven to use an OpenJDK8 compatible JAVA version, such as Amazon Corretto 8.
+- [Docker Desktop](https://www.docker.com/get-started/) (>= v20.10)
+- Netstat (included in `net-tools` package)
+- Libraries for Chrome:
+  - libatk-1.0.so.0
+  - libcups.so.2
+  - libxkbcommon.so.0
+  - libXdamage.so.1
+  - libpango-1.0.so.0
+  - libcairo.so.2
+  - libgtk-3.so.0
+  - libasound.so.2
 
 > **Note regarding AWS CDK version:** We recommend running all `cdk <cmd>` related tasks via `yarn cdk <cmd>` to ensure exact version parity. If you choose to run globally installed `cdk` command, ensure you have a compatible version of [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html) installed globally.
 
 ---
 
+## Preparing build environment
+### Amazon Linux 2
+
+Install dependencies
+```
+sudo yum install -y git
+```
+
+Install Java Runtime
+```
+wget https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.rpm
+sudo yum localinstall amazon-corretto-8-x64-linux-jdk.rpm
+```
+
+Install Maven
+```
+mkdir ~/maven
+cd ~/maven
+wget https://dlcdn.apache.org/maven/maven-3/3.8.7/binaries/apache-maven-3.8.7-bin.tar.gz
+tar xzvf apache-maven-3.8.7-bin.tar.gz
+export PATH="$HOME/maven/apache-maven-3.8.7/bin:$PATH"
+
+echo export PATH="$HOME/maven/apache-maven-3.8.7/bin:$PATH" >> ~/.bashrc
+```
+
+Install NVM
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+source ~/.bashrc
+```
+
+Install Node.js
+
+```
+nvm install 14
+```
+
+Install Yarn
+```
+npm install --global yarn
+```
+
+Install Docker
+```
+sudo yum install -y docker
+
+sudo systemctl start docker
+sudo systemctl enable docker
+
+sudo usermod -aG docker ${USER}
+newgrp docker
+```
+
+Install and configure virtualenv
+```
+pip3 install --user pipenv
+export PATH="$HOME/.local/bin:$PATH"
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+export PATH="$HOME/.pyenv/bin:$PATH"
+
+echo export PATH="$HOME/.local/bin:$PATH" >> ~/.bashrc
+echo export PATH="$HOME/.pyenv/bin:$PATH" >> ~/.bashrc
+
+sudo yum-builddep -y python3
+pipenv --python 3.9
+```
+
+---
+
+### Ubuntu 22.04
+
+Download package information and install dependencies
+```
+sudo apt update
+sudo apt -y install unzip ca-certificates curl gnupg lsb-release python3-pip python3-venv net-tools \
+    libatk-bridge2.0-0 libcups2 libxkbcommon-x11-0 libxdamage1 libgbm-dev libpango-1.0-0 libcairo2 libgtk-3-0 libasound2
+```
+
+Install AWS CLI
+```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+```
+
+Install Java Runtime
+```
+wget https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.deb
+sudo apt install ./amazon-corretto-8-x64-linux-jdk.deb
+```
+
+Install Maven
+```
+mkdir ~/maven
+cd ~/maven
+wget https://dlcdn.apache.org/maven/maven-3/3.8.7/binaries/apache-maven-3.8.7-bin.tar.gz
+tar xzvf apache-maven-3.8.7-bin.tar.gz
+export PATH="$HOME/maven/apache-maven-3.8.7/bin:$PATH"
+
+echo export PATH="$HOME/maven/apache-maven-3.8.7/bin:$PATH" >> ~/.bashrc
+```
+
+Install NVM
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+source ~/.bashrc
+```
+
+Install Node.js
+
+```
+nvm install 14
+```
+
+Install Yarn
+```
+npm install --global yarn
+```
+
+Install Docker
+```
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+
+sudo apt -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+sudo usermod -aG docker ${USER}
+newgrp docker
+```
+
+Install and configure virtualenv
+```
+pip3 install --user pipenv
+export PATH="$HOME/.local/bin:$PATH"
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+export PATH="$HOME/.pyenv/bin:$PATH"
+
+echo export PATH="$HOME/.local/bin:$PATH" >> ~/.bashrc
+echo export PATH="$HOME/.pyenv/bin:$PATH" >> ~/.bashrc
+```
+
+Uncomment `dep-src` to use `build-dep`
+
+```
+sudo sed -i 's/# deb-src/deb-src/g' /etc/apt/sources.list
+sudo apt update
+sudo apt build-dep python3
+```
+
+Install dependency and necessary version of Python
+```
+sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+    libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+pipenv --python 3.9
+```
+
+---
+
 ## Build and run the unit tests
 
-1. Clone the solution source code from its GitHub repository. `git clone https://github.com/aws-solutions/automated-data-analytics-on-aws`
-2. Open the terminal and navigate to the source folder created in step 1. `cd automated-data-analytics-on-aws/source`
-3. Run the following command.
+1. Clone the solution source code from its GitHub repository:
+
+   ```
+   git clone https://github.com/aws-solutions/automated-data-analytics-on-aws
+   ```
+2. Open the terminal and navigate to the source folder created in step 1:
+   ```
+   cd automated-data-analytics-on-aws/source
+   ```
+3. Activate `virtaulenv`:
+
+   ```
+   pyenv local 3.9
+   eval "$(pyenv init -)"
+   ```
+4. Run the following command:
 
    ```
    chmod +x ./run-all-tests.sh
