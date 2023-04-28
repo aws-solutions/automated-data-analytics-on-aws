@@ -57,6 +57,7 @@ export const SchemaFieldMappingField: Field = (props) => {
 
   return (
     <Inline>
+      {/** @ts-ignore Legacy Code*/}
       <FormField label="Old name" controlId={id + 'oldName'} stretch css={{ width: '30%' }}>
         <Autosuggest
           controlId={id + 'oldName'}
@@ -68,9 +69,11 @@ export const SchemaFieldMappingField: Field = (props) => {
           value={fieldOptions.find((option) => option.value === oldName)}
         />
       </FormField>
+      {/** @ts-ignore Legacy Code*/}
       <FormField label="New name" controlId={id + 'newName'} stretch css={{ width: '30%' }}>
         <Input controlId={id + 'newName'} onChange={setNewName} value={newName} />
       </FormField>
+      {/** @ts-ignore Legacy Code*/}
       <FormField label="New type" controlId={id + 'newType'} stretch css={{ width: '30%' }}>
         <Select
           controlId={id + 'newType'}

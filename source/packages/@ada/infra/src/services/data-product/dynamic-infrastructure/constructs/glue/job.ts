@@ -54,8 +54,7 @@ export default class Job extends Construct implements IGrantable {
         '--additional-python-modules': 'awswrangler',
         ...extraJobArgs,
       },
-      // NOTE: Upgrade Glue to version 3.0 (preview is only concern)
-      glueVersion: '2.0',
+      glueVersion: '3.0',
       role: sourceAccessRole.roleArn,
       executionProperty: {
         // This is the maximum supported by glue

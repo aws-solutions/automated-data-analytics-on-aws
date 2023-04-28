@@ -136,7 +136,7 @@ export class DataIngressGateway extends Construct {
         destinationCidrBlock: this.dataIngressNetworkCidr,
         transitGatewayId: this.transitGateway.attrId,
       });
-      route.addDependsOn(dataIngressVPCAttachment);
+      route.addDependency(dataIngressVPCAttachment);
     }
   }
 }

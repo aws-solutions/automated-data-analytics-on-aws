@@ -151,12 +151,6 @@ describe('post-data-product', () => {
       dataProductId: 'my-data-product',
       dataProductPolicyInput: {
         permissions: {
-          [DefaultGroupIds.DEFAULT]: {
-            access: DataProductAccess.READ_ONLY,
-          },
-          [DefaultGroupIds.POWER_USER]: {
-            access: DataProductAccess.READ_ONLY,
-          },
         },
       },
     });
@@ -271,12 +265,6 @@ describe('post-data-product', () => {
       dataProductId: 'my-data-product',
       dataProductPolicyInput: {
         permissions: {
-          [DefaultGroupIds.DEFAULT]: {
-            access: DataProductAccess.READ_ONLY,
-          },
-          [DefaultGroupIds.POWER_USER]: {
-            access: DataProductAccess.READ_ONLY,
-          },
           'my-group': {
             access: DataProductAccess.FULL,
           },
@@ -443,12 +431,6 @@ describe('post-data-product', () => {
       dataProductId: 'my-data-product',
       dataProductPolicyInput: {
         permissions: {
-          [DefaultGroupIds.DEFAULT]: {
-            access: DataProductAccess.READ_ONLY,
-          },
-          [DefaultGroupIds.POWER_USER]: {
-            access: DataProductAccess.READ_ONLY,
-          },
         },
       },
     });

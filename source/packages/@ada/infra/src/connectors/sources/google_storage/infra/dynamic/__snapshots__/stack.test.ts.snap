@@ -29,7 +29,7 @@ Object {
         "ExecutionProperty": Object {
           "MaxConcurrentRuns": 1000,
         },
-        "GlueVersion": "2.0",
+        "GlueVersion": "3.0",
         "Name": "test-d4688test-d45928737-transform-0--global-ada_json_relationalise-0",
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -61,7 +61,7 @@ Object {
         "ExecutionProperty": Object {
           "MaxConcurrentRuns": 1000,
         },
-        "GlueVersion": "2.0",
+        "GlueVersion": "3.0",
         "Name": "test-d4688test-d45928737-transform-1--global-ada_parquet_data_type_map-1",
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -628,6 +628,7 @@ Object {
       "Type": "AWS::Glue::Crawler",
     },
     "StateMachine2E01A3A5": Object {
+      "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "SourceAccessRoleDefaultPolicyADA23135",
         "SourceAccessRoleC447CA39",
@@ -745,6 +746,7 @@ Object {
         },
       },
       "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
     },
     "StateMachineLogs3CB16D3C": Object {
       "DeletionPolicy": "Delete",

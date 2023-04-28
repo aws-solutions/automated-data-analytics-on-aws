@@ -4,8 +4,9 @@
   "private": true,
   "license": "Apache-2.0",
   "scripts": {
-    "build": "mvn clean install -Djava.util.logging.config.file=./no-logging.properties",
-    "test": "mvn clean test -Djava.util.logging.config.file=./no-logging.properties",
-    "clean": "mvn clean -Djava.util.logging.config.file=./no-logging.properties"
+    "docker": "docker run -v $(pwd)/../../../:/source -v $HOME/.m2:/root/.m2 -w /source ada-java-build-base scripts/build-java.sh query-parse-render-lambdas",
+    "build": "yarn docker install -Djava.util.logging.config.file=./no-logging.properties",
+    "test": "yarn docker test -Djava.util.logging.config.file=./no-logging.properties",
+    "clean": "yarn docker -Djava.util.logging.config.file=./no-logging.properties"
   }
 }

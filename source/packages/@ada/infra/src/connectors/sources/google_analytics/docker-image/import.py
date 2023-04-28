@@ -98,7 +98,7 @@ class GoogleAnalyticsImport():
         self.metrics = self.get_metrics(metrics)
         self.page_size = page_size or 10000
         self.include_empty_rows = include_empty_rows
-        self.metricMap = {
+        self.metric_map = {
             'METRIC_TYPE_UNSPECIFIED': VARCHAR_255,
             'CURRENCY': DECIMAL_20_5,
             'INTEGER': 'int(11)',
@@ -111,20 +111,20 @@ class GoogleAnalyticsImport():
             self.page_size = MAX_REQUEST_SIZE
 
     def execute(self):
-        dateRange = self.getDateRange()
+        date_range = self.get_data_range()
 
-        if dateRange is None:
+        if date_range is None:
             return
         
         ga_conn = GoogleAnalytics()
 
         try:
-            since_formatted = dateRange[0].strftime('%Y-%m-%d')
+            since_formatted = date_range[0].strftime('%Y-%m-%d')
         except Exception as _:
             since_formatted = str(self.since)
         
         try:
-            until_formatted = dateRange[1].strftime('%Y-%m-%d')
+            until_formatted = date_range[1].strftime('%Y-%m-%d')
         except Exception as _:
             until_formatted = str(self.until)
 
@@ -140,19 +140,19 @@ class GoogleAnalyticsImport():
                                               self.page_size,
                                               self.include_empty_rows)
 
-        columnHeader = report.get('columnHeader', {})
+        column_header = report.get('columnHeader', {})
         # Right now all dimensions are hardcoded to varchar(255), will need a map if any non-varchar dimensions are used in the future
         # Unfortunately the API does not send back types for Dimensions like it does for Metrics (yet..)
-        dimensionHeaders = [
+        dimension_headers = [
             {'name': header.replace('ga:', ''), 'type': VARCHAR_255}
             for header
-            in columnHeader.get('dimensions', [])
+            in column_header.get('dimensions', [])
         ]
-        metricHeaders = [
+        metric_headers = [
             {'name': entry.get('name').replace('ga:', ''),
-             'type': self.metricMap.get(entry.get('type'), VARCHAR_255)}
+             'type': self.metric_map.get(entry.get('type'), VARCHAR_255)}
             for entry
-            in columnHeader.get('metricHeader', {}).get('metricHeaderEntries', [])
+            in column_header.get('metricHeader', {}).get('metricHeaderEntries', [])
         ]
         report_data = report.get('data', {});
         # might use this for antisampling
@@ -195,7 +195,7 @@ class GoogleAnalyticsImport():
                     metrics = row.get('metrics', [])
 
                     for index, dimension in enumerate(dimensions):
-                        header = dimensionHeaders[index].get(
+                        header = dimension_headers[index].get(
                             'name').lower()
                         root_data_obj[header] = dimension
 
@@ -204,7 +204,7 @@ class GoogleAnalyticsImport():
                         data.update(root_data_obj)
 
                         for index, value in enumerate(metric.get('values', [])):
-                            header = metricHeaders[index].get(
+                            header = metric_headers[index].get(
                                 'name').lower()
                             data[header] = value
                         data['viewid'] = self.view_id
@@ -223,7 +223,7 @@ class GoogleAnalyticsImport():
         calculate the date range based on utc time now
         e.g. if weekly, start = 1 week ago, end = utc now
     """
-    def getDateRange(self):
+    def get_data_range(self):
         try:
             since_date = parser.parse(self.since).date()
         except Exception as _:

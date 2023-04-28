@@ -36,13 +36,13 @@ For more information on the solution’s architecture, refer to the [implementat
 
 - The latest version of the AWS CLI, installed and configured.
   - https://aws.amazon.com/cli/ .
-- node.js version 14.
+- node.js version 16.
   - https://docs.npmjs.com/getting-started
-  - Below are the example commands for installing nvm and node 14, please make sure those commands fit your build environment before using them.
+  - Below are the example commands for installing nvm and node 16, please make sure those commands fit your build environment before using them.
     ```
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
     exec $SHELL -l
-    nvm install 14
+    nvm install 16
     ```
 - install yarn
   ```
@@ -65,29 +65,6 @@ For more information on the solution’s architecture, refer to the [implementat
     cd <Ada directory>
     pyenv local 3.9
     eval "$(pyenv init -)"
-    ```
-
-- Java Runtime
-
-  - The solution requires a Java 8 Runtime. We strongly recommend using [Amazon Corretto 8](https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html). Alternatively, you can also use other OpenJDKs such as [Eclipse Temurin](https://adoptium.net/en-GB/temurin/releases/?version=8).
-
-  - Below are the example commands for installing Amazon Corretto 8 on Amazon Linux 2, please make sure those commands fit your build environment before using them.
-    ```
-    wget https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.rpm
-    sudo yum localinstall amazon-corretto-8-x64-linux-jdk.rpm
-    ```
-
-- Maven (>=3.5.2)
-
-  - https://maven.apache.org/install.html. We recommend configuring Maven to use an OpenJDK8 compatible JAVA version, such as Amazon Corretto 8.
-
-  - Below are the example commands for installing Maven, please make sure those commands fit your build environment before using them.
-    ```
-    mkdir maven
-    cd maven
-    wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
-    tar xzvf apache-maven-3.8.6-bin.tar.gz
-    export PATH="/home/<YOUR_USERNAME>/maven/apache-maven-3.8.6/bin:$PATH"
     ```
 
 - Docker Desktop (>= v20.10)

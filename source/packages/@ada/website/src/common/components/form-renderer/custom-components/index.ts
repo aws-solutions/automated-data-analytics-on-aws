@@ -4,6 +4,7 @@ import { AccessPolicySelectField } from './AccessPolicySelectField';
 import { CardSelect } from './CardSelect';
 import { CodeEditorField } from './CodeEditorField';
 import { CustomWrapper } from './CustomWrapper';
+import { DynamoDBTableField } from './DynamoDBTableField';
 import { FieldListener } from './FieldListener';
 import { FileUploadField } from './FileUploadField';
 import { StringGroupField, TokenGroupField } from './TokenGroupField';
@@ -37,20 +38,21 @@ export * from './FieldListener';
 export * from './UserSelectField';
 
 export enum CustomComponentTypes {
-  CARD_SELECT = 'card-select',
-  CUSTOM_WRAPPER = 'custom-wrapper',
-  TWO_COLUMNS = 'two-columns',
-  ENTITY_NAME = 'entity-name',
-  ENTITY_IDENTIFIER = 'entity-identifier',
-  TOKEN_GROUP = 'token-group',
-  TAG_GROUP = 'tag-group',
-  STRING_GROUP = 'string-group',
-  CODE_EDITOR = 'code-editor',
-  FILE_UPLOAD = 'file-upload',
-  FIELD_LISTENER = 'field-listener',
-  USER_SELECT = 'user-select',
-  FIELD_ARRAY = 'field-array',
   ACCESSPOLICY_SELECT = 'access-policy-select',
+  CARD_SELECT = 'card-select',
+  CODE_EDITOR = 'code-editor',
+  CUSTOM_WRAPPER = 'custom-wrapper',
+  DYNAMO_DB_TABLE = 'dynamo-db-table',
+  ENTITY_IDENTIFIER = 'entity-identifier',
+  ENTITY_NAME = 'entity-name',
+  FIELD_ARRAY = 'field-array',
+  FIELD_LISTENER = 'field-listener',
+  FILE_UPLOAD = 'file-upload',
+  STRING_GROUP = 'string-group',
+  TAG_GROUP = 'tag-group',
+  TOKEN_GROUP = 'token-group',
+  TWO_COLUMNS = 'two-columns',
+  USER_SELECT = 'user-select',
 }
 
 export const DEFAULT_CUSTOM_COMPONENT_WRAPPER = {
@@ -58,6 +60,7 @@ export const DEFAULT_CUSTOM_COMPONENT_WRAPPER = {
   [CustomComponentTypes.CUSTOM_WRAPPER]: CustomWrapper as any,
   [CustomComponentTypes.TWO_COLUMNS]: TwoColumns as any,
   [CustomComponentTypes.ENTITY_NAME]: EntityNameField as any,
+  [CustomComponentTypes.DYNAMO_DB_TABLE]: DynamoDBTableField as any,
   [CustomComponentTypes.ENTITY_IDENTIFIER]: EntityIdentifierField as any,
   [CustomComponentTypes.TAG_GROUP]: TagGroup as any,
   [CustomComponentTypes.TOKEN_GROUP]: TokenGroupField as any,

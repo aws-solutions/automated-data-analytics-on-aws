@@ -153,8 +153,8 @@ export class ApiDeployStack extends ExtendedNestedStack {
       resourceArn: apiGatewayArn,
     });
 
-    cfnWebAssociation.addDependsOn(this.deployment.node.defaultChild as CfnResource);
-    cfnWebAssociation.addDependsOn(this.stage.node.defaultChild as CfnResource);
+    cfnWebAssociation.addDependency(this.deployment.node.defaultChild as CfnResource);
+    cfnWebAssociation.addDependency(this.stage.node.defaultChild as CfnResource);
   }
 }
 

@@ -13,7 +13,7 @@ jest.mock('@ada/api-client');
 const { Primary } = composeStories(stories);
 
 describe(`CreateDataProductView/${Connectors.AmazonKinesis.ID}`, () => {
-  describe.skip('storybook', () => {
+  describe('storybook', () => {
     it(Connectors.AmazonKinesis.ID, async () => {
       const { container } = render(<Primary {...(Primary.args as any)} />);
 

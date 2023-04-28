@@ -29,7 +29,7 @@ export default class UploadWebsiteConfiguration extends Construct {
 
     const uploadWebsiteConfigFunction = new LambdaFunction(this, 'Lambda', {
       description: 'Generate the website runtime-config.js file and upload to website bucket',
-      runtime: Runtime.PYTHON_3_7,
+      runtime: Runtime.PYTHON_3_9,
       handler: 'app.on_event',
       code: Code.fromAsset(getCustomResourcePath('upload-website-config')),
       timeout: Duration.seconds(60),

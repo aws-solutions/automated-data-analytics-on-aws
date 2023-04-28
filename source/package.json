@@ -2,10 +2,10 @@
   "name": "ada",
   "title": "Automated Data Analytics on AWS",
   "description": "Automated Data Analytics on AWS simplifies the management and analysis of data, providing an end-to-end platform used for ingesting, transforming, governing, and querying datasets through a standalone user interface",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Amazon Web Services",
   "awsSolutionId": "SO0190",
-  "awsSolutionVersion": "v1.1.0",
+  "awsSolutionVersion": "v1.2.0",
   "private": true,
   "license": "Apache-2.0",
   "engines": {
@@ -14,8 +14,9 @@
   "scripts": {
     "audit": "node yarn-audit.js --groups dependencies --level high --adt-suppress-level-exit-code",
     "prebuild": "yarn run lint --quiet & yarn run audit & yarn run license-checker",
+    "populate-java-cache": "cd packages/@ada/athena-lens && yarn build && cd -",
     "build": "yarn run build:workspace",
-    "build:workspace": "lerna run --stream build",
+    "build:workspace": "yarn run populate-java-cache && lerna run --stream build",
     "test": "lerna run --stream test",
     "posttest": "yarn coverage:aggregate",
     "test:infra": "lerna run --stream --scope @ada/infra test",
@@ -42,21 +43,22 @@
     "build-website": "lerna run --stream --no-prefix --scope @ada/website build",
     "update-notice": "yarn licenses --production --no-progress --silent --ignore-platform --ignore-engine --ignore-optional --json list | jq -r '.data.body[] | (.[0]) + \"$\"  +(.[2])' | grep -v '@ada/' | sort | uniq | column -t -s '$' >> ../NOTICE.txt",
     "cdk": "cdk",
-    "ui:test:local": "yarn run cypress run --config baseUrl=http://localhost:3000 --browser chrome"
+    "ui:test:local": "yarn run cypress run --config baseUrl=http://localhost:3000 --browser chrome",
+    "postinstall": "echo build java base container && cd scripts && docker build -t ada-java-build-base -f Dockerfile.java-build . && cd -"
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --cache --fix --quiet"
   },
   "dependencies": {
-    "aws-cdk-lib": "^2.53.0",
+    "aws-cdk-lib": "2.70.0",
     "constructs": "^10.1.101",
-    "@aws-cdk/aws-apigatewayv2-alpha": "^2.53.0-alpha.0",
-    "@aws-cdk/aws-apigatewayv2-authorizers-alpha": "^2.53.0-alpha.0",
-    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "^2.53.0-alpha.0",
-    "@aws-cdk/aws-glue-alpha": "^2.53.0-alpha.0",
-    "@aws-cdk/aws-kinesisfirehose-alpha": "^2.53.0-alpha.0",
-    "@aws-cdk/aws-kinesisfirehose-destinations-alpha": "^2.53.0-alpha.0",
-    "@aws-cdk/aws-lambda-python-alpha": "^2.53.0-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-alpha": "2.70.0-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-authorizers-alpha": "2.70.0-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.70.0-alpha.0",
+    "@aws-cdk/aws-glue-alpha": "2.70.0-alpha.0",
+    "@aws-cdk/aws-kinesisfirehose-alpha": "2.70.0-alpha.0",
+    "@aws-cdk/aws-kinesisfirehose-destinations-alpha": "2.70.0-alpha.0",
+    "@aws-cdk/aws-lambda-python-alpha": "2.70.0-alpha.0",
     "find-up": "^6.0.0",
     "json5": "^2.2.2",
     "lodash": "^4.17.21",
@@ -84,8 +86,8 @@
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
     "@aws-cdk/cloudformation-diff": "^2.33.0",
-    "aws-cdk": "^2.53.0",
-    "aws-sdk": "^2.1181.0",
+    "aws-cdk": "2.70.0",
+    "aws-sdk": "^2.1358.0",
     "babel-eslint": "^10.0.3",
     "copyfiles": "^2.4.1",
     "cypress": "10.3.1",
@@ -135,7 +137,7 @@
   "resolutions": {
     "**/prismjs": ">=1.27.0",
     "**/minimist": ">=1.2.6",
-    "vm2": "^3.9.11",
+    "vm2": "^3.9.17",
     "**/react-table": "^7.7.0",
     "**/@types/react-table": "^7.7.8",
     "lerna/**/trim-newlines": "^3.0.1",
@@ -157,7 +159,8 @@
     "qs": "^6.7.3",
     "express": "^4.17.3",
     "http-cache-semantics": "^4.1.1",
-    "json5": "~2.2.2"
+    "json5": "~2.2.2",
+    "xml2js": "^0.5.0"
   },
   "workspaces": {
     "packages": [

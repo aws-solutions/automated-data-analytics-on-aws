@@ -1,5 +1,6 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import * as cdk from 'aws-cdk-lib';
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 
 /**
@@ -37,6 +38,7 @@ const dynamicInfrastructureDeploymentActions = [
   'kinesis:*',
   'firehose:*',
 ];
+
 export const DynamicInfraDeploymentPolicyStatement = new PolicyStatement({
   effect: Effect.ALLOW,
   actions: dynamicInfrastructureDeploymentActions,
@@ -60,6 +62,19 @@ export const DynamicInfraDeploymentPermissionsBoundaryPolicyStatement = new Poli
   // have these permissions.
   actions: [...dynamicInfrastructureDeploymentActions, 'dynamodb:*', 'ssm:*', 'logs:*'],
   resources: ['*'],
+});
+
+/**
+ * Permission for preview lambda and importing cluster to read data source credentials
+ */
+export const DATA_PRODUCT_SECRET_PREFIX = 'DPSecrets';
+
+export const DataProductSecretsPolicyStatement = new PolicyStatement({
+  effect: Effect.ALLOW,
+  actions: ['secretsManager:GetSecretValue'],
+  resources: [
+    `arn:${cdk.Aws.PARTITION}:secretsmanager:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:secret:${DATA_PRODUCT_SECRET_PREFIX}*`,
+  ],
 });
 
 /**
@@ -95,10 +110,36 @@ export const ExternalSourceAssumeRolePolicyStatement = new PolicyStatement({
 });
 
 /**
- * Grant access to Query and Receive results of CloudWatch logs for all log groups.
+ * Grant access to Query and Receive results from Cloudwatch logs.
  */
- export const ExternalSourceDataCloudWatchAccessPolicyStatement = new PolicyStatement({
+export const ExternalSourceDataCloudWatchAccessPolicyStatement = new PolicyStatement({
   effect: Effect.ALLOW,
   actions: ['logs:StartQuery', 'logs:GetQueryResults'],
+  resources: ['*'],
+});
+
+/**
+ * Grant access to Query and Receive results of DynamoDB Table records DynamoDB Tables.
+ */
+export const ExternalSourceDynamoDBAccessPolicyStatement = new PolicyStatement({
+  effect: Effect.ALLOW,
+  actions: [
+    'dynamodb:BatchGetItem',
+    'dynamodb:Describe*',
+    'dynamodb:List*',
+    'dynamodb:GetItem',
+    'dynamodb:Query',
+    'dynamodb:Scan',
+    'dynamodb:PartiQLSelect',
+  ],
+  resources: ['*'],
+});
+
+/**
+ * Grant the ability to get CloudTrail trail information.
+ */
+export const ExternalSourceDataCloudTrailAccessPolicyStatement = new PolicyStatement({
+  effect: Effect.ALLOW,
+  actions: ['cloudtrail:Get*', 's3:Get*', 's3:ListBucket', 'ec2:describeRegions'],
   resources: ['*'],
 });

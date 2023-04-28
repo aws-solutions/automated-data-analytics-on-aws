@@ -3,7 +3,7 @@ SPDX-License-Identifier: Apache-2.0 */
 import { AwsCustomResource, AwsCustomResourcePolicy, PhysicalResourceId, Provider } from 'aws-cdk-lib/custom-resources';
 import { Bucket } from '../../s3/bucket';
 import { CFN_RESOURCE_TYPE, Details, ResourceProperties } from './types';
-import { CfnResource, CustomResource } from 'aws-cdk-lib';
+import { CfnResource, CustomResource, Fn } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { Effect, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Firehose, WAFV2 } from '@ada/aws-sdk';
@@ -101,7 +101,9 @@ export default class CloudFrontWebAcl extends Construct {
         },
       ],
     );
-    const deliveryStreamArn = deliveryStreamResource.getResponseField('DeliveryStreamARN');
+
+    const customResource = deliveryStreamResource.node.findChild('Resource').node.defaultChild as CfnResource;
+    const deliveryStreamArn = Fn.ref(customResource.logicalId);
 
     // Create the Web ACL
     const handler = new TypescriptFunction(this, 'Handler', {

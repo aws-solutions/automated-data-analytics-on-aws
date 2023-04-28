@@ -48,8 +48,12 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_BIGQUERY, I
 
     managedSecret: {
       enabled: true,
-      secretNameProperty: 'privateKeySecretName',
-      secretValueProperty: 'privateKey',
+      secretDetails: [
+        {
+          secretNameProperty: 'privateKeySecretName',
+          secretValueProperty: 'privateKey',
+        },
+      ],
     },
 
     supports: {
@@ -106,7 +110,7 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_BIGQUERY, I
         return {
           ...googleAuthFormDataToInputData({ sourceDetails, updateTrigger }),
           query: sourceDetails.query,
-        }
+        };
       },
     },
 
@@ -117,7 +121,7 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_BIGQUERY, I
         { key: 'clientId', label: 'Client Id' },
       ],
     },
-  }
+  },
 };
 
 

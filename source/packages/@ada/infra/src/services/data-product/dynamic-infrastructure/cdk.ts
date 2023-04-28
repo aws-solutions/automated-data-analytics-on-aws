@@ -15,7 +15,8 @@ import { v4 as uuid } from 'uuid';
 
 const cfn = AwsCloudFormationInstance();
 
-const DATA_PRODUCT_STATIC_INFRASTRUCTURE_PARAMETER_NAME = process.env.DATA_PRODUCT_STATIC_INFRASTRUCTURE_PARAMETER_NAME ?? '';
+const DATA_PRODUCT_STATIC_INFRASTRUCTURE_PARAMETER_NAME =
+  process.env.DATA_PRODUCT_STATIC_INFRASTRUCTURE_PARAMETER_NAME ?? '';
 
 const ssm = AwsSSMInstance();
 

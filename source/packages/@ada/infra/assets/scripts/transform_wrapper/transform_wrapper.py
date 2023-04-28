@@ -79,6 +79,8 @@ except Py4JJavaError as e:
 
 
 spark_input_frame = input_frame.toDF()
+# convert all column names to lowercase
+lowered_column_if = spark_input_frame.toDF(*[c.lower() for c in spark_input_frame.columns])
 
 if not spark_input_frame.rdd.isEmpty():
     print("Applying transforms")
@@ -86,7 +88,10 @@ if not spark_input_frame.rdd.isEmpty():
     output_frames = apply_transform(
         spark_context=sc,
         glue_context=glue_context,
-        input_frame=input_frame,
+        input_frame=DynamicFrame.fromDF(lowered_column_if,
+                                        glue_context,
+                                        args["INPUT_TABLE_NAME"]
+                                        ),
         data_product_id=args["DATA_PRODUCT_ID"],
         temp_s3_path=args["TEMP_S3_PATH"],
         transformation_ctx="transform",

@@ -40,13 +40,13 @@ export class JavaFunction extends Function {
     const description = (props.description || `Java function for ${props.package}`) + ` (${id}:${assetHash})`;
 
     super(scope, id, {
-      runtime: Runtime.JAVA_8,
+      runtime: Runtime.JAVA_11,
       code: Code.fromAsset(getPackagePath(props.package), {
         assetHashType: AssetHashType.CUSTOM,
         assetHash,
         bundling: {
           command: ['/bin/sh', '-c', `mvn clean install && cp /asset-input/target/${props.package}.jar /asset-output/`],
-          image: Runtime.JAVA_8.bundlingImage,
+          image: Runtime.JAVA_11.bundlingImage,
           volumes: [
             {
               hostPath: `${process.env.HOME}/.m2/`,
@@ -72,10 +72,10 @@ export class JavaFunction extends Function {
       if (provisionedConcurrentExecutions == null) {
         provisionedConcurrentExecutions = tryGetSolutionContext(
           this,
-          SolutionContext.JAVA_LAMBDA_PROVISIONED_CONCURRENT_EXECUTIONS
+          SolutionContext.JAVA_LAMBDA_PROVISIONED_CONCURRENT_EXECUTIONS,
         );
-        provisionedConcurrentExecutions = (provisionedConcurrentExecutions || 0) >= 1 ?
-          provisionedConcurrentExecutions : undefined
+        provisionedConcurrentExecutions =
+          (provisionedConcurrentExecutions || 0) >= 1 ? provisionedConcurrentExecutions : undefined;
       }
       this.alias = this.addAlias(props.alias, {
         provisionedConcurrentExecutions,

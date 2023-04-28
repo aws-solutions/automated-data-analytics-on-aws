@@ -79,7 +79,7 @@ export class DataProductCreationStateMachine extends Construct {
       counterTable: props.counterTable,
       internalTokenKey: props.internalTokenKey,
       entityManagementTables: props.entityManagementTables,
-    }
+    };
 
     const buildLambda = (
       handlerFile: string,
@@ -113,15 +113,20 @@ export class DataProductCreationStateMachine extends Construct {
     // The start-data-product-infra-deployment lambda is responsible for synthesizing the dynamic infrastructure and
     // initiating the deployment, so we grant additional write permissions
     const START_DATA_PRODUCT_INFRA_DEPLOYMENT = 'start-data-product-infra-deployment';
-    const startDataProductInfraDeploymentImage = new TarballImageAsset(this, `${startCase(START_DATA_PRODUCT_INFRA_DEPLOYMENT)}Image`, {
-      tarballFile: getDockerImagePath(START_DATA_PRODUCT_INFRA_DEPLOYMENT),
-    })
+    const startDataProductInfraDeploymentImage = new TarballImageAsset(
+      this,
+      `${startCase(START_DATA_PRODUCT_INFRA_DEPLOYMENT)}Image`,
+      {
+        tarballFile: getDockerImagePath(START_DATA_PRODUCT_INFRA_DEPLOYMENT),
+      },
+    );
     const startDataProductInfraDeploymentLambda = new DockerImageFunction(
       this,
       `Lambda-${START_DATA_PRODUCT_INFRA_DEPLOYMENT}`,
       {
         code: TarballImageAsset.tarballImageCode(startDataProductInfraDeploymentImage),
-        description: 'DockerImageLambda with AWS CDK lib to synthesize and depoloy data product dynamic infrastructure.',
+        description:
+          'DockerImageLambda with AWS CDK lib to synthesize and depoloy data product dynamic infrastructure.',
         environment: {
           // In cdk upgrade we need concrete env for event rules
           // https://github.com/aws/aws-cdk/blob/5bad3aaac6cc7cc7befb8bdd320181a7c650f15d/packages/%40aws-cdk/aws-events/lib/rule.ts#L202
@@ -132,7 +137,7 @@ export class DataProductCreationStateMachine extends Construct {
         },
         memorySize: 1024,
         timeout: Duration.minutes(5),
-      }
+      },
     );
     this.stepLambdas.push(startDataProductInfraDeploymentLambda);
     TypescriptFunction.applySolutionIntegration(startDataProductInfraDeploymentLambda, solutionIntegrationProps);
@@ -142,7 +147,13 @@ export class DataProductCreationStateMachine extends Construct {
     startDataProductInfraDeploymentLambda.addToRolePolicy(
       new PolicyStatement({
         effect: Effect.ALLOW,
-        actions: ['cloudformation:Describe*', 'cloudformation:List*', 'cloudformation:CreateStack', 'cloudformation:CreateChangeSet', 'cloudformation:ExecuteChangeSet'],
+        actions: [
+          'cloudformation:Describe*',
+          'cloudformation:List*',
+          'cloudformation:CreateStack',
+          'cloudformation:CreateChangeSet',
+          'cloudformation:ExecuteChangeSet',
+        ],
         resources: this.cloudformationResourceArns,
       }),
     );
@@ -152,10 +163,7 @@ export class DataProductCreationStateMachine extends Construct {
     startDataProductInfraDeploymentLambda.addToRolePolicy(
       new PolicyStatement({
         effect: Effect.ALLOW,
-        actions: [
-          'ssm:GetParameter',
-          'iam:PassRole',
-        ],
+        actions: ['ssm:GetParameter', 'iam:PassRole'],
         resources: [
           stack.formatArn({ service: 'iam', region: '', resource: 'role', resourceName: 'cdk-*' }),
           stack.formatArn({ service: 'ssm', resource: 'parameter', resourceName: 'cdk-bootstrap/*' }),
@@ -166,17 +174,11 @@ export class DataProductCreationStateMachine extends Construct {
     startDataProductInfraDeploymentLambda.addToRolePolicy(
       new PolicyStatement({
         effect: Effect.ALLOW,
-        actions: [
-          's3:*Object',
-          's3:ListBucket',
-          's3:getBucketLocation',
-        ],
-        resources: [
-          stack.formatArn({ service: 's3', account: '', region: '', resource: 'cdk-*' }),
-        ],
+        actions: ['s3:*Object', 's3:ListBucket', 's3:getBucketLocation'],
+        resources: [stack.formatArn({ service: 's3', account: '', region: '', resource: 'cdk-*' })],
         conditions: {
-          'StringEquals': {
-              "s3:ResourceAccount": stack.account,
+          StringEquals: {
+            's3:ResourceAccount': stack.account,
           },
         },
       }),

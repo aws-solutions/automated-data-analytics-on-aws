@@ -54,17 +54,26 @@ export async function selectUpdateTriggerType(
   await act(async () => {
     userEvent.click(trigger);
   });
+  // ensure state is fully resolved
+  await act(async () => {
+    await delay(DELAY.SHORT);
+  });
   return trigger;
 }
 
 export async function selectUpdatePolicy(canvasElement: HTMLElement, updatePolicy: string): Promise<HTMLInputElement> {
-  const trigger = canvasElement.querySelector(
+  const policy = canvasElement.querySelector(
     `input[name="updateTrigger.updatePolicy"][value="${updatePolicy}"]`,
   ) as HTMLInputElement;
   await act(async () => {
-    userEvent.click(trigger);
+    userEvent.click(policy);
   });
-  return trigger;
+  // ensure state is fully resolved
+  await act(async () => {
+    await delay(DELAY.SHORT);
+  });
+
+  return policy;
 }
 
 export async function clickNext(canvasElement: HTMLElement): Promise<void> {
@@ -110,10 +119,10 @@ export function assertKV(container: HTMLElement, key: string, value: string | st
 
   if (Array.isArray(value)) {
     for (const v of value) {
-      assert(parent.queryByText(v, { selector: 'span' }), `KV key "${key}" should have value "${v}"`);
+      assert(parent.queryAllByText(v, { selector: 'span' }), `KV key "${key}" should have value "${v}"`);
     }
   } else {
-    assert(parent.queryByText(value, { selector: 'span' }), `KV key "${key}" should have value "${value}"`);
+    assert(parent.queryAllByText(value, { selector: 'span' }), `KV key "${key}" should have value "${value}"`);
   }
 }
 

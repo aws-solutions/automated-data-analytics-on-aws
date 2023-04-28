@@ -4,7 +4,7 @@ SPDX-License-Identifier: Apache-2.0 */
 /**
  * define the list of default users
  */
- export enum DefaultUser {
+export enum DefaultUser {
   SYSTEM = 'system',
 }
 
@@ -17,7 +17,7 @@ export enum DataProductEventDetailTypes {
   DATA_PRODUCT_IMPORT_SUCCESS = 'DataProductImportSuccess',
   DATA_PRODUCT_IMPORT_ERROR = 'DataProductImportError',
   DATA_PRODUCT_BUILD_ERROR = 'DataProductBuildError',
-  DATA_PRODUCT_IMPORT_SUCCESS_NO_UPDATE = "DataProductImportSuccessNoUpdate",
+  DATA_PRODUCT_IMPORT_SUCCESS_NO_UPDATE = 'DataProductImportSuccessNoUpdate',
 }
 
 /**

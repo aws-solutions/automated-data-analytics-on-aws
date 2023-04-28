@@ -25,6 +25,8 @@ export const MS_SQL_ICON_URL = 'https://cdn.cdnlogo.com/logos/m/21/microsoft-sql
 
 export const ORACLE_DB_ICON_URL = 'https://cdn.cdnlogo.com/logos/o/73/oracle.svg';
 
+export const MONGODB_ICON_URL = 'https://cdn.cdnlogo.com/logos/m/25/mongodb.svg';
+
 export const GCP_ICONS_TO_EXTRACT = [
   'cloud_storage/cloud_storage.png',
   'cloud_storage/cloud_storage.svg',
@@ -117,6 +119,12 @@ export async function downloadOracleIcon(): Promise<void> {
   await downloadFile(ORACLE_DB_ICON_URL, outputPath);
 }
 
+export async function downloadMongoDBIcon(): Promise<void> {
+  const outputPath = path.join(SRC_VENDOR_DIR, 'mongodb.svg');
+  await fs.ensureDir(path.dirname(outputPath));
+  await downloadFile(MONGODB_ICON_URL, outputPath);
+}
+
 export async function main() {
   await Promise.all([
     extractGCPIcons(),
@@ -125,6 +133,7 @@ export async function main() {
     downloadPostgresIcon(),
     downloadMsSqlIcon(),
     downloadOracleIcon(),
+    downloadMongoDBIcon(),
   ]);
 }
 

@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-OntologyService) - Automated Data Analytics on AWS. Version v1.1.0",
+  "Description": "(SO0190-OntologyService) - Automated Data Analytics on AWS. Version v1.2.0",
   "Outputs": Object {
     "AdaOntologyServiceApiLambdaGetOntology5C119448Ref": Object {
       "Value": Object {
@@ -311,7 +311,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -434,6 +434,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -467,7 +480,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -505,7 +518,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableOntologyAttributesTable18EF31EFArn",
               },
             },
             Object {
@@ -546,7 +559,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableOntologyAttributesTable18EF31EFArn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAliasToOntologyAttributeTable797CB698Arn",
               },
             },
             Object {
@@ -576,19 +589,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAliasToOntologyAttributeTable797CB698Arn",
-              },
             },
           ],
           "Version": "2012-10-17",
@@ -668,7 +668,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -791,6 +791,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -824,7 +837,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -856,13 +869,10 @@ Object {
               "Action": Array [
                 "kms:Decrypt",
                 "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableOntologyAttributesTable18EF31EFArn",
               },
             },
             Object {
@@ -888,16 +898,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableOntologyAttributesTable18EF31EFArn",
-              },
             },
           ],
           "Version": "2012-10-17",
@@ -977,7 +977,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1100,6 +1100,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -1133,7 +1146,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -1165,13 +1178,10 @@ Object {
               "Action": Array [
                 "kms:Decrypt",
                 "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableOntologyAttributesTable18EF31EFArn",
               },
             },
             Object {
@@ -1197,16 +1207,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableOntologyAttributesTable18EF31EFArn",
-              },
             },
           ],
           "Version": "2012-10-17",
@@ -1286,7 +1286,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1409,6 +1409,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -1442,7 +1455,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -1480,7 +1493,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableOntologyAttributesTable18EF31EFArn",
               },
             },
             Object {
@@ -1521,7 +1534,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableOntologyAttributesTable18EF31EFArn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAliasToOntologyAttributeTable797CB698Arn",
               },
             },
             Object {
@@ -1551,19 +1564,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAliasToOntologyAttributeTable797CB698Arn",
-              },
             },
           ],
           "Version": "2012-10-17",

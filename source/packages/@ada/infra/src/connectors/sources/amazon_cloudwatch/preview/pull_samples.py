@@ -2,13 +2,12 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: Apache-2.0
 ###################################################################
-import re
 import awswrangler as wr
-import os
 import boto3
+import pandas as pd
 from handlers.common import * # NOSONAR
 from handlers.sampling.common import SamplingUtils # NOSONAR
-import pandas as pd
+
 
 def assume_pull_data_sample_role_session(sts_client, role_arn: str):
     assumed_role = sts_client.assume_role(

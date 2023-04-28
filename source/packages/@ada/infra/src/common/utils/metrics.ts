@@ -20,7 +20,7 @@ export interface MetricsPayload {
 }
 
 export enum SEND_ANONYMOUS_METRICS_RESULT {
-  Succeeded = 'Succeeded'
+  Succeeded = 'Succeeded',
 }
 
 export async function sendAnonymousMetric(payload: MetricsPayload): Promise<string> {

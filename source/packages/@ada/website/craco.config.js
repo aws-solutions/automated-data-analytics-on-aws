@@ -34,8 +34,8 @@ module.exports = {
         ...webpackConfig.resolve,
         alias: {
           ...(webpackConfig.resolve || {}).alias,
-          'ajv': path.resolve(__dirname, 'src/overrides/ajv'),
-        }
+          ajv: path.resolve(__dirname, 'src/overrides/ajv'),
+        },
       },
       module: {
         ...webpackConfig.module,
@@ -45,7 +45,11 @@ module.exports = {
             return {
               ...rule,
               oneOf: rule.oneOf.map((ruleObject) => {
-                if (typeof ruleObject.loader === 'string' && ruleObject.loader.includes('babel-loader') && ruleObject.include) {
+                if (
+                  typeof ruleObject.loader === 'string' &&
+                  ruleObject.loader.includes('babel-loader') &&
+                  ruleObject.include
+                ) {
                   return {
                     ...ruleObject,
                     options: {
@@ -57,12 +61,9 @@ module.exports = {
                       ],
                     },
                     include: (input) => {
-                      if (/@ada\/(website|infra|connectors|common)\/(src|dist)\//.test(input)) {
-                        return true;
-                      }
-                      return false;
-                    }
-                  }
+                      return /@ada\/(website|infra|connectors|common)\/(src|dist)\//.test(input);
+                    },
+                  };
                 } else {
                   return ruleObject;
                 }

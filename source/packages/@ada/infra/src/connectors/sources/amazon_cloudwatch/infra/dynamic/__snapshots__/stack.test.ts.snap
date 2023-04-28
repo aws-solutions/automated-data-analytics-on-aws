@@ -30,7 +30,7 @@ Object {
         "ExecutionProperty": Object {
           "MaxConcurrentRuns": 1000,
         },
-        "GlueVersion": "2.0",
+        "GlueVersion": "3.0",
         "Name": "test-d4688test-d45928737-transform-0--global-ada_json_relationalise-0",
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -63,7 +63,7 @@ Object {
         "ExecutionProperty": Object {
           "MaxConcurrentRuns": 1000,
         },
-        "GlueVersion": "2.0",
+        "GlueVersion": "3.0",
         "Name": "test-d4688test-d45928737-transform-1--global-ada_parquet_data_type_map-1",
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -618,7 +618,7 @@ Object {
         "Classifiers": Array [],
         "CrawlerSecurityConfiguration": "glueSecurityConfiguration",
         "DatabaseName": "rawDB",
-        "Name": "test-d4688test-d45928737-aws-aws--crawler",
+        "Name": "test-d4688test-d45928737-aws-cloudwatch--crawler",
         "Role": Object {
           "Fn::GetAtt": Array [
             "SourceAccessRoleC447CA39",
@@ -629,7 +629,7 @@ Object {
           "DeleteBehavior": "DEPRECATE_IN_DATABASE",
           "UpdateBehavior": "UPDATE_IN_DATABASE",
         },
-        "TablePrefix": "test-d4688test-d45928737-aws-aws-",
+        "TablePrefix": "test-d4688test-d45928737-aws-cloudwatch-",
         "Tags": Object {
           "Application": "Ada",
           "DataProductId": "test-data-product",
@@ -638,7 +638,7 @@ Object {
         "Targets": Object {
           "S3Targets": Array [
             Object {
-              "Path": "data-bucket/test-domain/test-data-product/test-stack/aws-aws-import",
+              "Path": "data-bucket/test-domain/test-data-product/test-stack/aws-cloudwatch-import",
             },
           ],
         },
@@ -646,6 +646,7 @@ Object {
       "Type": "AWS::Glue::Crawler",
     },
     "StateMachine2E01A3A5": Object {
+      "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "SourceAccessRoleDefaultPolicyADA23135",
         "SourceAccessRoleC447CA39",
@@ -659,7 +660,7 @@ Object {
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload\\":{\\"Payload\\":{\\"crawlerName\\":\\"test-d4688test-d45928737-aws-aws--crawler\\",\\"tablePrefix\\":\\"test-d4688test-d45928737-aws-aws-\\",\\"outputS3Path\\":\\"s3://data-bucket/test-domain/test-data-product/test-stack/aws-aws-import\\",\\"dataProduct\\":{\\"dataProductId\\":\\"test-data-product\\",\\"domainId\\":\\"test-domain\\",\\"name\\":\\"Test\\",\\"infrastructureStatus\\":\\"PROVISIONING\\",\\"dataStatus\\":\\"NO_DATA\\",\\"dataSets\\":{},\\"tags\\":[],\\"enableAutomaticTransforms\\":true,\\"enableAutomaticPii\\":false,\\"transforms\\":[],\\"updateTrigger\\":{\\"triggerType\\":\\"ON_DEMAND\\",\\"updatePolicy\\":\\"APPEND\\"},\\"parentDataProducts\\":[],\\"childDataProducts\\":[],\\"sourceType\\":\\"CLOUDWATCH\\",\\"sourceDetails\\":{\\"cloudwatchLogGroupArn\\":\\"arn:aws:logs:ap-southeast-1:123456789012:log-group:/myloggroup\\"}}}}}},\\"ImportCloudWatchData\\":{\\"Next\\":\\"VerifyImportStatus\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.ImportOutput\\",\\"Resource\\":\\"arn:",
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload\\":{\\"Payload\\":{\\"crawlerName\\":\\"test-d4688test-d45928737-aws-cloudwatch--crawler\\",\\"tablePrefix\\":\\"test-d4688test-d45928737-aws-cloudwatch-\\",\\"outputS3Path\\":\\"s3://data-bucket/test-domain/test-data-product/test-stack/aws-cloudwatch-import\\",\\"dataProduct\\":{\\"dataProductId\\":\\"test-data-product\\",\\"domainId\\":\\"test-domain\\",\\"name\\":\\"Test\\",\\"infrastructureStatus\\":\\"PROVISIONING\\",\\"dataStatus\\":\\"NO_DATA\\",\\"dataSets\\":{},\\"tags\\":[],\\"enableAutomaticTransforms\\":true,\\"enableAutomaticPii\\":false,\\"transforms\\":[],\\"updateTrigger\\":{\\"triggerType\\":\\"ON_DEMAND\\",\\"updatePolicy\\":\\"APPEND\\"},\\"parentDataProducts\\":[],\\"childDataProducts\\":[],\\"sourceType\\":\\"CLOUDWATCH\\",\\"sourceDetails\\":{\\"cloudwatchLogGroupArn\\":\\"arn:aws:logs:ap-southeast-1:123456789012:log-group:/myloggroup\\"}}}}}},\\"ImportCloudWatchData\\":{\\"Next\\":\\"VerifyImportStatus\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.ImportOutput\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -667,11 +668,11 @@ Object {
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:::dynamodb:getItem\\",\\"Parameters\\":{\\"Key\\":{\\"dataProductId\\":{\\"S\\":\\"test-data-product\\"},\\"domainId\\":{\\"S\\":\\"test-domain\\"}},\\"TableName\\":\\"CloudWatchTableName\\",\\"ConsistentRead\\":false}},\\"IsUpdateNeeded\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.taskresult.Item.num_rows.S\\",\\"StringEquals\\":\\"0\\",\\"Next\\":\\"NotifyForSuccessNoUpdate\\"}],\\"Default\\":\\"ExecuteCrawlertest-d4688test-d45928737-aws-aws--crawler\\"},\\"ExecuteCrawlertest-d4688test-d45928737-aws-aws--crawler\\":{\\"Next\\":\\"VerifyCrawlerStepFunctionOutput\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.CrawlerOutput\\",\\"Resource\\":\\"arn:",
+              ":states:::dynamodb:getItem\\",\\"Parameters\\":{\\"Key\\":{\\"dataProductId\\":{\\"S\\":\\"test-data-product\\"},\\"domainId\\":{\\"S\\":\\"test-domain\\"}},\\"TableName\\":\\"CloudWatchTableName\\",\\"ConsistentRead\\":false}},\\"IsUpdateNeeded\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.taskresult.Item.num_rows.S\\",\\"StringEquals\\":\\"0\\",\\"Next\\":\\"NotifyForSuccessNoUpdate\\"}],\\"Default\\":\\"ExecuteCrawlertest-d4688test-d45928737-aws-cloudwatch--crawler\\"},\\"ExecuteCrawlertest-d4688test-d45928737-aws-cloudwatch--crawler\\":{\\"Next\\":\\"VerifyCrawlerStepFunctionOutput\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.CrawlerOutput\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:::states:startExecution.sync:2\\",\\"Parameters\\":{\\"Input\\":{\\"crawlerName\\":\\"test-d4688test-d45928737-aws-aws--crawler\\"},\\"StateMachineArn\\":\\"arn:",
+              ":states:::states:startExecution.sync:2\\",\\"Parameters\\":{\\"Input\\":{\\"crawlerName\\":\\"test-d4688test-d45928737-aws-cloudwatch--crawler\\"},\\"StateMachineArn\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -775,6 +776,7 @@ Object {
         },
       },
       "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
     },
     "StateMachineLogs3CB16D3C": Object {
       "DeletionPolicy": "Delete",

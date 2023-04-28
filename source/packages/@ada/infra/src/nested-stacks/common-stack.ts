@@ -10,7 +10,7 @@ import {
 } from 'aws-cdk-lib/aws-iam';
 import { AttributeType, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Bucket } from '../common/constructs/s3/bucket';
-import { CfnBucket } from 'aws-cdk-lib/aws-s3';
+import { BucketEncryption, CfnBucket, ObjectOwnership } from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 import { CountedTable } from '../common/constructs/dynamodb/counted-table';
 import { CounterTable } from '../common/constructs/dynamodb/counter-table';
@@ -40,7 +40,12 @@ export class CommonStack extends ExtendedNestedStack {
   constructor(scope: Construct, id: string, props: CommonStackProps) {
     super(scope, id, props);
 
-    this.accessLogsBucket = new Bucket(this, 'AccessLogBucket', {});
+    this.accessLogsBucket = new Bucket(this, 'AccessLogBucket', {
+      // SSE-S3 is the only supported default bucket encryption for Server Access Logging target buckets
+      encryption: BucketEncryption.S3_MANAGED,
+      // Enable ACL so that CloudFront Distribution can drop logs into the bucket
+      objectOwnership: ObjectOwnership.BUCKET_OWNER_PREFERRED,
+    });
     (this.accessLogsBucket.node.defaultChild as CfnBucket).cfnOptions.metadata = {
       cfn_nag: {
         rules_to_suppress: [

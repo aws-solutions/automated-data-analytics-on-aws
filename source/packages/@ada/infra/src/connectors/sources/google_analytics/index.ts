@@ -34,10 +34,12 @@ export interface ISourceDetails__GOOGLE_ANALYTICS extends IGoogleServiceAccountA
  * Interface for the "sourceDetails" wizard form data of data products of this connector
  * @required
  */
-export type IFormData__GOOGLE_ANALYTICS = Connectors.IFormData<Omit<ISourceDetails, 'dimensions' | 'metrics'> & {
-  dimensions: { value: string }[];
-  metrics: { value: string }[];
-}>
+export type IFormData__GOOGLE_ANALYTICS = Connectors.IFormData<
+  Omit<ISourceDetails, 'dimensions' | 'metrics'> & {
+    dimensions: { value: string }[];
+    metrics: { value: string }[];
+  }
+>;
 
 export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_ANALYTICS, IFormData__GOOGLE_ANALYTICS> = {
   ID,
@@ -59,8 +61,12 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_ANALYTICS, 
 
     managedSecret: {
       enabled: true,
-      secretNameProperty: 'privateKeySecretName',
-      secretValueProperty: 'privateKey',
+      secretDetails: [
+        {
+          secretNameProperty: 'privateKeySecretName',
+          secretValueProperty: 'privateKey',
+        },
+      ],
     },
 
     supports: {
@@ -82,7 +88,7 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_ANALYTICS, 
       updateTriggerUpdatePolicy: {
         APPEND: true,
         REPLACE: true,
-      }
+      },
     },
   },
 
@@ -215,14 +221,16 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_ANALYTICS, 
           viewId: sourceDetails.viewId,
           dimensions: sourceDetails.dimensions.map((d: { value: string }) => d.value).join(','),
           metrics: sourceDetails.metrics.map((m: { value: string }) => m.value).join(','),
-          ...(updateTrigger.triggerType === DataProductUpdateTriggerType.ON_DEMAND ? {
-            // convert the data format from iso to yyyy-MM-DD based on local date as ga does not take time stamps
-            // en-ca formats the data as yyyy-MM-DD
-            // scheduled import does not support start and end date form
-            since: new Date(sourceDetails.since!).toLocaleDateString('en-CA'),
-            until: new Date(sourceDetails.until!).toLocaleDateString('en-CA'),
-          } : {}),
-        }
+          ...(updateTrigger.triggerType === DataProductUpdateTriggerType.ON_DEMAND
+            ? {
+                // convert the data format from iso to yyyy-MM-DD based on local date as ga does not take time stamps
+                // en-ca formats the data as yyyy-MM-DD
+                // scheduled import does not support start and end date form
+                since: new Date(sourceDetails.since!).toLocaleDateString('en-CA'),
+                until: new Date(sourceDetails.until!).toLocaleDateString('en-CA'),
+              }
+            : {}),
+        };
       },
     },
 
@@ -237,20 +245,16 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_ANALYTICS, 
         { key: 'clientId', label: 'Client Id' },
       ],
     },
-  }
+  },
 };
-
-
-
-
 
 ////////////////////////////////////////////////////////////////
 // REGISTER CONNECTOR - DO NOT EDIT BELOW THIS LINE
 ////////////////////////////////////////////////////////////////
 Connectors.register<typeof ID>(CONNECTOR);
 
-export type ISourceDetails = (typeof CONNECTOR)['ISourceDetails'];
-export type ISourceDetailsFormData = (typeof CONNECTOR)['ISourceDetailsFormData'];
+export type ISourceDetails = typeof CONNECTOR['ISourceDetails'];
+export type ISourceDetailsFormData = typeof CONNECTOR['ISourceDetailsFormData'];
 
 declare module '@ada/connectors/interface' {
   interface CONNECTOR_REGISTRY {

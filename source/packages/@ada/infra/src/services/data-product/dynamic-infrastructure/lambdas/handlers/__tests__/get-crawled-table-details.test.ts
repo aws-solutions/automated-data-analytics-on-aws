@@ -1,13 +1,14 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
 import { Glue } from 'aws-sdk';
+import { UPDATE_TABLE_KEYS, handler } from '../get-crawled-table-details';
 import { pick } from 'lodash';
-import { handler, UPDATE_TABLE_KEYS } from '../get-crawled-table-details';
 
 const mockGetTables = jest.fn();
+const mockDeletePartitionIndex = jest.fn();
 const mockUpdateTable = jest.fn();
 
-const CATALOG_ID = 'AwsDataCatalog'
+const CATALOG_ID = 'AwsDataCatalog';
 const DATABASE_NAME = 'dbName';
 const TABLE_PREFIX = 'prefix_';
 
@@ -15,6 +16,9 @@ jest.mock('@ada/aws-sdk', () => ({
   AwsGlueInstance: jest.fn().mockImplementation(() => ({
     getTables: (...args: any[]) => ({
       promise: jest.fn(() => Promise.resolve(mockGetTables(...args))),
+    }),
+    deletePartitionIndex: (...args: any[]) => ({
+      promise: jest.fn(() => Promise.resolve(mockDeletePartitionIndex(...args))),
     }),
     updateTable: (...args: any[]) => ({
       promise: jest.fn(() => Promise.resolve(mockUpdateTable(...args))),
@@ -117,17 +121,13 @@ describe('get-crawled-table-data', () => {
     expect(result.tableDetails).toEqual([expectedTableDetails(TABLE_PREFIX, 'table1')]);
   });
 
-
   it('should remove glue partition keys if detected', async () => {
     mockGetTables.mockReturnValue({
       TableList: [
         {
           ...mockTable,
           Name: TABLE_PREFIX + 'table1',
-          PartitionKeys: [
-            { Name: 'partition_0' },
-            { Name: 'partition_1' },
-          ]
+          PartitionKeys: [{ Name: 'partition_0' }, { Name: 'partition_1' }],
         },
         {
           ...mockTable,
@@ -135,15 +135,12 @@ describe('get-crawled-table-data', () => {
           StorageDescriptor: {
             ...mockTable.StorageDescriptor,
             Columns: [
-              ...mockTable.StorageDescriptor?.Columns || [],
+              ...(mockTable.StorageDescriptor?.Columns || []),
               { Name: 'partition_0' },
               { Name: 'partition_1' },
-            ]
+            ],
           },
-          PartitionKeys: [
-            { Name: 'partition_0' },
-            { Name: 'partition_1' },
-          ]
+          PartitionKeys: [{ Name: 'partition_0' }, { Name: 'partition_1' }],
         },
       ] as Glue.Table[],
     });
@@ -158,21 +155,26 @@ describe('get-crawled-table-data', () => {
       null,
     );
 
+    expect(mockDeletePartitionIndex).toHaveBeenCalledTimes(2);
     expect(mockUpdateTable).toHaveBeenCalledTimes(2);
-    expect(mockUpdateTable).toHaveBeenCalledWith(expect.objectContaining({
-      TableInput: {
-        ...pick(mockTable, UPDATE_TABLE_KEYS),
-        Name: TABLE_PREFIX + 'table1',
-        PartitionKeys: [],
-      }
-    }))
-    expect(mockUpdateTable).toHaveBeenCalledWith(expect.objectContaining({
-      TableInput: {
-        ...pick(mockTable, UPDATE_TABLE_KEYS),
-        Name: TABLE_PREFIX + 'table2',
-        PartitionKeys: [],
-      }
-    }))
+    expect(mockUpdateTable).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TableInput: {
+          ...pick(mockTable, UPDATE_TABLE_KEYS),
+          Name: TABLE_PREFIX + 'table1',
+          PartitionKeys: [],
+        },
+      }),
+    );
+    expect(mockUpdateTable).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TableInput: {
+          ...pick(mockTable, UPDATE_TABLE_KEYS),
+          Name: TABLE_PREFIX + 'table2',
+          PartitionKeys: [],
+        },
+      }),
+    );
 
     expect(result.tableDetails).toEqual([
       expectedTableDetails(TABLE_PREFIX, 'table1'),
@@ -188,18 +190,14 @@ describe('get-crawled-table-data', () => {
       StorageDescriptor: {
         ...mockTable.StorageDescriptor,
         Columns: [
-          ...mockTable.StorageDescriptor?.Columns || [],
+          ...(mockTable.StorageDescriptor?.Columns || []),
           { Name: 'year' },
           { Name: 'month' },
           { Name: 'day' },
-        ]
+        ],
       },
-      PartitionKeys: [
-        { Name: 'year' },
-        { Name: 'month' },
-        { Name: 'day' },
-      ]
-    }
+      PartitionKeys: [{ Name: 'year' }, { Name: 'month' }, { Name: 'day' }],
+    };
 
     mockGetTables.mockReturnValue({
       TableList: [
@@ -207,17 +205,9 @@ describe('get-crawled-table-data', () => {
           ...table,
           StorageDescriptor: {
             ...table.StorageDescriptor,
-            Columns: [
-              ...table.StorageDescriptor?.Columns || [],
-              { Name: 'partition_0' },
-              { Name: 'partition_1' },
-            ]
+            Columns: [...(table.StorageDescriptor?.Columns || []), { Name: 'partition_0' }, { Name: 'partition_1' }],
           },
-          PartitionKeys: [
-            ...table.PartitionKeys!,
-            { Name: 'partition_0' },
-            { Name: 'partition_1' },
-          ]
+          PartitionKeys: [...table.PartitionKeys!, { Name: 'partition_0' }, { Name: 'partition_1' }],
         },
       ] as Glue.Table[],
     });
@@ -232,22 +222,19 @@ describe('get-crawled-table-data', () => {
       null,
     );
 
+    expect(mockDeletePartitionIndex).toHaveBeenCalledTimes(1);
     expect(mockUpdateTable).toHaveBeenCalledTimes(1);
-    expect(mockUpdateTable).toHaveBeenCalledWith(expect.objectContaining({
-      TableInput: {
-        ...pick(table, UPDATE_TABLE_KEYS),
-        Name: TABLE_PREFIX + 'table1',
-        PartitionKeys: [
-          { Name: 'year' },
-          { Name: 'month' },
-          { Name: 'day' },
-        ]
-      }
-    }))
+    expect(mockUpdateTable).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TableInput: {
+          ...pick(table, UPDATE_TABLE_KEYS),
+          Name: TABLE_PREFIX + 'table1',
+          PartitionKeys: [{ Name: 'year' }, { Name: 'month' }, { Name: 'day' }],
+        },
+      }),
+    );
 
-    expect(result.tableDetails).toEqual([
-      expectedTableDetails(TABLE_PREFIX, 'table1', table),
-    ]);
+    expect(result.tableDetails).toEqual([expectedTableDetails(TABLE_PREFIX, 'table1', table)]);
   });
 
   it('should not throw an error if the getTables API returns more than 1 element', async () => {

@@ -3,12 +3,7 @@ SPDX-License-Identifier: Apache-2.0 */
 import 'jest-extended';
 import { MOCK_API_CLIENT as API } from '@ada/api-client/mock';
 import { APIGatewayProxyResult } from 'aws-lambda';
-import {
-  CallingUser,
-  DataProductAccess,
-  DataProductDataStatus,
-  DataProductInfrastructureStatus,
-} from '@ada/common';
+import { CallingUser, DataProductAccess, DataProductDataStatus, DataProductInfrastructureStatus } from '@ada/common';
 import { CreateAndUpdateDetails, DataProduct } from '@ada/api';
 import {
   DEFAULT_CALLER,
@@ -99,7 +94,7 @@ describe('delete-data-product', () => {
     );
 
     OperationalMetricsClient.getInstance = jest.fn(() => ({
-      send: mockSendOperationalMetrics
+      send: mockSendOperationalMetrics,
     }));
   });
 
@@ -160,7 +155,8 @@ describe('delete-data-product', () => {
 
       const response = await deleteDataProductHandler(dataProductId);
       expect(response.statusCode).toBe(400);
-    });
+    },
+  );
 
   it.each(['FAILED', 'TIMED_OUT', 'ABORTED'])(
     'should permit deleting a data product that is currently importing data but the import state machine is %s',
@@ -175,8 +171,8 @@ describe('delete-data-product', () => {
 
       const response = await deleteDataProductHandler(dataProductId);
       expect(response.statusCode).toBe(200);
-    });
-
+    },
+  );
 
   it('should not permit deleting a data product that is currently building', async () => {
     await testDataProductStore.putDataProduct(domainId, dataProductId, DEFAULT_CALLER.userId, {

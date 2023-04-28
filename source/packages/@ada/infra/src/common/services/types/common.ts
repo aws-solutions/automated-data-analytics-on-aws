@@ -8,3 +8,10 @@ export interface KeyValuePair<T, Q> {
   key: T;
   value: Q;
 }
+
+export interface DataProductSecret<T> {
+  key: T;
+  value: T;
+  secretKeyRef: T;
+  secretValueRef: T;
+}

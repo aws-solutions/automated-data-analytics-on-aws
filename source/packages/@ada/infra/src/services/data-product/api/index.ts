@@ -6,7 +6,7 @@ import { Bucket } from '../../../common/constructs/s3/bucket';
 import { CfnPolicy, Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Construct } from 'constructs';
 import { CounterTable } from '../../../common/constructs/dynamodb/counter-table';
-import { DATA_PRODUCT_SECRET_PREFIX } from '../components/secrets-manager/data-product';
+import { DATA_PRODUCT_SECRET_PREFIX } from '../../../common/constructs/iam/policies';
 import { DESCRIPTION_VALIDATION, FILEUPLOAD_SUPPORTED_CONTENTTYPES, S3Location } from '@ada/common';
 import {
   DataProduct,
@@ -15,6 +15,7 @@ import {
   Script,
   ScriptSourceValidationInput,
   ScriptSourceValidationOutput,
+  TableStream,
 } from './types';
 import {
   DataProductEventDetailTypes,
@@ -23,7 +24,12 @@ import {
   MicroserviceApiProps,
 } from '@ada/microservice-common';
 import { Database } from '@aws-cdk/aws-glue-alpha';
-import { DynamicInfraDeploymentPolicyStatement, OperationalMetricsConfig, TypescriptFunction, TypescriptFunctionProps } from '@ada/infra-common';
+import {
+  DynamicInfraDeploymentPolicyStatement,
+  OperationalMetricsConfig,
+  TypescriptFunction,
+  TypescriptFunctionProps,
+} from '@ada/infra-common';
 import { EntityManagementTables } from '../../api/components/entity/constructs/entity-management-tables';
 import { InternalTokenKey } from '../../../common/constructs/kms/internal-token-key';
 import { JsonSchemaType, LambdaIntegration } from 'aws-cdk-lib/aws-apigateway';
@@ -73,6 +79,7 @@ export interface DataProductServiceApiProps extends MicroserviceApiProps {
 
 export interface BuiltLambdaFunctions {
   getScriptLambda: TypescriptFunction;
+  getTableStreamLambda: TypescriptFunction;
   listScriptLambda: TypescriptFunction;
   putScriptLambda: TypescriptFunction;
   deleteScriptLambda: TypescriptFunction;
@@ -164,6 +171,15 @@ export default class DataProductApi extends MicroserviceApi {
     props.domainTable.grantReadData(listDomainLambda);
     const deleteDomainLambda = buildLambda('delete-domain');
     props.domainTable.grantReadWriteData(deleteDomainLambda);
+
+    const getTableStreamLambda = buildLambda('get-table-stream');
+    getTableStreamLambda.addToRolePolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ['dynamodb:DescribeTable'],
+        resources: ['*'],
+      }),
+    );
 
     const buildDataProductLambda = buildLambda('build-data-product', { timeout: Duration.minutes(15) });
     props.dataProductTable.grantReadWriteData(buildDataProductLambda);
@@ -311,6 +327,7 @@ export default class DataProductApi extends MicroserviceApi {
       deleteScriptLambda,
       putDomainLambda,
       getDomainLambda,
+      getTableStreamLambda,
       listDomainLambda,
       deleteDomainLambda,
       putDataProductLambda,
@@ -762,6 +779,29 @@ export default class DataProductApi extends MicroserviceApi {
                   description: 'Report containing the vulnerabilities of a script after scanning',
                   schema: ScriptSourceValidationOutput,
                   errorStatusCodes: [StatusCodes.BAD_REQUEST, StatusCodes.NOT_FOUND],
+                },
+              },
+            },
+          },
+        },
+        '/dynamoDB': {
+          paths: {
+            '/table': {
+              paths: {
+                '/{tableArn}': {
+                  paths: {
+                    '/stream': {
+                      GET: {
+                        integration: new LambdaIntegration(this.functions.getTableStreamLambda),
+                        response: {
+                          name: 'getDataProductDynamoDBTableStream',
+                          description: 'Handler for retrieving dynamodb table stream details',
+                          schema: asEntity(TableStream),
+                          errorStatusCodes: [StatusCodes.BAD_REQUEST, StatusCodes.NOT_FOUND, StatusCodes.FORBIDDEN],
+                        },
+                      },
+                    },
+                  },
                 },
               },
             },

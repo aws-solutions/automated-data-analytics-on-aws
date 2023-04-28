@@ -9,7 +9,6 @@ import {
   DataProductDataStatus,
   DataProductInfrastructureStatus,
   DataProductSourceDataStatus,
-  DefaultGroupIds,
   ReservedDataProducts,
   ReservedDomains,
 } from '@ada/common';
@@ -17,7 +16,7 @@ import { DataProductStore } from '../../components/ddb/data-product';
 import { METRICS_EVENT_TYPE, OperationalMetricsClient } from '@ada/services/api/components/operational-metrics/client';
 import {
   createSecret,
-  getSecretToStore,
+  getSecretsToStore,
   requireSecret,
   updateDataProductSecretDetails,
 } from '../../components/secrets-manager/data-product';
@@ -112,10 +111,12 @@ export const handler = ApiLambdaHandler.for(
     }
 
     if (requireSecret(dataProductToWrite)) {
-      const secret = getSecretToStore(dataProductToWrite);
-      const result = await createSecret(secret.key, secret.value);
+      const secrets = getSecretsToStore(dataProductToWrite);
 
-      updateDataProductSecretDetails(result.Name!, dataProductToWrite);
+      for (const secret of secrets) {
+        const result = await createSecret(secret.key, secret.value);
+        updateDataProductSecretDetails(result.Name!, secret, dataProductToWrite);
+      }
     }
 
     // Optimistically lock the domain
@@ -170,12 +171,6 @@ export const handler = ApiLambdaHandler.for(
       dataProductId,
       dataProductPolicyInput: {
         permissions: {
-          [DefaultGroupIds.DEFAULT]: {
-            access: DataProductAccess.READ_ONLY,
-          },
-          [DefaultGroupIds.POWER_USER]: {
-            access: DataProductAccess.READ_ONLY,
-          },
           ...Object.fromEntries(
             (initialFullAccessGroups || []).map((groupId) => [
               groupId,

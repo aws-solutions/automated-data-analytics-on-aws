@@ -2,14 +2,14 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { AWSError, AwsSecretsManagerInstance, PromiseResult, SecretsManager } from '@ada/aws-sdk';
 import { Connectors } from '@ada/connectors';
+import { DATA_PRODUCT_SECRET_PREFIX } from '../../../../common/constructs/iam/policies';
 import { DataProduct } from '@ada/api';
-import { KeyValuePair } from '@ada/microservice-common';
+import { DataProductSecret } from '@ada/microservice-common';
 import { VError } from 'verror';
 import { getFriendlyHash } from '@ada/cdk-core';
+import { v4 as uuidv4 } from 'uuid';
 
 const secretsManager = AwsSecretsManagerInstance();
-
-export const DATA_PRODUCT_SECRET_PREFIX = 'DPSecrets';
 
 /**
  * Create a new secret based on the provided input
@@ -35,30 +35,38 @@ export const createSecret = (
  */
 export const requireSecret = (dataProduct: DataProduct): boolean => {
   return Connectors.getManagedSecretConfig(dataProduct.sourceType as Connectors.ID)?.enabled === true;
-}
+};
 
 /**
  *
  * @param dataProduct the data product that has a secret
  * @returns the value of the secret to store with the prefix to use
  */
-export const getSecretToStore = (dataProduct: DataProduct): KeyValuePair<string, string> => {
+export const getSecretsToStore = (dataProduct: DataProduct): DataProductSecret<string>[] => {
   const config = Connectors.getManagedSecretConfig(dataProduct.sourceType as Connectors.ID);
   if (config?.enabled) {
-    if (dataProduct.sourceDetails && config.secretValueProperty in dataProduct.sourceDetails) {
-      return {
-        key: `${DATA_PRODUCT_SECRET_PREFIX}-data-product-${getUniqueSecretKeyForDataProduct(
-          dataProduct.domainId,
-          dataProduct.dataProductId,
-        )}`.replace(/_/g, '-'),
-        value: (dataProduct.sourceDetails as any)[config.secretValueProperty],
-      };
-    } else {
+    const secrets: DataProductSecret<string>[] = [];
+    for (const secretDetail of config.secretDetails) {
+      if (dataProduct.sourceDetails && secretDetail.secretValueProperty in dataProduct.sourceDetails) {
+        secrets.push({
+          key: `${DATA_PRODUCT_SECRET_PREFIX}-data-product-${getUniqueSecretKeyForDataProduct(
+            dataProduct.domainId,
+            dataProduct.dataProductId,
+          )}`.replace(/_/g, '-'),
+          value: (dataProduct.sourceDetails as any)[secretDetail.secretValueProperty],
+          secretKeyRef: secretDetail.secretNameProperty,
+          secretValueRef: secretDetail.secretValueProperty,
+        });
+      }
+    }
+    if (secrets.length == 0) {
       throw new VError(
         { name: 'SecretValuePropertyMissingError' },
-        `The provided data product does not define secret value property of "${config.secretValueProperty}"`,
+        `The provided data product does not define secret values defined in the config`,
         { config },
       );
+    } else {
+      return secrets;
     }
   } else {
     throw new VError(
@@ -69,20 +77,32 @@ export const getSecretToStore = (dataProduct: DataProduct): KeyValuePair<string,
 };
 
 const getUniqueSecretKeyForDataProduct = (domainId: string, dataProductId: string): string => {
-  return `${getFriendlyHash(domainId)}${getFriendlyHash(dataProductId)}${new Date().getTime()}`.replace(/_/g, '-');
+  return `${getFriendlyHash(domainId)}${getFriendlyHash(dataProductId)}${uuidv4()}`.replace(/_/g, '-');
 };
 /**
  * Update the data product to include secret name in the respective property based on the source type
  * @param secretName the name of the secret being written
+ * @param secretConfig a defined secret configuration
  * @param dataProduct the data product
  * @returns updated data product
  */
-export const updateDataProductSecretDetails = (secretName: string, dataProduct: DataProduct): DataProduct => {
+export const updateDataProductSecretDetails = (
+  secretName: string,
+  secretConfig: DataProductSecret<string>,
+  dataProduct: DataProduct,
+): DataProduct => {
   const config = Connectors.getManagedSecretConfig(dataProduct.sourceType as Connectors.ID);
-  if (config?.enabled && dataProduct.sourceDetails) {
-    delete (dataProduct.sourceDetails as any)[config.secretValueProperty];
+  if (config?.enabled && config.secretDetails && dataProduct.sourceDetails) {
+    for (const secret of config.secretDetails) {
+      if (
+        secret.secretValueProperty == secretConfig.secretValueRef &&
+        secret.secretNameProperty == secretConfig.secretKeyRef
+      ) {
+        delete (dataProduct.sourceDetails as any)[secret.secretValueProperty];
 
-    (dataProduct.sourceDetails as any)[config.secretNameProperty] = secretName;
+        (dataProduct.sourceDetails as any)[secret.secretNameProperty] = secretName;
+      }
+    }
   }
   return dataProduct;
 };
@@ -90,6 +110,16 @@ export const updateDataProductSecretDetails = (secretName: string, dataProduct: 
 /**
  * Get the property in which the data product secret is stored (if any)
  */
-export const getSourceDetailsSecretProperty = <T extends DataProduct>(dataProduct: T): keyof T['sourceDetails'] => {
-  return Connectors.getManagedSecretConfig(dataProduct.sourceType as Connectors.ID)?.secretNameProperty as keyof T['sourceDetails'];
-}
+export const getSourceDetailsSecretProperty = <T extends DataProduct>(dataProduct: T): (keyof T['sourceDetails'])[] => {
+  const config = Connectors.getManagedSecretConfig(dataProduct.sourceType as Connectors.ID);
+  const secrets: (keyof T['sourceDetails'])[] = [];
+
+  if (config?.enabled && config.secretDetails && dataProduct.sourceDetails) {
+    for (const secret of config.secretDetails) {
+      if (secret.secretNameProperty in (dataProduct.sourceDetails as any)) {
+        secrets.push((dataProduct.sourceDetails as any)[secret.secretNameProperty] as keyof T['sourceDetails']);
+      }
+    }
+  }
+  return secrets;
+};

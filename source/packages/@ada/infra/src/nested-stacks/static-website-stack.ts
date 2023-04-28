@@ -148,7 +148,7 @@ export class StaticWebsiteStack extends ExtendedNestedStack {
       ],
     });
     const cfnDistribution = this.cloudFrontDistribution.node.defaultChild as cloudfront.CfnDistribution;
-    cfnDistribution.addDependsOn(viewerResponseFunction.node.defaultChild as cloudfront.CfnFunction);
+    cfnDistribution.addDependency(viewerResponseFunction.node.defaultChild as cloudfront.CfnFunction);
     addCfnNagSuppressions(cfnDistribution, [
       {
         id: 'W70',

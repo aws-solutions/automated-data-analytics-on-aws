@@ -29,10 +29,14 @@ export const resolveTransforms = (
  * specific automatic transforms to run are discovered at runtime
  * Note that the order of this array determines execution order. Automatic transforms are executed first.
  */
+
 export const getPossibleTransformsForDataProduct = (
-  dataProduct: Pick<DataProduct, 'enableAutomaticTransforms' | 'transforms'>,
-): (DataProductTransform | AutomaticTransform)[] =>
-  (dataProduct.enableAutomaticTransforms ? (AUTOMATIC_TRANSFORMS as Transform[]) : []).concat(dataProduct.transforms);
+  dataProduct: Pick<DataProduct, 'enableAutomaticTransforms' | 'transforms' | 'sourceType'>,
+): (DataProductTransform | AutomaticTransform)[] => {
+  return (dataProduct.enableAutomaticTransforms ? (AUTOMATIC_TRANSFORMS as Transform[]) : []).concat(
+    dataProduct.transforms,
+  );
+};
 
 /**
  * Return the transforms that apply for the given input tables

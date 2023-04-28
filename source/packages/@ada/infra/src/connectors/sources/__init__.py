@@ -5,10 +5,13 @@ from .file_upload.preview import UPLOAD
 from .google_analytics.preview import GOOGLE_ANALYTICS
 from .google_bigquery.preview import GOOGLE_BIGQUERY
 from .google_storage.preview import GOOGLE_STORAGE
+from .amazon_dynamodb.preview import DYNAMODB
 from .amazon_cloudwatch.preview import CLOUDWATCH
 from .jdbc_mysql5.preview import MYSQL5
 from .jdbc_postgresql.preview import POSTGRESQL
 from .jdbc_sqlserver.preview import SQLSERVER
+from .amazon_cloudtrail.preview import CLOUDTRAIL
+from .mongodb.preview import MONGODB
 
 CONNECTORS: IConnectorMapping = {
     'S3': S3,
@@ -16,8 +19,11 @@ CONNECTORS: IConnectorMapping = {
     'GOOGLE_ANALYTICS': GOOGLE_ANALYTICS,
     'GOOGLE_BIGQUERY': GOOGLE_BIGQUERY,
     'GOOGLE_STORAGE': GOOGLE_STORAGE,
+    "DYNAMODB": DYNAMODB,
     "CLOUDWATCH": CLOUDWATCH,
     "MYSQL5": MYSQL5,
     "POSTGRESQL": POSTGRESQL,
-    "SQLSERVER": SQLSERVER
+    "SQLSERVER": SQLSERVER,
+    "CLOUDTRAIL": CLOUDTRAIL,
+    "MONGODB": MONGODB,
 }

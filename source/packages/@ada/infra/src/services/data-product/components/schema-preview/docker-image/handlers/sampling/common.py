@@ -27,6 +27,76 @@ KEY_ID = os.environ['KEY_ID']
 kms = boto3.client('kms')
 sts = boto3.client('sts')
 
+class SecretsManagerException(Exception):
+    pass
+
+
+class SecretsManager:
+    """Retrieve secrets from AWS SecretsManager"""
+
+    def __init__(self, session: boto3.session) -> None:
+        """Initialise class
+
+        Args:
+            session (boto3.session, optional): AWS boto3 session. Defaults to None
+        """
+        self.client = session.client("secretsmanager")
+
+    def get_secret(self, secret_id: str) -> None:
+        """Get secret
+
+        Args:
+            secret_id (str): AWS secretsmanager secret id
+    
+        Raises:
+            SecretsManagerException: Error retreiving secret
+
+        Returns:
+            str: Secret retrieved from AWS SecretsManager
+        """
+        try:
+            response = self.client.get_secret_value(SecretId=secret_id)
+        except self.client.exceptions.ResourceNotFoundException:
+            raise SecretsManagerException(f"Secret '{secret_id}' not found")
+        except self.client.exceptions.InvalidRequestException as e:
+            raise SecretsManagerException(f"Invalid request: {e}")
+        except self.client.exceptions.InvalidParameterException as e:
+            raise SecretsManagerException(f"Invalid parameter: {e}")
+        except Exception as e:
+            raise SecretsManagerException(f"Failed to retrieve secret: {e}")
+        return response["SecretString"]
+
+    def write_secret_to_file(self, filename: str, secret_id) -> None:
+        """Retrieve and write secret to file
+
+        Args:
+            filename (str): path and name of file to write
+            secret_id (str): AWS secretsmanager secret id
+
+        Raises:
+            SecretsManagerException: Error retrieving secret or writing to file
+        """
+        try:
+            secret = urllib.parse.unquote(self.get_secret(secret_id))
+            with open(filename, "w") as file:
+                file.write(secret)
+        except Exception as e:
+            raise SecretsManagerException(f"Failed to write secret to file: {e}")
+
+    @staticmethod
+    def get_credentials_from_source(source_details, credential_field_name, credential_secret_field_name):
+        if credential_field_name in source_details:
+            print("read credential from source details")
+            credential_value = source_details[credential_field_name]
+        elif credential_secret_field_name in source_details:
+            print("read credential from secret. {}".format(source_details[credential_secret_field_name]))
+            # create secret manager to use default boto session which should be lambda exec role
+            secrets_manager = SecretsManager(boto3)
+            credential_value = secrets_manager.get_secret(source_details[credential_secret_field_name])
+            
+        else:
+            raise Exception("Access credentials are not specified in the source details")
+        return credential_value
 
 class SamplingUtils:
     @staticmethod
@@ -101,7 +171,7 @@ class SamplingUtils:
         This will throw an exception if it's not possible to get the metadata (eg it's not a csv!)
         """
         # Read the first 10KB from the first object in the path
-        first_object_path = wr.s3.list_objects(path)[0]
+        first_object_path = wr.s3.list_objects(boto3_session=boto3_session, path=path)[0]
         s3_location = SamplingUtils.from_s3_path(first_object_path)
         res = boto3_session.client('s3').get_object(
             Bucket=s3_location['bucket'], Key=s3_location['key'], Range='bytes=0-10000')
@@ -148,6 +218,7 @@ class SamplingUtils:
         """
         Get Google Cloud Client credentials
         """
+        private_key = SecretsManager.get_credentials_from_source(source_details, 'privateKey', 'privateKeySecretName')
         return service_account.Credentials.from_service_account_info({
             "type": "service_account",
             "auth_uri": source_details["authUri"] if 'authUri' in source_details else "https://accounts.google.com/o/oauth2/auth",
@@ -158,7 +229,7 @@ class SamplingUtils:
             "client_id": source_details["clientId"],
             "client_email": source_details["clientEmail"],
             "private_key_id": source_details["privateKeyId"],
-            "private_key": source_details["privateKey"],
+            "private_key": private_key,
         })
 
     @staticmethod
@@ -217,7 +288,7 @@ class SamplingUtils:
             elif since_date and since_date > today:
                 raise DateRangeException("Import has not started yet")
             else:
-                pattern = 'rate\((\d+)\s(days?|weeks?|months?)\)'
+                pattern = r'rate\((\d+)\s(days?|weeks?|months?)\)'
                 matched = re.findall(
                     pattern, schedule_rate, flags=re.IGNORECASE)
                 if len(matched) == 1:
@@ -245,17 +316,16 @@ class SamplingUtils:
                     "Start date cannot be greater than end date")
             return (since_date, until_date)
 
-
 class PreviewGlueConnection():
-    def __init__(self, jdbc_connection_string: str, source_details: ISourceDetails, boto3_session: any):
+    def __init__(self, jdbc_connection_string: str, source_details: ISourceDetails, db_password: str, boto3_session: any):
         self.source_details = source_details
         self.jdbc_connection_string = jdbc_connection_string
         self.client = boto3_session.client('glue')
+        self.db_password = db_password
 
     def __enter__(self):
         # create create glue connection
         self.glue_connection_name = "ada-preview-connect-" + uuid.uuid4().hex
-
         self.client.create_connection(
             ConnectionInput={
                 'Name': self.glue_connection_name,
@@ -264,7 +334,7 @@ class PreviewGlueConnection():
                 'ConnectionProperties': {
                     'JDBC_CONNECTION_URL': self.jdbc_connection_string,
                     'USERNAME': self.source_details['username'],
-                    'PASSWORD': self.source_details['password'],
+                    'PASSWORD': self.db_password,
                     'JDBC_ENFORCE_SSL': 'false',
                 },
                 'PhysicalConnectionRequirements': {
@@ -277,3 +347,4 @@ class PreviewGlueConnection():
 
     def __exit__(self, *args):
         self.client.delete_connection(ConnectionName=self.glue_connection_name)
+        

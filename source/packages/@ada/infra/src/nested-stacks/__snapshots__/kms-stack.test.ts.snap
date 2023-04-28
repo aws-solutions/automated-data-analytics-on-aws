@@ -2,16 +2,8 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-KMSStack) - Automated Data Analytics on AWS. Version v1.1.0",
+  "Description": "(SO0190-KMSStack) - Automated Data Analytics on AWS. Version v1.2.0",
   "Outputs": Object {
-    "AdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn": Object {
-      "Value": Object {
-        "Fn::GetAtt": Array [
-          "KeyBucketKeyAccessLogBucket3FE8CB58",
-          "Arn",
-        ],
-      },
-    },
     "AdaKMSStackKeyBucketKeyAthenaOutputBucket0D9D1563Arn": Object {
       "Value": Object {
         "Fn::GetAtt": Array [
@@ -252,67 +244,6 @@ Object {
         "ResourceType": "CFN_STACK",
       },
       "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
-    },
-    "KeyBucketKeyAccessLogBucket3FE8CB58": Object {
-      "DeletionPolicy": "Delete",
-      "Metadata": Object {
-        "cfn_nag": Object {
-          "rules_to_suppress": Array [
-            Object {
-              "id": "W12",
-              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
-            },
-          ],
-        },
-      },
-      "Properties": Object {
-        "Description": "Key for bucket AccessLogBucket",
-        "EnableKeyRotation": true,
-        "KeyPolicy": Object {
-          "Statement": Array [
-            Object {
-              "Action": "kms:*",
-              "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "arn:",
-                      Object {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":iam::1111111111:root",
-                    ],
-                  ],
-                },
-              },
-              "Resource": "*",
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-      },
-      "Type": "AWS::KMS::Key",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "KeyBucketKeyAccessLogBucketAliasFDA113C7": Object {
-      "Properties": Object {
-        "AliasName": "alias/ada/BucketKey-AccessLogBucket/ghashx",
-        "TargetKeyId": Object {
-          "Fn::GetAtt": Array [
-            "KeyBucketKeyAccessLogBucket3FE8CB58",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::KMS::Alias",
     },
     "KeyBucketKeyAthenaOutputBucket3E0B1956": Object {
       "DeletionPolicy": "Delete",

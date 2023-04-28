@@ -175,7 +175,7 @@ export class AthenaProxyApiRoutes extends Construct {
       logFilePrefix: 'athena-proxy-cloudfront-logs/',
     });
     const cfnDistribution = distribution.node.defaultChild as cloudfront.CfnDistribution;
-    cfnDistribution.addDependsOn(viewerResponseFunction.node.defaultChild as cloudfront.CfnFunction);
+    cfnDistribution.addDependency(viewerResponseFunction.node.defaultChild as cloudfront.CfnFunction);
     addCfnNagSuppressions(cfnDistribution, [
       {
         id: 'W70',

@@ -12,7 +12,7 @@ jest.mock('@ada/api-client');
 
 const { Primary } = composeStories(stories);
 
-describe.skip(`CreateDataProductView/${Connectors.GoogleAnalytics.ID}`, () => {
+describe(`CreateDataProductView/${Connectors.GoogleAnalytics.ID}`, () => {
   describe('storybook', () => {
     it(Connectors.GoogleAnalytics.ID, async () => {
       const { container } = render(<Primary {...(Primary.args as any)} />);

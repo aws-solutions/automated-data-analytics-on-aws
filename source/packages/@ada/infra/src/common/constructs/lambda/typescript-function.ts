@@ -1,7 +1,7 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
 import * as path from 'path';
-import { Alias, Architecture, Function, ILayerVersion, Tracing } from 'aws-cdk-lib/aws-lambda';
+import { Alias, Architecture, Function, ILayerVersion, Runtime, Tracing } from 'aws-cdk-lib/aws-lambda';
 import { ApiLambdaLayer } from '../api/lambda-layer';
 import { Construct } from 'constructs';
 import { CounterTable } from '../dynamodb/counter-table';
@@ -17,16 +17,15 @@ import { uniqueLambdaDescription } from './utils';
 
 /* eslint-disable sonarjs/cognitive-complexity */
 
-
 export interface SolutionIntegrationTypescriptFunctionProps {
   /**
    * When provided, grants the permissions and adds the appropriate environment variables for sending
    * notifications
    */
-   readonly notificationBus?: NotificationBus;
-   readonly counterTable?: CounterTable;
-   readonly internalTokenKey?: InternalTokenKey;
-   readonly entityManagementTables?: EntityManagementTables;
+  readonly notificationBus?: NotificationBus;
+  readonly counterTable?: CounterTable;
+  readonly internalTokenKey?: InternalTokenKey;
+  readonly entityManagementTables?: EntityManagementTables;
 }
 
 export interface TypescriptFunctionProps extends SolutionIntegrationTypescriptFunctionProps {
@@ -96,6 +95,7 @@ export class TypescriptFunction extends NodejsFunction {
       handler: props.handlerFunction || 'handler',
       timeout: props.timeout || Duration.seconds(30),
       memorySize: props.memorySize || 1024,
+      runtime: Runtime.NODEJS_16_X,
       environment: props.environment,
       layers: props.layers,
       role: props.role,

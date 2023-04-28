@@ -5,15 +5,15 @@ import { Logger } from '@ada/infra-common/constructs/lambda/lambda-logger';
 import { MetricsPayload, OperationalMetricsConfig, sendAnonymousMetric } from '@ada/infra-common/utils/metrics';
 import moment from 'moment';
 
-export const SEND_ANONYMOUS_DATA = "SEND_ANONYMOUS_DATA";
-export const AWS_SOLUTION_ID = "AWS_SOLUTION_ID";
-export const AWS_SOLUTION_VERSION = "AWS_SOLUTION_VERSION";
-export const AWS_SOLUTION_DEPLOYMENT_ID = "AWS_SOLUTION_DEPLOYMENT_ID";
+export const SEND_ANONYMOUS_DATA = 'SEND_ANONYMOUS_DATA';
+export const AWS_SOLUTION_ID = 'AWS_SOLUTION_ID';
+export const AWS_SOLUTION_VERSION = 'AWS_SOLUTION_VERSION';
+export const AWS_SOLUTION_DEPLOYMENT_ID = 'AWS_SOLUTION_DEPLOYMENT_ID';
 
 export enum METRICS_EVENT_TYPE {
   DATA_PRODUCTS_CREATED = 'DATA_PRODUCT_CREATED',
   DATA_PRODUCTS_DELETED = 'DATA_PRODUCT_DELETED',
-  QUERY_EXECUTED = 'QUERY_EXECUTED'
+  QUERY_EXECUTED = 'QUERY_EXECUTED',
 }
 
 export interface OperationalMetricsDataType {
@@ -29,7 +29,7 @@ export const configOperationalMetricsClientForLambda = (lambda: LambdaFunction, 
   lambda.addEnvironment(AWS_SOLUTION_ID, config.awsSolutionId);
   lambda.addEnvironment(AWS_SOLUTION_VERSION, config.awsSolutionVersion);
   lambda.addEnvironment(AWS_SOLUTION_DEPLOYMENT_ID, config.anonymousDataUUID);
-}
+};
 
 const logger = new Logger({ tags: ['OperationalMetricsClient'] });
 
@@ -57,13 +57,15 @@ export class OperationalMetricsClient implements IOperationalMetricsClient {
     this.awsSolutionId = process.env[AWS_SOLUTION_ID] || '';
     this.awsSolutionVersion = process.env[AWS_SOLUTION_VERSION] || '';
     this.anonymousDataUUID = process.env[AWS_SOLUTION_DEPLOYMENT_ID] || '';
-    this.awsRegion = process.env["AWS_REGION"] || '';
-    
-    this.toSend = this.sendAnonymousData && (this.awsSolutionId !== '')
-      && (this.awsSolutionVersion !== '')
-      && (this.anonymousDataUUID !== '')
-      && (this.awsRegion !== '');
-    
+    this.awsRegion = process.env['AWS_REGION'] || '';
+
+    this.toSend =
+      this.sendAnonymousData &&
+      this.awsSolutionId !== '' &&
+      this.awsSolutionVersion !== '' &&
+      this.anonymousDataUUID !== '' &&
+      this.awsRegion !== '';
+
     logger.debug(`OperationalMetricsClient send/not send decision: ${this.toSend}`);
   }
 
@@ -79,10 +81,10 @@ export class OperationalMetricsClient implements IOperationalMetricsClient {
         timestamp: moment.utc().format('YYYY-MM-DD HH:mm:ss.S'),
         data: {
           region: this.awsRegion,
-          ...data
+          ...data,
         },
       };
-  
+
       const result = await sendAnonymousMetric(metricData);
 
       logger.debug(`Sent operational metrics; result: ${result}`);

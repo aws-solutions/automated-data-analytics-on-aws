@@ -24,4 +24,7 @@ module.exports = {
     '@storybook/addon-jest',
   ],
   framework: '@storybook/react',
+  features: {
+    interactionsDebugger: true,
+  },
 };

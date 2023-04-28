@@ -22,7 +22,7 @@ export class CloudWatchSourceStack extends AmazonNativeConnectorSourceTask {
 
     super(scope, id, {
       ...props,
-      connectorId: 'aws',
+      connectorId: 'cloudwatch',
       connectorName: 'Amazon CloudWatch',
       importStepName: 'ImportCloudWatchData',
       importDataStateAccessor: (refs: StaticInfra.Refs.IRecord) => refs.cloudWatchConnector.importDataStateMachine,

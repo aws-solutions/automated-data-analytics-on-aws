@@ -4,6 +4,6 @@
 
 echo "starting import ..."
 
-python3 import.py
+python3 cloudwatch_data_import.py
 
 echo "done"

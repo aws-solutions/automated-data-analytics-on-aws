@@ -10,11 +10,14 @@ defined in @ada/infra and svg/react support wired in @ada/website these will rem
 until proper connector framework is created.
 */
 
+import { ReactComponent as CLOUDTRAIL } from './icon_cloudtrail.svg';
 import { ReactComponent as CLOUDWATCH } from './icon_cloudwatch.svg';
+import { ReactComponent as DYNAMODB } from './icon_dynamodb.svg';
 import { ReactComponent as GOOGLE_ANALYTICS } from '../../vendor/google/ga.svg';
 import { ReactComponent as GOOGLE_BIGQUERY } from '../../vendor/google/bigquery.svg';
 import { ReactComponent as GOOGLE_STORAGE } from '../../vendor/google/cloud_storage.svg';
 import { ReactComponent as KINESIS } from './icon_kinesis.svg';
+import { ReactComponent as MONGODB } from '../../vendor/mongodb.svg';
 import { ReactComponent as MYSQL5 } from '../../vendor/mysql.svg';
 import { ReactComponent as POSTGRESQL } from '../../vendor/postgres.svg';
 import { ReactComponent as S3 } from './icon_s3.svg';
@@ -33,10 +36,13 @@ export const ConnectorIcons: Record<Connectors.ID, IconComponent> = {
   GOOGLE_ANALYTICS,
   GOOGLE_BIGQUERY,
   GOOGLE_STORAGE,
+  DYNAMODB,
   CLOUDWATCH,
   MYSQL5,
   POSTGRESQL,
   SQLSERVER,
+  CLOUDTRAIL,
+  MONGODB,
 };
 
 export interface SourceTypeIconProps {

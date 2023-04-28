@@ -89,7 +89,7 @@ describe('complete e2e creation of a domain, google analytics product, query wit
   });
 
   it('should query the data product and check governance', () => {
-    cy.queryAndGovernance(testDomain, uniqDataProductId, 2022, false);
+    cy.queryAndGovernance(testDomain, uniqDataProductId, new Date().getUTCFullYear(), false);
   });
 
   it('should delete a data product', () => {

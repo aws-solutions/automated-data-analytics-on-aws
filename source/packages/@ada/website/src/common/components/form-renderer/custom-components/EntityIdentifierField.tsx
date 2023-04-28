@@ -12,7 +12,7 @@ export const EntityIdentifierField: FunctionComponent<UseFieldApiConfig> = (prop
       {
         type: CustomValidatorTypes.JSONSCHEMA,
         schema: 'ID',
-        message: 'Must start with letter and only contain letters, numbers, and underscores.',
+        message: 'Must start with letter and only contain lower case letters, numbers, and underscores.',
       },
       ...(props.validate || []),
     ];

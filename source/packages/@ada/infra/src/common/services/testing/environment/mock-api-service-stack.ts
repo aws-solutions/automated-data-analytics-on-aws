@@ -3,6 +3,7 @@ SPDX-License-Identifier: Apache-2.0 */
 /** eslint-disable import/order */
 import { AttributeType } from 'aws-cdk-lib/aws-dynamodb';
 import { Bucket } from '../../../../common/constructs/s3/bucket';
+import { BucketEncryption } from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 import { CounterTable } from '../../../../common/constructs/dynamodb/counter-table';
 import { EntityManagementTables } from '../../../../services/api/components/entity/constructs/entity-management-tables';
@@ -48,7 +49,10 @@ export class TestStackWithMockedApiService extends TestStack {
     });
     this.notificationBus = new NotificationBus(this, 'notification-bus');
 
-    this.accessLogsBucket = new Bucket(this, 'AccessBucket', {});
+    this.accessLogsBucket = new Bucket(this, 'AccessBucket', {
+      // SSE-S3 is the only supported default bucket encryption for Server Access Logging target buckets
+      encryption: BucketEncryption.S3_MANAGED,
+    });
 
     this.apiService = new ApiServiceStack(this, 'Api', {
       adaUserPoolProps: {
@@ -71,8 +75,8 @@ export class TestStackWithMockedApiService extends TestStack {
       awsSolutionId: 'awsSolutionId',
       awsSolutionVersion: 'awsSolutionVersion',
       anonymousDataUUID: 'anonymousDataUUID',
-      sendAnonymousData: 'Yes'
-    }
+      sendAnonymousData: 'Yes',
+    };
 
     this.federatedApi = this.apiService.api;
   }

@@ -12,7 +12,7 @@ jest.mock('@ada/api-client');
 
 const { Primary } = composeStories(stories);
 
-describe.skip(`CreateDataProductView/${Connectors.AmazonS3.ID}`, () => {
+describe(`CreateDataProductView/${Connectors.AmazonS3.ID}`, () => {
   describe('storybook', () => {
     it(Connectors.AmazonS3.ID, async () => {
       const { container } = render(<Primary {...(Primary.args as any)} />);

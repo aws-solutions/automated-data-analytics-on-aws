@@ -20,7 +20,7 @@ echo "Running unit tests"
 source_dir="$(cd $PWD/../source; pwd -P)"
 
 # Install, build and run the tests
-export NODE_OPTIONS=--max_old_space_size=16384
+export NODE_OPTIONS=--max-old-space-size=16384
 export SOLUTION_SKIP_CP_CONTEXT=true
 yarn install --frozen-lockfile
 yarn run build

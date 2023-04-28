@@ -53,8 +53,12 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_STORAGE, IF
 
     managedSecret: {
       enabled: true,
-      secretNameProperty: 'privateKeySecretName',
-      secretValueProperty: 'privateKey',
+      secretDetails: [
+        {
+          secretNameProperty: 'privateKeySecretName',
+          secretValueProperty: 'privateKey',
+        },
+      ],
     },
 
     supports: {
@@ -102,7 +106,8 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_STORAGE, IF
           label: 'Google Storage Location',
           description: 'Enter the folder path of the data in Google Storage',
           placeholder: 'gs://my-bucket/path/to/my/data (folder)',
-          helperText: 'Only folders are supported at this time; please ensure the path above is a folder and not file path. File support will be added in near future.',
+          helperText:
+            'Only folders are supported at this time; please ensure the path above is a folder and not file path. File support will be added in near future.',
           validate: [
             {
               type: 'required',
@@ -117,13 +122,13 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_STORAGE, IF
         ...GOOGLE_AUTH_FIELDS,
       ],
       sourceDetailsFormDataToInputData: ({ sourceDetails, updateTrigger }) => {
-        const { bucket = '', key = '' } = PATTERN_GS_PATH.exec(sourceDetails.googleStoragePath)?.groups || {}
+        const { bucket = '', key = '' } = PATTERN_GS_PATH.exec(sourceDetails.googleStoragePath)?.groups || {};
 
         return {
           ...googleAuthFormDataToInputData({ sourceDetails, updateTrigger }),
           bucket,
           key,
-        }
+        };
       },
     },
 
@@ -135,7 +140,7 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_STORAGE, IF
         { key: 'clientId', label: 'Client Id' },
       ],
     },
-  }
+  },
 };
 
 

@@ -482,7 +482,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -640,7 +640,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -789,7 +789,7 @@ Object {
           "applicationType": "AWS-Solutions",
           "solutionID": "SO0190",
           "solutionName": "Automated Data Analytics on AWS",
-          "version": "v1.1.0",
+          "version": "v1.2.0",
         },
         "Description": "Attributes for Solutions Metadata",
         "Name": Object {
@@ -1522,7 +1522,7 @@ Object {
           "Solutions:ApplicationType": "AWS-Solutions",
           "Solutions:SolutionID": "SO0190",
           "Solutions:SolutionName": "Automated Data Analytics on AWS",
-          "Solutions:SolutionVersion": "v1.1.0",
+          "Solutions:SolutionVersion": "v1.2.0",
         },
       },
       "Type": "AWS::ServiceCatalogAppRegistry::Application",
@@ -1571,7 +1571,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -1598,12 +1598,6 @@ Object {
       ],
       "Properties": Object {
         "Parameters": Object {
-          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn": Object {
-            "Fn::GetAtt": Array [
-              "KMSStack7F65AEC0",
-              "Outputs.AdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn",
-            ],
-          },
           "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAthenaOutputBucket0D9D1563Arn": Object {
             "Fn::GetAtt": Array [
               "KMSStack7F65AEC0",
@@ -1636,7 +1630,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -1858,7 +1852,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -1919,7 +1913,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -2075,7 +2069,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -2320,7 +2314,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -2352,7 +2346,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -2374,7 +2368,7 @@ Object {
     "LayerB20D2F06": Object {
       "Properties": Object {
         "CompatibleRuntimes": Array [
-          "nodejs14.x",
+          "nodejs16.x",
         ],
         "Content": Object {
           "S3Bucket": "cdk-#####",
@@ -2797,7 +2791,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -2941,7 +2935,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -2973,7 +2967,7 @@ Object {
           "Ref": "AWS::Region",
         },
         "awsSolutionId": "SO0190",
-        "awsSolutionVersion": "v1.1.0",
+        "awsSolutionVersion": "v1.2.0",
         "sendAnonymousData": Object {
           "Ref": "sendAnonymousData",
         },
@@ -3220,7 +3214,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -3382,12 +3376,6 @@ Object {
               "Outputs.AdaDataProductServiceGlueEncryptionKey322DD43CArn",
             ],
           },
-          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn": Object {
-            "Fn::GetAtt": Array [
-              "KMSStack7F65AEC0",
-              "Outputs.AdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn",
-            ],
-          },
           "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAthenaOutputBucket0D9D1563Arn": Object {
             "Fn::GetAtt": Array [
               "KMSStack7F65AEC0",
@@ -3450,7 +3438,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {
@@ -3493,7 +3481,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "python3.7",
+        "Runtime": "python3.9",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3906,12 +3894,6 @@ Object {
               "Outputs.AdaDataProductServiceFileUploadBucket4C6FA9E4RegionalDomainName",
             ],
           },
-          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn": Object {
-            "Fn::GetAtt": Array [
-              "KMSStack7F65AEC0",
-              "Outputs.AdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn",
-            ],
-          },
         },
         "Tags": Array [
           Object {
@@ -3920,7 +3902,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.1.0",
+            "Value": "ada@1.2.0",
           },
         ],
         "TemplateURL": Object {

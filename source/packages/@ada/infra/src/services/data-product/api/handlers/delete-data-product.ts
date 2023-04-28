@@ -143,14 +143,23 @@ export const handler = ApiLambdaHandler.for(
       // Delete the data product secret (if any)
       ...[
         requireSecret(dataProduct)
-          ? [
-              secrets
-                .deleteSecret({
-                  SecretId: (dataProduct.sourceDetails as object)[getSourceDetailsSecretProperty(dataProduct)],
-                  ForceDeleteWithoutRecovery: true,
-                })
-                .promise(),
-            ]
+          ? (() => {
+              const secretsToDestroy = [];
+
+              for (const secret of getSourceDetailsSecretProperty(dataProduct)) {
+                secretsToDestroy.push(
+                  secrets
+                    .deleteSecret({
+                      SecretId: secret as string,
+                      ForceDeleteWithoutRecovery: true,
+                    })
+                    .promise(),
+                );
+              }
+
+              log.info(`secretsToDestroy: ${secretsToDestroy}`);
+              return secretsToDestroy;
+            })()
           : [],
       ],
       // Start deletion of data product infrastructure

@@ -81,7 +81,6 @@ describe('data-product/create/utils', () => {
       });
       // validate output matches schema so will be accepable to api validation
       expect(Connectors.Schema.validate(Connectors.Id.GOOGLE_STORAGE, sourceDetails).errors).toEqual([]);
-
     });
 
     it(Connectors.Id.GOOGLE_BIGQUERY, () => {
@@ -102,6 +101,7 @@ describe('data-product/create/utils', () => {
       // validate output matches schema so will be accepable to api validation
       expect(Connectors.Schema.validate(Connectors.Id.GOOGLE_BIGQUERY, sourceDetails).errors).toEqual([]);
     });
+
     it(Connectors.Id.GOOGLE_ANALYTICS, () => {
       const sourceDetails = marshalSourceDetails(
         Connectors.Id.GOOGLE_ANALYTICS,
@@ -133,6 +133,203 @@ describe('data-product/create/utils', () => {
       });
       // validate output matches schema so will be accepable to api validation
       expect(Connectors.Schema.validate(Connectors.Id.GOOGLE_STORAGE, sourceDetails).errors).toEqual([]);
+    });
+
+    it(Connectors.Id.CLOUDTRAIL, () => {
+      const sourceDetails = marshalSourceDetails(
+        Connectors.Id.CLOUDTRAIL,
+        {
+          cloudTrailTrailArn: 'arn:aws:cloudtrail:us-east-1:123456789012:trail/TestTrail',
+          cloudTrailEventTypes: ['Management', 'Data'],
+          cloudTrailDateFrom: '2023-03-14T06:50:00.000Z',
+          cloudTrailDateTo: '2023-03-16T06:50:00.000Z',
+          crossAccountRoleArn: 'arn:aws:iam::123456789011:role/AdaReadRole',
+        },
+        {
+          triggerType: DataProductUpdateTriggerType.ON_DEMAND,
+        },
+      );
+      expect(sourceDetails).toMatchObject({
+        cloudTrailTrailArn: 'arn:aws:cloudtrail:us-east-1:123456789012:trail/TestTrail',
+        cloudTrailEventTypes: 'Management & Data',
+        cloudTrailDateFrom: '2023-03-14T00:00:00.000Z',
+        cloudTrailDateTo: '2023-03-16T00:00:00.000Z',
+        crossAccountRoleArn: 'arn:aws:iam::123456789011:role/AdaReadRole',
+      });
+      // validate output matches schema so will be accepable to api validation
+      expect(Connectors.Schema.validate(Connectors.Id.CLOUDTRAIL, sourceDetails).errors).toEqual([]);
+    });
+
+    it(Connectors.Id.CLOUDWATCH, () => {
+      const sourceDetails = marshalSourceDetails(
+        Connectors.Id.CLOUDWATCH,
+        {
+          cloudwatchLogGroupArn: 'arn:aws:cloudwatch:us-east-1:12345679012',
+          query: 'select *',
+          since: '2023-03-14T06:50:00.000Z',
+          until: '2023-03-16T06:50:00.000Z',
+          crossAccountRoleArn: 'arn:aws:iam::123456789011:role/AdaReadRole',
+        },
+        {
+          triggerType: DataProductUpdateTriggerType.ON_DEMAND,
+        },
+      );
+      expect(sourceDetails).toMatchObject({
+        cloudwatchLogGroupArn: 'arn:aws:cloudwatch:us-east-1:12345679012',
+        crossAccountRoleArn: 'arn:aws:iam::123456789011:role/AdaReadRole',
+        query: 'select *',
+        since: '2023-03-14T06:50:00.000Z',
+        until: '2023-03-16T06:50:00.000Z',
+      });
+      // validate output matches schema so will be accepable to api validation
+      expect(Connectors.Schema.validate(Connectors.Id.CLOUDWATCH, sourceDetails).errors).toEqual([]);
+    });
+
+    it(Connectors.Id.DYNAMODB, () => {
+      const sourceDetails = marshalSourceDetails(
+        Connectors.Id.DYNAMODB,
+        {
+          dynamoDbTableArn: {
+            tableArn: 'arn:aws:logs:ap-southeast-1:123456789012:dynamodb:/mytable',
+            roleArn: 'arn:aws:iam::123456789011:role/AdaReadRole',
+          },
+        },
+        {
+          triggerType: DataProductUpdateTriggerType.ON_DEMAND,
+        },
+      );
+      expect(sourceDetails).toMatchObject({
+        dynamoDbTableArn: 'arn:aws:logs:ap-southeast-1:123456789012:dynamodb:/mytable',
+        crossAccountRoleArn: 'arn:aws:iam::123456789011:role/AdaReadRole',
+      });
+      // validate output matches schema so will be accepable to api validation
+      expect(Connectors.Schema.validate(Connectors.Id.DYNAMODB, sourceDetails).errors).toEqual([]);
+    });
+
+    it(Connectors.Id.MYSQL5, () => {
+      const sourceDetails = marshalSourceDetails(
+        Connectors.Id.MYSQL5,
+        {
+          databaseEndpoint: 'myendpoint',
+          databaseName: 'mydb',
+          databasePort: '1234',
+          databaseTable: 'mytable',
+          password: 'testpass',
+          username: 'testusername',
+        },
+        {
+          triggerType: DataProductUpdateTriggerType.ON_DEMAND,
+        },
+      );
+      expect(sourceDetails).toMatchObject({
+        databaseEndpoint: 'myendpoint',
+        databasePort: '1234',
+        databaseName: 'mydb',
+        databaseSchema: '',
+        databaseTable: 'mytable',
+        username: 'testusername',
+        password: 'testpass',
+      });
+      // validate output matches schema so will be accepable to api validation
+      expect(Connectors.Schema.validate(Connectors.Id.MYSQL5, sourceDetails).errors).toEqual([]);
+    });
+
+    it(Connectors.Id.POSTGRESQL, () => {
+      const sourceDetails = marshalSourceDetails(
+        Connectors.Id.POSTGRESQL,
+        {
+          databaseEndpoint: 'myendpoint',
+          databaseName: 'mydb',
+          databasePort: '1234',
+          databaseSchema: 'myschema',
+          databaseTable: 'mytable',
+          password: 'testpass',
+          username: 'testusername',
+        },
+        {
+          triggerType: DataProductUpdateTriggerType.ON_DEMAND,
+        },
+      );
+      expect(sourceDetails).toMatchObject({
+        databaseEndpoint: 'myendpoint',
+        databasePort: '1234',
+        databaseName: 'mydb',
+        databaseSchema: 'myschema',
+        databaseTable: 'mytable',
+        username: 'testusername',
+        password: 'testpass',
+      });
+      // validate output matches schema so will be accepable to api validation
+      expect(Connectors.Schema.validate(Connectors.Id.POSTGRESQL, sourceDetails).errors).toEqual([]);
+    });
+
+    it(Connectors.Id.SQLSERVER, () => {
+      const sourceDetails = marshalSourceDetails(
+        Connectors.Id.SQLSERVER,
+        {
+          databaseEndpoint: 'myendpoint',
+          databaseName: 'mydb',
+          databasePort: '1234',
+          databaseSchema: 'myschema',
+          databaseTable: 'mytable',
+          password: 'testpass',
+          username: 'testusername',
+        },
+        {
+          triggerType: DataProductUpdateTriggerType.ON_DEMAND,
+        },
+      );
+      expect(sourceDetails).toMatchObject({
+        databaseEndpoint: 'myendpoint',
+        databasePort: '1234',
+        databaseName: 'mydb',
+        databaseSchema: 'myschema',
+        databaseTable: 'mytable',
+        username: 'testusername',
+        password: 'testpass',
+      });
+      // validate output matches schema so will be accepable to api validation
+      expect(Connectors.Schema.validate(Connectors.Id.SQLSERVER, sourceDetails).errors).toEqual([]);
+    });
+
+    it(Connectors.Id.MONGODB, () => {
+      const sourceDetails = marshalSourceDetails(
+        Connectors.Id.MONGODB,
+        {
+          bookmarkField: 'PK',
+          bookmarkFieldType: 'string',
+          collectionName: 'mycollection',
+          databaseEndpoint: 'myendpoint',
+          databaseName: 'mydb',
+          databasePort: '9999',
+          extraParams: ['value1', 'value2'],
+          password: 'testpass',
+          tls: 'false',
+          tlsCA: 'tlsca-file-content',
+          tlsClientCert: 'tls-client-cert-file-content',
+          username: 'testuser',
+        },
+        {
+          triggerType: DataProductUpdateTriggerType.ON_DEMAND,
+        },
+      );
+
+      expect(sourceDetails).toMatchObject({
+        databaseEndpoint: 'myendpoint',
+        databasePort: '9999',
+        databaseName: 'mydb',
+        collectionName: 'mycollection',
+        username: 'testuser',
+        password: 'testpass',
+        tls: 'false',
+        tlsCA: 'tlsca-file-content',
+        tlsClientCert: 'tls-client-cert-file-content',
+        extraParams: ',',
+        bookmarkField: 'PK',
+        bookmarkFieldType: 'string',
+      });
+      // validate output matches schema so will be accepable to api validation
+      expect(Connectors.Schema.validate(Connectors.Id.MONGODB, sourceDetails).errors).toEqual([]);
     });
   });
 

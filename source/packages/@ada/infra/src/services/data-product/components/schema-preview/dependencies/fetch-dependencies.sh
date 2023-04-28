@@ -41,18 +41,18 @@ if [ "$FETCH_DEPENDENCY" = true ]; then
     
     # dependency source
     GLUE_SOURCE=https://github.com/awslabs/aws-glue-libs.git
-    SPARK_SOURCE=https://aws-glue-etl-artifacts.s3.amazonaws.com/glue-2.0/spark-2.4.3-bin-hadoop2.8.tgz
+    SPARK_SOURCE=https://aws-glue-etl-artifacts.s3.amazonaws.com/glue-3.0/spark-3.1.1-amzn-0-bin-3.2.1-amzn-3.tgz
     MAVEN_SOURCE=https://aws-glue-etl-artifacts.s3.amazonaws.com/glue-common/apache-maven-3.6.0-bin.tar.gz
 
     # download dependencies
-    git clone -b glue-2.0 $GLUE_SOURCE
+    git clone -b glue-3.0 $GLUE_SOURCE
     wget $SPARK_SOURCE
     wget $MAVEN_SOURCE
 
     tar zxfv apache-maven-3.6.0-bin.tar.gz
-    tar zxfv spark-2.4.3-bin-hadoop2.8.tgz
+    tar xfv spark-3.1.1-amzn-0-bin-3.2.1-amzn-3.tgz
 
-    rm spark-2.4.3-bin-hadoop2.8.tgz
+    rm spark-3.1.1-amzn-0-bin-3.2.1-amzn-3.tgz
     rm apache-maven-3.6.0-bin.tar.gz
 
     MAVEN_HOME="$DEPENDENCY_DIR/apache-maven-3.6.0"

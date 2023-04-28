@@ -2,10 +2,7 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { Connectors } from '@ada/connectors';
 import { DataProduct, DataProductPreview, DataProductUpdateTrigger, DataSets, Script } from '@ada/api';
-import {
-  DataProductUpdateTriggerType,
-  StepFunctionExecutionStatus,
-} from '@ada/common';
+import { DataProductUpdateTriggerType, StepFunctionExecutionStatus } from '@ada/common';
 import { SCHEDULERATE_CUSTOM } from '$connectors/common';
 import { nameToIdentifier } from '$common/utils/identifier';
 import { previewSchemaToColumnMetadata } from '$common/utils';
@@ -137,6 +134,9 @@ export const formDataToDataProduct = (formData: FormData): DataProduct => {
     enableAutomaticTransforms = supports.automaticTransforms && transforms == null;
   }
 
+  // if connector doesn't support automatic PII detection, turn it off
+  const overrideEnableAutomaticPii = supports.disableAutomaticPii ? false : enableAutomaticPii;
+
   return {
     domainId,
     name,
@@ -155,8 +155,7 @@ export const formDataToDataProduct = (formData: FormData): DataProduct => {
     parentDataProducts: [],
     childDataProducts: [],
     transforms: transforms || [],
-    enableAutomaticPii,
+    enableAutomaticPii: overrideEnableAutomaticPii,
     enableAutomaticTransforms,
   } as DataProduct;
-
 };

@@ -2,14 +2,17 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { Bucket } from '../../../../common/constructs/s3/bucket';
 import { Construct } from 'constructs';
+import { DataProductSecretsPolicyStatement } from '../../../../common/constructs/iam/policies';
 import { DockerImageFunction } from 'aws-cdk-lib/aws-lambda';
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { Effect, IRole, ManagedPolicy, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import {
   ExternalSourceAssumeRolePolicyStatement,
+  ExternalSourceDataCloudTrailAccessPolicyStatement,
   ExternalSourceDataCloudWatchAccessPolicyStatement,
   ExternalSourceDataKmsAccessPolicyStatement,
   ExternalSourceDataS3AccessPolicyStatement,
+  ExternalSourceDynamoDBAccessPolicyStatement,
   SolutionContext,
   TypescriptFunction,
   getDockerImagePath,
@@ -66,6 +69,10 @@ export default class SchemaPreview extends Construct {
       managedPolicies: [ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaVPCAccessExecutionRole')],
     });
 
+    // grant lambda exec role permission to retrieve secrets for credentails of the data product
+    // preview lambda will run to generate schema when data product is in creation process
+    pullDataSampleLambdaExecRole.addToPolicy(DataProductSecretsPolicyStatement);
+
     // Grant KMS permission
     productPreviewKey.grantDecrypt(pullDataSampleLambdaExecRole);
 
@@ -82,6 +89,20 @@ export default class SchemaPreview extends Construct {
       }),
     );
 
+    pullDataSampleConnectorRole.addToPolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: [
+          'dynamodb:GetItem',
+          'dynamodb:BatchGetItem',
+          'dynamodb:Scan',
+          'dynamodb:Query',
+          'dynamodb:ConditionCheckItem',
+          'ec2:describeRegions',
+        ],
+        resources: ['*'],
+      }),
+    );
     // Grant schemapreview lambda permissions to create, use and delete glue connection
     // so that glue connection can be used in the preview lambda for jdbc connector
     pullDataSampleConnectorRole.addToPolicy(
@@ -100,13 +121,22 @@ export default class SchemaPreview extends Construct {
     pullDataSampleConnectorRole.addToPolicy(ExternalSourceDataKmsAccessPolicyStatement);
     // Grant access to Query CloudWatch Logs
     pullDataSampleConnectorRole.addToPolicy(ExternalSourceDataCloudWatchAccessPolicyStatement);
+    // Grant access to get CloudTrail details
+    pullDataSampleConnectorRole.addToPolicy(ExternalSourceDataCloudTrailAccessPolicyStatement);
+    // Grant access to Query DynamoDB Tables
+    pullDataSampleConnectorRole.addToPolicy(ExternalSourceDynamoDBAccessPolicyStatement);
+    // Grant access to Assume external roles
+    pullDataSampleConnectorRole.addToPolicy(ExternalSourceAssumeRolePolicyStatement);
 
     addCfnNagSuppressionsToRolePolicy(pullDataSampleConnectorRole, [
       {
         id: 'W12',
-        reason: '* required to access external reousrces added later from data product console',
+        reason: '* required to access external resources added later from data product console',
       },
     ]);
+
+    // Grant access to get CloudTrail details
+    pullDataSampleConnectorRole.addToPolicy(ExternalSourceDataCloudTrailAccessPolicyStatement);
 
     // Container Lambda for preview sampling
     const previewSchemaDockerImage = new TarballImageAsset(scope, 'Tarball', {

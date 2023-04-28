@@ -1,7 +1,7 @@
-FROM public.ecr.aws/amazonlinux/amazonlinux:latest
+FROM public.ecr.aws/amazonlinux/amazonlinux:2
 
 RUN yum update -y
-RUN yum install -y \
+RUN yum install -y --skip-broken \
   which \
   curl \
   python3 \

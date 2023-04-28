@@ -1,11 +1,7 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
 import 'jest-extended';
-import {
-  APIGatewayProxyEventPathParameters,
-  APIGatewayProxyEventQueryStringParameters,
-  APIGatewayProxyResult,
-} from 'aws-lambda';
+import { APIGatewayProxyEventQueryStringParameters, APIGatewayProxyResult } from 'aws-lambda';
 import { Script, ScriptIdentifier } from '@ada/api';
 import { ScriptStore } from '../../../components/ddb/script';
 import { apiGatewayEvent, getLocalDynamoDocumentClient, recreateAllTables } from '@ada/microservice-test-common';
@@ -83,6 +79,10 @@ describe('list-script', () => {
     const response = await listScriptsHandler();
     expect(testScriptStore.listScripts).toHaveBeenCalledTimes(1);
     expect(response.statusCode).toBe(400);
-    expect(JSON.parse(response.body)).toStrictEqual({ name: 'Error', message: 'bad script', errorId: expect.stringMatching(/\w{10}/) });
+    expect(JSON.parse(response.body)).toStrictEqual({
+      name: 'Error',
+      message: 'bad script',
+      errorId: expect.stringMatching(/\w{10}/),
+    });
   });
 });

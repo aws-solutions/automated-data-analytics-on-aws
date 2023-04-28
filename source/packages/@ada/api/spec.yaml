@@ -4,7 +4,7 @@ info:
     of data, providing an end-to-end platform used for ingesting, transforming, governing,
     and querying datasets through a standalone user interface
   title: Automated Data Analytics on AWS API
-  version: 1.1.0
+  version: 1.2.0
 servers:
 - url: https://{apigId}.execute-api.{region}.amazonaws.com/{stage}
   variables:
@@ -978,6 +978,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DataProductEntity'
+          description: 200 response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 400 response
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 403 response
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 404 response
+  /data-product/dynamoDB/table/{tableArn}/stream:
+    get:
+      description: Get data product dynamo db table stream
+      operationId: GetDataProductDynamoDBTableStream
+      parameters:
+      - explode: false
+        in: path
+        name: tableArn
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableStreamEntity'
           description: 200 response
         "400":
           content:
@@ -9464,11 +9501,71 @@ components:
       - GOOGLE_ANALYTICS
       - GOOGLE_BIGQUERY
       - GOOGLE_STORAGE
+      - DYNAMODB
       - CLOUDWATCH
       - MYSQL5
       - POSTGRESQL
       - SQLSERVER
+      - CLOUDTRAIL
+      - MONGODB
       type: string
+    TableStream:
+      properties:
+        crossAccount:
+          description: Is the target table a cross account table
+          type: boolean
+        streamEnabled:
+          description: Is there a data stream enabled on the table
+          type: boolean
+        streamViewType:
+          description: What type of stream is enabled on the table
+          type: string
+        tableStreamArn:
+          description: Table stream ARN
+          type: string
+      type: object
+    TableStreamEntity:
+      description: Handler for retrieving dynamodb table stream details
+      example:
+        streamViewType: streamViewType
+        streamEnabled: true
+        tableStreamArn: tableStreamArn
+        updatedBy: updatedBy
+        createdBy: createdBy
+        createdTimestamp: createdTimestamp
+        updatedTimestamp: updatedTimestamp
+        crossAccount: true
+      properties:
+        createdBy:
+          maxLength: 256
+          pattern: '[\w\s+=.@-]+'
+          type: string
+        createdTimestamp:
+          maxLength: 64
+          pattern: ^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?))?$
+          type: string
+        crossAccount:
+          description: Is the target table a cross account table
+          type: boolean
+        streamEnabled:
+          description: Is there a data stream enabled on the table
+          type: boolean
+        streamViewType:
+          description: What type of stream is enabled on the table
+          type: string
+        tableStreamArn:
+          description: Table stream ARN
+          type: string
+        updatedBy:
+          maxLength: 256
+          pattern: '[\w\s+=.@-]+'
+          type: string
+        updatedTimestamp:
+          maxLength: 64
+          pattern: ^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?))?$
+          type: string
+      title: TableStreamEntity
+      type: object
     Tag:
       properties:
         key:

@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/nodejs:16 as builder
+FROM public.ecr.aws/lambda/nodejs:16 AS builder
 WORKDIR /usr/app
 COPY node_modules/ ./node_modules
 COPY dist/ ./

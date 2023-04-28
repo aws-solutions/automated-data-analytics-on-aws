@@ -1,6 +1,6 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import * as stories from './analytics.stories';
+import * as stories from './bigquery.stories';
 import { act, render } from '@testing-library/react';
 import { composeStories } from '@storybook/testing-react';
 import * as Connectors from '@ada/connectors';
@@ -12,7 +12,7 @@ jest.mock('@ada/api-client');
 
 const { Primary } = composeStories(stories);
 
-describe.skip(`CreateDataProductView/${Connectors.GoogleBigQuery.ID}`, () => {
+describe(`CreateDataProductView/${Connectors.GoogleBigQuery.ID}`, () => {
   describe('storybook', () => {
     it(Connectors.GoogleBigQuery.ID, async () => {
       const { container } = render(<Primary {...(Primary.args as any)} />);

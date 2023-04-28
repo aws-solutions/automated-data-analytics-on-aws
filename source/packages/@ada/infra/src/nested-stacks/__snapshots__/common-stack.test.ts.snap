@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-CommonStack) - Automated Data Analytics on AWS. Version v1.1.0",
+  "Description": "(SO0190-CommonStack) - Automated Data Analytics on AWS. Version v1.2.0",
   "Outputs": Object {
     "AdaCommonStackAccessLogBucketB5B66FEDArn": Object {
       "Value": Object {
@@ -129,9 +129,6 @@ Object {
     },
   },
   "Parameters": Object {
-    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn": Object {
-      "Type": "String",
-    },
     "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAthenaOutputBucket0D9D1563Arn": Object {
       "Type": "String",
     },
@@ -228,11 +225,15 @@ Object {
           "ServerSideEncryptionConfiguration": Array [
             Object {
               "ServerSideEncryptionByDefault": Object {
-                "KMSMasterKeyID": Object {
-                  "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn",
-                },
-                "SSEAlgorithm": "aws:kms",
+                "SSEAlgorithm": "AES256",
               },
+            },
+          ],
+        },
+        "OwnershipControls": Object {
+          "Rules": Array [
+            Object {
+              "ObjectOwnership": "BucketOwnerPreferred",
             },
           ],
         },
@@ -1081,7 +1082,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1309,7 +1310,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",

@@ -17,7 +17,7 @@ export const handler = async (
 
   const nextIndex = transformJobIndex + 1;
   const nextTransform = transformJobs[nextIndex];
-
+  
   return {
     ...event.Payload,
     transformJobIndex: nextIndex,

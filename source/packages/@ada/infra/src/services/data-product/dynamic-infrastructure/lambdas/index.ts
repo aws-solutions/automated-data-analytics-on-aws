@@ -42,7 +42,7 @@ export class DataProductInfraLambdas extends Construct {
       lambda.addToRolePolicy(
         new PolicyStatement({
           effect: Effect.ALLOW,
-          actions: ['glue:GetTables', 'glue:UpdateTable'],
+          actions: ['glue:GetTables', 'glue:UpdateTable', 'glue:DeletePartitionIndex'],
           resources: [
             Arn.format(
               {

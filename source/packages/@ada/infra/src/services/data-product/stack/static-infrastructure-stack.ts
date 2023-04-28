@@ -8,9 +8,9 @@ import { Construct } from 'constructs';
 import { Database, JobBookmarksEncryptionMode, S3EncryptionMode, SecurityConfiguration } from '@aws-cdk/aws-glue-alpha';
 import { ExtendedNestedStack, addCfnNagSuppressions, getUniqueName, globalHash } from '@ada/cdk-core';
 import { Key } from 'aws-cdk-lib/aws-kms';
+import { ParameterTier, StringParameter } from 'aws-cdk-lib/aws-ssm';
 import { Role } from 'aws-cdk-lib/aws-iam';
 import { StaticInfra } from '@ada/microservice-common';
-import { StringParameter } from 'aws-cdk-lib/aws-ssm';
 import AthenaQueryExecutorStateMachine from '../../query/components/athena-query-executor-step-function';
 import CrawlerPollerStateMachine from '../components/crawler-poller-state-machine';
 import DataIngressGateway from '../core/network/transit-gateway';
@@ -148,10 +148,12 @@ class BaseStaticInfrastructureStack extends ExtendedNestedStack implements Stati
       pointInTimeRecovery: true,
     });
 
-    addCfnNagSuppressions(this.lastUpdatedDetailTable.node.defaultChild as CfnResource, [{
-      id: 'W74',
-      reason: 'Table with no sensitive data and using AWS_MANAGED encryption',
-    }])
+    addCfnNagSuppressions(this.lastUpdatedDetailTable.node.defaultChild as CfnResource, [
+      {
+        id: 'W74',
+        reason: 'Table with no sensitive data and using AWS_MANAGED encryption',
+      },
+    ]);
 
     // collect subnet info from DataIngressVPC
     const subnetIds: string[] = [];
@@ -197,6 +199,7 @@ class BaseStaticInfrastructureStack extends ExtendedNestedStack implements Stati
           return JSON.stringify(this.staticInfraParameterValue);
         },
       }),
+      tier: ParameterTier.ADVANCED
     });
 
     this.dataProductCreationStateMachine.stepLambdas.forEach((lambda) => {

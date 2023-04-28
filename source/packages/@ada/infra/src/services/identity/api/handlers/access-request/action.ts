@@ -22,7 +22,6 @@ export const handler = ApiLambdaHandler.for(
 
     const groupStore = GroupStore.getInstance();
     const accessRequestStore = AccessRequestStore.getInstance();
-    // TODO: check user is a valid user
 
     const { reason } = request;
 

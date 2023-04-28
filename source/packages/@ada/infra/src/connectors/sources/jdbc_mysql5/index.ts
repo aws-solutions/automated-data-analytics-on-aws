@@ -53,8 +53,12 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__MYSQL5, IFormData_
 
     managedSecret: {
       enabled: true,
-      secretNameProperty: 'dbCredentialSecretName',
-      secretValueProperty: 'password',
+      secretDetails: [
+        {
+          secretNameProperty: 'dbCredentialSecretName',
+          secretValueProperty: 'password',
+        },
+      ],
     },
 
     supports: {

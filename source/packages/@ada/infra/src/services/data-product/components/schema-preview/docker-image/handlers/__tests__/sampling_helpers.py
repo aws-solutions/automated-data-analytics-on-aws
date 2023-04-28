@@ -18,7 +18,7 @@ class SamplingTestHelpers:
                   "dataProductId": "test-data-product",
                   "domainId": "test-domain",
                   "sourceType": source_type,
-                  "sourceDetails": base64.b64encode(json.dumps(source_details).encode("utf-8"))
+                  "sourceDetails": base64.b64encode(json.dumps(source_details).encode("utf-8")),
               },
               "callingUser": {
                   "userId": "darthvader",

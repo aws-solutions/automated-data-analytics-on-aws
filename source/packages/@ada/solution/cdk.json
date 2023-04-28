@@ -1,4 +1,7 @@
 {
   "app": "npx ts-node bin/cdk-solution.ts",
-  "context": {}
+  "context": {
+    "@aws-cdk/customresources:installLatestAwsSdkDefault": false,
+    "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": true
+  }
 }

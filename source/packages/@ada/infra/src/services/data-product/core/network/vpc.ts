@@ -3,7 +3,15 @@ SPDX-License-Identifier: Apache-2.0 */
 import { Arn, CfnResource, Stack } from 'aws-cdk-lib';
 import { AwsCustomResource, AwsCustomResourcePolicy, PhysicalResourceId } from 'aws-cdk-lib/custom-resources';
 import { Construct } from 'constructs';
-import { FlowLog, FlowLogDestination, FlowLogResourceType, SecurityGroup, SubnetType, Vpc } from 'aws-cdk-lib/aws-ec2';
+import {
+  FlowLog,
+  FlowLogDestination,
+  FlowLogResourceType,
+  IpAddresses,
+  SecurityGroup,
+  SubnetType,
+  Vpc,
+} from 'aws-cdk-lib/aws-ec2';
 import { LogGroup } from '../../../../common/constructs/cloudwatch/log-group';
 import { Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { SolutionContext, tryGetSolutionContext } from '../../../../common/context';
@@ -21,7 +29,8 @@ export class DataIngressVPC extends Construct {
 
     this.vpc = new Vpc(this, 'DataIngressVPC', {
       // VPC CIDR should have at least /24 mask
-      cidr: tryGetSolutionContext(this, SolutionContext.DATA_INGRESS_VPC_CIDR),
+      ipAddresses: IpAddresses.cidr(tryGetSolutionContext(this, SolutionContext.DATA_INGRESS_VPC_CIDR)),
+
       // can't use more than 2 Azs for keep stack environment agonistic
       maxAzs: 2,
 
@@ -116,12 +125,15 @@ export class DataIngressVPC extends Construct {
       },
       policy: AwsCustomResourcePolicy.fromSdkCalls({
         resources: [
-          Arn.format({
-            service: 'ec2',
-            resource: 'security-group',
-            resourceName: this.glueJDBCTargetSecurityGroup.securityGroupId,
-          }, Stack.of(this)),
-        ]
+          Arn.format(
+            {
+              service: 'ec2',
+              resource: 'security-group',
+              resourceName: this.glueJDBCTargetSecurityGroup.securityGroupId,
+            },
+            Stack.of(this),
+          ),
+        ],
       }),
     });
     addSelfReferenceIngressRule.node.addDependency(this.glueJDBCTargetSecurityGroup);

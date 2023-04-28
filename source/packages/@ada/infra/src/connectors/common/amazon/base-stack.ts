@@ -15,7 +15,11 @@ import {
   DynamicInfraStackProps,
   DynamicInfrastructureStackBase,
 } from '@ada/dynamic-infra/stacks/dynamic-infrastructure-stack-base';
-import { DynamoAttributeValue, DynamoGetItem, StepFunctionsStartExecution } from 'aws-cdk-lib/aws-stepfunctions-tasks';
+import {
+  DynamoAttributeValue,
+  DynamoGetItem,
+  StepFunctionsStartExecution,
+} from 'aws-cdk-lib/aws-stepfunctions-tasks';
 import { LogGroup } from 'aws-cdk-lib/aws-logs';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { Rule } from 'aws-cdk-lib/aws-events';
@@ -36,7 +40,7 @@ export interface AmazonNativeConnectorSourceTaskProps extends DynamicInfraStackP
 
 /**
  * Generic Base Amazon Native Connector Stack
- * This will provide the state machine to handle the data product lifecycle;
+ * This will provide the state machine to hande the data product lifecycle;
  * data import using the ecs cluster, storing last import data in a dynamodb table,
  * execute glue crawlers and tranforms on the imported data and handle success,
  * error and success no data to import (for subsequent on demand and schedule
@@ -55,10 +59,13 @@ export abstract class AmazonNativeConnectorSourceTask extends DynamicInfrastruct
     stateMachineInput,
     importStepName,
   }: AmazonNativeConnectorSourceTaskProps): IStateMachine {
-    const { dataBucket, glueDatabase, glueSecurityConfigurationName } = this.staticInfrastructureReferences;
+    const { dataBucket, glueDatabase, glueSecurityConfigurationName } =
+      this.staticInfrastructureReferences;
 
     const tablePrefix = `${this.dataProductUniqueIdentifier}-aws-${connectorId}-`;
+
     const s3DestinationPath = s3PathJoin(this.dataBucketPath, `aws-${connectorId}-import`);
+
     const s3Target = {
       bucket: dataBucket.bucketName,
       key: s3DestinationPath,

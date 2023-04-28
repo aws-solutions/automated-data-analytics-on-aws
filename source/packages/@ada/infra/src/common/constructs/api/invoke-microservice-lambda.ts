@@ -18,8 +18,8 @@ export interface InvokeMicroserviceLambdaProps extends MicroserviceApiRequestPro
  */
 export default class InvokeMicroserviceLambda extends AwsCustomResource {
   static makeSequential(invocations: InvokeMicroserviceLambda[]): void {
-    for(let i=1; i<invocations.length; i++) {
-      const prev = invocations[i-1];
+    for (let i = 1; i < invocations.length; i++) {
+      const prev = invocations[i - 1];
       const cur = invocations[i];
       cur.invokeAfter(prev);
     }
@@ -71,6 +71,6 @@ export default class InvokeMicroserviceLambda extends AwsCustomResource {
   invokeAfter(predecessor: InvokeMicroserviceLambda): void {
     const _instance = (this.node.defaultChild as CustomResource).node.defaultChild as CfnResource;
     const _predecessor = (predecessor.node.defaultChild as CustomResource).node.defaultChild as CfnResource;
-    _instance.addDependsOn(_predecessor);
+    _instance.addDependency(_predecessor);
   }
 }

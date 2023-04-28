@@ -21,6 +21,8 @@ export * as GoogleBigQuery from './google_bigquery';
 
 export * as GoogleStorage from './google_storage';
 
+export * as AmazonDynamoDB from './amazon_dynamodb';
+
 export * as AmazonCloudWatch from './amazon_cloudwatch';
 
 export * as MYSQL5 from './jdbc_mysql5';
@@ -28,3 +30,7 @@ export * as MYSQL5 from './jdbc_mysql5';
 export * as POSTGRESQL from './jdbc_postgresql';
 
 export * as SQLSERVER from './jdbc_sqlserver';
+
+export * as AmazonCloudTrail from './amazon_cloudtrail';
+
+export * as MongoDB from './mongodb';

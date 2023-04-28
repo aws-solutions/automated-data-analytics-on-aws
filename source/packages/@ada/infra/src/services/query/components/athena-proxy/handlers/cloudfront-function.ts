@@ -4,7 +4,7 @@ SPDX-License-Identifier: Apache-2.0 */
 /* eslint-disable */
 
 // @ts-ignore
-function handler(event: any) {
+function handler(event) {
   var response = event.response;
   var headers = response.headers;
 

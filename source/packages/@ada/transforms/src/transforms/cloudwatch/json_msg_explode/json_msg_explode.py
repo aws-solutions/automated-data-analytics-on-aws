@@ -14,7 +14,7 @@ def extract_json(payload: str, pattern: str) -> object or None:
     if result:
         try:  
             return json.loads(result.group(1))
-        except json.JSONDecodeError as e:
+        except json.JSONDecodeError as _e:
             return None
     
     return None

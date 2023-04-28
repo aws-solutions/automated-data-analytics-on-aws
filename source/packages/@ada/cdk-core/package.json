@@ -14,14 +14,14 @@
   },
   "dependencies": {
     "@ada/common": "*",
-    "aws-cdk-lib": "^2.53.0",
+    "aws-cdk-lib": "2.70.0",
     "constructs": "^10.1.181",
     "truncate-middle": "^1.0.6"
   },
   "devDependencies": {
     "@types/truncate-middle": "^1.0.1",
-    "aws-cdk": "^2.53.0",
-    "aws-sdk": "^2.1181.0",
+    "aws-cdk": "2.70.0",
+    "aws-sdk": "^2.1358.0",
     "cross-env": "^7.0.2",
     "module-alias": "^2.2.2",
     "string-hash": "^1.1.3",

@@ -251,10 +251,13 @@ export namespace Connectors {
     managedSecret?: {
       /** Indicates that this connector requires a managed secret */
       enabled: boolean;
-      /** The property name from the source details schema that defines the secret name */
-      secretNameProperty: string;
-      /** The property name from the source details schema that defines the secret key value */
-      secretValueProperty: string;
+
+      secretDetails: {
+        /** The property name from the source details schema that defines the secret name */
+        secretNameProperty: string;
+        /** The property name from the source details schema that defines the secret key value */
+        secretValueProperty: string;
+      }[];
     };
 
     /** Mapping of features/functionality this source type supports */
@@ -271,6 +274,10 @@ export namespace Connectors {
        * Indicates if the source type support custom transforms.
        */
       customTransforms: boolean;
+      /**
+       * Indicate if the source type support automatic PII detection
+       */
+      disableAutomaticPii?: boolean;
       /**
        * Indicates what types of update triggers to source supports.
        * If `false` the source does not support updates after initial import.

@@ -121,6 +121,7 @@ export const LayoutProvider: React.FC<LayoutProviderProps> = ({ children, layout
     [fullMode],
   );
 
+  /* eslint-disable-next-line */
   const [layouts] = useState<LayoutMap>(() => {
     const _layouts: LayoutMap = new Map();
     const defaultLayouts = {

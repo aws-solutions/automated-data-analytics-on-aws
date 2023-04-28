@@ -83,35 +83,29 @@ describe('retained', () => {
       const lambdaFunction = new lambda.Function(stack, 'Lambda', {
         code: lambda.AssetCode.fromInline('foo'),
         handler: 'handler',
-        runtime: lambda.Runtime.NODEJS_14_X,
+        runtime: lambda.Runtime.NODEJS_16_X,
       });
 
       aspect.bindLambda(lambdaFunction);
 
       const template = Template.fromStack(stack);
 
-      template.hasResourceProperties(
-        lambda.CfnFunction.CFN_RESOURCE_TYPE_NAME,
-        {
-          Environment: Match.objectLike({
-            Variables: {
-              [RETAINED_RESOURCES_ENV_VAR]: Match.anyValue(),
+      template.hasResourceProperties(lambda.CfnFunction.CFN_RESOURCE_TYPE_NAME, {
+        Environment: Match.objectLike({
+          Variables: {
+            [RETAINED_RESOURCES_ENV_VAR]: Match.anyValue(),
+          },
+        }),
+      });
+      template.hasResourceProperties(iam.CfnPolicy.CFN_RESOURCE_TYPE_NAME, {
+        PolicyDocument: Match.objectLike({
+          Statement: [
+            {
+              Action: RETAINED_POLICY_ACTIONS,
             },
-          }),
-        },
-      );
-      template.hasResourceProperties(
-        iam.CfnPolicy.CFN_RESOURCE_TYPE_NAME,
-        {
-          PolicyDocument: Match.objectLike({
-            Statement: [
-              {
-                Action: RETAINED_POLICY_ACTIONS,
-              },
-            ],
-          }),
-        },
-      );
+          ],
+        }),
+      });
     });
 
     it('should get arn for supported resources', () => {

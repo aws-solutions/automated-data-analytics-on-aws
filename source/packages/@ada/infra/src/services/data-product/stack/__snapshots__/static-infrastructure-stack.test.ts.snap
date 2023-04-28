@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-StaticInfrastructure) - Automated Data Analytics on AWS. Version v1.1.0",
+  "Description": "(SO0190-StaticInfrastructure) - Automated Data Analytics on AWS. Version v1.2.0",
   "Outputs": Object {
     "AdaDataProductServiceStaticInfrastructureDataBucketD9C0AD53Arn": Object {
       "Value": Object {
@@ -261,7 +261,328 @@ Object {
       },
       "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
     },
+    "CloudTrailImportDataStateMachine74CDCD1C": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "CloudTrailImportDataStateMachineRoleDefaultPolicy64C20EC6",
+        "CloudTrailImportDataStateMachineRole8A86022D",
+      ],
+      "Properties": Object {
+        "DefinitionString": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"StartAt\\":\\"RunECSImportTask\\",\\"States\\":{\\"RunECSImportTask\\":{\\"Next\\":\\"ECSTaskSucceeded\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"ECSTaskFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::ecs:runTask.sync\\",\\"Parameters\\":{\\"PropagateTags\\":\\"TASK_DEFINITION\\",\\"Cluster\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersCloudTrailECSClusterCloudtrail61AAED9A",
+                  "Arn",
+                ],
+              },
+              "\\",\\"TaskDefinition\\":\\"AdaDataProductServiceStaticInfrastructureECSContainersCloudTrailECSTaskDefinitioncloudtrail2381107B\\",\\"NetworkConfiguration\\":{\\"AwsvpcConfiguration\\":{\\"Subnets\\":[\\"",
+              Object {
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
+              },
+              "\\",\\"",
+              Object {
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
+              },
+              "\\"],\\"SecurityGroups\\":[\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcECSSecurityGroup61BDCCBA",
+                  "GroupId",
+                ],
+              },
+              "\\"]}},\\"Overrides\\":{\\"ContainerOverrides\\":[{\\"Name\\":\\"ECSContainerDef-cloudtrail\\",\\"Environment\\":[{\\"Name\\":\\"S3_OUTPUT_BUCKET_URI\\",\\"Value.$\\":\\"$.s3OutputPath\\"},{\\"Name\\":\\"TRIGGER_TYPE\\",\\"Value.$\\":\\"$.triggerType\\"},{\\"Name\\":\\"SCHEDULE_RATE\\",\\"Value.$\\":\\"$.scheduleRate\\"},{\\"Name\\":\\"CLOUDTRAIL_ARN\\",\\"Value.$\\":\\"$.cloudTrailTrailArn\\"},{\\"Name\\":\\"CLOUDTRAIL_DATE_FROM\\",\\"Value.$\\":\\"$.cloudTrailDateFrom\\"},{\\"Name\\":\\"CLOUDTRAIL_DATE_TO\\",\\"Value.$\\":\\"$.cloudTrailDateTo\\"},{\\"Name\\":\\"CLOUDTRAIL_EVENT_TYPES\\",\\"Value.$\\":\\"$.cloudTrailEventTypes\\"},{\\"Name\\":\\"CROSS_ACCOUNT_ROLE_ARN\\",\\"Value.$\\":\\"$.crossAccountRoleArn\\"},{\\"Name\\":\\"TABLE_NAME\\",\\"Value.$\\":\\"$.tableName\\"},{\\"Name\\":\\"DOMAIN_ID\\",\\"Value.$\\":\\"$.domainId\\"},{\\"Name\\":\\"DATA_PRODUCT_ID\\",\\"Value.$\\":\\"$.dataProductId\\"}]}]},\\"LaunchType\\":\\"FARGATE\\",\\"PlatformVersion\\":\\"LATEST\\"}},\\"ECSTaskSucceeded\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"status\\":\\"SUCCEEDED\\"},\\"End\\":true},\\"ECSTaskFailed\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"details.$\\":\\"$\\",\\"error\\":\\"Import failed in the ECS container, verify the logs\\",\\"status\\":\\"FAILED\\"},\\"End\\":true}},\\"TimeoutSeconds\\":172800}",
+            ],
+          ],
+        },
+        "LoggingConfiguration": Object {
+          "Destinations": Array [
+            Object {
+              "CloudWatchLogsLogGroup": Object {
+                "LogGroupArn": Object {
+                  "Fn::GetAtt": Array [
+                    "CloudTrailImportDataStateMachineStateMachineLogs1A75BCF5",
+                    "Arn",
+                  ],
+                },
+              },
+            },
+          ],
+          "Level": "ERROR",
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "CloudTrailImportDataStateMachineRole8A86022D",
+            "Arn",
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TracingConfiguration": Object {
+          "Enabled": true,
+        },
+      },
+      "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "CloudTrailImportDataStateMachineRole8A86022D": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "states.ap-southeast-1.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CloudTrailImportDataStateMachineRoleDefaultPolicy64C20EC6": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "ecs:RunTask",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        2,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        3,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        4,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        0,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "/",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "ecs:StopTask",
+                "ecs:DescribeTasks",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "iam:PassRole",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ECSContainersCloudTrailRole6FFD1D9A",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ECSContainersCloudTrailECSExecutionRoleCloudtrail1CAF6D69",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "events:PutTargets",
+                "events:PutRule",
+                "events:DescribeRule",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":events:ap-southeast-1:1111111111:rule/StepFunctionsGetEventsForECSTaskRule",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "CloudTrailImportDataStateMachineRoleDefaultPolicy64C20EC6",
+        "Roles": Array [
+          Object {
+            "Ref": "CloudTrailImportDataStateMachineRole8A86022D",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "CloudTrailImportDataStateMachineStateMachineLogs1A75BCF5": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+        "LogGroupName": "/aws/vendedlogs/states/ada/CloudTrailImportDataStateMachineStateMachineLogs/loggroup-######",
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
     "CloudWatchImportDataStateMachine1D920684": Object {
+      "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "CloudWatchImportDataStateMachineRoleDefaultPolicyFDAB8D25",
         "CloudWatchImportDataStateMachineRole88D934C6",
@@ -333,6 +654,7 @@ Object {
         },
       },
       "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
     },
     "CloudWatchImportDataStateMachineRole88D934C6": Object {
       "Properties": Object {
@@ -606,7 +928,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -727,7 +1049,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -848,7 +1170,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -943,6 +1265,7 @@ Object {
       "Type": "AWS::IAM::Policy",
     },
     "CrawlerPollerStateMachine3EA4304C": Object {
+      "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "CrawlerPollerStateMachineRoleDefaultPolicyA3398336",
         "CrawlerPollerStateMachineRoleFF81339C",
@@ -1021,6 +1344,7 @@ Object {
         },
       },
       "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
     },
     "CrawlerPollerStateMachineLogs0C7F01AD": Object {
       "DeletionPolicy": "Delete",
@@ -2485,6 +2809,7 @@ Object {
       "UpdateReplacePolicy": "Delete",
     },
     "DataProductCreationStateMachineC5A4C4A3": Object {
+      "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "DataProductCreationStateMachineRoleDefaultPolicyA1E52D40",
         "DataProductCreationStateMachineRole276687D9",
@@ -2574,6 +2899,7 @@ Object {
         },
       },
       "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
     },
     "DataProductCreationStateMachineLambdaCheckDataProductInfraDeploymentStatus250EEC00": Object {
       "DependsOn": Array [
@@ -2644,7 +2970,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -2774,6 +3100,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -2807,7 +3146,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -2834,19 +3173,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
             },
             Object {
               "Action": Array [
@@ -2907,6 +3233,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -2929,19 +3268,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn",
-              },
             },
           ],
           "Version": "2012-10-17",
@@ -3024,7 +3350,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3154,6 +3480,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -3187,7 +3526,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -3214,19 +3553,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
             },
             Object {
               "Action": Array [
@@ -3287,6 +3613,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -3309,19 +3648,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn",
-              },
             },
           ],
           "Version": "2012-10-17",
@@ -3404,7 +3730,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3534,6 +3860,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -3567,7 +3906,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -3594,19 +3933,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
             },
             Object {
               "Action": Array [
@@ -3667,6 +3993,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -3689,19 +4028,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn",
-              },
             },
           ],
           "Version": "2012-10-17",
@@ -3956,6 +4282,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -3989,7 +4328,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -4016,19 +4355,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
             },
             Object {
               "Action": Array [
@@ -4187,6 +4513,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -4209,19 +4548,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn",
-              },
             },
           ],
           "Version": "2012-10-17",
@@ -4527,7 +4853,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "java8",
+        "Runtime": "java11",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -4678,7 +5004,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -4750,6 +5076,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -4783,7 +5122,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -4813,21 +5152,9 @@ Object {
             },
             Object {
               "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
-            },
-            Object {
-              "Action": Array [
                 "glue:GetTables",
                 "glue:UpdateTable",
+                "glue:DeletePartitionIndex",
               ],
               "Effect": "Allow",
               "Resource": Array [
@@ -4951,7 +5278,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -4982,6 +5309,19 @@ Object {
               "Effect": "Allow",
               "Resource": Object {
                 "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
               },
             },
             Object {
@@ -5019,7 +5359,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -5049,21 +5389,9 @@ Object {
             },
             Object {
               "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
-            },
-            Object {
-              "Action": Array [
                 "glue:GetTables",
                 "glue:UpdateTable",
+                "glue:DeletePartitionIndex",
               ],
               "Effect": "Allow",
               "Resource": Array [
@@ -5208,7 +5536,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5280,6 +5608,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -5313,7 +5654,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -5343,21 +5684,9 @@ Object {
             },
             Object {
               "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
-            },
-            Object {
-              "Action": Array [
                 "glue:GetTables",
                 "glue:UpdateTable",
+                "glue:DeletePartitionIndex",
               ],
               "Effect": "Allow",
               "Resource": Array [
@@ -5465,7 +5794,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5496,6 +5825,19 @@ Object {
               "Effect": "Allow",
               "Resource": Object {
                 "Ref": "referencetoAdaSharedEvntBus3C45F515Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
               },
             },
             Object {
@@ -5533,7 +5875,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -5563,21 +5905,9 @@ Object {
             },
             Object {
               "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
-            },
-            Object {
-              "Action": Array [
                 "glue:GetTables",
                 "glue:UpdateTable",
+                "glue:DeletePartitionIndex",
               ],
               "Effect": "Allow",
               "Resource": Array [
@@ -5789,7 +6119,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5861,6 +6191,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -5894,7 +6237,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -5924,21 +6267,9 @@ Object {
             },
             Object {
               "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
-            },
-            Object {
-              "Action": Array [
                 "glue:GetTables",
                 "glue:UpdateTable",
+                "glue:DeletePartitionIndex",
               ],
               "Effect": "Allow",
               "Resource": Array [
@@ -6046,7 +6377,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -6118,6 +6449,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -6151,7 +6495,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -6181,21 +6525,9 @@ Object {
             },
             Object {
               "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
-            },
-            Object {
-              "Action": Array [
                 "glue:GetTables",
                 "glue:UpdateTable",
+                "glue:DeletePartitionIndex",
               ],
               "Effect": "Allow",
               "Resource": Array [
@@ -6322,7 +6654,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -6380,6 +6712,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -6413,7 +6758,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -6443,21 +6788,9 @@ Object {
             },
             Object {
               "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
-            },
-            Object {
-              "Action": Array [
                 "glue:GetTables",
                 "glue:UpdateTable",
+                "glue:DeletePartitionIndex",
               ],
               "Effect": "Allow",
               "Resource": Array [
@@ -6527,6 +6860,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -6549,19 +6895,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableDataProductTableCFB5877CArn",
-              },
             },
           ],
           "Version": "2012-10-17",
@@ -6648,7 +6981,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -6720,6 +7053,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -6753,7 +7099,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -6783,21 +7129,9 @@ Object {
             },
             Object {
               "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
-            },
-            Object {
-              "Action": Array [
                 "glue:GetTables",
                 "glue:UpdateTable",
+                "glue:DeletePartitionIndex",
               ],
               "Effect": "Allow",
               "Resource": Array [
@@ -6947,6 +7281,668 @@ Object {
                 ],
               },
             ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "DynamoDBDataImportStateMachine3B9931F8": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "DynamoDBDataImportStateMachineRoleDefaultPolicyE4B3721C",
+        "DynamoDBDataImportStateMachineRole4FB1A3DA",
+      ],
+      "Properties": Object {
+        "DefinitionString": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"StartAt\\":\\"RunECSImportTask\\",\\"States\\":{\\"RunECSImportTask\\":{\\"Next\\":\\"ECSTaskSucceeded\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"ECSTaskFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::ecs:runTask.sync\\",\\"Parameters\\":{\\"PropagateTags\\":\\"TASK_DEFINITION\\",\\"Cluster\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersDynamoDBECSClusterDynamoDBBD26D076",
+                  "Arn",
+                ],
+              },
+              "\\",\\"TaskDefinition\\":\\"AdaDataProductServiceStaticInfrastructureECSContainersDynamoDBECSTaskDefinitiondynamoDBDEA843A8\\",\\"NetworkConfiguration\\":{\\"AwsvpcConfiguration\\":{\\"Subnets\\":[\\"",
+              Object {
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
+              },
+              "\\",\\"",
+              Object {
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
+              },
+              "\\"],\\"SecurityGroups\\":[\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcECSSecurityGroup61BDCCBA",
+                  "GroupId",
+                ],
+              },
+              "\\"]}},\\"Overrides\\":{\\"ContainerOverrides\\":[{\\"Name\\":\\"ECSContainerDef-dynamoDB\\",\\"Environment\\":[{\\"Name\\":\\"S3_OUTPUT_BUCKET_URI\\",\\"Value.$\\":\\"$.s3OutputPath\\"},{\\"Name\\":\\"TRIGGER_TYPE\\",\\"Value.$\\":\\"$.triggerType\\"},{\\"Name\\":\\"SCHEDULE_RATE\\",\\"Value.$\\":\\"$.scheduleRate\\"},{\\"Name\\":\\"TABLE_ARN\\",\\"Value.$\\":\\"$.tableArn\\"},{\\"Name\\":\\"CROSS_ACCOUNT_ACCESS_ROLE\\",\\"Value.$\\":\\"$.crossAccountRoleArn\\"},{\\"Name\\":\\"DOMAIN_ID\\",\\"Value.$\\":\\"$.domainId\\"},{\\"Name\\":\\"TABLE_NAME\\",\\"Value.$\\":\\"$.tableName\\"},{\\"Name\\":\\"DATA_PRODUCT_ID\\",\\"Value.$\\":\\"$.dataProductId\\"}]}]},\\"LaunchType\\":\\"FARGATE\\",\\"PlatformVersion\\":\\"LATEST\\"}},\\"ECSTaskSucceeded\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"status\\":\\"SUCCEEDED\\"},\\"End\\":true},\\"ECSTaskFailed\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"details.$\\":\\"$\\",\\"error\\":\\"Import failed in the ECS container, verify the logs\\",\\"status\\":\\"FAILED\\"},\\"End\\":true}},\\"TimeoutSeconds\\":172800}",
+            ],
+          ],
+        },
+        "LoggingConfiguration": Object {
+          "Destinations": Array [
+            Object {
+              "CloudWatchLogsLogGroup": Object {
+                "LogGroupArn": Object {
+                  "Fn::GetAtt": Array [
+                    "DynamoDBDataImportStateMachineStateMachineLogs9AABB006",
+                    "Arn",
+                  ],
+                },
+              },
+            },
+          ],
+          "Level": "ERROR",
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "DynamoDBDataImportStateMachineRole4FB1A3DA",
+            "Arn",
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TracingConfiguration": Object {
+          "Enabled": true,
+        },
+      },
+      "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "DynamoDBDataImportStateMachineRole4FB1A3DA": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "states.ap-southeast-1.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "DynamoDBDataImportStateMachineRoleDefaultPolicyE4B3721C": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "ecs:RunTask",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        2,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        3,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        4,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        0,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "/",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "ecs:StopTask",
+                "ecs:DescribeTasks",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "iam:PassRole",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ECSContainersDynamoDBRoleAF9F65BD",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ECSContainersDynamoDBECSExecutionRoleDynamoDB6AF79149",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "events:PutTargets",
+                "events:PutRule",
+                "events:DescribeRule",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":events:ap-southeast-1:1111111111:rule/StepFunctionsGetEventsForECSTaskRule",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "DynamoDBDataImportStateMachineRoleDefaultPolicyE4B3721C",
+        "Roles": Array [
+          Object {
+            "Ref": "DynamoDBDataImportStateMachineRole4FB1A3DA",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "DynamoDBDataImportStateMachineStateMachineLogs9AABB006": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+        "LogGroupName": "/aws/vendedlogs/states/ada/DynamoDBDataImportStateMachineStateMachineLogs/loggroup-######",
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ECSContainersCloudTrailECSClusterCloudtrail61AAED9A": Object {
+      "Properties": Object {
+        "ClusterSettings": Array [
+          Object {
+            "Name": "containerInsights",
+            "Value": "enabled",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::ECS::Cluster",
+    },
+    "ECSContainersCloudTrailECSContainerLogGroupCloudtrail1B0C228B": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ECSContainersCloudTrailECSExecutionRoleCloudtrail1CAF6D69": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ECSContainersCloudTrailECSExecutionRolecloudtrailDefaultPolicyCEE74BCD": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:PutLogEvents",
+                "logs:CreateLogStream",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":ecr:ap-southeast-1:1111111111:repository/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersCloudTrailECSContainerLogGroupCloudtrail1B0C228B",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ECSContainersCloudTrailECSExecutionRolecloudtrailDefaultPolicyCEE74BCD",
+        "Roles": Array [
+          Object {
+            "Ref": "ECSContainersCloudTrailECSExecutionRoleCloudtrail1CAF6D69",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E": Object {
+      "Properties": Object {
+        "ContainerDefinitions": Array [
+          Object {
+            "Cpu": 2048,
+            "Essential": true,
+            "Image": Object {
+              "Fn::Sub": "1111111111.dkr.ecr.ap-southeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1:###hash64###",
+            },
+            "LogConfiguration": Object {
+              "LogDriver": "awslogs",
+              "Options": Object {
+                "awslogs-group": Object {
+                  "Ref": "ECSContainersCloudTrailECSContainerLogGroupCloudtrail1B0C228B",
+                },
+                "awslogs-region": "ap-southeast-1",
+                "awslogs-stream-prefix": "ecs-cloudtrail",
+              },
+            },
+            "MemoryReservation": 8192,
+            "Name": "ECSContainerDef-cloudtrail",
+          },
+        ],
+        "Cpu": "2048",
+        "ExecutionRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ECSContainersCloudTrailECSExecutionRoleCloudtrail1CAF6D69",
+            "Arn",
+          ],
+        },
+        "Family": "AdaDataProductServiceStaticInfrastructureECSContainersCloudTrailECSTaskDefinitioncloudtrail2381107B",
+        "Memory": "8192",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": Array [
+          "FARGATE",
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TaskRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ECSContainersCloudTrailRole6FFD1D9A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ECS::TaskDefinition",
+    },
+    "ECSContainersCloudTrailRole6FFD1D9A": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ECSContainersCloudTrailRoleDefaultPolicy876200E7": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+            Object {
+              "id": "W76",
+              "reason": "SPCM expected to be high for ECS Task execution role",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:AbortMultipartUpload",
+                "s3:GetBucketLocation",
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:ListBucketMultipartUploads",
+                "s3:PutObject",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "DataBucket",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "DataBucket",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":secret:DPSecrets*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:GenerateDataKey",
+                "kms:Decrypt",
+                "kms:Encrypt",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "cloudtrail:Get*",
+                "s3:Get*",
+                "s3:ListBucket",
+                "ec2:describeRegions",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "LastUpdatedDetail",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ECSContainersCloudTrailRoleDefaultPolicy876200E7",
+        "Roles": Array [
+          Object {
+            "Ref": "ECSContainersCloudTrailRole6FFD1D9A",
           },
         ],
       },
@@ -7216,7 +8212,15 @@ Object {
                     Object {
                       "Ref": "AWS::Partition",
                     },
-                    ":secretsmanager:ap-southeast-1:1111111111:secret:DPSecrets*",
+                    ":secretsmanager:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":secret:DPSecrets*",
                   ],
                 ],
               },
@@ -7275,6 +8279,347 @@ Object {
         "Roles": Array [
           Object {
             "Ref": "ECSContainersCloudWatchRole9C252028",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ECSContainersDynamoDBECSClusterDynamoDBBD26D076": Object {
+      "Properties": Object {
+        "ClusterSettings": Array [
+          Object {
+            "Name": "containerInsights",
+            "Value": "enabled",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::ECS::Cluster",
+    },
+    "ECSContainersDynamoDBECSContainerLogGroupDynamoDBFEF33B4A": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ECSContainersDynamoDBECSExecutionRoleDynamoDB6AF79149": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ECSContainersDynamoDBECSExecutionRoledynamoDBDefaultPolicyBEF0653C": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:PutLogEvents",
+                "logs:CreateLogStream",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":ecr:ap-southeast-1:1111111111:repository/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersDynamoDBECSContainerLogGroupDynamoDBFEF33B4A",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ECSContainersDynamoDBECSExecutionRoledynamoDBDefaultPolicyBEF0653C",
+        "Roles": Array [
+          Object {
+            "Ref": "ECSContainersDynamoDBECSExecutionRoleDynamoDB6AF79149",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9": Object {
+      "Properties": Object {
+        "ContainerDefinitions": Array [
+          Object {
+            "Cpu": 512,
+            "Essential": true,
+            "Image": Object {
+              "Fn::Sub": "1111111111.dkr.ecr.ap-southeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1:###hash64###",
+            },
+            "LogConfiguration": Object {
+              "LogDriver": "awslogs",
+              "Options": Object {
+                "awslogs-group": Object {
+                  "Ref": "ECSContainersDynamoDBECSContainerLogGroupDynamoDBFEF33B4A",
+                },
+                "awslogs-region": "ap-southeast-1",
+                "awslogs-stream-prefix": "ecs-dynamoDB",
+              },
+            },
+            "MemoryReservation": 1024,
+            "Name": "ECSContainerDef-dynamoDB",
+          },
+        ],
+        "Cpu": "512",
+        "ExecutionRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ECSContainersDynamoDBECSExecutionRoleDynamoDB6AF79149",
+            "Arn",
+          ],
+        },
+        "Family": "AdaDataProductServiceStaticInfrastructureECSContainersDynamoDBECSTaskDefinitiondynamoDBDEA843A8",
+        "Memory": "1024",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": Array [
+          "FARGATE",
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TaskRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ECSContainersDynamoDBRoleAF9F65BD",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ECS::TaskDefinition",
+    },
+    "ECSContainersDynamoDBRoleAF9F65BD": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ECSContainersDynamoDBRoleDefaultPolicy31838BE2": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:AbortMultipartUpload",
+                "s3:GetBucketLocation",
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:ListBucketMultipartUploads",
+                "s3:PutObject",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "DataBucket",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "DataBucket",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":secret:DPSecrets*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:GenerateDataKey",
+                "kms:Decrypt",
+                "kms:Encrypt",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:Describe*",
+                "dynamodb:List*",
+                "dynamodb:GetItem",
+                "dynamodb:Query",
+                "dynamodb:Scan",
+                "dynamodb:PartiQLSelect",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "LastUpdatedDetail",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ECSContainersDynamoDBRoleDefaultPolicy31838BE2",
+        "Roles": Array [
+          Object {
+            "Ref": "ECSContainersDynamoDBRoleAF9F65BD",
           },
         ],
       },
@@ -7544,7 +8889,15 @@ Object {
                     Object {
                       "Ref": "AWS::Partition",
                     },
-                    ":secretsmanager:ap-southeast-1:1111111111:secret:DPSecrets*",
+                    ":secretsmanager:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":secret:DPSecrets*",
                   ],
                 ],
               },
@@ -7836,7 +9189,15 @@ Object {
                     Object {
                       "Ref": "AWS::Partition",
                     },
-                    ":secretsmanager:ap-southeast-1:1111111111:secret:DPSecrets*",
+                    ":secretsmanager:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":secret:DPSecrets*",
                   ],
                 ],
               },
@@ -8128,7 +9489,15 @@ Object {
                     Object {
                       "Ref": "AWS::Partition",
                     },
-                    ":secretsmanager:ap-southeast-1:1111111111:secret:DPSecrets*",
+                    ":secretsmanager:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":secret:DPSecrets*",
                   ],
                 ],
               },
@@ -8151,6 +9520,343 @@ Object {
         "Roles": Array [
           Object {
             "Ref": "ECSContainersGoogleAnalyticsRole6E74F345",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ECSContainersMongoDBECSClusterMongoDBBE2DCF05": Object {
+      "Properties": Object {
+        "ClusterSettings": Array [
+          Object {
+            "Name": "containerInsights",
+            "Value": "enabled",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::ECS::Cluster",
+    },
+    "ECSContainersMongoDBECSContainerLogGroupMongoDB56BDBEDA": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ECSContainersMongoDBECSExecutionRoleMongoDBED825C38": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ECSContainersMongoDBECSExecutionRolemongoDBDefaultPolicy58445A8E": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:PutLogEvents",
+                "logs:CreateLogStream",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":ecr:ap-southeast-1:1111111111:repository/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersMongoDBECSContainerLogGroupMongoDB56BDBEDA",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ECSContainersMongoDBECSExecutionRolemongoDBDefaultPolicy58445A8E",
+        "Roles": Array [
+          Object {
+            "Ref": "ECSContainersMongoDBECSExecutionRoleMongoDBED825C38",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D": Object {
+      "Properties": Object {
+        "ContainerDefinitions": Array [
+          Object {
+            "Cpu": 512,
+            "Essential": true,
+            "Image": Object {
+              "Fn::Sub": "1111111111.dkr.ecr.ap-southeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1:###hash64###",
+            },
+            "LogConfiguration": Object {
+              "LogDriver": "awslogs",
+              "Options": Object {
+                "awslogs-group": Object {
+                  "Ref": "ECSContainersMongoDBECSContainerLogGroupMongoDB56BDBEDA",
+                },
+                "awslogs-region": "ap-southeast-1",
+                "awslogs-stream-prefix": "ecs-mongoDB",
+              },
+            },
+            "MemoryReservation": 1024,
+            "Name": "ECSContainerDef-mongoDB",
+          },
+        ],
+        "Cpu": "512",
+        "ExecutionRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ECSContainersMongoDBECSExecutionRoleMongoDBED825C38",
+            "Arn",
+          ],
+        },
+        "Family": "AdaDataProductServiceStaticInfrastructureECSContainersMongoDBECSTaskDefinitionmongoDBCC6D776A",
+        "Memory": "1024",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": Array [
+          "FARGATE",
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TaskRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ECSContainersMongoDBRole00E0730A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ECS::TaskDefinition",
+    },
+    "ECSContainersMongoDBRole00E0730A": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ECSContainersMongoDBRoleDefaultPolicy5CC759D1": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:AbortMultipartUpload",
+                "s3:GetBucketLocation",
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:ListBucketMultipartUploads",
+                "s3:PutObject",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "DataBucket",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "DataBucket",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":secret:DPSecrets*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:GenerateDataKey",
+                "kms:Decrypt",
+                "kms:Encrypt",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "s3:List*",
+                "s3:Get*",
+                "s3:Describe*",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "LastUpdatedDetail",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ECSContainersMongoDBRoleDefaultPolicy5CC759D1",
+        "Roles": Array [
+          Object {
+            "Ref": "ECSContainersMongoDBRole00E0730A",
           },
         ],
       },
@@ -8323,7 +10029,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -8446,6 +10152,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -8479,7 +10198,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -8511,13 +10230,10 @@ Object {
               "Action": Array [
                 "kms:Decrypt",
                 "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableCachedQueryTableFD9290A0Arn",
               },
             },
             Object {
@@ -8540,16 +10256,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableCachedQueryTableFD9290A0Arn",
-              },
             },
           ],
           "Version": "2012-10-17",
@@ -8653,7 +10359,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -8776,31 +10482,6 @@ Object {
             },
             Object {
               "Action": Array [
-                "dynamodb:BatchGetItem",
-                "dynamodb:GetRecords",
-                "dynamodb:GetShardIterator",
-                "dynamodb:Query",
-                "dynamodb:GetItem",
-                "dynamodb:Scan",
-                "dynamodb:ConditionCheckItem",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:PutItem",
-                "dynamodb:UpdateItem",
-                "dynamodb:DeleteItem",
-                "dynamodb:DescribeTable",
-              ],
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
-                },
-                Object {
-                  "Ref": "AWS::NoValue",
-                },
-              ],
-            },
-            Object {
-              "Action": Array [
                 "kms:Decrypt",
                 "kms:DescribeKey",
                 "kms:Encrypt",
@@ -8830,7 +10511,7 @@ Object {
               "Effect": "Allow",
               "Resource": Array [
                 Object {
-                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
                 },
                 Object {
                   "Ref": "AWS::NoValue",
@@ -8868,7 +10549,7 @@ Object {
               "Effect": "Allow",
               "Resource": Array [
                 Object {
-                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCachedQueryTableADA4A480Arn",
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
                 },
                 Object {
                   "Ref": "AWS::NoValue",
@@ -8887,6 +10568,31 @@ Object {
               "Resource": Object {
                 "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableCachedQueryTableFD9290A0Arn",
               },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCachedQueryTableADA4A480Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
             },
           ],
           "Version": "2012-10-17",
@@ -8965,7 +10671,7 @@ Object {
         "Role": Object {
           "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn",
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -8980,6 +10686,7 @@ Object {
       "Type": "AWS::Lambda::Function",
     },
     "ExecuteGovernedQueryStateMachineAthenaQueryExecutorStateMachineC6570B18": Object {
+      "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "ExecuteGovernedQueryStateMachineAthenaQueryExecutorStateMachineRoleDefaultPolicy7733C5C3",
         "ExecuteGovernedQueryStateMachineAthenaQueryExecutorStateMachineRoleF7B236D1",
@@ -9050,6 +10757,7 @@ Object {
         },
       },
       "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
     },
     "ExecuteGovernedQueryStateMachineAthenaQueryExecutorStateMachineRoleDefaultPolicy7733C5C3": Object {
       "Properties": Object {
@@ -9290,6 +10998,19 @@ Object {
             },
             Object {
               "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
                 "dynamodb:BatchGetItem",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
@@ -9323,7 +11044,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
               },
             },
             Object {
@@ -9350,19 +11071,6 @@ Object {
                   "Ref": "AWS::NoValue",
                 },
               ],
-            },
-            Object {
-              "Action": Array [
-                "kms:Decrypt",
-                "kms:DescribeKey",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
-              },
             },
             Object {
               "Action": Array [
@@ -9457,6 +11165,7 @@ Object {
       "Type": "AWS::IAM::Policy",
     },
     "GAImportDataStateMachineBA5D539B": Object {
+      "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "GAImportDataStateMachineRoleDefaultPolicyA7B49870",
         "GAImportDataStateMachineRole9EE0538A",
@@ -9528,6 +11237,7 @@ Object {
         },
       },
       "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
     },
     "GAImportDataStateMachineRole9EE0538A": Object {
       "Properties": Object {
@@ -9775,6 +11485,7 @@ Object {
       "UpdateReplacePolicy": "Delete",
     },
     "GCBigQueryImportDataStateMachineA46C9770": Object {
+      "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "GCBigQueryImportDataStateMachineRoleDefaultPolicy47F3014C",
         "GCBigQueryImportDataStateMachineRole118D47DA",
@@ -9846,6 +11557,7 @@ Object {
         },
       },
       "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
     },
     "GCBigQueryImportDataStateMachineRole118D47DA": Object {
       "Properties": Object {
@@ -10093,6 +11805,7 @@ Object {
       "UpdateReplacePolicy": "Delete",
     },
     "GCPImportDataStateMachine193D1733": Object {
+      "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "GCPImportDataStateMachineRoleDefaultPolicyBFDD71A5",
         "GCPImportDataStateMachineRoleF825A342",
@@ -10164,6 +11877,7 @@ Object {
         },
       },
       "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
     },
     "GCPImportDataStateMachineRoleDefaultPolicyBFDD71A5": Object {
       "Properties": Object {
@@ -10556,6 +12270,326 @@ Object {
       "Type": "AWS::KMS::Key",
       "UpdateReplacePolicy": "Delete",
     },
+    "MongoDBImportDataStateMachine0B9D316C": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "MongoDBImportDataStateMachineRoleDefaultPolicy836F0D11",
+        "MongoDBImportDataStateMachineRole176CEE22",
+      ],
+      "Properties": Object {
+        "DefinitionString": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"StartAt\\":\\"RunECSImportTask\\",\\"States\\":{\\"RunECSImportTask\\":{\\"Next\\":\\"ECSTaskSucceeded\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"ECSTaskFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::ecs:runTask.sync\\",\\"Parameters\\":{\\"PropagateTags\\":\\"TASK_DEFINITION\\",\\"Cluster\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersMongoDBECSClusterMongoDBBE2DCF05",
+                  "Arn",
+                ],
+              },
+              "\\",\\"TaskDefinition\\":\\"AdaDataProductServiceStaticInfrastructureECSContainersMongoDBECSTaskDefinitionmongoDBCC6D776A\\",\\"NetworkConfiguration\\":{\\"AwsvpcConfiguration\\":{\\"Subnets\\":[\\"",
+              Object {
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
+              },
+              "\\",\\"",
+              Object {
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
+              },
+              "\\"],\\"SecurityGroups\\":[\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcECSSecurityGroup61BDCCBA",
+                  "GroupId",
+                ],
+              },
+              "\\"]}},\\"Overrides\\":{\\"ContainerOverrides\\":[{\\"Name\\":\\"ECSContainerDef-mongoDB\\",\\"Environment\\":[{\\"Name\\":\\"S3_OUTPUT_BUCKET_URI\\",\\"Value.$\\":\\"$.s3OutputPath\\"},{\\"Name\\":\\"TRIGGER_TYPE\\",\\"Value.$\\":\\"$.triggerType\\"},{\\"Name\\":\\"SCHEDULE_RATE\\",\\"Value.$\\":\\"$.scheduleRate\\"},{\\"Name\\":\\"DB_ENDPOINT\\",\\"Value.$\\":\\"$.databaseEndpoint\\"},{\\"Name\\":\\"DB_PORT\\",\\"Value.$\\":\\"$.databasePort\\"},{\\"Name\\":\\"DB_NAME\\",\\"Value.$\\":\\"$.databaseName\\"},{\\"Name\\":\\"COLLECTION_NAME\\",\\"Value.$\\":\\"$.collectionName\\"},{\\"Name\\":\\"USERNAME\\",\\"Value.$\\":\\"$.username\\"},{\\"Name\\":\\"PASSWORD\\",\\"Value.$\\":\\"$.password\\"},{\\"Name\\":\\"TABLE_NAME\\",\\"Value.$\\":\\"$.tableName\\"},{\\"Name\\":\\"DOMAIN_ID\\",\\"Value.$\\":\\"$.domainId\\"},{\\"Name\\":\\"DATA_PRODUCT_ID\\",\\"Value.$\\":\\"$.dataProductId\\"},{\\"Name\\":\\"TLS\\",\\"Value.$\\":\\"$.tls\\"},{\\"Name\\":\\"TLS_CA_ID\\",\\"Value.$\\":\\"$.tlsCA\\"},{\\"Name\\":\\"TLS_CLIENT_CERT_ID\\",\\"Value.$\\":\\"$.tlsClientCert\\"},{\\"Name\\":\\"EXTRA_PARAMS\\",\\"Value.$\\":\\"$.extraParams\\"},{\\"Name\\":\\"BOOKMARK_FIELD\\",\\"Value.$\\":\\"$.bookmarkField\\"},{\\"Name\\":\\"BOOKMARK_FIELD_TYPE\\",\\"Value.$\\":\\"$.bookmarkFieldType\\"}]}]},\\"LaunchType\\":\\"FARGATE\\",\\"PlatformVersion\\":\\"LATEST\\"}},\\"ECSTaskSucceeded\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"status\\":\\"SUCCEEDED\\"},\\"End\\":true},\\"ECSTaskFailed\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"details.$\\":\\"$\\",\\"error\\":\\"Import failed in the ECS container, verify the logs\\",\\"status\\":\\"FAILED\\"},\\"End\\":true}},\\"TimeoutSeconds\\":172800}",
+            ],
+          ],
+        },
+        "LoggingConfiguration": Object {
+          "Destinations": Array [
+            Object {
+              "CloudWatchLogsLogGroup": Object {
+                "LogGroupArn": Object {
+                  "Fn::GetAtt": Array [
+                    "MongoDBImportDataStateMachineStateMachineLogsB8CB4F13",
+                    "Arn",
+                  ],
+                },
+              },
+            },
+          ],
+          "Level": "ERROR",
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "MongoDBImportDataStateMachineRole176CEE22",
+            "Arn",
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TracingConfiguration": Object {
+          "Enabled": true,
+        },
+      },
+      "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "MongoDBImportDataStateMachineRole176CEE22": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "states.ap-southeast-1.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "MongoDBImportDataStateMachineRoleDefaultPolicy836F0D11": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "ecs:RunTask",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        2,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        3,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        4,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        0,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "/",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "ecs:StopTask",
+                "ecs:DescribeTasks",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "iam:PassRole",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ECSContainersMongoDBRole00E0730A",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ECSContainersMongoDBECSExecutionRoleMongoDBED825C38",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "events:PutTargets",
+                "events:PutRule",
+                "events:DescribeRule",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":events:ap-southeast-1:1111111111:rule/StepFunctionsGetEventsForECSTaskRule",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "MongoDBImportDataStateMachineRoleDefaultPolicy836F0D11",
+        "Roles": Array [
+          Object {
+            "Ref": "MongoDBImportDataStateMachineRole176CEE22",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "MongoDBImportDataStateMachineStateMachineLogsB8CB4F13": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+        "LogGroupName": "/aws/vendedlogs/states/ada/MongoDBImportDataStateMachineStateMachineLogs/loggroup-######",
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
     "ScriptsBucket": Object {
       "DeletionPolicy": "Retain",
       "Properties": Object {
@@ -10652,6 +12686,7 @@ Object {
         "Tags": Object {
           "Application": "Ada",
         },
+        "Tier": "Advanced",
         "Type": "String",
         "Value": Object {
           "Fn::Join": Array [
@@ -10804,7 +12839,22 @@ Object {
               Object {
                 "Ref": "GCPImportDataStateMachine193D1733",
               },
-              "\\"},\\"cloudWatchConnector\\":{\\"importDataStateMachineArn\\":\\"",
+              "\\"},\\"dynamoDBConnector\\":{\\"importDataStateMachineArn\\":\\"",
+              Object {
+                "Ref": "DynamoDBDataImportStateMachine3B9931F8",
+              },
+              "\\",\\"lastUpdatedDetailTableName\\":\\"",
+              Object {
+                "Ref": "LastUpdatedDetail",
+              },
+              "\\",\\"otherArns\\":{\\"ecsTaskRole\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersDynamoDBRoleAF9F65BD",
+                  "Arn",
+                ],
+              },
+              "\\"}},\\"cloudWatchConnector\\":{\\"importDataStateMachineArn\\":\\"",
               Object {
                 "Ref": "CloudWatchImportDataStateMachine1D920684",
               },
@@ -10819,7 +12869,30 @@ Object {
                   "Arn",
                 ],
               },
-              "\\"}}}",
+              "\\"}},\\"cloudTrailConnector\\":{\\"importDataStateMachineArn\\":\\"",
+              Object {
+                "Ref": "CloudTrailImportDataStateMachine74CDCD1C",
+              },
+              "\\",\\"lastUpdatedDetailTableName\\":\\"",
+              Object {
+                "Ref": "LastUpdatedDetail",
+              },
+              "\\",\\"otherArns\\":{\\"ecsTaskRole\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersCloudTrailRole6FFD1D9A",
+                  "Arn",
+                ],
+              },
+              "\\"}},\\"mongoDBConnector\\":{\\"importDataStateMachineArn\\":\\"",
+              Object {
+                "Ref": "MongoDBImportDataStateMachine0B9D316C",
+              },
+              "\\",\\"lastUpdatedDetailTableName\\":\\"",
+              Object {
+                "Ref": "LastUpdatedDetail",
+              },
+              "\\"}}",
             ],
           ],
         },

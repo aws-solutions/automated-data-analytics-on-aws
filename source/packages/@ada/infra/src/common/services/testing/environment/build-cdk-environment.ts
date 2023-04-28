@@ -4,6 +4,7 @@ import * as fs from 'fs-extra';
 import { App, NestedStack, Stack, Token } from 'aws-cdk-lib';
 import { AttributeType } from 'aws-cdk-lib/aws-dynamodb';
 import { Bucket } from '../../../constructs/s3/bucket';
+import { BucketEncryption } from 'aws-cdk-lib/aws-s3';
 import { Code, EnvironmentOptions, IFunction, Function as LambdaFunction, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { CounterTable } from '../../../constructs/dynamodb/counter-table';
@@ -185,13 +186,16 @@ export const buildCdkEnvironmentForTests = <T extends Microservice, P extends Mi
       : new FederatedRestApi(stack, 'MockFederatedApi', {
           customAuthorizer: new RequestAuthorizer(stack, 'auth', {
             handler: new LambdaFunction(stack, 'MyFunction', {
-              runtime: Runtime.NODEJS_14_X,
+              runtime: Runtime.NODEJS_16_X,
               handler: 'index.handler',
               code: Code.fromInline('console.log(1)'),
             }) as IFunction,
             identitySources: [IdentitySource.header('Authorization')],
           }),
-          accessLogsBucket: new Bucket(stack, 'logsBucket', {}),
+          accessLogsBucket: new Bucket(stack, 'logsBucket', {
+            // SSE-S3 is the only supported default bucket encryption for Server Access Logging target buckets
+            encryption: BucketEncryption.S3_MANAGED,
+          }),
         });
     const serviceNestedStack: NestedStack = new ServiceNestedStack(stack, 'Stack', {
       ...props,

@@ -9,12 +9,12 @@ from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 
 class GoogleAnalytics():
-    gaService = namedtuple('gaService', ['name', 'version', 'scopes'])
+    ga_service = namedtuple('gaService', ['name', 'version', 'scopes'])
     _services = {
-        'reporting': gaService(name='analyticsreporting',
+        'reporting': ga_service(name='analyticsreporting',
                                version='v4',
                                scopes=['https://www.googleapis.com/auth/analytics.readonly']),
-        'management': gaService(name='analytics',
+        'management': ga_service(name='analytics',
                                 version='v3',
                                 scopes=['https://www.googleapis.com/auth/analytics'])
     }
@@ -58,7 +58,7 @@ class GoogleAnalytics():
 
         #https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet
 
-        reportRequest = {
+        report_request = {
             'viewId': view_id,
             'dateRanges': [{'startDate': since, 'endDate': until}],
             'samplingLevel': sampling_level or 'LARGE',
@@ -70,7 +70,7 @@ class GoogleAnalytics():
 
         response = (analytics
                     .reports()
-                    .batchGet(body={'reportRequests': [reportRequest]})
+                    .batchGet(body={'reportRequests': [report_request]})
                     .execute())
 
         if response.get('reports'):
@@ -79,10 +79,10 @@ class GoogleAnalytics():
 
             while report.get('nextPageToken'):
                 time.sleep(1)
-                reportRequest.update({'pageToken': report['nextPageToken']})
+                report_request.update({'pageToken': report['nextPageToken']})
                 response = (analytics
                     .reports()
-                    .batchGet(body={'reportRequests': [reportRequest]})
+                    .batchGet(body={'reportRequests': [report_request]})
                     .execute())
                 report = response['reports'][0]
                 rows.extend(report.get('data', {}).get('rows', []))

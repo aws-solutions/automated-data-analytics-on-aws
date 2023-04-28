@@ -658,3 +658,29 @@ export const Script: JsonSchema = extendSchema(
   },
   ScriptIdentifier,
 );
+
+/**
+ * Schema for table stream details
+ */
+export const TableStream: JsonSchema = {
+  id: `${__filename}/TableStream`,
+  type: JsonSchemaType.OBJECT,
+  properties: {
+    crossAccount: {
+      type: JsonSchemaType.BOOLEAN,
+      description: 'Is the target table a cross account table',
+    },
+    tableStreamArn: {
+      type: JsonSchemaType.STRING,
+      description: 'Table stream ARN',
+    },
+    streamEnabled: {
+      description: 'Is there a data stream enabled on the table',
+      type: JsonSchemaType.BOOLEAN,
+    },
+    streamViewType: {
+      description: 'What type of stream is enabled on the table',
+      type: JsonSchemaType.STRING,
+    },
+  },
+};

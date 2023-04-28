@@ -196,7 +196,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
 
   // Ensure downstream children only render if user already available
   if (userContext == null) {
-    // TODO: gate non-DefaultUsers from see anything, show public landing page
+    // gate non-DefaultUsers from see anything, show public landing page
     return <UserGate />;
   }
 

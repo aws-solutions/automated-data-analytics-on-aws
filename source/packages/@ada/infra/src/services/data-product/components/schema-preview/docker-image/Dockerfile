@@ -36,6 +36,7 @@ RUN ACCEPT_EULA=Y yum install -y msodbcsql17
 
 WORKDIR /glue
 
+RUN pip3 install --upgrade pip
 # Install any other lambda dependencies
 RUN pip3 install \
   awswrangler[sqlserver] regex 
@@ -43,7 +44,7 @@ RUN pip3 install \
 # copy all dependencies into glue directory
 COPY ./dependencies .
 
-ENV SPARK_HOME /glue/spark-2.4.3-bin-spark-2.4.3-bin-hadoop2.8
+ENV SPARK_HOME /glue/spark-3.1.1-amzn-0-bin-3.2.1-amzn-3
 ENV MAVEN_HOME /glue/apache-maven-3.6.0
 ENV GLUE_HOME /glue/aws-glue-libs
 ENV GLUE_JARS_DIR $GLUE_HOME/jarsv1
@@ -59,13 +60,13 @@ RUN echo "spark.executor.extraClassPath $GLUE_JARS_DIR/*" >> $SPARK_CONF_DIR/spa
 # Expose environment variables set by glue-setup.sh
 ENV SPARK_CONF_DIR $GLUE_HOME/conf
 ENV SPARK_PYTHON_PATH $SPARK_HOME/python/
-ENV SPARK_PY4J_PATH $SPARK_HOME/python/lib/py4j-0.10.7-src.zip
+ENV SPARK_PY4J_PATH $SPARK_HOME/python/lib/py4j-0.10.9-src.zip
 ENV GLUE_PYTHON_PATH $GLUE_HOME/PyGlue.zip
 ENV PYTHONPATH $SPARK_PYTHON_PATH:$SPARK_PY4J_PATH:$GLUE_PYTHON_PATH:$PYTHONPATH
 
 ENV PYSPARK_DRIVER_PYTHON python3
 ENV PYSPARK_PYTHON python3
-ENV SPARK_SCALA_VERSION 2.11
+ENV SPARK_SCALA_VERSION 2.12
 ENV SPARK_LOCAL_IP 127.0.0.1
 
 RUN yum clean all

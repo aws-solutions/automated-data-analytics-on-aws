@@ -1,6 +1,6 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import { Button, Container, KeyValuePair, Stack } from 'aws-northstar';
+import { Alert, Button, Container, KeyValuePair, Stack } from 'aws-northstar';
 import { CardSelect, CardSelectOption, CustomComponentTypes, CustomWrapper } from '$common/components';
 import { CodeViewer } from '$common/components/CodeViewer';
 import { ConfirmedButton } from '$northstar-plus';
@@ -315,6 +315,11 @@ export const buildSteps = (_domains: Domain[], _groups: Group[], _scripts: Scrip
                 title={LL.VIEW.DATA_PRODUCT.Wizard.REVIEW.Details.title()}
                 sourceDetailsCollapsible={false}
               />
+              <Container
+                title={LL.VIEW.DATA_PRODUCT.Wizard.REVIEW.Permissions.title()}
+              >
+                <Alert>{LL.VIEW.DATA_PRODUCT.Wizard.REVIEW.Permissions.content()}</Alert>
+              </Container>
               {preview && (
                 <Container
                   title={LL.VIEW.DATA_PRODUCT.Wizard.REVIEW.Schema.title()}

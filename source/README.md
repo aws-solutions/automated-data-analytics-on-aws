@@ -6,9 +6,6 @@ To build and run the application the following dependencies are required:
 
 - Node (v14.x.x)
 - yarn (`npm install --global yarn`)
-- Java (eg. `openjdk version "1.8.0_312"`). We strongly recommend using Amazon Corretto 8 as the default JAVA version
-  `export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home` (https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/macos-install.html)
-- Maven (>= v3.6)
 - pipenv (`pip3 install pipenv`)
 - pyenv (`brew install pyenv`)
 

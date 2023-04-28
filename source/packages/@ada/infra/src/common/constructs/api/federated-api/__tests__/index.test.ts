@@ -92,7 +92,10 @@ describe('api/federated-api', () => {
         template.hasResourceProperties('AWS::ApiGateway::Method', { HttpMethod: 'GET', AuthorizationType: 'CUSTOM' });
         template.hasResourceProperties('AWS::ApiGateway::Method', { HttpMethod: 'POST', AuthorizationType: 'CUSTOM' });
         template.hasResourceProperties('AWS::ApiGateway::Method', { HttpMethod: 'PUT', AuthorizationType: 'CUSTOM' });
-        template.hasResourceProperties('AWS::ApiGateway::Method', { HttpMethod: 'DELETE', AuthorizationType: 'CUSTOM' });
+        template.hasResourceProperties('AWS::ApiGateway::Method', {
+          HttpMethod: 'DELETE',
+          AuthorizationType: 'CUSTOM',
+        });
         /* eslint-enable max-len */
       });
     });

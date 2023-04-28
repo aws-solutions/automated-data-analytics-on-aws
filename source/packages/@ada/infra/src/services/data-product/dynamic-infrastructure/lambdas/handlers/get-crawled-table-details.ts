@@ -116,6 +116,17 @@ export const handler = async (
         });
 
       try {
+        // glue crawler started to add partition index automatically which prevent removing the partition columns.
+        // delete this partition index first before update.
+        await glue
+          .deletePartitionIndex({
+            CatalogId: table.CatalogId,
+            DatabaseName: databaseName,
+            TableName: table.Name,
+            IndexName: 'crawler_partition_index',
+          })
+          .promise();
+
         await glue
           .updateTable({
             CatalogId: table.CatalogId,

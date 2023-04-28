@@ -16,6 +16,8 @@ const commonProps = { customUserAgent: userAgent };
 
 export const AwsKMSInstance = (props?: SDKProps): AWS.KMS => new AWS.KMS({ ...props, ...commonProps });
 
+export const AwsDynamoDB = (props?: SDKProps): AWS.DynamoDB => new AWS.DynamoDB({ ...props, ...commonProps });
+
 export const AwsSecretsManagerInstance = (props?: SDKProps): AWS.SecretsManager =>
   new AWS.SecretsManager({ ...props, ...commonProps });
 

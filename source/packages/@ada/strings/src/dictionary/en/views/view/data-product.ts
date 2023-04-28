@@ -266,6 +266,10 @@ export const DATA_PRODUCT = {
 			CustomTransforms: {
 				title: 'Custom transforms',
 				subtitle: 'New transforms script to create',
+			},
+			Permissions: {
+				title: 'Permissions',
+				content: 'By default, the data product is accessible only to the Admin group and to you as the data product owner. Once the data product is created, you have the ability to extend access to other groups by granting permissions on the data product details page.'
 			}
 		},
 

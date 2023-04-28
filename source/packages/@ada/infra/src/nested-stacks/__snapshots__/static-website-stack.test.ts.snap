@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-Website) - Automated Data Analytics on AWS. Version v1.1.0",
+  "Description": "(SO0190-Website) - Automated Data Analytics on AWS. Version v1.2.0",
   "Outputs": Object {
     "AdaWebsiteCloudfrontDistributionCFDistribution28056574DomainName": Object {
       "Value": Object {
@@ -71,9 +71,6 @@ Object {
       "Type": "String",
     },
     "referencetoAdaDataProductServiceNestedStackDataProductServiceNestedStackResourceA1CE38EDOutputsAdaDataProductServiceFileUploadBucket4C6FA9E4RegionalDomainName": Object {
-      "Type": "String",
-    },
-    "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn": Object {
       "Type": "String",
     },
   },
@@ -278,18 +275,6 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-                "kms:Decrypt",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyAccessLogBucketD8C2B98FArn",
-              },
-            },
           ],
           "Version": "2012-10-17",
         },
@@ -352,7 +337,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -459,10 +444,7 @@ Object {
             Array [
               "{\\"service\\":\\"WAFV2\\",\\"action\\":\\"putLoggingConfiguration\\",\\"parameters\\":{\\"LoggingConfiguration\\":{\\"LogDestinationConfigs\\":[\\"",
               Object {
-                "Fn::GetAtt": Array [
-                  "CfWebACLDeliveryStream722E32A3",
-                  "DeliveryStreamARN",
-                ],
+                "Ref": "CfWebACLDeliveryStream722E32A3",
               },
               "\\"],\\"ResourceArn\\":\\"",
               Object {

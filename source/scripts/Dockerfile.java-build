@@ -1,0 +1,7 @@
+FROM public.ecr.aws/docker/library/amazoncorretto:11
+
+RUN yum update -y && yum install -y wget gzip tar
+RUN mkdir /maven && cd /maven && \
+    wget https://archive.apache.org/dist/maven/maven-3/3.9.1/binaries/apache-maven-3.9.1-bin.tar.gz && \
+    tar xzvf apache-maven-3.9.1-bin.tar.gz
+ENV PATH="/maven/apache-maven-3.9.1/bin:$PATH"

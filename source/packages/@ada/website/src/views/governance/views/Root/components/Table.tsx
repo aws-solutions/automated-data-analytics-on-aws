@@ -208,14 +208,14 @@ export const OntologiesTable: React.FC<OntologiesTableProps> = () => {
     () => [ //NOSONAR (S3776:Cognitive Complexity) - won't fix
       {
         id: 'namespace',
-        accessor: 'ontologyNamespace',
+        accessor: (data) => startCase(data.ontologyNamespace),
         Header: LL.ENTITY['Ontology@'].namespace.label(),
         width: 100,
-        Cell: ({ value }) => startCase(value),
       },
       {
         id: 'name',
         Header: LL.ENTITY['Ontology@'].name.label(),
+        accessor: (data) => data.name || data.ontologyId,
         width: 200,
         Cell: ({ row }: { row: { original: OntologyWithAttributePolicies } }) => {
           const { ontologyNamespace, ontologyId: _ontologyId, name } = row.original;

@@ -2,12 +2,24 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { CreateDataProductView } from '../../../index';
-import { DataProductUpdateTriggerType } from '@ada/common';
+import { DataProductUpdateTriggerType, DataProductUpdatePolicy } from '@ada/common';
 import { act } from '@testing-library/react';
 import { userEvent, within } from '@storybook/testing-library';
-import { assertReview, assertSubmit, clickNext, gotoSourceTypeDetails, selectUpdateTriggerType, useSourceTypeTestApiMocks } from '../../helpers';
+import {
+  assertReview,
+  assertSubmit,
+  clickNext, 
+  gotoSourceTypeDetails,
+  selectUpdateTriggerType, 
+  useSourceTypeTestApiMocks,
+  selectUpdatePolicy
+} from '../../helpers';
 import { DELAY } from '$testing/interaction';
-import { GOOGLE_SOURCE_DETAILS, selectMostRecentAuth, useGoogleSourceTypeTestSetup } from './helpers';
+import {
+  GOOGLE_SOURCE_DETAILS,
+  selectMostRecentAuth,
+  useGoogleSourceTypeTestSetup
+} from './helpers';
 import { multiselectOptionEvent } from '$testing/user-event';
 import * as Connectors from '@ada/connectors';
 
@@ -43,13 +55,13 @@ Primary.play = async ({ canvasElement }) => {
     await userEvent.type(input, SOURCE_DETAILS.viewId, { delay: DELAY.TYPING });
   });
 
-  for(const dimension of SOURCE_DETAILS.dimensions.split(',')) {
+  for (const dimension of SOURCE_DETAILS.dimensions.split(',')) {
     await act(async () => {
       await multiselectOptionEvent(canvasElement, 'Dimensions', dimension);
     });
   }
 
-  for(const metric of SOURCE_DETAILS.metrics.split(',')) {
+  for (const metric of SOURCE_DETAILS.metrics.split(',')) {
     await act(async () => {
       await multiselectOptionEvent(canvasElement, 'Metrics', metric);
     });
@@ -59,6 +71,8 @@ Primary.play = async ({ canvasElement }) => {
 
   await selectUpdateTriggerType(canvasElement, DataProductUpdateTriggerType.ON_DEMAND);
 
+  await selectUpdatePolicy(canvasElement, DataProductUpdatePolicy.REPLACE);
+
   await act(async () => {
     await userEvent.type(getByLabelText('Since'), SOURCE_DETAILS.since!, { delay: DELAY.TYPING });
   });
@@ -66,7 +80,6 @@ Primary.play = async ({ canvasElement }) => {
   await act(async () => {
     await userEvent.type(getByLabelText('Until'), SOURCE_DETAILS.until!, { delay: DELAY.TYPING });
   });
-
 
   await clickNext(canvasElement);
 

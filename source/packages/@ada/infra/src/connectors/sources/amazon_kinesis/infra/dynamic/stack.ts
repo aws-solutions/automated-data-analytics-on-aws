@@ -161,9 +161,8 @@ export class KinesisSourceStack extends DynamicInfrastructureStackBase {
         errorOutputPrefix: `firehoseFailures/!{firehose:error-output-type}/`,
         // The first buffer condition that is satisfied triggers Kinesis Data Firehose to deliver the data
         bufferingHints: {
-          // TODO: set to max interval after DEMO
-          intervalInSeconds: 60, // min 60s max 900s as of 30/09/21
-          sizeInMBs: 5, // min 1 max 128 as of 30/09/21
+          intervalInSeconds: 120, // min 60s max 900s as of 30/09/21
+          sizeInMBs: 10, // min 1 max 128 as of 30/09/21
         },
         compressionFormat: 'UNCOMPRESSED',
         roleArn: this.role.roleArn,

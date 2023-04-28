@@ -196,6 +196,13 @@ export const TEST_STATIC_INFRASTRUCTURE: StaticInfra.IStaticParams = {
   googleAnalyticsConnector: {
     importDataStateMachineArn: 'arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachineImport',
   },
+  cloudTrailConnector: {
+    importDataStateMachineArn: 'arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachineImport',
+    lastUpdatedDetailTableName: 'CloudTrailTableName',
+    otherArns: {
+      ecsTaskRole: "arn:aws:iam::666666666666:role/mock-cross-account-role"
+    }
+  },
   cloudWatchConnector: {
     importDataStateMachineArn: 'arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachineImport',
     lastUpdatedDetailTableName: 'CloudWatchTableName',
@@ -208,4 +215,18 @@ export const TEST_STATIC_INFRASTRUCTURE: StaticInfra.IStaticParams = {
     availabilityZones: ['ap-southeast-2a', 'ap-southeast-2b'],
     securityGroupIds: ['sg-12345', 'sg-23456'],
   },
+  dynamoDBConnector: {
+    importDataStateMachineArn: 'arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachineImport',
+    lastUpdatedDetailTableName: 'DynamoDBTableName',
+    otherArns: {
+      ecsTaskRole: 'arn:aws:iam::11111111111:role/test-role',
+    },
+  },
+  mongoDBConnector: {
+    importDataStateMachineArn: 'arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachineImport',
+    lastUpdatedDetailTableName: 'DynamoDBTableName',
+    otherArns: {
+      ecsTaskRole: 'arn:aws:iam::11111111111:role/test-role',
+    },
+  }
 };

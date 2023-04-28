@@ -42,7 +42,7 @@ export const convertValue = (columnInfo: QueryResultColumnMetadata, value?: stri
     case 'tinyint':
     case 'smallint':
     case 'int':
-    case 'bigint': // TODO: BigInt does not serialise to json, consider alternative!
+    case 'bigint': // BigInt does not serialise to json, currently it is serialise into int, but might need a better solution
       return parseInt(value, 10);
     case 'double':
     case 'float':
@@ -60,7 +60,7 @@ export const getQueryResults = async (
   queryExecutionStepFunction: Partial<QueryExecutionStepFunctionOutput>,
   { nextToken, limit, pageSize }: PaginationParameters,
   retrieveDataIntegrity = false,
-): Promise<PaginatedQueryResult> => { //NOSONAR (S3776:Cognitive Complexity) - won't fix
+): Promise<PaginatedQueryResult> => {//NOSONAR (S3776:Cognitive Complexity) - won't fix
   const { originalQuery, callingUser, updatedTimestamp } = queryExecutionStepFunction;
 
   // Get the pagination details from the nextToken if specified

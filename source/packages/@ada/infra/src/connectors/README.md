@@ -2,9 +2,9 @@
 
 This folder contains all the built-in "ingress" connectors available with the current solution and provides _**an** interface_ for registering them.
 
-Ingress connectors consist of both back-end CDK infrastrcuture and scripts, and front-end UI components. The CDK infra targets both _static_ (deployed with solution) and _dynamic_ (deployed per data product) along with supplying python scripts used for previewing/sampling connector data. The UI elements of a connector are applied during data product creation (wizard) and on the details page of data products using the connector.
+Ingress connectors consist of both back-end CDK infrastructure and scripts, and front-end UI components. The CDK infra targets both _static_ (deployed with solution) and _dynamic_ (deployed per data product) along with supplying python scripts used for previewing/sampling connector data. The UI elements of a connector are applied during data product creation (wizard) and on the details page of data products using the connector.
 
-## Dislaimer
+## Disclaimer
 
 > The _interface_ defined here is considered temporary and expected to drastically change in future releases.
 
