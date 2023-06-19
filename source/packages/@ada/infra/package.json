@@ -70,7 +70,7 @@
     "@aws-cdk/aws-servicecatalogappregistry-alpha": "2.70.0-alpha.0",
     "@aws-sdk/util-arn-parser": "^3.208.0",
     "await-spawn": "^4.0.2",
-    "aws-cdk-lib": "2.70.0",
+    "aws-cdk-lib": "2.80.0",
     "aws-lambda-router": "0.11.0",
     "aws-xray-sdk": "^3.3.6",
     "aws4": "1.11.0",

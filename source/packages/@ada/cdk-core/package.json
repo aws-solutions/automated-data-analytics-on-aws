@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@ada/common": "*",
-    "aws-cdk-lib": "2.70.0",
+    "aws-cdk-lib": "2.80.0",
     "constructs": "^10.1.181",
     "truncate-middle": "^1.0.6"
   },

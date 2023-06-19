@@ -29,7 +29,7 @@
     "@types/node-fetch": "^2.5.7",
     "@types/pluralize": "^0.0.29",
     "aws-cdk": "2.70.0",
-    "aws-cdk-lib": "2.70.0",
+    "aws-cdk-lib": "2.80.0",
     "constructs": "^10.1.181",
     "btoa": "^1.2.1",
     "es6-promise": "^4.2.4",
