@@ -31,7 +31,7 @@ jest.mock('@ada/aws-sdk', () => ({
     assumeRole: () => ({
       promise: jest.fn(() =>
         Promise.resolve({
-          Credentials: { AccessKeyId: 'access-key', SecretAccessKey: 'secret-key', SessionToken: 'session-token' },
+          Credentials: { AccessKeyId: 'accessKey', SecretAccessKey: 'secretKey', SessionToken: 'sessionToken' },
         }),
       ),
     }),

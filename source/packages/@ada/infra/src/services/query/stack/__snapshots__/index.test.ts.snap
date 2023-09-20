@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-QueryService) - Automated Data Analytics on AWS. Version v1.2.0",
+  "Description": "(SO0190-QueryService) - Automated Data Analytics on AWS. Version v1.3.0",
   "Outputs": Object {
     "AdaQueryServiceApiLambdaGetAthenaQueryResult40B42785Ref": Object {
       "Value": Object {
@@ -165,7 +165,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5799,6 +5799,7 @@ Object {
     },
     "ApiRestApiRefqueryOPTIONSBC9FCF1E": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -5931,11 +5932,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefqueryPostQueryResponseE571568A",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -5999,32 +5996,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefqueryPostQueryResponseE571568A": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefqueryPostQueryRequest108B3097",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "An execution id to track the status or retrieve the result of a query",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "properties": Object {
-            "executionId": Object {
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "executionId",
-          ],
-          "title": "PostQueryResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefquerySavedQuery9A8E7D0C": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -6063,6 +6034,7 @@ Object {
     },
     "ApiRestApiRefqueryexecutionIdOPTIONS2977B07E": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -6243,11 +6215,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefqueryexecutionIdresultListQueryResultsResponse678C2ED3",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -6295,138 +6263,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefqueryexecutionIdresultListQueryResultsResponse678C2ED3": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The result of a query execution",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "DataIntegrityEnum": Object {
-              "description": "Data Integrity value",
-              "enum": Array [
-                "stale",
-                "current",
-              ],
-              "type": "string",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-            "QueryResult": Object {
-              "properties": Object {
-                "columns": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/QueryResultColumnMetadata",
-                  },
-                  "type": "array",
-                },
-                "data": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/QueryResultData",
-                  },
-                  "type": "array",
-                },
-                "dataIntegrity": Object {
-                  "$ref": "#/definitions/DataIntegrityEnum",
-                  "description": "Data Integrity value",
-                },
-              },
-              "required": Array [
-                "data",
-                "columns",
-              ],
-              "type": "object",
-            },
-            "QueryResultColumnMetadata": Object {
-              "properties": Object {
-                "caseSensitive": Object {
-                  "type": "boolean",
-                },
-                "label": Object {
-                  "type": "string",
-                },
-                "name": Object {
-                  "type": "string",
-                },
-                "nullable": Object {
-                  "type": "string",
-                },
-                "precision": Object {
-                  "description": "For decimal data types, specifies the total number of digits",
-                  "type": "number",
-                },
-                "scale": Object {
-                  "description": "For decimal data types, specifies the total number of digits in the fractional part of the value",
-                  "type": "number",
-                },
-                "type": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "name",
-                "type",
-              ],
-              "type": "object",
-            },
-            "QueryResultData": Object {
-              "additionalProperties": Object {
-                "type": "string",
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "columns": Object {
-              "items": Object {
-                "$ref": "#/definitions/QueryResultColumnMetadata",
-              },
-              "type": "array",
-            },
-            "data": Object {
-              "items": Object {
-                "$ref": "#/definitions/QueryResultData",
-              },
-              "type": "array",
-            },
-            "dataIntegrity": Object {
-              "$ref": "#/definitions/DataIntegrityEnum",
-              "description": "Data Integrity value",
-            },
-            "error": Object {
-              "type": "string",
-            },
-            "nextToken": Object {
-              "type": "string",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "data",
-            "columns",
-          ],
-          "title": "ListQueryResultsResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefqueryexecutionIdresultOPTIONS69A5C341": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -6559,11 +6398,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefqueryexecutionIdresultasathenaListQueryResultsAsAthenaResultsResponse3D8AE17B",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -6609,32 +6444,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefqueryexecutionIdresultasathenaListQueryResultsAsAthenaResultsResponse3D8AE17B": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The result of a query execution",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "properties": Object {
-            "nextToken": Object {
-              "type": "string",
-            },
-            "resultSet": Object {},
-            "updateCount": Object {
-              "type": "integer",
-            },
-          },
-          "title": "listQueryResultsAsAthenaResultsResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefqueryexecutionIdresultasathenaOPTIONSDAC9FFE6": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -6709,11 +6521,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefqueryexecutionIdresultdownloadGetQueryResultDownloadResponse81C07742",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -6815,31 +6623,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefqueryexecutionIdresultdownloadGetQueryResultDownloadResponse81C07742": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "A download url for the full result of a query",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "properties": Object {
-            "signedUrl": Object {
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "signedUrl",
-          ],
-          "title": "GetQueryResultDownloadResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefqueryexecutionIdresultdownloadOPTIONS38F5CFDE": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -6914,11 +6700,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefqueryexecutionIdstatusGetQueryStatusResponse0E7F3F96",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -7020,51 +6802,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefqueryexecutionIdstatusGetQueryStatusResponse0E7F3F96": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The status of a query execution",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "QueryExecutionStatusEnum": Object {
-              "description": "Status for a query execution",
-              "enum": Array [
-                "RUNNING",
-                "SUCCEEDED",
-                "FAILED",
-                "TIMED_OUT",
-                "ABORTED",
-                "QUEUED",
-                "CANCELLED",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "reason": Object {
-              "description": "Failure status reason",
-              "type": "string",
-            },
-            "status": Object {
-              "$ref": "#/definitions/QueryExecutionStatusEnum",
-              "description": "Status for a query execution",
-            },
-          },
-          "required": Array [
-            "status",
-          ],
-          "title": "GetQueryStatusResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefqueryexecutionIdstatusOPTIONSCED85750": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -7106,6 +6846,7 @@ Object {
     },
     "ApiRestApiRefquerygenerateOPTIONS1D29350F": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -7180,11 +6921,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefquerygeneratePostQueryGenerateResponse44E79103",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -7306,813 +7043,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefquerygeneratePostQueryGenerateResponse44E79103": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefquerygeneratePostQueryGenerateRequestE67FC1C7",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The generated query (ie. translated to include governance)",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "ColumnMetadata": Object {
-              "properties": Object {
-                "dataType": Object {
-                  "description": "The data type of the column",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w _\\\\{\\\\}\\"<>:,-]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "A description of the column",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "ontologyAttributeId": Object {
-                  "description": "The ontology attribute the column maps to (if any)",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "ontologyNamespace": Object {
-                  "description": "The ontologyNamespace of the ontology attribute",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "piiClassification": Object {
-                  "description": "Pii classification of the column",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "sortOrder": Object {
-                  "description": "The order in which this column should appear in the schema and results",
-                  "type": "number",
-                },
-              },
-              "required": Array [
-                "dataType",
-              ],
-              "type": "object",
-            },
-            "ColumnsMetadata": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/ColumnMetadata",
-              },
-              "description": "A map of column name to metadata about the column",
-              "type": "object",
-            },
-            "DataProduct": Object {
-              "properties": Object {
-                "childDataProducts": Object {
-                  "description": "Any child data products, ie data products that use this data product as a source for their data",
-                  "items": Object {
-                    "$ref": "#/definitions/DataProductIdentifier",
-                  },
-                  "type": "array",
-                },
-                "cloudFormationStackId": Object {
-                  "description": "The id of the cloudformation stack for all resources pertaining to this data product",
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-                "dataImportStateMachineArn": Object {
-                  "description": "The arn of the state machine for importing data product data (if any)",
-                  "type": "string",
-                },
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataSets": Object {
-                  "$ref": "#/definitions/DataSets",
-                  "description": "Map of datasets by id",
-                },
-                "dataStatus": Object {
-                  "$ref": "#/definitions/DataProductDataStatus",
-                  "description": "Status of data product data",
-                },
-                "dataStatusDetails": Object {
-                  "description": "Details about the data status of the data product, eg error message if data import failed",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "A description of the data product",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "enableAutomaticPii": Object {
-                  "description": "Whether or not to automatically apply pii detection and redaction",
-                  "type": "boolean",
-                },
-                "enableAutomaticTransforms": Object {
-                  "description": "Whether or not to automatically apply transforms based on the type of data in the data product",
-                  "type": "boolean",
-                },
-                "infrastructureStatus": Object {
-                  "$ref": "#/definitions/DataProductInfrastructureStatus",
-                  "description": "Status of data product infrastructure",
-                },
-                "infrastructureStatusDetails": Object {
-                  "description": "Details about the infrastructure status of the data product, eg error message if creation failed",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "latestDataUpdateTimestamp": Object {
-                  "description": "The time at which the data product data was last updated",
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the data product",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "parentDataProducts": Object {
-                  "description": "Any parent data products, ie data products that are used as a source for data in this data product",
-                  "items": Object {
-                    "$ref": "#/definitions/DataProductIdentifier",
-                  },
-                  "type": "array",
-                },
-                "sourceDataSets": Object {
-                  "$ref": "#/definitions/DataSets",
-                  "description": "Map of datasets by id",
-                },
-                "sourceDataStatus": Object {
-                  "$ref": "#/definitions/DataProductSourceDataStatus",
-                  "description": "Status of raw source data product data",
-                },
-                "sourceDataStatusDetails": Object {
-                  "description": "Details about the raw source data status of the data product, eg error message if data source inference failed",
-                  "type": "string",
-                },
-                "sourceDetails": Object {
-                  "$ref": "#/definitions/SouceDetailsSchema",
-                },
-                "sourceType": Object {
-                  "$ref": "#/definitions/SourceTypeEnum",
-                  "description": "Source type value",
-                },
-                "tags": Object {
-                  "$ref": "#/definitions/Tags",
-                },
-                "transforms": Object {
-                  "$ref": "#/definitions/DataProductTransforms",
-                  "description": "Ordered list of transformations applied to data in the data product",
-                },
-                "updateTrigger": Object {
-                  "$ref": "#/definitions/DataProductUpdateTrigger",
-                  "description": "The trigger for a data update",
-                },
-              },
-              "required": Array [
-                "childDataProducts",
-                "dataProductId",
-                "dataSets",
-                "domainId",
-                "name",
-                "parentDataProducts",
-                "sourceType",
-                "tags",
-                "transforms",
-                "updateTrigger",
-              ],
-              "type": "object",
-            },
-            "DataProductBase": Object {
-              "properties": Object {
-                "childDataProducts": Object {
-                  "description": "Any child data products, ie data products that use this data product as a source for their data",
-                  "items": Object {
-                    "$ref": "#/definitions/DataProductIdentifier",
-                  },
-                  "type": "array",
-                },
-                "cloudFormationStackId": Object {
-                  "description": "The id of the cloudformation stack for all resources pertaining to this data product",
-                  "maxLength": 2048,
-                  "pattern": "^arn:[\\\\w]+:[\\\\w-]+:[\\\\w-]+:[\\\\d]+:[*-\\\\/\\\\w]+$",
-                  "type": "string",
-                },
-                "dataImportStateMachineArn": Object {
-                  "description": "The arn of the state machine for importing data product data (if any)",
-                  "type": "string",
-                },
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataStatus": Object {
-                  "$ref": "#/definitions/DataProductDataStatus",
-                  "description": "Status of data product data",
-                },
-                "dataStatusDetails": Object {
-                  "description": "Details about the data status of the data product, eg error message if data import failed",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "A description of the data product",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "enableAutomaticPii": Object {
-                  "description": "Whether or not to automatically apply pii detection and redaction",
-                  "type": "boolean",
-                },
-                "enableAutomaticTransforms": Object {
-                  "description": "Whether or not to automatically apply transforms based on the type of data in the data product",
-                  "type": "boolean",
-                },
-                "infrastructureStatus": Object {
-                  "$ref": "#/definitions/DataProductInfrastructureStatus",
-                  "description": "Status of data product infrastructure",
-                },
-                "infrastructureStatusDetails": Object {
-                  "description": "Details about the infrastructure status of the data product, eg error message if creation failed",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "latestDataUpdateTimestamp": Object {
-                  "description": "The time at which the data product data was last updated",
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the data product",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "parentDataProducts": Object {
-                  "description": "Any parent data products, ie data products that are used as a source for data in this data product",
-                  "items": Object {
-                    "$ref": "#/definitions/DataProductIdentifier",
-                  },
-                  "type": "array",
-                },
-                "sourceDataSets": Object {
-                  "$ref": "#/definitions/DataSets",
-                  "description": "Map of datasets by id",
-                },
-                "sourceDataStatus": Object {
-                  "$ref": "#/definitions/DataProductSourceDataStatus",
-                  "description": "Status of raw source data product data",
-                },
-                "sourceDataStatusDetails": Object {
-                  "description": "Details about the raw source data status of the data product, eg error message if data source inference failed",
-                  "type": "string",
-                },
-                "sourceDetails": Object {
-                  "$ref": "#/definitions/SouceDetailsSchema",
-                },
-                "sourceType": Object {
-                  "$ref": "#/definitions/SourceTypeEnum",
-                  "description": "Source type value",
-                },
-                "tags": Object {
-                  "$ref": "#/definitions/Tags",
-                },
-                "transforms": Object {
-                  "$ref": "#/definitions/DataProductTransforms",
-                  "description": "Ordered list of transformations applied to data in the data product",
-                },
-                "updateTrigger": Object {
-                  "$ref": "#/definitions/DataProductUpdateTrigger",
-                  "description": "The trigger for a data update",
-                },
-              },
-              "required": Array [
-                "childDataProducts",
-                "dataProductId",
-                "domainId",
-                "name",
-                "parentDataProducts",
-                "sourceType",
-                "tags",
-                "transforms",
-                "updateTrigger",
-              ],
-              "type": "object",
-            },
-            "DataProductDataStatus": Object {
-              "description": "Status of data product data",
-              "enum": Array [
-                "NO_DATA",
-                "UPDATING",
-                "READY",
-                "FAILED",
-              ],
-              "type": "string",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DataProductInfrastructureStatus": Object {
-              "description": "Status of data product infrastructure",
-              "enum": Array [
-                "PROVISIONING",
-                "READY",
-                "FAILED",
-              ],
-              "type": "string",
-            },
-            "DataProductSourceDataStatus": Object {
-              "description": "Status of raw source data product data",
-              "enum": Array [
-                "NO_DATA",
-                "UPDATING",
-                "READY",
-                "FAILED",
-              ],
-              "type": "string",
-            },
-            "DataProductTransform": Object {
-              "description": "Uniquely identifies the script. Used to calculate the script path in s3",
-              "properties": Object {
-                "inlineScriptContent": Object {
-                  "description": "Inline script content for use in schema previews. Data products cannot be created with inline scripts.",
-                  "maxLength": 262144,
-                  "pattern": "^[\\\\s\\\\S]*def apply_transform\\\\([\\\\s\\\\S]*$",
-                  "type": "string",
-                },
-                "inputArgs": Object {
-                  "description": "Arguments to pass to the script",
-                },
-                "namespace": Object {
-                  "description": "The namespace in which the script resides, eg the domain.",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "scriptId": Object {
-                  "description": "Identifies the script within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "scriptId",
-                "namespace",
-              ],
-              "type": "object",
-            },
-            "DataProductTransforms": Object {
-              "description": "Ordered list of transformations applied to data in the data product",
-              "items": Object {
-                "$ref": "#/definitions/DataProductTransform",
-                "description": "Uniquely identifies the script. Used to calculate the script path in s3",
-              },
-              "type": "array",
-            },
-            "DataProductUpdatePolicyType": Object {
-              "description": "Update types for a data product data",
-              "enum": Array [
-                "APPEND",
-                "REPLACE",
-              ],
-              "type": "string",
-            },
-            "DataProductUpdateTrigger": Object {
-              "description": "The trigger for a data update",
-              "properties": Object {
-                "scheduleRate": Object {
-                  "description": "Cron schedule for data update (if triggerType is scheduled)",
-                  "maxLength": 64,
-                  "pattern": "(?:(?:^rate\\\\((\\\\d+) (minutes?|hours?|days?)\\\\)$)|(?:^cron\\\\(([\\\\w,/\\\\-*?#]{1,20} ?){1,6}\\\\)$))",
-                  "type": "string",
-                },
-                "triggerType": Object {
-                  "$ref": "#/definitions/DataProductUpdateTriggerType",
-                  "description": "Trigger types for a data product data",
-                },
-                "updatePolicy": Object {
-                  "$ref": "#/definitions/DataProductUpdatePolicyType",
-                  "description": "Update types for a data product data",
-                },
-              },
-              "required": Array [
-                "triggerType",
-              ],
-              "type": "object",
-            },
-            "DataProductUpdateTriggerType": Object {
-              "description": "Trigger types for a data product data",
-              "enum": Array [
-                "ON_DEMAND",
-                "SCHEDULE",
-                "AUTOMATIC",
-              ],
-              "type": "string",
-            },
-            "DataSet": Object {
-              "properties": Object {
-                "columnMetadata": Object {
-                  "$ref": "#/definitions/ColumnsMetadata",
-                  "description": "A map of column name to metadata about the column",
-                },
-                "description": Object {
-                  "description": "A description of the dataset",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "identifiers": Object {
-                  "$ref": "#/definitions/DataSetIdentifiers",
-                  "description": "Details specific to attributes that identify the dataset",
-                },
-                "name": Object {
-                  "description": "The name of the dataset within the data product",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "columnMetadata",
-                "identifiers",
-              ],
-              "type": "object",
-            },
-            "DataSetDetails": Object {
-              "properties": Object {
-                "description": Object {
-                  "description": "A description of the dataset",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "identifiers": Object {
-                  "$ref": "#/definitions/DataSetIdentifiers",
-                  "description": "Details specific to attributes that identify the dataset",
-                },
-                "name": Object {
-                  "description": "The name of the dataset within the data product",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "identifiers",
-              ],
-              "type": "object",
-            },
-            "DataSetIdentifiers": Object {
-              "description": "Details specific to attributes that identify the dataset",
-              "properties": Object {
-                "catalog": Object {
-                  "description": "The catalog of the dataset",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "database": Object {
-                  "description": "The database where the detaset is located",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "table": Object {
-                  "description": "The name of the table that contains the data of the dataset",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataSets": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/DataSet",
-              },
-              "description": "Map of datasets by id",
-              "type": "object",
-            },
-            "GovernedColumnMetadata": Object {
-              "properties": Object {
-                "dataType": Object {
-                  "description": "The data type of the column",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w _\\\\{\\\\}\\"<>:,-]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "A description of the column",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "lensToApply": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "ontologyAttributeId": Object {
-                  "description": "The ontology attribute the column maps to (if any)",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "ontologyNamespace": Object {
-                  "description": "The ontologyNamespace of the ontology attribute",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "piiClassification": Object {
-                  "description": "Pii classification of the column",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "sortOrder": Object {
-                  "description": "The order in which this column should appear in the schema and results",
-                  "type": "number",
-                },
-                "sqlClauses": Object {
-                  "items": Object {
-                    "maxLength": 262144,
-                    "pattern": "^([\\\\s\\\\S]+)$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "dataType",
-                "lensToApply",
-                "sqlClauses",
-              ],
-              "type": "object",
-            },
-            "GovernedColumnsMetadata": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/GovernedColumnMetadata",
-              },
-              "type": "object",
-            },
-            "GovernedDataSet": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "type": "string",
-                },
-                "dataProductId": Object {
-                  "type": "string",
-                },
-                "dataSet": Object {
-                  "$ref": "#/definitions/GovernedDataSetDetails",
-                },
-                "dataSetId": Object {
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "domainId",
-                "dataProductId",
-                "dataSetId",
-                "addressedAs",
-                "dataSet",
-              ],
-              "type": "object",
-            },
-            "GovernedDataSetDetails": Object {
-              "properties": Object {
-                "columnMetadata": Object {
-                  "$ref": "#/definitions/GovernedColumnsMetadata",
-                },
-                "description": Object {
-                  "description": "A description of the dataset",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "identifiers": Object {
-                  "$ref": "#/definitions/DataSetIdentifiers",
-                  "description": "Details specific to attributes that identify the dataset",
-                },
-                "name": Object {
-                  "description": "The name of the dataset within the data product",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "columnMetadata",
-                "identifiers",
-              ],
-              "type": "object",
-            },
-            "GovernedDataSets": Object {
-              "description": "The data sets involved in the query, with their applied governance details",
-              "items": Object {
-                "$ref": "#/definitions/GovernedDataSet",
-              },
-              "type": "array",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-            "Query": Object {
-              "properties": Object {
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "ScriptIdentifier": Object {
-              "description": "Uniquely identifies the script. Used to calculate the script path in s3",
-              "properties": Object {
-                "namespace": Object {
-                  "description": "The namespace in which the script resides, eg the domain.",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "scriptId": Object {
-                  "description": "Identifies the script within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "scriptId",
-                "namespace",
-              ],
-              "type": "object",
-            },
-            "SouceDetailsSchema": Object {
-              "type": "object",
-            },
-            "SourceTypeEnum": Object {
-              "description": "Source type value",
-              "enum": Array [
-                "UPLOAD",
-                "S3",
-                "KINESIS",
-                "GOOGLE_ANALYTICS",
-                "GOOGLE_BIGQUERY",
-                "GOOGLE_STORAGE",
-                "DYNAMODB",
-                "CLOUDWATCH",
-                "MYSQL5",
-                "POSTGRESQL",
-                "SQLSERVER",
-                "CLOUDTRAIL",
-                "MONGODB",
-              ],
-              "type": "string",
-            },
-            "Tag": Object {
-              "properties": Object {
-                "key": Object {
-                  "maxLength": 128,
-                  "minLength": 1,
-                  "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                },
-                "value": Object {
-                  "maxLength": 256,
-                  "minLength": 0,
-                  "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                },
-              },
-              "required": Array [
-                "key",
-              ],
-              "type": "object",
-            },
-            "Tags": Object {
-              "items": Object {
-                "$ref": "#/definitions/Tag",
-              },
-              "type": "array",
-            },
-          },
-          "properties": Object {
-            "dataProducts": Object {
-              "description": "The data products involved in the query",
-              "items": Object {
-                "$ref": "#/definitions/DataProduct",
-              },
-              "type": "array",
-            },
-            "governedDataSets": Object {
-              "$ref": "#/definitions/GovernedDataSets",
-              "description": "The data sets involved in the query, with their applied governance details",
-            },
-            "query": Object {
-              "description": "An SQL query",
-              "maxLength": 262144,
-              "pattern": "^([\\\\s\\\\S]+)$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "dataProducts",
-            "governedDataSets",
-            "query",
-          ],
-          "title": "PostQueryGenerateResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefqueryhistoryGET38F1CECC": Object {
       "DependsOn": Array [
         "ApiRestApiRefqueryhistoryOPTIONSFC56E77B",
@@ -8148,11 +7078,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefqueryhistoryListQueryHistoriesResponse8E3C2F6E",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -8240,148 +7166,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefqueryhistoryListQueryHistoriesResponse8E3C2F6E": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The list of queries performed by a specific user, order by execution date (desc)",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-            "Query": Object {
-              "properties": Object {
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "QueryHistory": Object {
-              "properties": Object {
-                "executionId": Object {
-                  "type": "string",
-                },
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "executionId",
-                "query",
-              ],
-              "type": "object",
-            },
-            "QueryHistoryEntity": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "executionId": Object {
-                  "type": "string",
-                },
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "executionId",
-                "query",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "nextToken": Object {
-              "type": "string",
-            },
-            "queries": Object {
-              "items": Object {
-                "$ref": "#/definitions/QueryHistoryEntity",
-              },
-              "type": "array",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "queries",
-          ],
-          "title": "ListQueryHistoriesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefqueryhistoryOPTIONSFC56E77B": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -8456,11 +7243,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefquerysavedqueryListQuerySavedQueriesResponseB30B1F6D",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -8548,384 +7331,6 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefquerysavedqueryListQuerySavedQueriesResponseB30B1F6D": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The list of all public saved queries",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DataSetIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataSetId": Object {
-                  "description": "The id of the data set",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "dataSetId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-            "Query": Object {
-              "properties": Object {
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "ReferencedDataSetIdentifier": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "description": "How the data set was referenced in a query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataSetId": Object {
-                  "description": "The id of the data set",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "dataProductId",
-                "dataSetId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "SavedQuery": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "referencedDataSets": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/ReferencedDataSetIdentifier",
-                  },
-                  "type": "array",
-                },
-                "referencedQueries": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/SavedQueryIdentifier",
-                  },
-                  "type": "array",
-                },
-                "tags": Object {
-                  "$ref": "#/definitions/Tags",
-                },
-                "type": Object {
-                  "enum": Array [
-                    "PUBLIC",
-                    "PRIVATE",
-                  ],
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "namespace",
-                "query",
-                "queryId",
-                "referencedDataSets",
-                "referencedQueries",
-                "type",
-              ],
-              "type": "object",
-            },
-            "SavedQueryEntity": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "referencedDataSets": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/ReferencedDataSetIdentifier",
-                  },
-                  "type": "array",
-                },
-                "referencedQueries": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/SavedQueryIdentifier",
-                  },
-                  "type": "array",
-                },
-                "tags": Object {
-                  "$ref": "#/definitions/Tags",
-                },
-                "type": Object {
-                  "enum": Array [
-                    "PUBLIC",
-                    "PRIVATE",
-                  ],
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "namespace",
-                "query",
-                "queryId",
-                "referencedDataSets",
-                "referencedQueries",
-                "type",
-              ],
-              "type": "object",
-            },
-            "SavedQueryIdentifier": Object {
-              "properties": Object {
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespace",
-                "queryId",
-              ],
-              "type": "object",
-            },
-            "Tag": Object {
-              "properties": Object {
-                "key": Object {
-                  "maxLength": 128,
-                  "minLength": 1,
-                  "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                },
-                "value": Object {
-                  "maxLength": 256,
-                  "minLength": 0,
-                  "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                },
-              },
-              "required": Array [
-                "key",
-              ],
-              "type": "object",
-            },
-            "Tags": Object {
-              "items": Object {
-                "$ref": "#/definitions/Tag",
-              },
-              "type": "array",
-            },
-          },
-          "properties": Object {
-            "nextToken": Object {
-              "type": "string",
-            },
-            "queries": Object {
-              "items": Object {
-                "$ref": "#/definitions/SavedQueryEntity",
-              },
-              "type": "array",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "queries",
-          ],
-          "title": "ListQuerySavedQueriesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefquerysavedqueryNamespaceA722EFD9": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -8940,6 +7345,7 @@ Object {
     },
     "ApiRestApiRefquerysavedqueryOPTIONS773B4A45": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -9014,11 +7420,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefquerysavedquerynamespaceListQueryNamespaceSavedQueriesResponse38CA7FD5",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -9115,386 +7517,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefquerysavedquerynamespaceListQueryNamespaceSavedQueriesResponse38CA7FD5": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The list of queries saved within the given namespace",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DataSetIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataSetId": Object {
-                  "description": "The id of the data set",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "dataSetId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-            "Query": Object {
-              "properties": Object {
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "ReferencedDataSetIdentifier": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "description": "How the data set was referenced in a query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataSetId": Object {
-                  "description": "The id of the data set",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "dataProductId",
-                "dataSetId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "SavedQuery": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "referencedDataSets": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/ReferencedDataSetIdentifier",
-                  },
-                  "type": "array",
-                },
-                "referencedQueries": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/SavedQueryIdentifier",
-                  },
-                  "type": "array",
-                },
-                "tags": Object {
-                  "$ref": "#/definitions/Tags",
-                },
-                "type": Object {
-                  "enum": Array [
-                    "PUBLIC",
-                    "PRIVATE",
-                  ],
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "namespace",
-                "query",
-                "queryId",
-                "referencedDataSets",
-                "referencedQueries",
-                "type",
-              ],
-              "type": "object",
-            },
-            "SavedQueryEntity": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "referencedDataSets": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/ReferencedDataSetIdentifier",
-                  },
-                  "type": "array",
-                },
-                "referencedQueries": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/SavedQueryIdentifier",
-                  },
-                  "type": "array",
-                },
-                "tags": Object {
-                  "$ref": "#/definitions/Tags",
-                },
-                "type": Object {
-                  "enum": Array [
-                    "PUBLIC",
-                    "PRIVATE",
-                  ],
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "namespace",
-                "query",
-                "queryId",
-                "referencedDataSets",
-                "referencedQueries",
-                "type",
-              ],
-              "type": "object",
-            },
-            "SavedQueryIdentifier": Object {
-              "properties": Object {
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespace",
-                "queryId",
-              ],
-              "type": "object",
-            },
-            "Tag": Object {
-              "properties": Object {
-                "key": Object {
-                  "maxLength": 128,
-                  "minLength": 1,
-                  "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                },
-                "value": Object {
-                  "maxLength": 256,
-                  "minLength": 0,
-                  "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                },
-              },
-              "required": Array [
-                "key",
-              ],
-              "type": "object",
-            },
-            "Tags": Object {
-              "items": Object {
-                "$ref": "#/definitions/Tag",
-              },
-              "type": "array",
-            },
-          },
-          "properties": Object {
-            "nextToken": Object {
-              "type": "string",
-            },
-            "queries": Object {
-              "items": Object {
-                "$ref": "#/definitions/SavedQueryEntity",
-              },
-              "type": "array",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "queries",
-          ],
-          "title": "listQueryNamespaceSavedQueriesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefquerysavedquerynamespaceOPTIONSA0084358": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -9581,11 +7606,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefquerysavedquerynamespacequeryIdDeleteQuerySavedQueryResponseCB802B4E",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -9688,356 +7709,6 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefquerysavedquerynamespacequeryIdDeleteQuerySavedQueryResponseCB802B4E": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefquerysavedquerynamespacequeryIdPutQuerySavedQueryResponseDE97E74C",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The saved query that was deleted",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DataSetIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataSetId": Object {
-                  "description": "The id of the data set",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "dataSetId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "Query": Object {
-              "properties": Object {
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "ReferencedDataSetIdentifier": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "description": "How the data set was referenced in a query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataSetId": Object {
-                  "description": "The id of the data set",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "dataProductId",
-                "dataSetId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "SavedQuery": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "referencedDataSets": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/ReferencedDataSetIdentifier",
-                  },
-                  "type": "array",
-                },
-                "referencedQueries": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/SavedQueryIdentifier",
-                  },
-                  "type": "array",
-                },
-                "tags": Object {
-                  "$ref": "#/definitions/Tags",
-                },
-                "type": Object {
-                  "enum": Array [
-                    "PUBLIC",
-                    "PRIVATE",
-                  ],
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "namespace",
-                "query",
-                "queryId",
-                "referencedDataSets",
-                "referencedQueries",
-                "type",
-              ],
-              "type": "object",
-            },
-            "SavedQueryIdentifier": Object {
-              "properties": Object {
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespace",
-                "queryId",
-              ],
-              "type": "object",
-            },
-            "Tag": Object {
-              "properties": Object {
-                "key": Object {
-                  "maxLength": 128,
-                  "minLength": 1,
-                  "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                },
-                "value": Object {
-                  "maxLength": 256,
-                  "minLength": 0,
-                  "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                },
-              },
-              "required": Array [
-                "key",
-              ],
-              "type": "object",
-            },
-            "Tags": Object {
-              "items": Object {
-                "$ref": "#/definitions/Tag",
-              },
-              "type": "array",
-            },
-          },
-          "properties": Object {
-            "addressedAs": Object {
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "namespace": Object {
-              "description": "The namespace for this query",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "query": Object {
-              "description": "An SQL query",
-              "maxLength": 262144,
-              "pattern": "^([\\\\s\\\\S]+)$",
-              "type": "string",
-            },
-            "queryId": Object {
-              "description": "The id of the query within the namespace",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "referencedDataSets": Object {
-              "items": Object {
-                "$ref": "#/definitions/ReferencedDataSetIdentifier",
-              },
-              "type": "array",
-            },
-            "referencedQueries": Object {
-              "items": Object {
-                "$ref": "#/definitions/SavedQueryIdentifier",
-              },
-              "type": "array",
-            },
-            "tags": Object {
-              "$ref": "#/definitions/Tags",
-            },
-            "type": Object {
-              "enum": Array [
-                "PUBLIC",
-                "PRIVATE",
-              ],
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "addressedAs",
-            "namespace",
-            "query",
-            "queryId",
-            "referencedDataSets",
-            "referencedQueries",
-            "type",
-          ],
-          "title": "DeleteQuerySavedQueryResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefquerysavedquerynamespacequeryIdGET668530A3": Object {
       "DependsOn": Array [
         "ApiRestApiRefquerysavedquerynamespacequeryIdOPTIONSB5836E28",
@@ -10073,11 +7744,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefquerysavedquerynamespacequeryIdGetQuerySavedQueryResponse2C1AE900",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -10180,355 +7847,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefquerysavedquerynamespacequeryIdGetQuerySavedQueryResponse2C1AE900": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The saved query",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DataSetIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataSetId": Object {
-                  "description": "The id of the data set",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "dataSetId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "Query": Object {
-              "properties": Object {
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "ReferencedDataSetIdentifier": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "description": "How the data set was referenced in a query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataSetId": Object {
-                  "description": "The id of the data set",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "dataProductId",
-                "dataSetId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "SavedQuery": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "referencedDataSets": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/ReferencedDataSetIdentifier",
-                  },
-                  "type": "array",
-                },
-                "referencedQueries": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/SavedQueryIdentifier",
-                  },
-                  "type": "array",
-                },
-                "tags": Object {
-                  "$ref": "#/definitions/Tags",
-                },
-                "type": Object {
-                  "enum": Array [
-                    "PUBLIC",
-                    "PRIVATE",
-                  ],
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "namespace",
-                "query",
-                "queryId",
-                "referencedDataSets",
-                "referencedQueries",
-                "type",
-              ],
-              "type": "object",
-            },
-            "SavedQueryIdentifier": Object {
-              "properties": Object {
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespace",
-                "queryId",
-              ],
-              "type": "object",
-            },
-            "Tag": Object {
-              "properties": Object {
-                "key": Object {
-                  "maxLength": 128,
-                  "minLength": 1,
-                  "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                },
-                "value": Object {
-                  "maxLength": 256,
-                  "minLength": 0,
-                  "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                },
-              },
-              "required": Array [
-                "key",
-              ],
-              "type": "object",
-            },
-            "Tags": Object {
-              "items": Object {
-                "$ref": "#/definitions/Tag",
-              },
-              "type": "array",
-            },
-          },
-          "properties": Object {
-            "addressedAs": Object {
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "namespace": Object {
-              "description": "The namespace for this query",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "query": Object {
-              "description": "An SQL query",
-              "maxLength": 262144,
-              "pattern": "^([\\\\s\\\\S]+)$",
-              "type": "string",
-            },
-            "queryId": Object {
-              "description": "The id of the query within the namespace",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "referencedDataSets": Object {
-              "items": Object {
-                "$ref": "#/definitions/ReferencedDataSetIdentifier",
-              },
-              "type": "array",
-            },
-            "referencedQueries": Object {
-              "items": Object {
-                "$ref": "#/definitions/SavedQueryIdentifier",
-              },
-              "type": "array",
-            },
-            "tags": Object {
-              "$ref": "#/definitions/Tags",
-            },
-            "type": Object {
-              "enum": Array [
-                "PUBLIC",
-                "PRIVATE",
-              ],
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "addressedAs",
-            "namespace",
-            "query",
-            "queryId",
-            "referencedDataSets",
-            "referencedQueries",
-            "type",
-          ],
-          "title": "GetQuerySavedQueryResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefquerysavedquerynamespacequeryIdOPTIONSB5836E28": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -10603,11 +7924,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefquerysavedquerynamespacequeryIdPutQuerySavedQueryResponseDE97E74C",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -10716,9 +8033,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "ApiRestApiRefquerysavedquerynamespacequeryIdPutQuerySavedQueryRequest13E5AF5C": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefquerysavedquerynamespacequeryIdGetQuerySavedQueryResponse2C1AE900",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "The query to save",
@@ -10952,356 +8266,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefquerysavedquerynamespacequeryIdPutQuerySavedQueryResponseDE97E74C": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefquerysavedquerynamespacequeryIdPutQuerySavedQueryRequest13E5AF5C",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The saved query",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DataSetIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataSetId": Object {
-                  "description": "The id of the data set",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "dataSetId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "Query": Object {
-              "properties": Object {
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "query",
-              ],
-              "type": "object",
-            },
-            "ReferencedDataSetIdentifier": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "description": "How the data set was referenced in a query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "dataSetId": Object {
-                  "description": "The id of the data set",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "dataProductId",
-                "dataSetId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "SavedQuery": Object {
-              "properties": Object {
-                "addressedAs": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "query": Object {
-                  "description": "An SQL query",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "referencedDataSets": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/ReferencedDataSetIdentifier",
-                  },
-                  "type": "array",
-                },
-                "referencedQueries": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/SavedQueryIdentifier",
-                  },
-                  "type": "array",
-                },
-                "tags": Object {
-                  "$ref": "#/definitions/Tags",
-                },
-                "type": Object {
-                  "enum": Array [
-                    "PUBLIC",
-                    "PRIVATE",
-                  ],
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "addressedAs",
-                "namespace",
-                "query",
-                "queryId",
-                "referencedDataSets",
-                "referencedQueries",
-                "type",
-              ],
-              "type": "object",
-            },
-            "SavedQueryIdentifier": Object {
-              "properties": Object {
-                "namespace": Object {
-                  "description": "The namespace for this query",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "queryId": Object {
-                  "description": "The id of the query within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespace",
-                "queryId",
-              ],
-              "type": "object",
-            },
-            "Tag": Object {
-              "properties": Object {
-                "key": Object {
-                  "maxLength": 128,
-                  "minLength": 1,
-                  "pattern": "^([a-zA-Z][a-zA-Z0-9_.:/=+-@]{0,127})$",
-                },
-                "value": Object {
-                  "maxLength": 256,
-                  "minLength": 0,
-                  "pattern": "^([a-zA-Z0-9_.:/=+-@]{0,256})$",
-                },
-              },
-              "required": Array [
-                "key",
-              ],
-              "type": "object",
-            },
-            "Tags": Object {
-              "items": Object {
-                "$ref": "#/definitions/Tag",
-              },
-              "type": "array",
-            },
-          },
-          "properties": Object {
-            "addressedAs": Object {
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "namespace": Object {
-              "description": "The namespace for this query",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "query": Object {
-              "description": "An SQL query",
-              "maxLength": 262144,
-              "pattern": "^([\\\\s\\\\S]+)$",
-              "type": "string",
-            },
-            "queryId": Object {
-              "description": "The id of the query within the namespace",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "referencedDataSets": Object {
-              "items": Object {
-                "$ref": "#/definitions/ReferencedDataSetIdentifier",
-              },
-              "type": "array",
-            },
-            "referencedQueries": Object {
-              "items": Object {
-                "$ref": "#/definitions/SavedQueryIdentifier",
-              },
-              "type": "array",
-            },
-            "tags": Object {
-              "$ref": "#/definitions/Tags",
-            },
-            "type": Object {
-              "enum": Array [
-                "PUBLIC",
-                "PRIVATE",
-              ],
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "addressedAs",
-            "namespace",
-            "query",
-            "queryId",
-            "referencedDataSets",
-            "referencedQueries",
-            "type",
-          ],
-          "title": "PutQuerySavedQueryResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefqueryschemaDomainId3231CE58": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -11316,6 +8280,7 @@ Object {
     },
     "ApiRestApiRefqueryschemaOPTIONS45D7CA85": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -11369,6 +8334,7 @@ Object {
     },
     "ApiRestApiRefqueryschemadomainIdOPTIONS16231ED7": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -11422,6 +8388,7 @@ Object {
     },
     "ApiRestApiRefqueryschemadomainIddataproductOPTIONS2F7C3791": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -11496,11 +8463,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefqueryschemadomainIddataproductdataProductIdGetQuerySchemaDataProductResponseF8A64F91",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -11604,39 +8567,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefqueryschemadomainIddataproductdataProductIdGetQuerySchemaDataProductResponseF8A64F91": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The schema for a data product",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "Schema": Object {
-              "additionalProperties": Object {
-                "type": "string",
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "schema": Object {
-              "$ref": "#/definitions/Schema",
-            },
-          },
-          "required": Array [
-            "schema",
-          ],
-          "title": "GetQuerySchemaDataProductResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefqueryschemadomainIddataproductdataProductIdOPTIONSCCE763E3": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -11723,11 +8656,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefquerysyncGetQuerySyncResponseFEFBA2B8",
-              },
-            },
+            "ResponseModels": Object {},
             "ResponseParameters": Object {
               "method.response.header.location": true,
             },
@@ -11824,22 +8753,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefquerysyncGetQuerySyncResponseFEFBA2B8": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "A redirect to the query result api",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "GetQuerySyncResponse",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefquerysyncOPTIONS302E574C": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -11881,6 +8797,7 @@ Object {
     },
     "ApiRestApiRefquerysyncexecutionIdOPTIONS111A0927": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -11967,19 +8884,11 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefquerysyncexecutionIdresultGetQuerySyncResultResponse0D2706F0F",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefquerysyncexecutionIdresultGetQuerySyncResultResponse1E390397C",
-              },
-            },
+            "ResponseModels": Object {},
             "ResponseParameters": Object {
               "method.response.header.location": true,
             },
@@ -12080,110 +8989,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefquerysyncexecutionIdresultGetQuerySyncResultResponse0D2706F0F": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The result of the query",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "DataIntegrityEnum": Object {
-              "description": "Data Integrity value",
-              "enum": Array [
-                "stale",
-                "current",
-              ],
-              "type": "string",
-            },
-            "QueryResultColumnMetadata": Object {
-              "properties": Object {
-                "caseSensitive": Object {
-                  "type": "boolean",
-                },
-                "label": Object {
-                  "type": "string",
-                },
-                "name": Object {
-                  "type": "string",
-                },
-                "nullable": Object {
-                  "type": "string",
-                },
-                "precision": Object {
-                  "description": "For decimal data types, specifies the total number of digits",
-                  "type": "number",
-                },
-                "scale": Object {
-                  "description": "For decimal data types, specifies the total number of digits in the fractional part of the value",
-                  "type": "number",
-                },
-                "type": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "name",
-                "type",
-              ],
-              "type": "object",
-            },
-            "QueryResultData": Object {
-              "additionalProperties": Object {
-                "type": "string",
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "columns": Object {
-              "items": Object {
-                "$ref": "#/definitions/QueryResultColumnMetadata",
-              },
-              "type": "array",
-            },
-            "data": Object {
-              "items": Object {
-                "$ref": "#/definitions/QueryResultData",
-              },
-              "type": "array",
-            },
-            "dataIntegrity": Object {
-              "$ref": "#/definitions/DataIntegrityEnum",
-              "description": "Data Integrity value",
-            },
-          },
-          "required": Array [
-            "data",
-            "columns",
-          ],
-          "title": "GetQuerySyncResultResponse0",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
-    "ApiRestApiRefquerysyncexecutionIdresultGetQuerySyncResultResponse1E390397C": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefquerysyncexecutionIdresultGetQuerySyncResultResponse0D2706F0F",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "A redirect to the query result api",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "GetQuerySyncResultResponse1",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefquerysyncexecutionIdresultOPTIONSFB876A97": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -12712,7 +9520,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -14401,7 +11209,7 @@ Object {
               "Ref": "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID",
             },
             "AWS_SOLUTION_ID": "SO0190",
-            "AWS_SOLUTION_VERSION": "v1.2.0",
+            "AWS_SOLUTION_VERSION": "v1.3.0",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
             },
@@ -15703,9 +12511,6 @@ Object {
               "Arn",
             ],
           },
-        },
-        "StreamModeDetails": Object {
-          "StreamMode": "PROVISIONED",
         },
         "Tags": Array [
           Object {

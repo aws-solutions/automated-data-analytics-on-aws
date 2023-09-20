@@ -2,16 +2,17 @@
 SPDX-License-Identifier: Apache-2.0 */
 import * as fixtures from '$testing/__fixtures__';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { DELAY } from '$testing/interaction';
 import { DefaultGroupIds, LensIds } from '@ada/common';
 import { LL } from '$strings';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { NONE_LENS_OPTION } from '$common/entity/ontology';
 import { UpdateOntologyView } from './index';
 import { act } from '@testing-library/react';
+import { autoSuggestOptionEvent, selectOptionEvent } from '$testing/user-event';
 import { delay, getOntologyIdString } from '$common/utils';
 import { findSQLEditor } from '$testing/sql-editor';
 import { groupDisplayName } from '$common/entity/group/utils';
-import { selectOptionEvent } from '$testing/user-event';
 import { userEvent, within } from '@storybook/testing-library';
 
 const SYSTEM_ONTOLOGY = fixtures.ONTOLOGY_PII_LOCATION;
@@ -47,12 +48,18 @@ System.parameters = {
 
 export const Coverage = Template.bind({});
 
+const GOVERNANCE_MAP: [groupId: DefaultGroupIds, column: string | undefined, row: string | undefined][] = [
+  [DefaultGroupIds.DEFAULT, undefined, 'foo > 5'],
+  [DefaultGroupIds.POWER_USER, LensIds.CLEAR, undefined],
+  [DefaultGroupIds.ADMIN, LensIds.CLEAR, undefined],
+]
+
 Coverage.play = async ({ canvasElement }) => {
   const { getByText, getByLabelText } = within(canvasElement);
 
   // ensure state is fully resolved
   await act(async () => {
-    await delay(10);
+    await delay(DELAY.SHORT);
   });
 
   await userEvent.type(getByLabelText('Description'), 'Updated description', { delay: 2 });
@@ -62,27 +69,39 @@ Coverage.play = async ({ canvasElement }) => {
   });
 
   await act(async () => {
-    await delay(10);
+    await delay(DELAY.SHORT);
   });
 
   await selectOptionEvent(canvasElement, LL.ENTITY['Ontology@'].defaultLens.label(), LensIds.HASHED);
 
-  await editGroupColumnPolicy(canvasElement, DefaultGroupIds.DEFAULT);
-  await editGroupColumnPolicy(canvasElement, DefaultGroupIds.POWER_USER, LensIds.CLEAR);
-  await editGroupColumnPolicy(canvasElement, DefaultGroupIds.ADMIN, LensIds.CLEAR);
-
-  await editGroupRowPolicy(canvasElement, DefaultGroupIds.DEFAULT, 'foo > 5');
-  await editGroupRowPolicy(canvasElement, DefaultGroupIds.POWER_USER);
-  await editGroupRowPolicy(canvasElement, DefaultGroupIds.ADMIN);
+  for (const [groupId, column, row] of GOVERNANCE_MAP) {
+    await addGroupPolicy(canvasElement, groupId);
+    await editGroupColumnPolicy(canvasElement, groupId, column);
+    await editGroupRowPolicy(canvasElement, groupId, row);
+  }
 
   await act(async () => {
-    await delay(100);
+    await delay(DELAY.IMMEDIATE);
   });
 
   await act(async () => {
     userEvent.click(getByText('Submit'));
   });
 };
+
+async function addGroupPolicy(canvasElement: HTMLElement, groupId: string) {
+  const { getByText, getByTestId } = within(canvasElement);
+
+  await autoSuggestOptionEvent(getByTestId('search-custom-group'), LL.VIEW.GOVERNANCE.actions.searchGroups(), groupDisplayName(groupId));
+
+  await delay(DELAY.SHORT);
+
+  await act(async () => {
+    userEvent.click(getByText('Add Governance Settings'));
+  });
+
+  await delay(DELAY.SHORT);
+}
 
 async function editGroupColumnPolicy(canvasElement: HTMLElement, groupId: string, value?: string) {
   const { getByText } = within(canvasElement);
@@ -96,7 +115,7 @@ async function editGroupRowPolicy(canvasElement: HTMLElement, groupId: string, v
   const sqlEditor = await findSQLEditor(groupContainer);
 
   await act(async () => {
-    await sqlEditor.setValue(value);
+    await sqlEditor.setValue(value || '');
     await delay(10);
   });
 

@@ -9,7 +9,6 @@ import {
   DataProductDataStatus,
   DataProductInfrastructureStatus,
   DataProductSourceDataStatus,
-  DefaultGroupIds,
   ReservedDataProducts,
 } from '@ada/common';
 import {
@@ -32,7 +31,7 @@ import { METRICS_EVENT_TYPE, OperationalMetricsClient } from '@ada/services/api/
 jest.mock('@ada/api-client-lambda');
 const mockStartExecution = jest.fn();
 const mockCreateSecret = jest.fn();
-const mockInvokeAsync = jest.fn();
+const mockInvoke = jest.fn();
 const mockSendOperationalMetrics = jest.fn();
 
 jest.mock('@ada/aws-sdk', () => ({
@@ -55,8 +54,8 @@ jest.mock('@ada/aws-sdk', () => ({
     }),
   })),
   AwsLambdaInstance: jest.fn().mockImplementation(() => ({
-    invokeAsync: (...args: any[]) => ({
-      promise: jest.fn(() => Promise.resolve(mockInvokeAsync(...args))),
+    invoke: (...args: any[]) => ({
+      promise: jest.fn(() => Promise.resolve(mockInvoke(...args))),
     }),
   })),
 }));
@@ -141,7 +140,7 @@ describe('post-data-product', () => {
         },
       }),
     });
-    expect(mockInvokeAsync).toHaveBeenCalled();
+    expect(mockInvoke).toHaveBeenCalled();
 
     // Should set the default policy
     expect(API.putGovernancePolicyDomainDataProduct).toHaveBeenCalledWith<
@@ -212,7 +211,7 @@ describe('post-data-product', () => {
         },
       }),
     });
-    expect(mockInvokeAsync).toHaveBeenCalled();
+    expect(mockInvoke).toHaveBeenCalled();
 
     // Should have created the secret as this is google storage
     expect(mockCreateSecret).toHaveBeenCalledWith({
@@ -255,7 +254,7 @@ describe('post-data-product', () => {
         },
       }),
     });
-    expect(mockInvokeAsync).toHaveBeenCalled();
+    expect(mockInvoke).toHaveBeenCalled();
 
     // Should set the default policy with the full access groups
     expect(API.putGovernancePolicyDomainDataProduct).toHaveBeenCalledWith<
@@ -290,7 +289,7 @@ describe('post-data-product', () => {
 
     // Shouldn't have kicked off any infrastructure creation
     expect(mockStartExecution).not.toHaveBeenCalled();
-    expect(mockInvokeAsync).not.toHaveBeenCalled();
+    expect(mockInvoke).not.toHaveBeenCalled();
   });
 
   it('should not allow creating a data product with a script in a different domain', async () => {
@@ -307,7 +306,7 @@ describe('post-data-product', () => {
 
     // Shouldn't have kicked off any infrastructure creation
     expect(mockStartExecution).not.toHaveBeenCalled();
-    expect(mockInvokeAsync).not.toHaveBeenCalled();
+    expect(mockInvoke).not.toHaveBeenCalled();
   });
 
   it('should not update an existing data product', async () => {
@@ -421,7 +420,7 @@ describe('post-data-product', () => {
         },
       }),
     });
-    expect(mockInvokeAsync).toHaveBeenCalled();
+    expect(mockInvoke).toHaveBeenCalled();
 
     // Should set the default policy
     expect(API.putGovernancePolicyDomainDataProduct).toHaveBeenCalledWith<

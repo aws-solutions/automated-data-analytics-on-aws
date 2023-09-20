@@ -6,7 +6,7 @@ import { HelpPanelProps } from 'aws-northstar/components/HelpPanel';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { last } from 'lodash';
 import { nanoid } from 'nanoid';
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import ReactMarkdown, { Options as ReactMarkdownOptions } from 'react-markdown';
 import rehypeAddClasses from 'rehype-add-classes';
 import rehypeRaw from 'rehype-raw';
@@ -54,12 +54,14 @@ export const HelpProvider: React.FC<{}> = ({ children }) => {
     [setPanelStack],
   );
 
-  const context: IHelpContext = {
+  const context: IHelpContext = useMemo(() => ({
     managedPanels: panelStack,
     activePanel: last(panelStack),
     addHelpPanel,
     removeHelpPanel,
-  };
+  }), [
+    panelStack, addHelpPanel, removeHelpPanel,
+  ]);
 
   return <HelpContext.Provider value={context}>{children}</HelpContext.Provider>;
 };

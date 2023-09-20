@@ -27,7 +27,7 @@ import { isOwner, useUserId } from '$core/provider/UserProvider';
 import { useNotificationContext } from '$northstar-plus';
 import { useStatefulRef } from '$common/hooks';
 import { useUserCanEditDataProduct } from '$views/data-product/hooks';
-import React, { createContext, useCallback, useContext, useRef, useState } from 'react';
+import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
 
 export interface NormalizedDatasetSchema {
   readonly id: string;
@@ -160,7 +160,7 @@ export const SchemaRendererProvider: React.FC<{ dataProductId?: DataProductIdent
 
   const [sampleDataset, setSampleDataset] = useState<NormalizedDatasetSchema>();
 
-  const context: ISchemaRendererContext = {
+  const context: ISchemaRendererContext = useMemo(() => ({
     ...mutableContext,
 
     schema,
@@ -178,7 +178,26 @@ export const SchemaRendererProvider: React.FC<{ dataProductId?: DataProductIdent
 
     sampleDataset,
     setSampleDataset,
-  };
+  }), [
+    mutableContext,
+
+    schema,
+    updateSchema,
+    totalDatasets,
+    loadDataProductPreview,
+    loadDataProductEntity,
+
+    isCreator,
+    isEditAllowed,
+    isPreview,
+
+    isEditMode,
+    enterEditMode,
+    exitEditMode,
+
+    sampleDataset,
+    setSampleDataset,
+  ]);
 
   return <SchemaRendererContext.Provider value={context}>{children}</SchemaRendererContext.Provider>;
 };

@@ -1,27 +1,26 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
 import { Alert, Stack } from 'aws-northstar';
+import { AttributePolicy, AttributeValuePolicy, Ontology, OntologyIdentifier, OntologyInput } from '@ada/api';
 import { CustomComponentTypes, ErrorAlert } from '$common/components';
 import { CustomValidatorTypes } from '$common/components/form-renderer/validators';
-import { DefaultGroupIds, ID_VALIDATION, OntologyNamespace, ReservedDomains } from '@ada/common';
-import { Field, validatorTypes } from 'aws-northstar/components/FormRenderer';
+import { ID_VALIDATION, OntologyNamespace, ReservedDomains, buildNamespaceAndAttributeId } from '@ada/common';
 import {
-  GOVERNABLE_GROUPS,
   LENSE_OPTIONS,
   LENSE_OPTIONS_WITH_NULLABLE,
   NONE_LENS_OPTION,
 } from '$common/entity/ontology';
-import { LensEnum, Ontology, OntologyIdentifier, OntologyInput } from '@ada/api';
 import { NO_REFRESH_OPTIONS, apiHooks } from '$api';
+import { OntologyGovernanceGroup, useOntologyGovernanceAttribute } from '../hooks';
 import { Skeletons, WizardLayout, WizardStep, useNotificationContext } from '$northstar-plus';
 import { componentTypes } from 'aws-northstar/components/FormRenderer/types';
-import { get, isEmpty, omit, pick } from 'lodash';
 import { getOntologyIdString, isDataEqual, nameToIdentifier } from '$common/utils';
-import { groupDisplayName } from '$common/entity/group/utils';
+import { getSortedGroupArray } from '../utils/getSortedGroupArray';
+import { omit, pick } from 'lodash';
 import { useFormApi } from '@data-driven-forms/react-form-renderer';
 import { useHistory } from 'react-router-dom';
 import { useI18nContext } from '$strings';
-import { useOntologyGovernance } from '../hooks';
+import { validatorTypes } from 'aws-northstar/components/FormRenderer';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 /* eslint-plugin-disable sonarjs */
@@ -35,15 +34,11 @@ const SYSTEM = 'system';
 
 const ALLOWED_SYSTEM_MUTABLES: (keyof OntologyInput)[] = ['defaultLens', 'aliases'];
 
-interface OntologyGroupGovernance {
-  column?: LensEnum;
-  row?: string; // sql clause
-}
 interface FormData extends Ontology {
   updatedTimestamp?: string;
   existing?: boolean;
   system?: boolean;
-  group?: Record<GOVERNABLE_GROUPS, OntologyGroupGovernance>;
+  groups?: OntologyGovernanceGroup[];
 }
 
 export const CreateOntologyWizard: React.FC = () => {
@@ -52,24 +47,29 @@ export const CreateOntologyWizard: React.FC = () => {
       ontologyNamespace: OntologyNamespace.DEFAULT,
       aliases: [],
       columnGovernance: {
-        [DefaultGroupIds.DEFAULT]: undefined,
-        [DefaultGroupIds.POWER_USER]: undefined,
-        [DefaultGroupIds.ADMIN]: undefined,
       },
       rowGovernance: {
-        [DefaultGroupIds.DEFAULT]: undefined,
-        [DefaultGroupIds.POWER_USER]: undefined,
-        [DefaultGroupIds.ADMIN]: undefined,
       },
+      groups: [],
     };
   }, []);
 
   return <Wizard initialValues={initialValues} />;
 };
 
+const renderCustomComponent = (
+  content: string,
+  system?: boolean,
+) => () => {
+  if (system) {
+    return <Alert type="info">{content}</Alert>;
+  }
+  return null;
+};
+
 export const UpdateOntologyWizard: React.FC<{ id: OntologyIdentifier }> = ({ id }) => {
   const [existingOntology, { isLoading: isLoadingExisting, error }] = apiHooks.useOntology(id, NO_REFRESH_OPTIONS);
-  const [governace, { isLoading: isLoadingGoverance }] = useOntologyGovernance(id);
+  const [governance, { isLoading: isLoadingGoverance }] = useOntologyGovernanceAttribute(id);
 
   const [initialValues, setInitialValues] = useState<Partial<FormData>>();
 
@@ -80,7 +80,7 @@ export const UpdateOntologyWizard: React.FC<{ id: OntologyIdentifier }> = ({ id 
 
         existing: true,
         system: existingOntology?.createdBy === SYSTEM,
-        group: governace,
+        groups: getSortedGroupArray(governance),
       });
     }
   }, [isLoadingExisting, isLoadingGoverance]);
@@ -116,12 +116,7 @@ const Wizard: React.FC<{ initialValues: Partial<FormData> }> = ({ initialValues 
             component: componentTypes.CUSTOM,
             name: '__system_warning',
             hidenField: !system,
-            CustomComponent: () => {
-              if (system) {
-                return <Alert type="info">{LL.VIEW.GOVERNANCE.wizard.alert.systemEntity()}</Alert>;
-              }
-              return null;
-            },
+            CustomComponent: renderCustomComponent(LL.VIEW.GOVERNANCE.wizard.alert.systemEntity(), system),
           },
           {
             // TODO: use freeform select without restricted global
@@ -132,7 +127,7 @@ const Wizard: React.FC<{ initialValues: Partial<FormData> }> = ({ initialValues 
             helperText: LL_ONTOLOGY_ATTR.namespace.hintText(),
             isRequired: true,
             resolveProps: (_props, _field, form) => {
-              const { existing, system:isSystem } = form.getState().initialValues as FormData;
+              const { existing, system: isSystem } = form.getState().initialValues as FormData;
               const isReadOnly = existing || isSystem;
               return {
                 isReadOnly,
@@ -166,7 +161,7 @@ const Wizard: React.FC<{ initialValues: Partial<FormData> }> = ({ initialValues 
             description: LL_ONTOLOGY_ATTR.name.description(),
             isRequired: true,
             resolveProps: (_props, _field, form) => {
-              const { existing, system:isSystem } = form.getState().initialValues as FormData;
+              const { existing, system: isSystem } = form.getState().initialValues as FormData;
               const isReadOnly = existing || isSystem;
               return {
                 isReadOnly,
@@ -232,46 +227,42 @@ const Wizard: React.FC<{ initialValues: Partial<FormData> }> = ({ initialValues 
               },
             ],
           },
-          ...GOVERNABLE_GROUPS.map((groupId): Field => {
-            return {
-              component: componentTypes.SUB_FORM,
-              title: groupDisplayName(groupId),
-              description: LL.VIEW.GOVERNANCE.wizard.groupGovernance.description(),
-              name: `group.${groupId}`,
-              fields: [
-                {
-                  component: componentTypes.SELECT,
-                  name: `group.${groupId}.column`,
-                  label: LL.ENTITY.AttributePolicy(),
-                  description: LL.ENTITY.AttributePolicy_description(),
-                  isOptional: true,
-                  options: LENSE_OPTIONS_WITH_NULLABLE,
-                },
-                {
-                  component: CustomComponentTypes.CODE_EDITOR,
-                  name: `group.${groupId}.row`,
-                  label: LL.ENTITY.AttributeValuePolicy(),
-                  description: LL.ENTITY.AttributeValuePolicy_description(),
-                  mode: 'sql',
-                  // @ts-ignore
-                  resolveProps: (_props, _field, form) => {
-                    const { ontologyNamespace = 'abc', name = 'attribute' } = form.getState().values;
-                    const id = getOntologyIdString({ ontologyId: nameToIdentifier(name), ontologyNamespace });
+          {
+            component: CustomComponentTypes.GOVERNANCE_EDIT,
+            name: 'groups',
+            fields: [
+              {
+                component: componentTypes.SELECT,
+                name: `column`,
+                label: LL.ENTITY.AttributePolicy(),
+                description: LL.ENTITY.AttributePolicy_description(),
+                isOptional: true,
+                options: LENSE_OPTIONS_WITH_NULLABLE,
+              },
+              {
+                component: CustomComponentTypes.CODE_EDITOR,
+                name: `row`,
+                label: LL.ENTITY.AttributeValuePolicy(),
+                description: LL.ENTITY.AttributeValuePolicy_description(),
+                mode: 'sql',
+                // @ts-ignore
+                resolveProps: (_props, _field, form) => {
+                  const { ontologyNamespace = 'abc', name = 'attribute' } = form.getState().values;
+                  const id = getOntologyIdString({ ontologyId: nameToIdentifier(name), ontologyNamespace });
 
-                    return {
-                      helpText: `eg. "${id}" > 100`,
-                      hintText: `eg. "${id}" > 100`,
-                    };
-                  },
-                  validate: [
-                    {
-                      type: CustomValidatorTypes.SQL_CLAUSE,
-                    },
-                  ],
+                  return {
+                    helpText: `eg. "${id}" > 100`,
+                    hintText: `eg. "${id}" > 100`,
+                  };
                 },
-              ],
-            };
-          }),
+                validate: [
+                  {
+                    type: CustomValidatorTypes.SQL_CLAUSE,
+                  },
+                ],
+              },
+            ],
+          }
         ],
       },
     ];
@@ -300,10 +291,10 @@ const useSaveOntology = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { addError, addSuccess } = useNotificationContext();
 
-  const [putAttribute] = apiHooks.usePutGovernancePolicyAttributesGroupAsync();
-  const [deleteAttribute] = apiHooks.useDeleteGovernancePolicyAttributesGroupAsync();
-  const [putAttributeValue] = apiHooks.usePutGovernancePolicyAttributeValuesGroupAsync();
-  const [deleteAttributeValue] = apiHooks.useDeleteGovernancePolicyAttributeValuesGroupAsync();
+  const [batchPutAttributes] = apiHooks.usePutGovernancePolicyAttributesAsync();
+  const [batchDeleteAttributes] = apiHooks.useDeleteGovernancePolicyAttributesAsync();
+  const [batchPutAttributeValues] = apiHooks.usePutGovernancePolicyAttributeValuesAsync();
+  const [batchDeleteAttributeValues] = apiHooks.useDeleteGovernancePolicyAttributeValuesAsync();
   const [putOntology] = apiHooks.usePutOntologyAsync();
 
   /* eslint-disable sonarjs/cognitive-complexity */
@@ -315,13 +306,14 @@ const useSaveOntology = () => {
         const isExisting = formData.existing === true;
         const isSystem = formData.system === true;
         const modified = formState.modified || {};
-
         const { name, ontologyNamespace, description, defaultLens, updatedTimestamp, aliases } = formData;
 
         const ontologyId = nameToIdentifier(name);
         if (formData.ontologyId && formData.ontologyId !== ontologyId) {
           throw new Error(`Form name and ontologyId are inconsistent for update`);
         }
+
+        const namespaceAndAttributeId = buildNamespaceAndAttributeId(ontologyNamespace, ontologyId);
 
         if (isExisting !== true) {
           // CREATE NEW
@@ -336,44 +328,47 @@ const useSaveOntology = () => {
             },
           });
 
-          await Promise.all(
-            GOVERNABLE_GROUPS.flatMap((groupId) => {
-              const operations: Promise<any>[] = [];
+          const attributePolicies: AttributePolicy[] = [];
+          const attributeValuePolicies: AttributeValuePolicy[] = [];
 
-              const columnProp = `group.${groupId}.column`;
-              const columnValue = get(formData, columnProp);
-              if (modified[columnProp] && !isEmpty(columnValue)) {
-                operations.push(
-                  putAttribute({
-                    group: groupId,
-                    attributeId: ontologyId,
-                    ontologyNamespace: ontologyNamespace,
-                    attributePolicyInput: {
-                      lensId: columnValue,
-                    },
-                  }),
-                );
+          (formData.groups || []).forEach((groupRecord) => {
+
+            if (groupRecord.column && groupRecord.column !== NONE_LENS_OPTION.value) {
+              attributePolicies.push({
+                group: groupRecord.groupId,
+                namespaceAndAttributeId,
+                lensId: groupRecord.column,
+              })
+            }
+
+            if (groupRecord.row && groupRecord.row !== NONE_LENS_OPTION.value) {
+              attributeValuePolicies.push({
+                group: groupRecord.groupId,
+                namespaceAndAttributeId,
+                sqlClause: groupRecord.row,
+              });
+            }
+          });
+
+          const operations: Promise<any>[] = [];
+
+          if (attributePolicies.length > 0) {
+            operations.push(batchPutAttributes({
+              putGovernancePolicyAttributesRequest: {
+                policies: attributePolicies,
               }
+            }));
+          }
 
-              const rowProp = `group.${groupId}.row`;
-              const rowValue = get(formData, rowProp);
-
-              if (modified[rowProp] && !isEmpty(rowValue)) {
-                operations.push(
-                  putAttributeValue({
-                    group: groupId,
-                    attributeId: ontologyId,
-                    ontologyNamespace: ontologyNamespace,
-                    attributeValuePolicyInput: {
-                      sqlClause: rowValue,
-                    },
-                  }),
-                );
+          if (attributeValuePolicies.length > 0) {
+            operations.push(batchPutAttributeValues({
+              putGovernancePolicyAttributeValuesRequest: {
+                policies: attributeValuePolicies,
               }
+            }))
+          }
 
-              return operations;
-            }),
-          );
+          operations.length > 0 && await Promise.all(operations);
 
           addSuccess({
             header: LL.ENTITY.Ontology__CREATED(name),
@@ -407,77 +402,108 @@ const useSaveOntology = () => {
             });
           }
 
-          await Promise.all(
-            GOVERNABLE_GROUPS.flatMap((groupId) => {
-              const operations: Promise<any>[] = [];
+          const attributePolicies: AttributePolicy[] = [];
+          const attributeValuePolicies: AttributeValuePolicy[] = [];
 
-              const columnProp = `group.${groupId}.column`;
-              const columnValue = get(formData, columnProp);
+          const deleledAttributePolicies: AttributePolicy[] = [];
+          const deletedAttributeValuePolicies: AttributeValuePolicy[] = [];
 
-              if (modified[columnProp]) {
-                if (isEmpty(columnValue) || columnValue === NONE_LENS_OPTION.value) {
-                  // DELETE if previously had value but now is empy
-                  const initValue = formState.initialValues.group[groupId].column;
-                  if (initValue && !isEmpty(initValue)) {
-                    operations.push(
-                      deleteAttribute({
-                        group: groupId,
-                        attributeId: ontologyId,
-                        ontologyNamespace,
-                      }),
-                    );
-                  }
-                } else {
-                  // SET if has value and modified
-                  operations.push(
-                    putAttribute({
-                      group: groupId,
-                      attributeId: ontologyId,
-                      ontologyNamespace: ontologyNamespace,
-                      attributePolicyInput: {
-                        lensId: columnValue,
-                        updatedTimestamp: formState.values.group[groupId].columnUpdatedTimestamp,
-                      },
-                    }),
-                  );
-                }
+          (formData.groups || []).forEach((groupRecord) => {
+            // Original groupRecords
+            const initValue = formState.initialValues.groups.find((g: any) => g.groupId === groupRecord.groupId);
+
+            if (!groupRecord.column || groupRecord.column === NONE_LENS_OPTION.value) {
+              // DELETE if previously had value but now is empy
+              if (initValue?.column) {
+                deleledAttributePolicies.push({
+                  group: groupRecord.groupId,
+                  namespaceAndAttributeId,
+                  lensId: initValue?.column,
+                });
+              }
+            } else if (initValue?.column !== groupRecord.column) {
+              // SET if has value and modified
+              attributePolicies.push({
+                group: groupRecord.groupId,
+                namespaceAndAttributeId,
+                lensId: groupRecord.column,
+              })
+            }
+
+            if (!groupRecord.row) {
+              // DELETE if previously had value but now is empy
+              if (initValue?.row) {
+                deletedAttributeValuePolicies.push({
+                  group: groupRecord.groupId,
+                  namespaceAndAttributeId,
+                  sqlClause: '',
+                });
+              }
+            } else if (initValue?.row !== groupRecord.row) {
+              // SET if has value and modified
+              attributeValuePolicies.push({
+                group: groupRecord.groupId,
+                namespaceAndAttributeId,
+                sqlClause: groupRecord.row,
+              });
+            }
+          });
+
+          (formState.initialValues.groups || [])
+            .filter((g: any) => !formData.groups?.find(xg => xg.groupId === g.groupId))
+            .forEach((groupRecord: any) => {
+              if (groupRecord.column) {
+                deleledAttributePolicies.push({
+                  group: groupRecord.groupId,
+                  namespaceAndAttributeId,
+                  lensId: groupRecord.column,
+                });
               }
 
-              const rowProp = `group.${groupId}.row`;
-              const rowValue = get(formData, rowProp);
-
-              if (modified[rowProp]) {
-                if (isEmpty(rowValue)) {
-                  // DELETE if previously had value but now is empy
-                  const initValue = formState.initialValues.group[groupId].row;
-                  if (initValue && !isEmpty(initValue)) {
-                    operations.push(
-                      deleteAttributeValue({
-                        group: groupId,
-                        attributeId: ontologyId,
-                        ontologyNamespace,
-                      }),
-                    );
-                  }
-                } else {
-                  // SET if has value and modified
-                  operations.push(
-                    putAttributeValue({
-                      group: groupId,
-                      attributeId: ontologyId,
-                      ontologyNamespace: ontologyNamespace,
-                      attributeValuePolicyInput: {
-                        sqlClause: rowValue,
-                        updatedTimestamp: formState.values.group[groupId].rowUpdatedTimestamp,
-                      },
-                    }),
-                  );
-                }
+              if (groupRecord.row) {
+                deletedAttributeValuePolicies.push({
+                  group: groupRecord.groupId,
+                  namespaceAndAttributeId,
+                  sqlClause: groupRecord.row,
+                });
               }
+            });
 
-              return operations;
-            }),
-          );
+          const operations: Promise<any>[] = [];
+
+          if (attributePolicies.length > 0) {
+            operations.push(batchPutAttributes({
+              putGovernancePolicyAttributesRequest: {
+                policies: attributePolicies,
+              }
+            }));
+          }
+
+          if (attributeValuePolicies.length > 0) {
+            operations.push(batchPutAttributeValues({
+              putGovernancePolicyAttributeValuesRequest: {
+                policies: attributeValuePolicies,
+              }
+            }));
+          }
+
+          if (deleledAttributePolicies.length > 0) {
+            operations.push(batchDeleteAttributes({
+              deleteGovernancePolicyAttributesRequest: {
+                policies: deleledAttributePolicies,
+              }
+            }));
+          }
+
+          if (deletedAttributeValuePolicies.length > 0) {
+            operations.push(batchDeleteAttributeValues({
+              deleteGovernancePolicyAttributeValuesRequest: {
+                policies: deletedAttributeValuePolicies,
+              }
+            }));
+          }
+
+          operations.length > 0 && await Promise.all(operations);
 
           addSuccess({
             header: LL.ENTITY.Ontology__UPDATED(name),

@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-SchemaPreview) - Automated Data Analytics on AWS. Version v1.2.0",
+  "Description": "(SO0190-SchemaPreview) - Automated Data Analytics on AWS. Version v1.3.0",
   "Outputs": Object {
     "ApiDataProductPreviewUrl95C4A115": Object {
       "Value": Object {
@@ -825,6 +825,7 @@ Object {
     },
     "ApiRestApiRefdataproductpreviewOPTIONS62613BC4": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -878,6 +879,7 @@ Object {
     },
     "ApiRestApiRefdataproductpreviewdomainOPTIONS2E0071CE": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -919,6 +921,7 @@ Object {
     },
     "ApiRestApiRefdataproductpreviewdomaindomainIdOPTIONS2D503ADD": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -972,6 +975,7 @@ Object {
     },
     "ApiRestApiRefdataproductpreviewdomaindomainIddataproductOPTIONS369122F4": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1013,6 +1017,7 @@ Object {
     },
     "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdOPTIONSFF13DD22": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1145,11 +1150,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPostDataProductPreviewDomainDataProductResponseBDF8403A",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -1645,9 +1646,11 @@ Object {
                 "GOOGLE_STORAGE",
                 "DYNAMODB",
                 "CLOUDWATCH",
+                "REDSHIFT",
                 "MYSQL5",
                 "POSTGRESQL",
                 "SQLSERVER",
+                "ORACLE",
                 "CLOUDTRAIL",
                 "MONGODB",
               ],
@@ -1809,36 +1812,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPostDataProductPreviewDomainDataProductResponseBDF8403A": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPostDataProductPreviewDomainDataProductRequest126AAE4A",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "An execution id for tracking the preview of a data product",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "properties": Object {
-            "previewId": Object {
-              "description": "The id of the data product preview",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "previewId",
-          ],
-          "title": "PostDataProductPreviewDomainDataProductResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdPreviewId56729D3A": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -1886,11 +1859,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdpreviewIdGetDataProductPreviewDomainDataProductResponse867CB336",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -1994,253 +1963,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdpreviewIdGetDataProductPreviewDomainDataProductResponse867CB336": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The data product preview, or just its status if the preview is ongoing",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "ApiError": Object {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "properties": Object {
-                "cause": Object {
-                  "type": "string",
-                },
-                "details": Object {
-                  "type": "string",
-                },
-                "errorId": Object {
-                  "type": "string",
-                },
-                "message": Object {
-                  "type": "string",
-                },
-                "name": Object {
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "message",
-              ],
-              "title": "GenericError",
-              "type": "object",
-            },
-            "DataProductPreviewIdentifier": Object {
-              "properties": Object {
-                "previewId": Object {
-                  "description": "The id of the data product preview",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "previewId",
-              ],
-              "type": "object",
-            },
-            "DataProductTransform": Object {
-              "description": "Uniquely identifies the script. Used to calculate the script path in s3",
-              "properties": Object {
-                "inlineScriptContent": Object {
-                  "description": "Inline script content for use in schema previews. Data products cannot be created with inline scripts.",
-                  "maxLength": 262144,
-                  "pattern": "^[\\\\s\\\\S]*def apply_transform\\\\([\\\\s\\\\S]*$",
-                  "type": "string",
-                },
-                "inputArgs": Object {
-                  "description": "Arguments to pass to the script",
-                },
-                "namespace": Object {
-                  "description": "The namespace in which the script resides, eg the domain.",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "scriptId": Object {
-                  "description": "Identifies the script within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "scriptId",
-                "namespace",
-              ],
-              "type": "object",
-            },
-            "DataProductTransforms": Object {
-              "description": "Ordered list of transformations applied to data in the data product",
-              "items": Object {
-                "$ref": "#/definitions/DataProductTransform",
-                "description": "Uniquely identifies the script. Used to calculate the script path in s3",
-              },
-              "type": "array",
-            },
-            "DataSetPreview": Object {
-              "properties": Object {
-                "classification": Object {
-                  "description": "The classification of the data stored for this dataset in s3 (if any)",
-                  "type": "string",
-                },
-                "data": Object {
-                  "items": Object {
-                    "type": "object",
-                  },
-                  "type": "array",
-                },
-                "metadata": Object {
-                  "description": "Any metadata that may have been discovered by the preview",
-                  "type": "object",
-                },
-                "s3Path": Object {
-                  "description": "The path to the data for this dataset in s3 (if any)",
-                  "type": "string",
-                },
-                "s3SamplePath": Object {
-                  "description": "The path to the sample data for this dataset in s3 (if any)",
-                  "type": "string",
-                },
-                "schema": Object {
-                  "$ref": "#/definitions/DataSetPreviewSchema",
-                },
-              },
-              "required": Array [
-                "schema",
-                "data",
-              ],
-              "type": "object",
-            },
-            "DataSetPreviewNamedSchema": Object {
-              "properties": Object {
-                "container": Object {
-                  "$ref": "#/definitions/DataSetPreviewSchema",
-                },
-                "name": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "name",
-              ],
-              "type": "object",
-            },
-            "DataSetPreviewSchema": Object {
-              "properties": Object {
-                "dataType": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "elementType": Object {
-                  "$ref": "#/definitions/DataSetPreviewSchema",
-                },
-                "fields": Object {
-                  "items": Object {
-                    "$ref": "#/definitions/DataSetPreviewNamedSchema",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "dataType",
-              ],
-              "type": "object",
-            },
-            "ScriptIdentifier": Object {
-              "description": "Uniquely identifies the script. Used to calculate the script path in s3",
-              "properties": Object {
-                "namespace": Object {
-                  "description": "The namespace in which the script resides, eg the domain.",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "scriptId": Object {
-                  "description": "Identifies the script within the namespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "scriptId",
-                "namespace",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "durationMilliseconds": Object {
-              "description": "The time taken to complete the preview",
-              "type": "number",
-            },
-            "error": Object {
-              "$ref": "#/definitions/ApiError",
-            },
-            "initialDataSets": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/DataSetPreview",
-              },
-              "description": "Data sets discovered from the source data, keyed by dataset id",
-              "type": "object",
-            },
-            "previewId": Object {
-              "description": "The id of the data product preview",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "status": Object {
-              "description": "The status of the preview execution",
-              "enum": Array [
-                "RUNNING",
-                "SUCCEEDED",
-                "FAILED",
-                "TIMED_OUT",
-                "ABORTED",
-              ],
-              "type": "string",
-            },
-            "transformedDataSets": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/DataSetPreview",
-              },
-              "description": "Data set previews after transforms have been applied, keyed by dataset id",
-              "type": "object",
-            },
-            "transformsApplied": Object {
-              "$ref": "#/definitions/DataProductTransforms",
-              "description": "Ordered list of transformations applied to data in the data product",
-            },
-          },
-          "required": Array [
-            "previewId",
-            "status",
-          ],
-          "title": "GetDataProductPreviewDomainDataProductResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefdataproductpreviewdomaindomainIddataproductdataProductIdpreviewIdOPTIONS2638608A": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -2324,7 +2049,7 @@ Object {
             ],
           ],
         },
-        "Handler": "__entrypoint__.handler",
+        "Handler": "index.handler",
         "MemorySize": 128,
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -2332,7 +2057,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -3095,6 +2820,14 @@ Object {
                 "dynamodb:Query",
                 "dynamodb:ConditionCheckItem",
                 "ec2:describeRegions",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "redshift:GetClusterCredentials",
+                "redshift-serverless:GetCredentials",
               ],
               "Effect": "Allow",
               "Resource": "*",

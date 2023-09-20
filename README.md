@@ -203,7 +203,7 @@ To uninstall the solution from AWS CloudFormation console:
 
 ## Collection of operational metrics
 
-This solution collects anonymous operational metrics to help AWS improve the quality of features of the solution. For more information, including how to disable this capability, refer to the [implementation guide](https://docs.aws.amazon.com/solutions/latest/automated-data-analytics-on-aws/collection-of-operational-metrics.html).
+This solution collects anonymized operational metrics to help AWS improve the quality of features of the solution. For more information, including how to disable this capability, refer to the [implementation guide](https://docs.aws.amazon.com/solutions/latest/automated-data-analytics-on-aws/collection-of-operational-metrics.html).
 
 ---
 

@@ -332,7 +332,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
     [emitter],
   );
 
-  const context: NotificationContext = {
+  const context: NotificationContext = useMemo(() => ({
     ...store,
     addNotification,
     addFatal,
@@ -347,7 +347,12 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
     addBrief,
     onAddedNotification,
     onDismissedNotification,
-  };
+  }), [
+    store, addNotification, 
+    addFatal, addError, addWarning, addInfo, addSuccess,
+    addNotifications, dismissNotification, dismissAllNotifications,
+    addFlashbar, addBrief, onAddedNotification, onDismissedNotification,
+  ]);
 
   return <NotificationContext.Provider value={context}>{children}</NotificationContext.Provider>;
 };

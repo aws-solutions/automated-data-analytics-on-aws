@@ -3,8 +3,8 @@ SPDX-License-Identifier: Apache-2.0 */
 import { AttributeType } from 'aws-cdk-lib/aws-dynamodb'; // must be imported before any aliases
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { CountedTable } from '../../common/constructs/dynamodb/counted-table';
+import { DefinitionBody, Pass, StateMachine } from 'aws-cdk-lib/aws-stepfunctions';
 import { NestedStack } from 'aws-cdk-lib';
-import { Pass, StateMachine } from 'aws-cdk-lib/aws-stepfunctions';
 import { RetainedAspect, TestApp } from '@ada/cdk-core';
 import { TestStackWithMockedApiService, buildCdkEnvironmentForTests } from '@ada/microservice-test-common';
 import AdministrationServiceStack, { AdministrationServiceStackProps } from './stack';
@@ -13,12 +13,14 @@ import DataProductCreationStateMachine from '../data-product/components/creation
 export const generateEnvironmentForTests = () => {
   const stack = new TestStackWithMockedApiService(new TestApp());
   new RetainedAspect(stack); //NOSONAR (S1848) - cdk construct is used
-  const { federatedApi, 
-    counterTable, 
-    notificationBus, 
-    entityManagementTables, 
-    internalTokenKey, 
-    operationalMetricsConfig } = stack;
+  const {
+    federatedApi,
+    counterTable,
+    notificationBus,
+    entityManagementTables,
+    internalTokenKey,
+    operationalMetricsConfig,
+  } = stack;
 
   return {
     ...buildCdkEnvironmentForTests<AdministrationServiceStack, AdministrationServiceStackProps>(
@@ -33,11 +35,11 @@ export const generateEnvironmentForTests = () => {
           entityManagementTables,
           federatedApi,
           glueCrawlerStateMachine: new StateMachine(stack, 'CrawlerStateMachine', {
-            definition: new Pass(stack, 'noop'),
+            definitionBody: DefinitionBody.fromChainable(new Pass(stack, 'noop')),
           }),
           internalTokenKey,
           notificationBus,
-          operationalMetricsConfig
+          operationalMetricsConfig,
         }),
         dataProductTable: new CountedTable(stack, 'DataProductTable', {
           partitionKey: {

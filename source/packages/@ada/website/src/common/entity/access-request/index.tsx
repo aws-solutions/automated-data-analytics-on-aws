@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { useI18nContext } from '$strings';
 import { useIsAdmin, useUserId } from '$core/provider/UserProvider';
 import { useNotificationContext } from '$northstar-plus';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 const NOTIFICATION_UUID = Symbol('ACCESS_REQUEST_NOTIFICATION').toString();
 
@@ -146,13 +146,16 @@ export const AccessRequestProvider: React.FC = ({ children }) => {
     }
   }, [hasPendingAccessRequests, notified]);
 
-  const context: IAccessRequestContext = {
+  const context: IAccessRequestContext = useMemo(() => ({
     accessRequests,
     hasPendingAccessRequests,
     denyRequest,
     approveRequest,
     getAccessRequestAcknowledgement: getAcknowledgement,
-  };
-
+  }), [accessRequests, hasPendingAccessRequests, 
+    denyRequest, approveRequest, 
+    getAcknowledgement]
+  );
+  
   return <AccessRequestContext.Provider value={context}>{children}</AccessRequestContext.Provider>;
 };

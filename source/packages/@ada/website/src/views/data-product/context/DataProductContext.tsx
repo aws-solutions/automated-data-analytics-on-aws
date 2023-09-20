@@ -6,7 +6,7 @@ import { HookError, apiHooks } from '$api';
 import { getDataProductSQLIdentitier, getDataProductSourceSQLIdentitier, isNotFoundError } from '$common/utils';
 import { useIsOwner } from '$core/provider/UserProvider';
 import { useLiveDataProductState, useUserCanEditDataProduct } from '../hooks';
-import React, { createContext, useCallback, useContext } from 'react';
+import React, { createContext, useCallback, useContext, useMemo } from 'react';
 
 interface IDataProductContext {
   identifier: DataProductIdentifier;
@@ -57,7 +57,7 @@ export const DataProductContextProvider: React.FC<{ identifier: DataProductIdent
     await refetchState({ force: true });
   }, [refetchState]);
 
-  const context: IDataProductContext = {
+  const context: IDataProductContext = useMemo(() => ({
     identifier,
     dataProduct,
     dataProductState,
@@ -76,7 +76,19 @@ export const DataProductContextProvider: React.FC<{ identifier: DataProductIdent
 
     refetchDataProduct,
     refetchDataProductState,
-  };
+  }), [
+    identifier,
+    dataProduct,
+    dataProductState,
+    error,
+    
+    isUserAllowedToEdit,
+    isDataProductOwner,
+    canUserQuerySource,
+
+    refetchDataProduct,
+    refetchDataProductState,
+  ]);
 
   return <DataProductContext.Provider value={context}>{children}</DataProductContext.Provider>;
 };

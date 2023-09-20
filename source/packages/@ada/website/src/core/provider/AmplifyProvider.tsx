@@ -12,10 +12,10 @@ import {
   setSolutionPersistenceItem,
 } from '$config';
 import { FederatedCognitoUser, TEST_COGNITO_USER } from '../../common/entity/user';
+import { Hub, Logger } from 'aws-amplify';
 import { RuntimeConfig } from '../../runtime-config';
 import { throttle } from 'lodash';
 import { useStatefulRef } from '$common/hooks';
-import Amplify, { Hub } from 'aws-amplify';
 import EventEmitter from 'eventemitter3';
 import React, { PropsWithChildren, createContext, useContext, useEffect, useMemo, useState } from 'react';
 
@@ -39,7 +39,7 @@ const { region, userPoolId, userPoolClientId, oauthDomain, oauthScopes, ouathRes
     },
   });
 
-ENV_DEVELOPMENT && (Amplify.Logger.LOG_LEVEL = 'INFO');
+ENV_DEVELOPMENT && (Logger.LOG_LEVEL = 'INFO');
 
 export interface AmplifyContext {
   cognitoUser: FederatedCognitoUser;

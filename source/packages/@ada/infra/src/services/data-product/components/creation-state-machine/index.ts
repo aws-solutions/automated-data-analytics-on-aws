@@ -5,6 +5,7 @@ import {
   CatchProps,
   Choice,
   Condition,
+  DefinitionBody,
   LogLevel,
   StateMachine,
   TaskInput,
@@ -163,7 +164,7 @@ export class DataProductCreationStateMachine extends Construct {
     startDataProductInfraDeploymentLambda.addToRolePolicy(
       new PolicyStatement({
         effect: Effect.ALLOW,
-        actions: ['ssm:GetParameter', 'iam:PassRole'],
+        actions: ['ssm:GetParameter', 'iam:PassRole', 'sts:AssumeRole'],
         resources: [
           stack.formatArn({ service: 'iam', region: '', resource: 'role', resourceName: 'cdk-*' }),
           stack.formatArn({ service: 'ssm', resource: 'parameter', resourceName: 'cdk-bootstrap/*' }),
@@ -257,7 +258,7 @@ export class DataProductCreationStateMachine extends Construct {
       );
 
     this.stateMachine = new StateMachine(this, 'StateMachine', {
-      definition,
+      definitionBody: DefinitionBody.fromChainable(definition),
       tracingEnabled: true,
       timeout: Duration.minutes(30),
       logs: {

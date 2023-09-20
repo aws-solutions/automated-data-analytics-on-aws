@@ -25,6 +25,7 @@ export interface TransformJobsAndCrawlersProps {
   readonly glueSecurityConfigurationName: string;
   readonly sourceAccessRole: ExternalFacingRole;
   readonly glueConnectionNames?: string[];
+  readonly defaultTransformRequired: boolean;
   readonly extraJobArgs?: { [key: string]: string };
 }
 
@@ -49,6 +50,7 @@ export default class TransformJobsAndCrawlers extends Construct {
       glueSecurityConfigurationName,
       sourceAccessRole,
       glueConnectionNames,
+      defaultTransformRequired,
       extraJobArgs,
     }: TransformJobsAndCrawlersProps,
   ) {
@@ -74,6 +76,15 @@ export default class TransformJobsAndCrawlers extends Construct {
 
     // NOTE: Consider accepting the kms key arn as input for s3-based data products to scope this role down.
     sourceAccessRole.addToPolicy(ExternalSourceDataKmsAccessPolicyStatement);
+
+    /**
+     * If the default transform is required and the user has not supplied any transforms, force this data
+     * product to execute the default 'ada_parquet_data_type_map', which will force copying
+     * data to s3 and thus be readable via Athena
+     */
+    if (defaultTransformRequired && dataProduct.transforms.length === 0) {
+      dataProduct.transforms.push({ scriptId: 'ada_parquet_data_type_map', namespace: 'global' });
+    }
 
     // Create a job and a crawler for every script that may be involved in the data product transform chain
     this.transformJobs = getPossibleTransformsForDataProduct(dataProduct).map((transform, i) => {

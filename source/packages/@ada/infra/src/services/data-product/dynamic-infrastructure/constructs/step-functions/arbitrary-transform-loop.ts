@@ -34,6 +34,7 @@ export interface ArbitraryTransformLoopProps {
   readonly putErrorEventOnEventBridge: EventBridgePutEvents;
   readonly sourceAccessRole: ExternalFacingRole;
   readonly glueConnectionNames?: string[];
+  readonly defaultTransformRequired: boolean;
   readonly extraJobArgs?: { [key: string]: string };
 }
 
@@ -67,6 +68,7 @@ export default class ArbitraryTransformLoop extends Construct {
       glueSecurityConfigurationName,
       sourceAccessRole: props.sourceAccessRole,
       glueConnectionNames: props.glueConnectionNames,
+      defaultTransformRequired: props.defaultTransformRequired,
       extraJobArgs: props.extraJobArgs,
     });
   }

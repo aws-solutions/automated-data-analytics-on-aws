@@ -5,6 +5,7 @@ import * as appRegistry from '@aws-cdk/aws-servicecatalogappregistry-alpha';
 import * as cdk from 'aws-cdk-lib';
 import * as cr from 'aws-cdk-lib/custom-resources';
 import * as iam from 'aws-cdk-lib/aws-iam';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { CfnResourceAssociation } from 'aws-cdk-lib/aws-servicecatalogappregistry';
 import { Construct, IConstruct } from 'constructs';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
@@ -108,6 +109,7 @@ export class AppRegistry extends Construct implements cdk.IAspect {
       handler: 'handler',
       description: 'Lambda for checking the state of AppRegistry Application Resource Group state',
       initialPolicy: [lambdaPolicyStatement],
+      runtime: lambda.Runtime.NODEJS_16_X,
     });
 
     const provider = new cr.Provider(this, 'Provider', {

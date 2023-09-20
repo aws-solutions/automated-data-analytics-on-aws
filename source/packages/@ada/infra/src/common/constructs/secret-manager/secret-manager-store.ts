@@ -2,7 +2,7 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { Construct } from 'constructs';
 import { CustomResource, Duration } from 'aws-cdk-lib';
-import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
+import { Effect, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { Provider } from 'aws-cdk-lib/custom-resources';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
@@ -47,12 +47,22 @@ export class CustomResourceSecretsManagerStore extends Construct {
           ],
           resources: [secret.secretFullArn!],
         }),
+        new PolicyStatement({
+          effect: Effect.ALLOW,
+          actions: ['secretsmanager:GetRandomPassword'],
+          resources: ['*'],
+        }),
       ],
+    });
+
+    rotationHandler.addPermission('rotationHandlerPermission', {
+      principal: new ServicePrincipal('secretsmanager.amazonaws.com'),
     });
 
     secret.addRotationSchedule('AutoRotateSecret', {
       automaticallyAfter: Duration.days(90),
       rotationLambda: rotationHandler,
+      rotateImmediatelyOnUpdate: false,
     });
 
     const handler = new TypescriptFunction(this, 'WriteLambda', {

@@ -26,6 +26,7 @@ window['runtime-config'] = {
   "userPoolClientId": "mockUserPoolClientId",
   "apiUrl": "https://test.api/",
   "region": "ap-southeast-1",
+  "accountId": "123456789012",
   "oauthScopes": [
     "phone",
     "profile",

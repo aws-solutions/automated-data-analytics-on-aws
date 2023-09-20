@@ -14,7 +14,17 @@ import {
 import { AthenaGetQueryExecution, LambdaInvoke } from 'aws-cdk-lib/aws-stepfunctions-tasks';
 import { AthenaQueryExecutionState } from '@ada/common';
 import { CfnResource, Duration, RemovalPolicy, Stack } from 'aws-cdk-lib';
-import { Choice, Condition, LogLevel, Pass, StateMachine, TaskInput, Wait, WaitTime } from 'aws-cdk-lib/aws-stepfunctions';
+import {
+  Choice,
+  Condition,
+  DefinitionBody,
+  LogLevel,
+  Pass,
+  StateMachine,
+  TaskInput,
+  Wait,
+  WaitTime,
+} from 'aws-cdk-lib/aws-stepfunctions';
 import { Construct } from 'constructs';
 import { CounterTable } from '../../../../common/constructs/dynamodb/counter-table';
 import { EntityManagementTables } from '../../../api/components/entity/constructs/entity-management-tables';
@@ -272,14 +282,10 @@ export class AthenaQueryExecutorStateMachine extends Construct {
         }),
       );
 
-      if(queryEventsStream.encryptionKey) {
+      if (queryEventsStream.encryptionKey) {
         logQueryExecutionLambdaRole.addToPolicy(
           new PolicyStatement({
-            actions: [
-              'kms:Encrypt',
-              'kms:ReEncrypt*',
-              'kms:GenerateDataKey*',
-            ],
+            actions: ['kms:Encrypt', 'kms:ReEncrypt*', 'kms:GenerateDataKey*'],
             resources: [queryEventsStream.encryptionKey.keyArn],
           }),
         );
@@ -365,7 +371,7 @@ export class AthenaQueryExecutorStateMachine extends Construct {
 
     this.stateMachine = new StateMachine(this, 'AthenaQueryExecutorStateMachine', {
       tracingEnabled: true,
-      definition,
+      definitionBody: DefinitionBody.fromChainable(definition),
       logs: {
         destination: new LogGroup(this, 'AthenaQueryExecutorLogs', {
           logGroupName: getUniqueStateMachineLogGroupName(this, `${id}StateMachineLogs`),

@@ -2,9 +2,16 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { Construct } from 'constructs';
 import { ContainerDefinition, FargatePlatformVersion, ICluster, TaskDefinition } from 'aws-cdk-lib/aws-ecs';
+import {
+  DefinitionBody,
+  IntegrationPattern,
+  LogLevel,
+  Pass,
+  StateMachine,
+  TaskInput,
+} from 'aws-cdk-lib/aws-stepfunctions';
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { EcsFargateLaunchTarget, EcsRunTask, EcsRunTaskProps } from 'aws-cdk-lib/aws-stepfunctions-tasks';
-import { IntegrationPattern, LogLevel, Pass, StateMachine, TaskInput } from 'aws-cdk-lib/aws-stepfunctions';
 import { LogGroup } from '../../../../common/constructs/cloudwatch/log-group';
 import { SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { getUniqueStateMachineLogGroupName } from '@ada/cdk-core';
@@ -70,7 +77,7 @@ export default class BaseEcsRunnerStateMachine extends Construct {
       .next(success);
 
     this.stateMachine = new StateMachine(this, 'StateMachine', {
-      definition,
+      definitionBody: DefinitionBody.fromChainable(definition),
       tracingEnabled: true,
       // NOTE: depending on the amount of data this might take more. Find the right timeout?
       timeout: Duration.days(2),

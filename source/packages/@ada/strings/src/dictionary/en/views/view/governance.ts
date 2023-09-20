@@ -41,6 +41,8 @@ export const GOVERNANCE = {
 	actions: {
 		editGovernance: 'Edit Governance',
 		addOntolgoy: `Add ${ENTITY.Ontology}`,
+		searchGroups: `find ${ENTITY.group} and add governance settings for the group`,
+		addGovernanceForGroup: 'Add Governance Settings'
 	},
 
 	summary: {

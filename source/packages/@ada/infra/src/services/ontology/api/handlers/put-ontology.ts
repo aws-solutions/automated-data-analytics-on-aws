@@ -2,6 +2,7 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { ApiLambdaHandler, ApiResponse } from '@ada/api-gateway';
 import { DefaultUser } from '../../../../common/services';
+import { OntologyEntity } from '@ada/api';
 import { OntologyNamespace } from '@ada/common';
 import { OntologyStore } from '../../components/ddb/ontology';
 import type { OntologyIdentifier, OntologyInput } from '@ada/api-client';
@@ -64,6 +65,11 @@ export const handler = ApiLambdaHandler.for(
       });
     }
 
-    return ApiResponse.success(await OntologyStore.getInstance().putOntology(ontologyIdentifier, userId, ontology));
+    const ret = await OntologyStore.getInstance().putOntology(ontologyIdentifier, userId, ontology);
+    if (userId !== DefaultUser.SYSTEM) {
+      return ApiResponse.success(ret);
+    } else {
+      return ApiResponse.success({ name: ret.name } as OntologyEntity);
+    }
   },
 );

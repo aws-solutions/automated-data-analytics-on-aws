@@ -24,10 +24,8 @@ export type BuiltInTransformIds = keyof typeof BuiltInTransforms;
  * This defines all automatic transforms that can be applied. Transforms are applied in the order they are specified
  * here, filtering out any that do not apply based on the initial classification of data.
  */
-export const AUTOMATIC_TRANSFORMS: AutomaticTransform[] = [json_relationalize, parquet_data_type_map].map(
-  ({ transform }) => ({
-    scriptId: transform.id,
-    namespace: transform.namespace,
-    applicableClassifications: transform.applicableClassifications!,
-  }),
-);
+export const AUTOMATIC_TRANSFORMS: AutomaticTransform[] = [json_relationalize].map(({ transform }) => ({
+  scriptId: transform.id,
+  namespace: transform.namespace,
+  applicableClassifications: transform.applicableClassifications!,
+}));

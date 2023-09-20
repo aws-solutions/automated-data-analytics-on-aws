@@ -20,7 +20,11 @@
 # CLIENT_X509_CERT_URL: can com from service account configuration, default: https://www.googleapis.com/robot/v1/metadata/x509/[client-email]
 
 # from https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html
+
+set -e
+
 output=$(curl 169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | head -n 1 | cut -d $' ' -f2)
+
 export AWS_ACCESS_KEY_ID=$(jq -r .AccessKeyId <<< "$output")
 export AWS_SECRET_ACCESS_KEY=$(jq -r .SecretAccessKey <<< "$output")
 export AWS_SECURITY_TOKEN=$(jq -r .Token <<< "$output")

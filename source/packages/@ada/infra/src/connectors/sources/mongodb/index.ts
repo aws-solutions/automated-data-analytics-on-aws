@@ -203,7 +203,7 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__MONGODB, IFormData
             {
               type: 'pattern',
               pattern: PATTERN_DB_PORT,
-              message: 'Must be 0 to 65353',
+              message: 'Must be 0 to 65535',
             },
           ],
         },
@@ -368,7 +368,7 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__MONGODB, IFormData
           collectionName: sourceDetails.collectionName,
           username: sourceDetails.username,
           password: sourceDetails.password,
-          tls: (sourceDetails.tls && sourceDetails.tls!.toString()) || 'false',
+          tls: sourceDetails.tls?.toString() || 'false',
           tlsCA: sourceDetails.tlsCA,
           tlsClientCert: sourceDetails.tlsClientCert && encodeURIComponent(sourceDetails.tlsClientCert),
           extraParams:

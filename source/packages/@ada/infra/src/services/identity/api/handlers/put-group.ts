@@ -4,6 +4,7 @@ import { ApiClient } from '@ada/api-client-lambda';
 import { ApiLambdaHandler, ApiResponse } from '@ada/api-gateway';
 import { DefaultGroupIds } from '@ada/common';
 import { DefaultUser } from '@ada/microservice-common';
+import { GroupEntity } from '@ada/api';
 import { GroupStore } from '../../../api/components/ddb/groups';
 import { Logger } from '@ada/infra-common/constructs/lambda/lambda-logger';
 import { entityIdentifier } from '@ada/api-client/types';
@@ -97,6 +98,10 @@ export const handler = ApiLambdaHandler.for(
 
     await lockClient.release(...apiAccessPolicyLocks);
 
-    return ApiResponse.success(writtenGroup);
+    if (userId !== DefaultUser.SYSTEM) {
+      return ApiResponse.success(writtenGroup);
+    } else {
+      return ApiResponse.success({} as GroupEntity);
+    }
   },
 );

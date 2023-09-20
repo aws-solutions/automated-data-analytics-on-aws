@@ -11,6 +11,7 @@ import { EntityManagementTables } from '../components/entity/constructs/entity-m
 import { FederatedRestApi } from '../../../common/constructs/api/federated-api';
 import { InternalTokenKey } from '../../../common/constructs/kms/internal-token-key';
 import { NotificationBus } from '../components/notification/constructs/bus';
+import { PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Stack } from 'aws-cdk-lib';
 import { UserPool } from 'aws-cdk-lib/aws-cognito';
 import FederatedApi from '../api';
@@ -85,21 +86,22 @@ export class ApiServiceStack extends BaseMicroservice {
     // Using custom resource to delete the entire api, rather than per resource (resources, methods, integration, etc)
     new AwsCustomResource(this, 'ApiTeardown', { //NOSONAR (typescript:S1848) - cdk construct is used
       onDelete: {
-        service: 'apigateway',
+        service: 'APIGateway',
         action: 'deleteRestApi',
         parameters: {
           restApiId: this.api.restApiId,
         },
       },
-      policy: AwsCustomResourcePolicy.fromSdkCalls({
-        resources: [
-          Stack.of(this).formatArn({
-            service: 'apigateway',
-            resource: 'restapis',
-            resourceName: this.api.restApiId,
-          }),
+      policy: AwsCustomResourcePolicy.fromStatements([new PolicyStatement({
+        resources: [Stack.of(this).formatArn({
+          service: 'apigateway',
+          resource: 'restapis',
+          resourceName: this.api.restApiId,
+        }),
+          `arn:${Stack.of(this).partition}:apigateway:${Stack.of(this).region}::/restapis/${this.api.restApiId}`
         ],
-      }),
+        actions: ['apigateway:DELETE'],
+      })]),
     });
   }
 }

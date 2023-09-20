@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-StaticInfrastructure) - Automated Data Analytics on AWS. Version v1.2.0",
+  "Description": "(SO0190-StaticInfrastructure) - Automated Data Analytics on AWS. Version v1.3.0",
   "Outputs": Object {
     "AdaDataProductServiceStaticInfrastructureDataBucketD9C0AD53Arn": Object {
       "Value": Object {
@@ -190,7 +190,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1517,6 +1517,11 @@ Object {
         "Code": Object {
           "S3Bucket": "cdk-#####",
           "S3Key": "cdkhash######.zip",
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_CA_BUNDLE": "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem",
+          },
         },
         "Handler": "index.handler",
         "Layers": Array [
@@ -4406,6 +4411,7 @@ Object {
               "Action": Array [
                 "ssm:GetParameter",
                 "iam:PassRole",
+                "sts:AssumeRole",
               ],
               "Effect": "Allow",
               "Resource": Array [
@@ -9862,6 +9868,346 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
+    "ECSContainersRedshiftECSClusterRedshift296B57BB": Object {
+      "Properties": Object {
+        "ClusterSettings": Array [
+          Object {
+            "Name": "containerInsights",
+            "Value": "enabled",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::ECS::Cluster",
+    },
+    "ECSContainersRedshiftECSContainerLogGroupRedshift0B30D902": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ECSContainersRedshiftECSExecutionRoleRedshift9D976AE1": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ECSContainersRedshiftECSExecutionRoleredshiftDefaultPolicyD2FF3A11": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:PutLogEvents",
+                "logs:CreateLogStream",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":ecr:ap-southeast-1:1111111111:repository/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersRedshiftECSContainerLogGroupRedshift0B30D902",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ECSContainersRedshiftECSExecutionRoleredshiftDefaultPolicyD2FF3A11",
+        "Roles": Array [
+          Object {
+            "Ref": "ECSContainersRedshiftECSExecutionRoleRedshift9D976AE1",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45": Object {
+      "Properties": Object {
+        "ContainerDefinitions": Array [
+          Object {
+            "Cpu": 512,
+            "Essential": true,
+            "Image": Object {
+              "Fn::Sub": "1111111111.dkr.ecr.ap-southeast-1.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-1111111111-ap-southeast-1:###hash64###",
+            },
+            "LogConfiguration": Object {
+              "LogDriver": "awslogs",
+              "Options": Object {
+                "awslogs-group": Object {
+                  "Ref": "ECSContainersRedshiftECSContainerLogGroupRedshift0B30D902",
+                },
+                "awslogs-region": "ap-southeast-1",
+                "awslogs-stream-prefix": "ecs-redshift",
+              },
+            },
+            "MemoryReservation": 1024,
+            "Name": "ECSContainerDef-redshift",
+          },
+        ],
+        "Cpu": "512",
+        "ExecutionRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ECSContainersRedshiftECSExecutionRoleRedshift9D976AE1",
+            "Arn",
+          ],
+        },
+        "Family": "AdaDataProductServiceStaticInfrastructureECSContainersRedshiftECSTaskDefinitionredshift35D44CF2",
+        "Memory": "1024",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": Array [
+          "FARGATE",
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TaskRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "ECSContainersRedshiftRoleD20929A5",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ECS::TaskDefinition",
+    },
+    "ECSContainersRedshiftRoleD20929A5": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ECSContainersRedshiftRoleDefaultPolicy54E1796C": Object {
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "* resource required to create log streams",
+            },
+            Object {
+              "id": "W76",
+              "reason": "SPCM expected to be high for ECS Task execution role",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:AbortMultipartUpload",
+                "s3:GetBucketLocation",
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:ListBucketMultipartUploads",
+                "s3:PutObject",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "DataBucket",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "DataBucket",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":secret:DPSecrets*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:GenerateDataKey",
+                "kms:Decrypt",
+                "kms:Encrypt",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "redshift:GetClusterCredentials",
+                "redshift-serverless:GetCredentials",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "LastUpdatedDetail",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ECSContainersRedshiftRoleDefaultPolicy54E1796C",
+        "Roles": Array [
+          Object {
+            "Ref": "ECSContainersRedshiftRoleD20929A5",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
     "ExecuteGovernedQueryStateMachineAthenaExecutionPolicy4FC26084": Object {
       "Metadata": Object {
         "cfn_nag": Object {
@@ -12590,6 +12936,326 @@ Object {
       "Type": "AWS::Logs::LogGroup",
       "UpdateReplacePolicy": "Delete",
     },
+    "RedshiftDataImportStateMachine825B2A54": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "RedshiftDataImportStateMachineRoleDefaultPolicy9ADB259E",
+        "RedshiftDataImportStateMachineRole9D25A379",
+      ],
+      "Properties": Object {
+        "DefinitionString": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"StartAt\\":\\"RunECSImportTask\\",\\"States\\":{\\"RunECSImportTask\\":{\\"Next\\":\\"ECSTaskSucceeded\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"ECSTaskFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::ecs:runTask.sync\\",\\"Parameters\\":{\\"PropagateTags\\":\\"TASK_DEFINITION\\",\\"Cluster\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersRedshiftECSClusterRedshift296B57BB",
+                  "Arn",
+                ],
+              },
+              "\\",\\"TaskDefinition\\":\\"AdaDataProductServiceStaticInfrastructureECSContainersRedshiftECSTaskDefinitionredshift35D44CF2\\",\\"NetworkConfiguration\\":{\\"AwsvpcConfiguration\\":{\\"Subnets\\":[\\"",
+              Object {
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet1Subnet50E70DA3",
+              },
+              "\\",\\"",
+              Object {
+                "Ref": "DataIngressVpcDataIngressVPCDataIngressPrivateWithNatSubnet2Subnet9A761164",
+              },
+              "\\"],\\"SecurityGroups\\":[\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "DataIngressVpcECSSecurityGroup61BDCCBA",
+                  "GroupId",
+                ],
+              },
+              "\\"]}},\\"Overrides\\":{\\"ContainerOverrides\\":[{\\"Name\\":\\"ECSContainerDef-redshift\\",\\"Environment\\":[{\\"Name\\":\\"S3_OUTPUT_BUCKET_URI\\",\\"Value.$\\":\\"$.s3OutputPath\\"},{\\"Name\\":\\"TRIGGER_TYPE\\",\\"Value.$\\":\\"$.triggerType\\"},{\\"Name\\":\\"SCHEDULE_RATE\\",\\"Value.$\\":\\"$.scheduleRate\\"},{\\"Name\\":\\"DATABASE_ENDPOINT\\",\\"Value.$\\":\\"$.databaseEndpoint\\"},{\\"Name\\":\\"DATABASE_PORT\\",\\"Value.$\\":\\"$.databasePort\\"},{\\"Name\\":\\"DATABASE_NAME\\",\\"Value.$\\":\\"$.databaseName\\"},{\\"Name\\":\\"DATABASE_TABLE\\",\\"Value.$\\":\\"$.databaseTable\\"},{\\"Name\\":\\"DATABASE_TYPE\\",\\"Value.$\\":\\"$.databaseType\\"},{\\"Name\\":\\"WORKGROUP\\",\\"Value.$\\":\\"$.workgroup\\"},{\\"Name\\":\\"DATABASE_USERNAME\\",\\"Value.$\\":\\"$.databaseUsername\\"},{\\"Name\\":\\"CLUSTER_IDENTIFIER\\",\\"Value.$\\":\\"$.clusterIdentifier\\"},{\\"Name\\":\\"TABLE_NAME\\",\\"Value.$\\":\\"$.tableName\\"},{\\"Name\\":\\"DOMAIN_ID\\",\\"Value.$\\":\\"$.domainId\\"},{\\"Name\\":\\"DATA_PRODUCT_ID\\",\\"Value.$\\":\\"$.dataProductId\\"},{\\"Name\\":\\"CROSS_ACCOUNT_ACCESS_ROLE\\",\\"Value.$\\":\\"$.crossAccountRoleArn\\"}]}]},\\"LaunchType\\":\\"FARGATE\\",\\"PlatformVersion\\":\\"LATEST\\"}},\\"ECSTaskSucceeded\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"status\\":\\"SUCCEEDED\\"},\\"End\\":true},\\"ECSTaskFailed\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"details.$\\":\\"$\\",\\"error\\":\\"Import failed in the ECS container, verify the logs\\",\\"status\\":\\"FAILED\\"},\\"End\\":true}},\\"TimeoutSeconds\\":172800}",
+            ],
+          ],
+        },
+        "LoggingConfiguration": Object {
+          "Destinations": Array [
+            Object {
+              "CloudWatchLogsLogGroup": Object {
+                "LogGroupArn": Object {
+                  "Fn::GetAtt": Array [
+                    "RedshiftDataImportStateMachineStateMachineLogs522BF2E4",
+                    "Arn",
+                  ],
+                },
+              },
+            },
+          ],
+          "Level": "ERROR",
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "RedshiftDataImportStateMachineRole9D25A379",
+            "Arn",
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "TracingConfiguration": Object {
+          "Enabled": true,
+        },
+      },
+      "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "RedshiftDataImportStateMachineRole9D25A379": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "states.ap-southeast-1.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "RedshiftDataImportStateMachineRoleDefaultPolicy9ADB259E": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "ecs:RunTask",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        2,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        3,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        4,
+                        Object {
+                          "Fn::Split": Array [
+                            ":",
+                            Object {
+                              "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    ":",
+                    Object {
+                      "Fn::Select": Array [
+                        0,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "/",
+                    Object {
+                      "Fn::Select": Array [
+                        1,
+                        Object {
+                          "Fn::Split": Array [
+                            "/",
+                            Object {
+                              "Fn::Select": Array [
+                                5,
+                                Object {
+                                  "Fn::Split": Array [
+                                    ":",
+                                    Object {
+                                      "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "ecs:StopTask",
+                "ecs:DescribeTasks",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "iam:PassRole",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ECSContainersRedshiftRoleD20929A5",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ECSContainersRedshiftECSExecutionRoleRedshift9D976AE1",
+                    "Arn",
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "events:PutTargets",
+                "events:PutRule",
+                "events:DescribeRule",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":events:ap-southeast-1:1111111111:rule/StepFunctionsGetEventsForECSTaskRule",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "RedshiftDataImportStateMachineRoleDefaultPolicy9ADB259E",
+        "Roles": Array [
+          Object {
+            "Ref": "RedshiftDataImportStateMachineRole9D25A379",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "RedshiftDataImportStateMachineStateMachineLogs522BF2E4": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KmsKeyId": Object {
+          "Fn::GetAtt": Array [
+            "LogGroupEncryptionKmsKeyE595E4BA",
+            "Arn",
+          ],
+        },
+        "LogGroupName": "/aws/vendedlogs/states/ada/RedshiftDataImportStateMachineStateMachineLogs/loggroup-######",
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
     "ScriptsBucket": Object {
       "DeletionPolicy": "Retain",
       "Properties": Object {
@@ -12866,6 +13532,21 @@ Object {
               Object {
                 "Fn::GetAtt": Array [
                   "ECSContainersCloudWatchRole9C252028",
+                  "Arn",
+                ],
+              },
+              "\\"}},\\"redshiftConnector\\":{\\"importDataStateMachineArn\\":\\"",
+              Object {
+                "Ref": "RedshiftDataImportStateMachine825B2A54",
+              },
+              "\\",\\"lastUpdatedDetailTableName\\":\\"",
+              Object {
+                "Ref": "LastUpdatedDetail",
+              },
+              "\\",\\"otherArns\\":{\\"ecsTaskRole\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "ECSContainersRedshiftRoleD20929A5",
                   "Arn",
                 ],
               },

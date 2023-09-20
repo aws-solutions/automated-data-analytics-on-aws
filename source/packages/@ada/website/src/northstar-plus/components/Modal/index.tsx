@@ -71,18 +71,19 @@ export const Modal = ({ visible = false, children, title, subtitle, footer, onCl
     onClose?.();
   };
 
-  const CloseButton = () => (
-    <IconButton className={styles.closeButton} onClick={handleClose} aria-label="close">
-      <Close />
-    </IconButton>
-  );
-
   return (
     // CHANGE: wrap modal in portal - prevents nested forms and is best practice with modals
     <ModalPortal>
       <section data-testid="modal" className={clsx(styles.cyclorama, { [styles.cycloramaActive]: isVisible })}>
         <div data-testid="modal-inner" className={styles.modalPlaceholder}>
-          <Container title={title} subtitle={subtitle} actionGroup={<CloseButton />} footerContent={footer}>
+          <Container title={title}
+            subtitle={subtitle}
+            actionGroup={<IconButton className={styles.closeButton}
+              onClick={handleClose}
+              aria-label="close">
+              <Close />
+            </IconButton>}
+            footerContent={footer}>
             {children}
           </Container>
         </div>

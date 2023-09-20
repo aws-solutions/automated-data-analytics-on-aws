@@ -1,10 +1,9 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
+title: ""
 labels: bug
-assignees: ''
-
+assignees: ""
 ---
 
 **Describe the bug**
@@ -17,16 +16,17 @@ Steps to reproduce the behavior.
 A clear and concise description of what you expected to happen.
 
 **Please complete the following information about the solution:**
-- [ ] Version: [e.g. v1.0.0]
 
-To get the version of the solution, you can look at the description of the created CloudFormation stack. For example, "_(SO0021) - Video On Demand workflow with AWS Step Functions, MediaConvert, MediaPackage, S3, CloudFront and DynamoDB. Version **v5.0.0**_". If the description does not contain the version information, you can look at the mappings section of the template:
+- [ ] Version: [e.g. v1.3.0]
+
+To get the version of the solution, you can look at the description of the created CloudFormation stack. For example, "_(SO0190) - Automated Data Analytics on AWS. Version v1.2.0_". If the description does not contain the version information, you can look at the mappings section of the template:
 
 ```yaml
 Mappings:
   SourceCode:
     General:
       S3Bucket: "solutions"
-      KeyPrefix: "video-on-demand-on-aws/v5.0.0"
+      KeyPrefix: "automated-data-analytics-on-aws/v1.3.0"
 ```
 
 - [ ] Region: [e.g. us-east-1]

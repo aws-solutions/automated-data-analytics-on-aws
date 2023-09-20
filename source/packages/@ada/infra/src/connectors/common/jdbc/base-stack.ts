@@ -5,6 +5,7 @@ import { CfnConnection } from 'aws-cdk-lib/aws-glue';
 import {
   Choice,
   Condition,
+  DefinitionBody,
   IStateMachine,
   LogLevel,
   Pass,
@@ -38,6 +39,10 @@ export abstract class JDBCSourceStackBase extends DynamicInfrastructureStackBase
   // If not using connection in glue, remove this override function
   protected getConnectionName(): string {
     return `${this.dataProductUniqueIdentifier}-connection`;
+  }
+
+  protected getDefaultTransformRequired(): boolean {
+    return true;
   }
 
   protected abstract getConnectionString(sourceDetails: ISourceDetails__JDBC): string;
@@ -119,7 +124,7 @@ export abstract class JDBCSourceStackBase extends DynamicInfrastructureStackBase
     // State machiine to orchestrating data product importing
     return new StateMachine(this, 'StateMachine', {
       tracingEnabled: true,
-      definition,
+      definitionBody: DefinitionBody.fromChainable(definition),
       role: this.role,
       logs: {
         destination: new LogGroup(this, 'StateMachineLogs', {

@@ -25,11 +25,15 @@ export * as AmazonDynamoDB from './amazon_dynamodb';
 
 export * as AmazonCloudWatch from './amazon_cloudwatch';
 
+export * as AmazonRedshift from './amazon_redshift';
+
 export * as MYSQL5 from './jdbc_mysql5';
 
 export * as POSTGRESQL from './jdbc_postgresql';
 
 export * as SQLSERVER from './jdbc_sqlserver';
+
+export * as ORACLE from './jdbc_oracle';
 
 export * as AmazonCloudTrail from './amazon_cloudtrail';
 

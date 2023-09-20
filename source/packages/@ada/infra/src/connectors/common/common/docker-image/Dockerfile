@@ -9,11 +9,9 @@ RUN yum install -y --skip-broken \
   unzip \
   gzip \
   zip \
+  jq \
   tar
 
-RUN curl -o /usr/local/bin/jq http://stedolan.github.io/jq/download/linux64/jq
-RUN chmod +x /usr/local/bin/jq
-# We should move the google sdk to the relevant google connector images
 RUN curl -sSL https://sdk.cloud.google.com | bash
 ENV PATH $PATH:/root/google-cloud-sdk/bin
 

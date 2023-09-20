@@ -11,11 +11,11 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { NONE_LENS_OPTION } from '$common/entity/ontology';
 import { PutOntologyRequest } from '@ada/api';
 import { act, waitFor } from '@testing-library/react';
+import { autoSuggestOptionEvent, selectOptionEvent } from '$testing/user-event';
 import { delay } from '$common/utils';
 import { findSQLEditor } from '$testing/sql-editor';
 import { groupDisplayName } from '$common/entity/group/utils';
 import { pick } from 'lodash';
-import { selectOptionEvent } from '$testing/user-event';
 import { useImmediateEffect } from '$common/hooks';
 import { userEvent, within } from '@storybook/testing-library';
 
@@ -100,9 +100,10 @@ Coverage.play = async ({ canvasElement }) => {
     await delay(DELAY.SHORT);
   });
 
-   await selectOptionEvent(canvasElement, LL.ENTITY['Ontology@'].defaultLens.label(), NEW_ONTOLOGY.defaultLens);
+  await selectOptionEvent(canvasElement, LL.ENTITY['Ontology@'].defaultLens.label(), NEW_ONTOLOGY.defaultLens);
 
   for (const [groupId, column, row] of GOVERNANCE_MAP) {
+    await addGroupPolicy(canvasElement, groupId);
     column && await editGroupColumnPolicy(canvasElement, groupId, column);
     row && await editGroupRowPolicy(canvasElement, groupId, row);
   }
@@ -122,10 +123,23 @@ Coverage.play = async ({ canvasElement }) => {
       ontologyInput: pick(NEW_ONTOLOGY, ['aliases', 'defaultLens', 'description', 'name']),
     } as PutOntologyRequest, undefined);
 
-    expect(API.putGovernancePolicyAttributesGroup).toBeCalledTimes(2);
-    expect(API.putGovernancePolicyAttributeValuesGroup).toBeCalledTimes(2);
+    expect(API.putGovernancePolicyAttributes).toBeCalledTimes(1);
+    expect(API.putGovernancePolicyAttributeValues).toBeCalledTimes(1);
   })
 };
+
+async function addGroupPolicy(canvasElement: HTMLElement, groupId: string) {
+  const { getByText, getByTestId } = within(canvasElement);
+  await autoSuggestOptionEvent(getByTestId('search-custom-group'), LL.VIEW.GOVERNANCE.actions.searchGroups(), groupDisplayName(groupId));
+
+  await delay(DELAY.SHORT);
+
+  await act(async () => {
+    userEvent.click(getByText('Add Governance Settings'));
+  });
+
+  await delay(DELAY.SHORT);
+}
 
 async function editGroupColumnPolicy(canvasElement: HTMLElement, groupId: string, value?: string) {
   const { getByText } = within(canvasElement);

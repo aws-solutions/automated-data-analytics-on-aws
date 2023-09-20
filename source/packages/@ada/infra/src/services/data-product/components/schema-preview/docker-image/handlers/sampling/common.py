@@ -30,6 +30,9 @@ sts = boto3.client('sts')
 class SecretsManagerException(Exception):
     pass
 
+class MissCredentialException(Exception):
+    pass
+
 
 class SecretsManager:
     """Retrieve secrets from AWS SecretsManager"""
@@ -95,7 +98,7 @@ class SecretsManager:
             credential_value = secrets_manager.get_secret(source_details[credential_secret_field_name])
             
         else:
-            raise Exception("Access credentials are not specified in the source details")
+            raise MissCredentialException("Access credentials are not specified in the source details")
         return credential_value
 
 class SamplingUtils:

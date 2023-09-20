@@ -7,6 +7,7 @@ import { CustomWrapper } from './CustomWrapper';
 import { DynamoDBTableField } from './DynamoDBTableField';
 import { FieldListener } from './FieldListener';
 import { FileUploadField } from './FileUploadField';
+import { GovernanceEdit } from './GovernanceEdit';
 import { StringGroupField, TokenGroupField } from './TokenGroupField';
 import { TagGroup } from './TagGroup';
 import { TwoColumns } from './TwoColumns';
@@ -37,6 +38,8 @@ export * from './FieldListener';
 
 export * from './UserSelectField';
 
+export * from './GovernanceEdit';
+
 export enum CustomComponentTypes {
   ACCESSPOLICY_SELECT = 'access-policy-select',
   CARD_SELECT = 'card-select',
@@ -53,6 +56,7 @@ export enum CustomComponentTypes {
   TOKEN_GROUP = 'token-group',
   TWO_COLUMNS = 'two-columns',
   USER_SELECT = 'user-select',
+  GOVERNANCE_EDIT = 'governance-edit',
 }
 
 export const DEFAULT_CUSTOM_COMPONENT_WRAPPER = {
@@ -71,4 +75,5 @@ export const DEFAULT_CUSTOM_COMPONENT_WRAPPER = {
   [CustomComponentTypes.USER_SELECT]: UserSelectField as any,
   [CustomComponentTypes.FIELD_ARRAY]: FieldArray as any,
   [CustomComponentTypes.ACCESSPOLICY_SELECT]: AccessPolicySelectField as any,
+  [CustomComponentTypes.GOVERNANCE_EDIT]: GovernanceEdit as any,
 };

@@ -290,6 +290,12 @@ describe('put-ontology', () => {
       },
     });
     expect(response.statusCode).toBe(200);
+
+    const expectedResponse = {
+      name: 'test name',
+    };
+    expect(JSON.parse(response.body)).toEqual(expectedResponse);
+
     const expectedOntology = {
       ...ontology,
       ontologyId: 'pii-ontology-id-1',
@@ -299,7 +305,6 @@ describe('put-ontology', () => {
       createdTimestamp: now,
       updatedTimestamp: now,
     };
-    expect(JSON.parse(response.body)).toEqual(expectedOntology);
 
     // Check the ontology is written to dynamodb
     expect(

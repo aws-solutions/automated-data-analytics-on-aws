@@ -36,7 +36,8 @@ const APPROVED_PKG_LIST: string[] = [
   'difflib', // PSF - http://docs.python.org/license.html
   'dreamopt', // The MIT License (MIT)
   'es5-ext', // ISC License
-  'heap', // The MIT License
+  'heap', // The MIT License,
+  "pako", // (MIT AND Zlib) from @aws-amplify
 ]
 
 const UNKNOWN = 'Unknown'

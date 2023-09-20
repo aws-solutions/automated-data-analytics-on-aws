@@ -10,6 +10,8 @@ node_modules
 .eslintcache
 .local
 .scannerwork
+.venv
+ada.log
 
 **/.jest.test-cdk-environment.js*
 
@@ -95,3 +97,6 @@ source/packages/@ada/infra/src/services/data-product/components/schema-preview/d
 # temporary files
 source/packages/@ada/infra/src/common/constructs/api/lambda-layer/code/nodejs/api-client-lambda/jwt-signer/index.ts
 source/packages/@ada/infra/src/common/constructs/api/lambda-layer/code/nodejs/api-client-lambda/jwt-signer/version.json
+
+# pipenv
+**/Pipfile

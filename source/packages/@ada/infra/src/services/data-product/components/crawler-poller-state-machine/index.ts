@@ -1,6 +1,16 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import { Choice, Condition, LogLevel, Pass, StateMachine, TaskInput, Wait, WaitTime } from 'aws-cdk-lib/aws-stepfunctions';
+import {
+  Choice,
+  Condition,
+  DefinitionBody,
+  LogLevel,
+  Pass,
+  StateMachine,
+  TaskInput,
+  Wait,
+  WaitTime,
+} from 'aws-cdk-lib/aws-stepfunctions';
 import { Construct } from 'constructs';
 import { Duration, RemovalPolicy, Stack } from 'aws-cdk-lib';
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
@@ -94,7 +104,7 @@ export class CrawlerPollerStateMachine extends Construct {
       );
 
     this.stateMachine = new StateMachine(this, 'StateMachine', {
-      definition,
+      definitionBody: DefinitionBody.fromChainable(definition),
       tracingEnabled: true,
       timeout: Duration.minutes(10),
       logs: {

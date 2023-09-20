@@ -244,7 +244,7 @@ Object {
         "No",
       ],
       "Default": "Yes",
-      "Description": "Send anonymous operational metrics to AWS. We use this data to better understand how customers use this solution and related services and products. Choose No to opt out of this feature.",
+      "Description": "Send anonymized operational metrics to AWS. We use this data to better understand how customers use this solution and related services and products. Choose No to opt out of this feature.",
       "Type": "String",
     },
   },
@@ -265,7 +265,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -482,7 +482,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -640,7 +640,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -789,7 +789,7 @@ Object {
           "applicationType": "AWS-Solutions",
           "solutionID": "SO0190",
           "solutionName": "Automated Data Analytics on AWS",
-          "version": "v1.2.0",
+          "version": "v1.3.0",
         },
         "Description": "Attributes for Solutions Metadata",
         "Name": Object {
@@ -903,7 +903,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1024,7 +1024,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1072,7 +1072,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1117,7 +1117,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1522,7 +1522,7 @@ Object {
           "Solutions:ApplicationType": "AWS-Solutions",
           "Solutions:SolutionID": "SO0190",
           "Solutions:SolutionName": "Automated Data Analytics on AWS",
-          "Solutions:SolutionVersion": "v1.2.0",
+          "Solutions:SolutionVersion": "v1.3.0",
         },
       },
       "Type": "AWS::ServiceCatalogAppRegistry::Application",
@@ -1571,7 +1571,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -1630,7 +1630,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -1852,7 +1852,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -1913,7 +1913,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -2069,7 +2069,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -2314,7 +2314,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -2346,7 +2346,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -2413,7 +2413,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -2488,7 +2488,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -2791,7 +2791,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -2935,7 +2935,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -2967,7 +2967,7 @@ Object {
           "Ref": "AWS::Region",
         },
         "awsSolutionId": "SO0190",
-        "awsSolutionVersion": "v1.2.0",
+        "awsSolutionVersion": "v1.3.0",
         "sendAnonymousData": Object {
           "Ref": "sendAnonymousData",
         },
@@ -2997,7 +2997,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3072,7 +3072,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3214,7 +3214,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -3438,7 +3438,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {
@@ -3643,7 +3643,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3789,6 +3789,7 @@ Object {
               },
               ".execute-api.ap-southeast-1.amazonaws.com/prod/\\",
   \\"region\\": \\"ap-southeast-1\\",
+  \\"accountId\\": \\"1111111111\\",
   \\"oauthScopes\\": [
     \\"phone\\",
     \\"profile\\",
@@ -3902,7 +3903,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.2.0",
+            "Value": "ada@1.3.0",
           },
         ],
         "TemplateURL": Object {

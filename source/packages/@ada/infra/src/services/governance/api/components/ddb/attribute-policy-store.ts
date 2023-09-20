@@ -2,11 +2,12 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { AttributePolicy, AttributePolicyIdentifier, CreateAndUpdateDetails, LensEnum } from '@ada/api';
 import { AwsDynamoDBDocumentClient, DynamoDB } from '@ada/aws-sdk';
-import { GenericDynamodbStore } from '@ada/microservice-common';
+import { GenericDynamodbStore, fetchPageWithQueryForHashKeyEquals } from '@ada/microservice-common';
 import { buildNamespaceAndAttributeId } from '@ada/common';
 
 // Table names are passed as environment variables defined in the CDK infrastructure
 const ATTRIBUTE_POLICY_TABLE_NAME = process.env.ATTRIBUTE_POLICY_TABLE_NAME ?? '';
+const ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME= process.env.ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME ?? '';
 
 export type AttributePolicyWithCreateUpdateDetails = AttributePolicy & CreateAndUpdateDetails;
 
@@ -25,12 +26,13 @@ export class AttributePolicyStore {
     AttributePolicyStore.instance || new AttributePolicyStore(AwsDynamoDBDocumentClient());
 
   private readonly store: GenericDynamodbStore<AttributePolicyIdentifier, AttributePolicy>;
-
+  private readonly ddb: DynamoDB.DocumentClient;
   /**
    * Create an instance of the attribute policy store
    * @param ddb dynamodb document client
    */
   private constructor(ddb: DynamoDB.DocumentClient) {
+    this.ddb = ddb;
     this.store = new GenericDynamodbStore<AttributePolicyIdentifier, AttributePolicy>(
       ddb,
       ATTRIBUTE_POLICY_TABLE_NAME,
@@ -51,6 +53,27 @@ export class AttributePolicyStore {
       namespaceAndAttributeId: buildNamespaceAndAttributeId(ontologyNamespace, attributeId),
       group,
     });
+  };
+
+  /**
+   * Return attribute policies that has the namespaceAndAttributeId provided as input
+   * @param ontologyNamespace the ontologyNamespace value
+   * @param attributeId the attributeId value
+   * @returns attribute policies for that namespaceAndAttributeId
+   */
+  public getAttributePoliciesByAttributeId = async (ontologyNamespace: string,
+    attributeId: string,
+  ): Promise<AttributePolicy[]> => {
+    const res = await fetchPageWithQueryForHashKeyEquals('namespaceAndAttributeId', buildNamespaceAndAttributeId(ontologyNamespace, attributeId), {
+      indexName: ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME,
+    })({
+      ddb: this.ddb,
+      limit: 1000,
+      tableName: ATTRIBUTE_POLICY_TABLE_NAME ?? '',
+    });
+
+    // the clientId is the partition key of the GSI, we are expecting only one item
+    return res.Items || [];
   };
 
   /**

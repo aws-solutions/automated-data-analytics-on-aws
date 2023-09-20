@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-AdministrationService) - Automated Data Analytics on AWS. Version v1.2.0",
+  "Description": "(SO0190-AdministrationService) - Automated Data Analytics on AWS. Version v1.3.0",
   "Outputs": Object {
     "AdaAdministrationServiceApiLambdaStartTearDownDestroyDataC06606E1Ref": Object {
       "Value": Object {
@@ -1446,6 +1446,7 @@ Object {
     },
     "ApiRestApiRefadministrationOPTIONS9595A0BA": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1511,6 +1512,7 @@ Object {
     },
     "ApiRestApiRefadministrationstartteardownOPTIONS6D1EC999": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1597,11 +1599,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefadministrationstartteardowndestroydataDeleteAdministrationStartTearDownDestroyDataResponseC7F18D56",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -1692,52 +1690,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefadministrationstartteardowndestroydataDeleteAdministrationStartTearDownDestroyDataResponseC7F18D56": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Details about the tear down that has been started",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "properties": Object {
-            "coreStackId": Object {
-              "type": "string",
-            },
-            "message": Object {
-              "type": "string",
-            },
-            "mode": Object {
-              "description": "Indicates the teardown mode being performed.",
-              "enum": Array [
-                "retain-data",
-                "destroy-data",
-              ],
-              "type": "string",
-            },
-            "retainedResources": Object {
-              "description": "List of resource arns that will be retained after deletion has completed, unless mode is destroy data.",
-              "items": Object {
-                "type": "string",
-              },
-              "type": "array",
-            },
-          },
-          "required": Array [
-            "coreStackId",
-            "mode",
-            "message",
-            "retainedResources",
-          ],
-          "title": "DeleteAdministrationStartTearDownDestroyDataResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefadministrationstartteardowndestroydataOPTIONSB50EAC5B": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1870,11 +1825,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefadministrationstartteardownretaindataDeleteAdministrationStartTearDownRetainDataResponse49D721C1",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -1907,52 +1858,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefadministrationstartteardownretaindataDeleteAdministrationStartTearDownRetainDataResponse49D721C1": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Details about the tear down that has been started",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "properties": Object {
-            "coreStackId": Object {
-              "type": "string",
-            },
-            "message": Object {
-              "type": "string",
-            },
-            "mode": Object {
-              "description": "Indicates the teardown mode being performed.",
-              "enum": Array [
-                "retain-data",
-                "destroy-data",
-              ],
-              "type": "string",
-            },
-            "retainedResources": Object {
-              "description": "List of resource arns that will be retained after deletion has completed, unless mode is destroy data.",
-              "items": Object {
-                "type": "string",
-              },
-              "type": "array",
-            },
-          },
-          "required": Array [
-            "coreStackId",
-            "mode",
-            "message",
-            "retainedResources",
-          ],
-          "title": "DeleteAdministrationStartTearDownRetainDataResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefadministrationstartteardownretaindataOPTIONS4EFC215B": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {

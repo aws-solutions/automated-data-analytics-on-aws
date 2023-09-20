@@ -19,7 +19,7 @@ export type UserPoolAddOnsAdvancedSecurityMode = keyof typeof UserPoolAddOnsAdva
  */
 export class InputParameters {
   public readonly adminEmail: string;
- 
+
   public readonly adminPhoneNumber: string;
 
   public readonly autoAssociateAdmin: string;
@@ -38,7 +38,7 @@ export class InputParameters {
       // try to get the default value from the context, so that it will not break the CI/CD
       default: scope.node.tryGetContext('adminEmail'),
       allowedPattern: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
-      constraintDescription: " must be a valid email address."
+      constraintDescription: ' must be a valid email address.',
     });
     this.adminEmail = adminEmail.valueAsString;
 
@@ -50,7 +50,7 @@ export class InputParameters {
         'The phone number of the administrator. Must be a valid phone number in E.164 format (e.g. +15555550123) that can receive OTP messages if MFA is enabled. Change the default value to your phone number if you want to enable this functionality',
       default: defaultAdminPhoneNumber,
       allowedPattern: '^\\+[1-9]\\d{1,14}$',
-      constraintDescription: " must be a valid phone number in E.164 format, e.g. +15555550123"
+      constraintDescription: ' must be a valid phone number in E.164 format, e.g. +15555550123',
     });
     this.adminPhoneNumber = adminPhoneNumber.valueAsString;
 
@@ -67,9 +67,10 @@ export class InputParameters {
       assertions: [
         {
           assert: Fn.conditionNot(Fn.conditionEquals(adminPhoneNumber, defaultAdminPhoneNumber)),
-          assertDescription: 'When Multi-Factor Authentication (MFA) is enabled, a valid phone number of the administrator must be provided'
-        }
-      ]
+          assertDescription:
+            'When Multi-Factor Authentication (MFA) is enabled, a valid phone number of the administrator must be provided',
+        },
+      ],
     });
 
     const advancedSecurityMode = new CfnParameter(scope, 'advancedSecurityMode', {
@@ -92,7 +93,7 @@ export class InputParameters {
     const sendAnonymousData = new CfnParameter(scope, 'sendAnonymousData', {
       type: 'String',
       description:
-        'Send anonymous operational metrics to AWS. We use this data to better understand how customers use this solution and related services and products. Choose No to opt out of this feature.',
+        'Send anonymized operational metrics to AWS. We use this data to better understand how customers use this solution and related services and products. Choose No to opt out of this feature.',
       default: 'Yes',
       allowedValues: ['Yes', 'No'],
     });

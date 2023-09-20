@@ -150,6 +150,9 @@ export interface CdkEnvironmentForTests {
   readonly environmentVariables: { [key: string]: string };
   readonly port: number;
   readonly serviceNestedStack: NestedStack;
+  readonly installerConfig: {
+    downloadUrl: string;
+  },
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -215,6 +218,11 @@ export const buildCdkEnvironmentForTests = <T extends Microservice, P extends Mi
       ...getCdkEnvironmentForTests(serviceNestedStack, additionalTables),
       port: DYNAMODB_LOCAL_PORT,
       serviceNestedStack,
+      // Fix the version due to an issue in dynamodb local: https://github.com/shelfio/jest-dynamodb/issues/212
+      installerConfig: {
+        downloadUrl:
+          "https://s3.eu-central-1.amazonaws.com/dynamodb-local-frankfurt/dynamodb_local_2023-06-09.tar.gz",
+      },
     };
   } catch (error) {
     console.error('Failed to synthesize testing environment -', error);
@@ -293,8 +301,8 @@ function resolveReference(ref: string, cfns: any[], parentCfn: any): any {
 }
 
 export const writeCdkEnvironmentToFile = (
-  { tables, port, environmentVariables }: CdkEnvironmentForTests,
+  { tables, port, installerConfig, environmentVariables }: CdkEnvironmentForTests,
   path: string,
 ) => {
-  fs.writeJsonSync(path, { tables, port, environmentVariables }, { spaces: 2 });
+  fs.writeJsonSync(path, { tables, port, environmentVariables, installerConfig }, { spaces: 2 });
 };

@@ -1,7 +1,16 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
 import { Bucket, IBucket } from 'aws-cdk-lib/aws-s3';
-import { Choice, Condition, IStateMachine, LogLevel, Pass, StateMachine, TaskInput } from 'aws-cdk-lib/aws-stepfunctions';
+import {
+  Choice,
+  Condition,
+  DefinitionBody,
+  IStateMachine,
+  LogLevel,
+  Pass,
+  StateMachine,
+  TaskInput,
+} from 'aws-cdk-lib/aws-stepfunctions';
 import { Construct } from 'constructs';
 import { Crawler } from '@ada/dynamic-infra/constructs/glue/crawler';
 import {
@@ -23,6 +32,10 @@ export class S3SourceStack extends DynamicInfrastructureStackBase {
 
   constructor(scope: Construct, id: string, props: DynamicInfraStackProps) {
     super(scope, id, props);
+  }
+
+  protected getDefaultTransformRequired(): boolean {
+    return true;
   }
 
   protected createDataSourceInfrastructureAndStateMachine(props: DynamicInfraStackProps): IStateMachine {
@@ -54,21 +67,21 @@ export class S3SourceStack extends DynamicInfrastructureStackBase {
       new Choice(this, 'VerifyCrawlerStepFunctionOutput')
         // Look at the "status" field
         .when(
-            Condition.stringEquals('$.Output.Payload.status', 'FAILED'), 
-            new Pass(this, 'DeconstructErrorFromStateMachineExecution', {
-              parameters: {
-                ErrorDetails: TaskInput.fromObject({
-                  Error: TaskInput.fromJsonPathAt('$.Output.Payload.error').value,
-                }).value,
-              },
-            }).next(this.putErrorEventOnEventBridge),
+          Condition.stringEquals('$.Output.Payload.status', 'FAILED'),
+          new Pass(this, 'DeconstructErrorFromStateMachineExecution', {
+            parameters: {
+              ErrorDetails: TaskInput.fromObject({
+                Error: TaskInput.fromJsonPathAt('$.Output.Payload.error').value,
+              }).value,
+            },
+          }).next(this.putErrorEventOnEventBridge),
         )
         .otherwise(getCrawledTableDetails.next(this.transformLoop.executeAllTransformsAndCompleteStateMachine())),
     );
 
     return new StateMachine(this, 'StateMachine', {
       tracingEnabled: true,
-      definition,
+      definitionBody: DefinitionBody.fromChainable(definition),
       role: this.role,
       logs: {
         destination: new LogGroup(this, 'StateMachineLogs', {

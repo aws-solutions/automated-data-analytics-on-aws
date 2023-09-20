@@ -1,12 +1,17 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import * as cxapi from '@aws-cdk/cx-api';
 import { ApiClient } from '@ada/api-client-lambda';
 import { App } from 'aws-cdk-lib';
+import { AssetBuildNode, AssetPublishNode, StackNode } from 'aws-cdk/lib/util/work-graph-types';
 import { AwsCloudFormationInstance, AwsSSMInstance, CloudFormation } from '@ada/aws-sdk';
 import { CallingUser, DATA_PRODUCT_CLOUD_FORMATION_STACK_NAME_PREFIX } from '@ada/common';
-import { CloudFormationDeployments } from 'aws-cdk/lib/api/cloudformation-deployments';
+import { Concurrency } from 'aws-cdk/lib/util/work-graph';
 import { DataProduct } from '@ada/api';
+import { Deployments } from 'aws-cdk/lib/api/deployments';
 import { SdkProvider } from 'aws-cdk/lib/api/aws-auth';
+import { WorkGraphBuilder } from 'aws-cdk/lib/util/work-graph-builder';
+
 import { StaticInfra } from '@ada/infra-common/services';
 import { VError } from 'verror';
 import { getFriendlyHash } from '@ada/cdk-core';
@@ -74,60 +79,107 @@ export const startDataProductInfraDeployment = async (
 
   const stack = app.synth().getStackByName(stackIdentifier);
 
+  let dynamicStackArn = '';
   console.log('Synthesized dynamic infrastructure stack', stackIdentifier, stack);
 
   const sdkProvider = await SdkProvider.withAwsCliCompatibleDefaults();
-  const cdk = new CloudFormationDeployments({ sdkProvider });
+  const deployments = new Deployments({ sdkProvider });
 
-  // Prepare for deployment - uploads assets and creates the change set, ready to deploy
-  const { stackArn } = await cdk.deployStack({
-    // @ts-ignore: https://github.com/aws/aws-cdk/issues/18211
-    stack,
-    tags: Object.keys(stack.tags)
-      .map((Key) => {
-        return { Key, Value: stack.tags[Key] };
+  const buildAsset = async (assetNode: AssetBuildNode) => {
+    await deployments.buildSingleAsset(assetNode.assetManifestArtifact, assetNode.assetManifest, assetNode.asset, {
+      stack: assetNode.parentStack,
+      stackName: assetNode.parentStack.stackName,
+    });
+  };
+
+  const publishAsset = async (assetNode: AssetPublishNode) => {
+    await deployments.publishSingleAsset(assetNode.assetManifest, assetNode.asset, {
+      stack: assetNode.parentStack,
+      stackName: assetNode.parentStack.stackName,
+    });
+  };
+
+  const deployStack = async (assetNode: StackNode) => {
+    const stack = assetNode.stack;
+    // Prepare for deployment - uploads assets and creates the change set, ready to deploy
+    const { stackArn } = await deployments.deployStack({
+      // @ts-ignore: https://github.com/aws/aws-cdk/issues/18211
+      stack,
+      tags: Object.keys(stack.tags)
+        .map((Key) => {
+          return { Key, Value: stack.tags[Key] };
+        })
+        .concat([
+          {
+            Key: 'DataProductId',
+            Value: dataProduct.dataProductId,
+          },
+          {
+            Key: 'DomainId',
+            Value: dataProduct.domainId,
+          },
+        ]),
+      // Do not execute the deployment via cdk since it waits for the deployment to complete
+      execute: false,
+    });
+
+    // Find the change set that was created since the cdk deployStack does not return it
+    const changeSets = await cfn
+      .listChangeSets({
+        StackName: stackArn,
       })
-      .concat([
-        {
-          Key: 'DataProductId',
-          Value: dataProduct.dataProductId,
-        },
-        {
-          Key: 'DomainId',
-          Value: dataProduct.domainId,
-        },
-      ]),
-    // Do not execute the deployment via cdk since it waits for the deployment to complete
-    execute: false,
-  });
+      .promise();
 
-  // Find the change set that was created since the cdk deployStack does not return it
-  const changeSets = await cfn
-    .listChangeSets({
-      StackName: stackArn,
-    })
-    .promise();
+    // We expect a single change set for the data product
+    if (changeSets?.Summaries?.length !== 1) {
+      throw new VError(
+        { name: 'SingleChangeSetError' },
+        `Expected a single change set to deploy dynamic infrastructure: ${JSON.stringify(changeSets)}`,
+      );
+    }
 
-  // We expect a single change set for the data product
-  if (changeSets?.Summaries?.length !== 1) {
-    throw new VError(
-      { name: 'SingleChangeSetError' },
-      `Expected a single change set to deploy dynamic infrastructure: ${JSON.stringify(changeSets)}`,
-    );
+    const changeSetId = changeSets.Summaries[0].ChangeSetId!;
+
+    console.log('Deploying dynamic data product infrastructure with change set id:', changeSetId);
+
+    await cfn
+      .executeChangeSet({
+        ChangeSetName: changeSetId,
+        StackName: stackArn,
+      })
+      .promise();
+
+    dynamicStackArn = stackArn;
+  };
+
+  try {
+    console.log('Prepare assets');
+    const stackAndAssetManifests = [
+      <unknown>stack as cxapi.CloudFormationStackArtifact,
+      ...(<unknown>(
+        stack.dependencies?.filter(cxapi.AssetManifestArtifact.isAssetManifestArtifact) ?? []
+      ) as cxapi.CloudArtifact[]),
+    ];
+
+    const workGraph = new WorkGraphBuilder(false).build(stackAndAssetManifests);
+    const graphConcurrency: Concurrency = {
+      stack: 1,
+      'asset-build': 1, // This will be CPU-bound/memory bound, mostly matters for Docker builds
+      'asset-publish': 1, // This will be I/O-bound, 8 in parallel seems reasonable
+    };
+
+    console.log('Start building, publishing and deployment');
+    await workGraph.doParallel(graphConcurrency, {
+      deployStack,
+      buildAsset,
+      publishAsset,
+    });
+  } catch (e) {
+    console.log(`Dynamic infrastructure stack ${stackIdentifier} failed to deploy.`);
+    throw e;
   }
 
-  const changeSetId = changeSets.Summaries[0].ChangeSetId!;
-
-  console.log('Deploying dynamic data product infrastructure with change set id:', changeSetId);
-
-  await cfn
-    .executeChangeSet({
-      ChangeSetName: changeSetId,
-      StackName: stackArn,
-    })
-    .promise();
-
-  return stackArn;
+  return dynamicStackArn;
 };
 
 /**

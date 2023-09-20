@@ -23,6 +23,7 @@ import {
   Integration,
   JsonSchema,
   JsonSchemaVersion,
+  LambdaIntegration,
   Resource,
   ResourceOptions,
 } from 'aws-cdk-lib/aws-apigateway';
@@ -107,13 +108,7 @@ export function DecoratedResource(api: IDecoratedRestApi, resource: Resource): I
           return true as IDecoratedResource['decorated'];
         }
         case 'parentResource': {
-          return (
-            resource.parentResource &&
-            (DecoratedResource(
-              api,
-              resource.parentResource as unknown as Resource,
-            ) )
-          );
+          return resource.parentResource && DecoratedResource(api, resource.parentResource as unknown as Resource);
         }
         case 'addResource': {
           // wrap decendant resources with proxy
@@ -135,11 +130,12 @@ export function DecoratedResource(api: IDecoratedRestApi, resource: Resource): I
         case 'addMethod': {
           // apply schema/validation/mapping/etc to the method
           const fn: IDecoratedResource['addMethod'] = (httpMethod, integration, options) => {
+            const createResponseModel = !(integration instanceof LambdaIntegration);
             const method = new ExposedMethod(resource, httpMethod, {
               resource,
               httpMethod,
               integration,
-              options: options && buildRequestResponse(api, resource, httpMethod, options),
+              options: options && buildRequestResponse(api, resource, httpMethod, createResponseModel, options),
             });
 
             // update openapi definition
@@ -223,7 +219,11 @@ function buildRequest(
  * @param responseStatusCode the status code of the response (defaults to 200)
  * @param responseHeaders headers included in the response
  */
-function buildResponse(context: RequestResponseContext, responses: ResponseProps[]): ExposedMethodResponse[] {
+function buildResponse(
+  context: RequestResponseContext,
+  responses: ResponseProps[],
+  createResponseModel: boolean,
+): ExposedMethodResponse[] {
   const { api, resource, operationName } = context;
 
   return responses.reduce(
@@ -239,20 +239,28 @@ function buildResponse(context: RequestResponseContext, responses: ResponseProps
         schema = asPaginatedResponse(schema);
       }
 
+      const modelParams = {
+        // do not add explicit `modelName` so model can be replaced
+        restApi: resource.api,
+        contentType: 'application/json',
+        description,
+        schema: {
+          schema: JsonSchemaVersion.DRAFT4,
+          title: modelName,
+          ...schema,
+        },
+      };
+
+      // only create cdk instance of model if the response model is requried,
+      // otherwise create a data structure instead of the CDK construct
+      const responseModel = createResponseModel
+        ? new ExposedModel(resource, modelName, modelParams)
+        : ((<unknown>{ props: modelParams }) as ExposedModel);
+
       methodResponses.push({
         statusCode: String(responseStatusCode),
         responseModels: {
-          'application/json': new ExposedModel(resource, modelName, {
-            // do not add explicit `modelName` so model can be replaced
-            restApi: resource.api,
-            contentType: 'application/json',
-            description,
-            schema: {
-              schema: JsonSchemaVersion.DRAFT4,
-              title: modelName,
-              ...schema,
-            },
-          }),
+          'application/json': responseModel,
         },
         responseParameters:
           responseHeaders &&
@@ -321,6 +329,7 @@ function buildRequestResponse(
   api: IDecoratedRestApi,
   resource: Resource,
   httpMethod: HTTP_METHOD,
+  createResponseModel: boolean,
   { request, response, requestParameters, operationName, description, paginated = false }: RequestResponseProps,
 ): ExposedMethodOptions {
   if (operationName == null) {
@@ -346,7 +355,8 @@ function buildRequestResponse(
     requestParameters,
     requestValidator: api.requestValidator,
     requestModels: request && buildRequest(context, request),
-    methodResponses: response && buildResponse(context, Array.isArray(response) ? response : [response]),
+    methodResponses:
+      response && buildResponse(context, Array.isArray(response) ? response : [response], createResponseModel),
     operationName: context.operationName,
     description: context.description,
   };

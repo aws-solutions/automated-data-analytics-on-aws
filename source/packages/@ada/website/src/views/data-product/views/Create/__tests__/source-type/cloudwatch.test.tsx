@@ -23,7 +23,7 @@ describe(`CreateDataProductView/${Connectors.AmazonCloudWatch.ID}`, () => {
     });
 
     it(`input error - ${Connectors.AmazonCloudWatch.ID}`, async () => {
-      const { container } = render(<Primary {...(Primary.args as any)} />);
+      const { container } = render(<InputError {...(InputError.args as any)} />);
 
       await InputError.play({ canvasElement: container });
 

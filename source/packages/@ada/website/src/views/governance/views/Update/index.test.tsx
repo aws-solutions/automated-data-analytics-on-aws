@@ -3,15 +3,12 @@ SPDX-License-Identifier: Apache-2.0 */
 import * as fixtures from '$testing/__fixtures__';
 import * as stories from './index.stories';
 import { MOCK_API_CLIENT as API } from '@ada/api-client/mock';
+import { DELAY } from '$testing/interaction';
 import { DefaultGroupIds, LensIds } from '@ada/common';
+import { LL } from '@ada/strings';
 import {
-  DeleteGovernancePolicyAttributeValuesGroupRequest,
-  DeleteGovernancePolicyAttributesGroupRequest,
-  PutGovernancePolicyAttributeValuesGroupRequest,
-  PutGovernancePolicyAttributesGroupRequest,
   PutOntologyRequest,
 } from '@ada/api';
-import { LL } from '@ada/strings';
 import { act, render } from '@testing-library/react';
 import { composeStories } from '@storybook/testing-react';
 import { delay } from '$common/utils';
@@ -38,7 +35,7 @@ describe('views/goverance/update', () => {
     const { container, findByText } = render(<Coverage {...(Coverage.args as any)} />);
 
     await act(async () => {
-      await delay(10);
+      await delay(DELAY.SHORT);
     });
 
     await act(async () => {
@@ -46,7 +43,7 @@ describe('views/goverance/update', () => {
     });
 
     await act(async () => {
-      await delay(100);
+      await delay(DELAY.SHORT);
     });
 
     // notification
@@ -68,53 +65,42 @@ describe('views/goverance/update', () => {
     );
 
     // column policy
-    expect(API.putGovernancePolicyAttributesGroup).toHaveBeenCalledTimes(1);
-    expect(API.putGovernancePolicyAttributesGroup).toHaveBeenCalledWith(
+    expect(API.putGovernancePolicyAttributes).toHaveBeenCalledTimes(1);
+    expect(API.putGovernancePolicyAttributes).toHaveBeenCalledWith(
       {
-        group: DefaultGroupIds.POWER_USER,
-        ontologyNamespace: CUSTOM_ONTOLOGY.ontologyNamespace,
-        attributeId: CUSTOM_ONTOLOGY.ontologyId,
-        attributePolicyInput: {
-          lensId: 'clear',
-          updatedTimestamp: fixtures.ENTITY_CRUD.updatedTimestamp,
-        },
-      } as PutGovernancePolicyAttributesGroupRequest,
-      undefined,
-    );
-
-    expect(API.deleteGovernancePolicyAttributesGroup).toHaveBeenCalledTimes(1);
-    expect(API.deleteGovernancePolicyAttributesGroup).toHaveBeenCalledWith(
-      {
-        group: DefaultGroupIds.DEFAULT,
-        ontologyNamespace: CUSTOM_ONTOLOGY.ontologyNamespace,
-        attributeId: CUSTOM_ONTOLOGY.ontologyId,
-      } as DeleteGovernancePolicyAttributesGroupRequest,
-      undefined,
+        putGovernancePolicyAttributesRequest: {
+          policies: [
+            {
+              group: DefaultGroupIds.POWER_USER,
+              lensId: 'clear',
+              namespaceAndAttributeId: `${CUSTOM_ONTOLOGY.ontologyNamespace}.${CUSTOM_ONTOLOGY.ontologyId}`,
+            },
+            {
+              group: DefaultGroupIds.ADMIN,
+              lensId: 'clear',
+              namespaceAndAttributeId: `${CUSTOM_ONTOLOGY.ontologyNamespace}.${CUSTOM_ONTOLOGY.ontologyId}`,
+            }
+          ]
+        }
+      },
+      undefined
     );
 
     // row policy
-    expect(API.putGovernancePolicyAttributeValuesGroup).toHaveBeenCalledTimes(1);
-    expect(API.putGovernancePolicyAttributeValuesGroup).toHaveBeenCalledWith(
-      {
-        group: DefaultGroupIds.DEFAULT,
-        attributeId: CUSTOM_ONTOLOGY.ontologyId,
-        ontologyNamespace: CUSTOM_ONTOLOGY.ontologyNamespace,
-        attributeValuePolicyInput: {
-          sqlClause: 'foo > 5',
-          updatedTimestamp: fixtures.ENTITY_CRUD.updatedTimestamp,
+    expect(API.putGovernancePolicyAttributeValues).toHaveBeenCalledTimes(1);
+    expect(API.putGovernancePolicyAttributeValues).toHaveBeenCalledWith({
+      putGovernancePolicyAttributeValuesRequest: {
+          policies: [
+            {
+              group: DefaultGroupIds.DEFAULT,
+              namespaceAndAttributeId: `${CUSTOM_ONTOLOGY.ontologyNamespace}.${CUSTOM_ONTOLOGY.ontologyId}`,
+              sqlClause: 'foo > 5',
+            },
+          ]
         },
-      } as PutGovernancePolicyAttributeValuesGroupRequest,
+      },
       undefined,
     );
 
-    expect(API.deleteGovernancePolicyAttributeValuesGroup).toHaveBeenCalledTimes(1);
-    expect(API.deleteGovernancePolicyAttributeValuesGroup).toHaveBeenCalledWith(
-      {
-        group: DefaultGroupIds.POWER_USER,
-        attributeId: CUSTOM_ONTOLOGY.ontologyId,
-        ontologyNamespace: CUSTOM_ONTOLOGY.ontologyNamespace,
-      } as DeleteGovernancePolicyAttributeValuesGroupRequest,
-      undefined,
-    );
-  }, 20000);
+  }, 40000);
 });

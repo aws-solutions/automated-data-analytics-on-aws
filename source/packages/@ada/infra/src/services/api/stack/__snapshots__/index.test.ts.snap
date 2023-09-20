@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-ApiService) - Automated Data Analytics on AWS. Version v1.2.0",
+  "Description": "(SO0190-ApiService) - Automated Data Analytics on AWS. Version v1.3.0",
   "Outputs": Object {
     "AdaApiServiceFederatedApiAccessRequestTableC2AE5655Arn": Object {
       "Value": Object {
@@ -178,7 +178,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -316,7 +316,7 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "{\\"service\\":\\"apigateway\\",\\"action\\":\\"deleteRestApi\\",\\"parameters\\":{\\"restApiId\\":\\"",
+              "{\\"service\\":\\"APIGateway\\",\\"action\\":\\"deleteRestApi\\",\\"parameters\\":{\\"restApiId\\":\\"",
               Object {
                 "Ref": "FederatedApiFederatedRestApi4B626648",
               },
@@ -340,23 +340,40 @@ Object {
         "PolicyDocument": Object {
           "Statement": Array [
             Object {
-              "Action": "apigateway:DeleteRestApi",
+              "Action": "apigateway:DELETE",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
-                  "",
-                  Array [
-                    "arn:",
-                    Object {
-                      "Ref": "AWS::Partition",
-                    },
-                    ":apigateway:ap-southeast-1:1111111111:restapis/",
-                    Object {
-                      "Ref": "FederatedApiFederatedRestApi4B626648",
-                    },
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":apigateway:ap-southeast-1:1111111111:restapis/",
+                      Object {
+                        "Ref": "FederatedApiFederatedRestApi4B626648",
+                      },
+                    ],
                   ],
-                ],
-              },
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":apigateway:ap-southeast-1::/restapis/",
+                      Object {
+                        "Ref": "FederatedApiFederatedRestApi4B626648",
+                      },
+                    ],
+                  ],
+                },
+              ],
             },
           ],
           "Version": "2012-10-17",
@@ -3985,6 +4002,7 @@ Object {
     },
     "FederatedApiFederatedRestApiOPTIONSDAF42E56": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -4089,11 +4107,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "FederatedApiFederatedRestApiapiaccesspolicyListApiAccessPoliciesResponseB0D1C168",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -4189,191 +4203,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "FederatedApiFederatedRestApiapiaccesspolicyListApiAccessPoliciesResponseB0D1C168": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Available api access policies to associate with groups",
-        "RestApiId": Object {
-          "Ref": "FederatedApiFederatedRestApi4B626648",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "ApiAccessPolicy": Object {
-              "properties": Object {
-                "apiAccessPolicyId": Object {
-                  "description": "Identifier for an api access policy",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "Description of the api access policy",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "Name of the api access policy",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "resources": Object {
-                  "items": Object {
-                    "description": "Resource arn for execute-api:Invoke permission associated with the policy",
-                    "maxLength": 2048,
-                    "pattern": "^arn:[^:]+:execute-api:[^:]+:[0-9]+:[^\\\\/]+\\\\/.*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyId",
-                "name",
-                "resources",
-              ],
-              "type": "object",
-            },
-            "ApiAccessPolicyEntity": Object {
-              "properties": Object {
-                "apiAccessPolicyId": Object {
-                  "description": "Identifier for an api access policy",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "Description of the api access policy",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "Name of the api access policy",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "resources": Object {
-                  "items": Object {
-                    "description": "Resource arn for execute-api:Invoke permission associated with the policy",
-                    "maxLength": 2048,
-                    "pattern": "^arn:[^:]+:execute-api:[^:]+:[0-9]+:[^\\\\/]+\\\\/.*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyId",
-                "name",
-                "resources",
-              ],
-              "type": "object",
-            },
-            "ApiAccessPolicyIdentifier": Object {
-              "properties": Object {
-                "apiAccessPolicyId": Object {
-                  "description": "Identifier for an api access policy",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyId",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "nextToken": Object {
-              "type": "string",
-            },
-            "policies": Object {
-              "items": Object {
-                "$ref": "#/definitions/ApiAccessPolicyEntity",
-              },
-              "type": "array",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "policies",
-          ],
-          "title": "ListApiAccessPoliciesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "FederatedApiFederatedRestApiapiaccesspolicyOPTIONS7ECA6862": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -4448,11 +4280,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdDeleteApiAccessPolicyResponse112CBBCC",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -4554,161 +4382,6 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdDeleteApiAccessPolicyResponse112CBBCC": Object {
-      "DependsOn": Array [
-        "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdPutApiAccessPolicyResponse3C622807",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The deleted api access policy",
-        "RestApiId": Object {
-          "Ref": "FederatedApiFederatedRestApi4B626648",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "ApiAccessPolicy": Object {
-              "properties": Object {
-                "apiAccessPolicyId": Object {
-                  "description": "Identifier for an api access policy",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "Description of the api access policy",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "Name of the api access policy",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "resources": Object {
-                  "items": Object {
-                    "description": "Resource arn for execute-api:Invoke permission associated with the policy",
-                    "maxLength": 2048,
-                    "pattern": "^arn:[^:]+:execute-api:[^:]+:[0-9]+:[^\\\\/]+\\\\/.*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyId",
-                "name",
-                "resources",
-              ],
-              "type": "object",
-            },
-            "ApiAccessPolicyIdentifier": Object {
-              "properties": Object {
-                "apiAccessPolicyId": Object {
-                  "description": "Identifier for an api access policy",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyId",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "apiAccessPolicyId": Object {
-              "description": "Identifier for an api access policy",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "Description of the api access policy",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "name": Object {
-              "description": "Name of the api access policy",
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "resources": Object {
-              "items": Object {
-                "description": "Resource arn for execute-api:Invoke permission associated with the policy",
-                "maxLength": 2048,
-                "pattern": "^arn:[^:]+:execute-api:[^:]+:[0-9]+:[^\\\\/]+\\\\/.*$",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "apiAccessPolicyId",
-            "name",
-            "resources",
-          ],
-          "title": "DeleteApiAccessPolicyResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdGET30806867": Object {
       "DependsOn": Array [
         "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdOPTIONSDE3C07F9",
@@ -4744,11 +4417,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdGetApiAccessPolicyResponse604553CE",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -4850,160 +4519,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdGetApiAccessPolicyResponse604553CE": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The api access policy",
-        "RestApiId": Object {
-          "Ref": "FederatedApiFederatedRestApi4B626648",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "ApiAccessPolicy": Object {
-              "properties": Object {
-                "apiAccessPolicyId": Object {
-                  "description": "Identifier for an api access policy",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "Description of the api access policy",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "Name of the api access policy",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "resources": Object {
-                  "items": Object {
-                    "description": "Resource arn for execute-api:Invoke permission associated with the policy",
-                    "maxLength": 2048,
-                    "pattern": "^arn:[^:]+:execute-api:[^:]+:[0-9]+:[^\\\\/]+\\\\/.*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyId",
-                "name",
-                "resources",
-              ],
-              "type": "object",
-            },
-            "ApiAccessPolicyIdentifier": Object {
-              "properties": Object {
-                "apiAccessPolicyId": Object {
-                  "description": "Identifier for an api access policy",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyId",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "apiAccessPolicyId": Object {
-              "description": "Identifier for an api access policy",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "Description of the api access policy",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "name": Object {
-              "description": "Name of the api access policy",
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "resources": Object {
-              "items": Object {
-                "description": "Resource arn for execute-api:Invoke permission associated with the policy",
-                "maxLength": 2048,
-                "pattern": "^arn:[^:]+:execute-api:[^:]+:[0-9]+:[^\\\\/]+\\\\/.*$",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "apiAccessPolicyId",
-            "name",
-            "resources",
-          ],
-          "title": "GetApiAccessPolicyResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdOPTIONSDE3C07F9": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -5078,11 +4596,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdPutApiAccessPolicyResponse3C622807",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -5182,9 +4696,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdPutApiAccessPolicyRequest39ED14BC": Object {
-      "DependsOn": Array [
-        "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdGetApiAccessPolicyResponse604553CE",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "Details of the api access policy to create/update",
@@ -5257,161 +4768,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdPutApiAccessPolicyResponse3C622807": Object {
-      "DependsOn": Array [
-        "FederatedApiFederatedRestApiapiaccesspolicyapiAccessPolicyIdPutApiAccessPolicyRequest39ED14BC",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The created/updated api access policy",
-        "RestApiId": Object {
-          "Ref": "FederatedApiFederatedRestApi4B626648",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "ApiAccessPolicy": Object {
-              "properties": Object {
-                "apiAccessPolicyId": Object {
-                  "description": "Identifier for an api access policy",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "Description of the api access policy",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "Name of the api access policy",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "resources": Object {
-                  "items": Object {
-                    "description": "Resource arn for execute-api:Invoke permission associated with the policy",
-                    "maxLength": 2048,
-                    "pattern": "^arn:[^:]+:execute-api:[^:]+:[0-9]+:[^\\\\/]+\\\\/.*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyId",
-                "name",
-                "resources",
-              ],
-              "type": "object",
-            },
-            "ApiAccessPolicyIdentifier": Object {
-              "properties": Object {
-                "apiAccessPolicyId": Object {
-                  "description": "Identifier for an api access policy",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyId",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "apiAccessPolicyId": Object {
-              "description": "Identifier for an api access policy",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "Description of the api access policy",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "name": Object {
-              "description": "Name of the api access policy",
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "resources": Object {
-              "items": Object {
-                "description": "Resource arn for execute-api:Invoke permission associated with the policy",
-                "maxLength": 2048,
-                "pattern": "^arn:[^:]+:execute-api:[^:]+:[0-9]+:[^\\\\/]+\\\\/.*$",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "apiAccessPolicyId",
-            "name",
-            "resources",
-          ],
-          "title": "PutApiAccessPolicyResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "FederatedApiFederatedRestApicostGETA93F13B5": Object {
       "DependsOn": Array [
         "FederatedApiFederatedRestApicostOPTIONS031F695C",
@@ -5447,11 +4803,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "FederatedApiFederatedRestApicostListCostsResponse4C465921",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -5546,144 +4898,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "FederatedApiFederatedRestApicostListCostsResponse4C465921": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Details about the cost",
-        "RestApiId": Object {
-          "Ref": "FederatedApiFederatedRestApi4B626648",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "MetricValue": Object {
-              "properties": Object {
-                "amount": Object {
-                  "description": "The actual number that represents the metric.",
-                  "type": "string",
-                },
-                "unit": Object {
-                  "description": "The unit that the metric is given in.",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "dimensionValueAttributes": Object {
-              "description": "Group by function",
-              "items": Object {
-                "properties": Object {
-                  "key": Object {
-                    "description": "The key to group by",
-                    "type": "string",
-                  },
-                  "type": Object {
-                    "description": "Group Definition type.  \\"DIMENSION\\"|\\"TAG\\"|\\"COST_CATEGORY\\"",
-                    "type": "string",
-                  },
-                },
-                "type": "object",
-              },
-              "type": "array",
-            },
-            "groupDefinitions": Object {
-              "description": "Group by function",
-              "items": Object {
-                "properties": Object {
-                  "key": Object {
-                    "description": "The key to group by",
-                    "type": "string",
-                  },
-                  "type": Object {
-                    "description": "Group Definition type. \\"DIMENSION\\"|\\"TAG\\"|\\"COST_CATEGORY\\"",
-                    "type": "string",
-                  },
-                },
-                "type": "object",
-              },
-              "type": "array",
-            },
-            "resultsByTime": Object {
-              "description": "Results by time",
-              "items": Object {
-                "properties": Object {
-                  "estimated": Object {
-                    "description": "Whether it is an estimation or not",
-                    "type": "boolean",
-                  },
-                  "groups": Object {
-                    "description": "Groups",
-                    "items": Object {
-                      "properties": Object {
-                        "keys": Object {
-                          "items": Object {
-                            "type": "string",
-                          },
-                          "type": "array",
-                        },
-                        "metrics": Object {
-                          "additionalProperties": Object {
-                            "$ref": "#/definitions/MetricValue",
-                          },
-                          "type": "object",
-                        },
-                      },
-                      "type": "object",
-                    },
-                    "type": "array",
-                  },
-                  "timePeriod": Object {
-                    "properties": Object {
-                      "end": Object {
-                        "description": "end timestamp",
-                        "type": "string",
-                      },
-                      "start": Object {
-                        "description": "start timestamp",
-                        "type": "string",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "total": Object {
-                    "description": "Total",
-                    "properties": Object {
-                      "blendedCost": Object {
-                        "additionalProperties": Object {
-                          "$ref": "#/definitions/MetricValue",
-                        },
-                        "type": "object",
-                      },
-                      "usageQuantity": Object {
-                        "additionalProperties": Object {
-                          "$ref": "#/definitions/MetricValue",
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-              "type": "array",
-            },
-          },
-          "required": Array [
-            "groupDefinitions",
-            "resultsByTime",
-            "dimensionValueAttributes",
-          ],
-          "title": "listCostsResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "FederatedApiFederatedRestApicostOPTIONS031F695C": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -5725,6 +4942,7 @@ Object {
     },
     "FederatedApiFederatedRestApipermissionOPTIONS4C8552DE": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -5778,6 +4996,7 @@ Object {
     },
     "FederatedApiFederatedRestApipermissionuserOPTIONSBFEA1350": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -5922,11 +5141,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "FederatedApiFederatedRestApipermissionuseruserIdGetPermissionUserResponseE0166071",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -5970,52 +5185,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "FederatedApiFederatedRestApipermissionuseruserIdGetPermissionUserResponseE0166071": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The list of APIs that the user has access to",
-        "RestApiId": Object {
-          "Ref": "FederatedApiFederatedRestApi4B626648",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "Permission": Object {
-              "description": "Define the permission for the given route",
-              "properties": Object {
-                "access": Object {
-                  "description": "A flag that define whether the user can call this route or not",
-                  "type": "boolean",
-                },
-              },
-              "type": "object",
-            },
-            "UserPermission": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/Permission",
-                "description": "Define the permission for the given route",
-              },
-              "description": "Map of route by name",
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "permissions": Object {
-              "$ref": "#/definitions/UserPermission",
-              "description": "Map of route by name",
-            },
-          },
-          "required": Array [
-            "permissions",
-          ],
-          "title": "GetPermissionUserResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "FederatedApiFederatedRestApipermissionuseruserIdOPTIONS39A666CC": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {

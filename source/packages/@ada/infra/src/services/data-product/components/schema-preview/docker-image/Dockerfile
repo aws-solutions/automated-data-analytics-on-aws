@@ -120,9 +120,9 @@ ENV KEY_ID test-key-id
 ENV AWS_DEFAULT_REGION ap-test-1
 ENV PULL_DATA_SAMPLE_ROLE_ARN some-test-role-arn
 ENV AWS_REGION=ap-test-1 \
-  AWS_ACCESS_KEY_ID=test-access-key \
-  AWS_SECRET_ACCESS_KEY=test-secret-access-key \
-  AWS_SESSION_TOKEN=test-session-token
+  AWS_ACCESS_KEY_ID=testAccessKey \
+  AWS_SECRET_ACCESS_KEY=testSecretAccessKey \
+  AWS_SESSION_TOKEN=testSessionToken
 RUN pytest -vv --capture=tee-sys
 RUN echo "success" > /glue/handlers/test_result.txt
 

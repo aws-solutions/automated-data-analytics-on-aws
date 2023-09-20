@@ -20,7 +20,7 @@ export async function handler(
 
   switch (event.RequestType) {
     case 'Create':
-      // only create anonymous uuid for create event
+      // only create anonymized uuid for create event
       anonymousDataUUID = uuidv4();
       break;
 
@@ -30,7 +30,7 @@ export async function handler(
       break;
   }
 
-  // send anonymous metrics data
+  // send anonymized metrics data
   const result = await sendAnonymousMetric({
     awsSolutionId,
     awsSolutionVersion,

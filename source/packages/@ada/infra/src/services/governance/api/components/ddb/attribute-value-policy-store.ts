@@ -3,11 +3,12 @@ SPDX-License-Identifier: Apache-2.0 */
 import { AttributePolicyIdentifier, AttributeValuePolicy, CreateAndUpdateDetails } from '@ada/api';
 import { AwsDynamoDBDocumentClient, DynamoDB } from '@ada/aws-sdk';
 
-import { GenericDynamodbStore } from '@ada/microservice-common';
+import { GenericDynamodbStore, fetchPageWithQueryForHashKeyEquals } from '@ada/microservice-common';
 import { buildNamespaceAndAttributeId } from '@ada/common';
 
 // Table names are passed as environment variables defined in the CDK infrastructure
 const ATTRIBUTE_VALUE_POLICY_TABLE_NAME = process.env.ATTRIBUTE_VALUE_POLICY_TABLE_NAME ?? '';
+const ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME = process.env.ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME ?? '';
 
 export type AttributeValuePolicyWithCreateUpdateDetails = AttributeValuePolicy & CreateAndUpdateDetails;
 
@@ -17,6 +18,7 @@ export type AttributeValuePolicyWithCreateUpdateDetails = AttributeValuePolicy &
 export class AttributeValuePolicyStore {
   // Singleton instance of the policy store
   private static instance: AttributeValuePolicyStore | undefined;
+  private readonly ddb: DynamoDB.DocumentClient;
 
   /**
    * Get an instance of the attribute value policy store. Creates the instance with any default dependencies.
@@ -32,6 +34,7 @@ export class AttributeValuePolicyStore {
    * @param ddb dynamodb document client
    */
   private constructor(ddb: DynamoDB.DocumentClient) {
+    this.ddb = ddb;
     this.store = new GenericDynamodbStore<AttributePolicyIdentifier, AttributeValuePolicy>(
       ddb,
       ATTRIBUTE_VALUE_POLICY_TABLE_NAME,
@@ -109,6 +112,38 @@ export class AttributeValuePolicyStore {
       group,
     });
   };
+
+  /**
+   * Delete a batch of attribute value policies
+   * @param attributeValuePolicyIdentifiers the attribute policies to delete
+   */
+  public batchDeleteAttributeValuePolicy = (
+    attributeValuePolicyIdentifiers: AttributePolicyIdentifier[],
+  ): Promise<(AttributeValuePolicyWithCreateUpdateDetails | undefined)[]> => {
+    return this.store.batchDeleteIfExists(attributeValuePolicyIdentifiers);
+  };
+
+  /**
+   * Return attribute value policies that has the namespaceAndAttributeId provided as input
+   * @param ontologyNamespace the ontologyNamespace value
+   * @param attributeId the attributeId value
+   * @returns attribute value policies for that namespaceAndAttributeId
+   */
+  public getAttributeValuePoliciesByAttributeId = async (ontologyNamespace: string,
+    attributeId: string,
+  ): Promise<AttributeValuePolicy[]> => {
+    const res = await fetchPageWithQueryForHashKeyEquals('namespaceAndAttributeId', buildNamespaceAndAttributeId(ontologyNamespace, attributeId), {
+      indexName: ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME,
+    })({
+      ddb: this.ddb,
+      limit: 1000,
+      tableName: ATTRIBUTE_VALUE_POLICY_TABLE_NAME ?? '',
+    });
+
+    // the clientId is the partition key of the GSI, we are expecting only one item
+    return res.Items || [];
+  };
+
 
   /**
    * Get the sql clause that should be applied for each given attribute for the given group

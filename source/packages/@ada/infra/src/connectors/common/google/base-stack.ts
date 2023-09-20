@@ -3,6 +3,7 @@ SPDX-License-Identifier: Apache-2.0 */
 import {
   Choice,
   Condition,
+  DefinitionBody,
   IStateMachine,
   IntegrationPattern,
   LogLevel,
@@ -38,6 +39,10 @@ export interface GoogleConnectorSourceTaskProps extends DynamicInfraStackProps {
 export abstract class GoogleConnectorSourceTask extends DynamicInfrastructureStackBase {
   constructor(scope: Construct, id: string, props: GoogleConnectorSourceTaskProps) {
     super(scope, id, props);
+  }
+
+  protected getDefaultTransformRequired(): boolean {
+    return false;
   }
 
   protected createDataSourceInfrastructureAndStateMachine({
@@ -129,7 +134,7 @@ export abstract class GoogleConnectorSourceTask extends DynamicInfrastructureSta
 
     return new StateMachine(this, 'StateMachine', {
       tracingEnabled: true,
-      definition,
+      definitionBody: DefinitionBody.fromChainable(definition),
       role: this.role,
       logs: {
         destination: new LogGroup(this, 'StateMachineLogs', {

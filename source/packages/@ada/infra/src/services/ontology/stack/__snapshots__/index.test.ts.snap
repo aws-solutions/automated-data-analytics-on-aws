@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-OntologyService) - Automated Data Analytics on AWS. Version v1.2.0",
+  "Description": "(SO0190-OntologyService) - Automated Data Analytics on AWS. Version v1.3.0",
   "Outputs": Object {
     "AdaOntologyServiceApiLambdaGetOntology5C119448Ref": Object {
       "Value": Object {
@@ -105,7 +105,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3429,11 +3429,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefontologyListOntologiesResponseBA424C32",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -3521,248 +3517,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefontologyListOntologiesResponseBA424C32": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The list of all ontologies",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-            "Ontology": Object {
-              "description": "Uniquely identifies the ontology attribute.",
-              "properties": Object {
-                "aliases": Object {
-                  "description": "Alternate names for the ontology attribute, used for ontology suggestions",
-                  "items": Object {
-                    "$ref": "#/definitions/OntologyAlias",
-                  },
-                  "type": "array",
-                },
-                "defaultLens": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "description": Object {
-                  "description": "A description of the ontology attribute",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the ontology attribute",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "ontologyId": Object {
-                  "description": "Identifies the ontology attribute within the ontologyNamespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "ontologyNamespace": Object {
-                  "description": "The namespace the ontology attribute belongs to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "aliases",
-                "name",
-                "ontologyId",
-                "ontologyNamespace",
-              ],
-              "type": "object",
-            },
-            "OntologyAlias": Object {
-              "properties": Object {
-                "name": Object {
-                  "description": "The name of an alias for this ontology attribute",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "name",
-              ],
-              "type": "object",
-            },
-            "OntologyEntity": Object {
-              "description": "Uniquely identifies the ontology attribute.",
-              "properties": Object {
-                "aliases": Object {
-                  "description": "Alternate names for the ontology attribute, used for ontology suggestions",
-                  "items": Object {
-                    "$ref": "#/definitions/OntologyAlias",
-                  },
-                  "type": "array",
-                },
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "defaultLens": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "description": Object {
-                  "description": "A description of the ontology attribute",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the ontology attribute",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "ontologyId": Object {
-                  "description": "Identifies the ontology attribute within the ontologyNamespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "ontologyNamespace": Object {
-                  "description": "The namespace the ontology attribute belongs to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "aliases",
-                "name",
-                "ontologyId",
-                "ontologyNamespace",
-              ],
-              "type": "object",
-            },
-            "OntologyIdentifier": Object {
-              "description": "Uniquely identifies the ontology attribute.",
-              "properties": Object {
-                "ontologyId": Object {
-                  "description": "Identifies the ontology attribute within the ontologyNamespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "ontologyNamespace": Object {
-                  "description": "The namespace the ontology attribute belongs to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "ontologyId",
-                "ontologyNamespace",
-              ],
-              "type": "object",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "nextToken": Object {
-              "type": "string",
-            },
-            "ontologies": Object {
-              "items": Object {
-                "$ref": "#/definitions/OntologyEntity",
-                "description": "Uniquely identifies the ontology attribute.",
-              },
-              "type": "array",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "ontologies",
-          ],
-          "title": "ListOntologiesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefontologyOPTIONS2B2CA766": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -4134,6 +3891,7 @@ Object {
     },
     "ApiRestApiRefontologyfindByAliasOPTIONS83B72C67": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -4175,6 +3933,7 @@ Object {
     },
     "ApiRestApiRefontologyontologyNamespaceOPTIONSDBF2C1CC": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -4261,11 +4020,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefontologyontologyNamespaceontologyIdDeleteOntologyResponse551B0819",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -4368,217 +4123,6 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefontologyontologyNamespaceontologyIdDeleteOntologyResponse551B0819": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefontologyontologyNamespaceontologyIdPutOntologyResponse329EBDD4",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The ontology that was deleted",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-            "Ontology": Object {
-              "description": "Uniquely identifies the ontology attribute.",
-              "properties": Object {
-                "aliases": Object {
-                  "description": "Alternate names for the ontology attribute, used for ontology suggestions",
-                  "items": Object {
-                    "$ref": "#/definitions/OntologyAlias",
-                  },
-                  "type": "array",
-                },
-                "defaultLens": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "description": Object {
-                  "description": "A description of the ontology attribute",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the ontology attribute",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "ontologyId": Object {
-                  "description": "Identifies the ontology attribute within the ontologyNamespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "ontologyNamespace": Object {
-                  "description": "The namespace the ontology attribute belongs to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "aliases",
-                "name",
-                "ontologyId",
-                "ontologyNamespace",
-              ],
-              "type": "object",
-            },
-            "OntologyAlias": Object {
-              "properties": Object {
-                "name": Object {
-                  "description": "The name of an alias for this ontology attribute",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "name",
-              ],
-              "type": "object",
-            },
-            "OntologyIdentifier": Object {
-              "description": "Uniquely identifies the ontology attribute.",
-              "properties": Object {
-                "ontologyId": Object {
-                  "description": "Identifies the ontology attribute within the ontologyNamespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "ontologyNamespace": Object {
-                  "description": "The namespace the ontology attribute belongs to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "ontologyId",
-                "ontologyNamespace",
-              ],
-              "type": "object",
-            },
-          },
-          "description": "Uniquely identifies the ontology attribute.",
-          "properties": Object {
-            "aliases": Object {
-              "description": "Alternate names for the ontology attribute, used for ontology suggestions",
-              "items": Object {
-                "$ref": "#/definitions/OntologyAlias",
-              },
-              "type": "array",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "defaultLens": Object {
-              "$ref": "#/definitions/LensEnum",
-              "description": "Lens value",
-            },
-            "description": Object {
-              "description": "A description of the ontology attribute",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "name": Object {
-              "description": "The name of the ontology attribute",
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "ontologyId": Object {
-              "description": "Identifies the ontology attribute within the ontologyNamespace",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "ontologyNamespace": Object {
-              "description": "The namespace the ontology attribute belongs to",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "aliases",
-            "name",
-            "ontologyId",
-            "ontologyNamespace",
-          ],
-          "title": "DeleteOntologyResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefontologyontologyNamespaceontologyIdGETApiPermissionAdaOntologyServiceApiRestApiRefEF70DF76GETOntologyOntologyNamespaceOntologyId68FF6B3E": Object {
       "Properties": Object {
         "Action": "lambda:InvokeFunction",
@@ -4672,11 +4216,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefontologyontologyNamespaceontologyIdGetOntologyResponse8CBF9915",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -4713,216 +4253,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefontologyontologyNamespaceontologyIdGetOntologyResponse8CBF9915": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The ontology with the given id",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-            "Ontology": Object {
-              "description": "Uniquely identifies the ontology attribute.",
-              "properties": Object {
-                "aliases": Object {
-                  "description": "Alternate names for the ontology attribute, used for ontology suggestions",
-                  "items": Object {
-                    "$ref": "#/definitions/OntologyAlias",
-                  },
-                  "type": "array",
-                },
-                "defaultLens": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "description": Object {
-                  "description": "A description of the ontology attribute",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the ontology attribute",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "ontologyId": Object {
-                  "description": "Identifies the ontology attribute within the ontologyNamespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "ontologyNamespace": Object {
-                  "description": "The namespace the ontology attribute belongs to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "aliases",
-                "name",
-                "ontologyId",
-                "ontologyNamespace",
-              ],
-              "type": "object",
-            },
-            "OntologyAlias": Object {
-              "properties": Object {
-                "name": Object {
-                  "description": "The name of an alias for this ontology attribute",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "name",
-              ],
-              "type": "object",
-            },
-            "OntologyIdentifier": Object {
-              "description": "Uniquely identifies the ontology attribute.",
-              "properties": Object {
-                "ontologyId": Object {
-                  "description": "Identifies the ontology attribute within the ontologyNamespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "ontologyNamespace": Object {
-                  "description": "The namespace the ontology attribute belongs to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "ontologyId",
-                "ontologyNamespace",
-              ],
-              "type": "object",
-            },
-          },
-          "description": "Uniquely identifies the ontology attribute.",
-          "properties": Object {
-            "aliases": Object {
-              "description": "Alternate names for the ontology attribute, used for ontology suggestions",
-              "items": Object {
-                "$ref": "#/definitions/OntologyAlias",
-              },
-              "type": "array",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "defaultLens": Object {
-              "$ref": "#/definitions/LensEnum",
-              "description": "Lens value",
-            },
-            "description": Object {
-              "description": "A description of the ontology attribute",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "name": Object {
-              "description": "The name of the ontology attribute",
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "ontologyId": Object {
-              "description": "Identifies the ontology attribute within the ontologyNamespace",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "ontologyNamespace": Object {
-              "description": "The namespace the ontology attribute belongs to",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "aliases",
-            "name",
-            "ontologyId",
-            "ontologyNamespace",
-          ],
-          "title": "GetOntologyResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefontologyontologyNamespaceontologyIdOPTIONS2DB86D3E": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -4997,11 +4330,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefontologyontologyNamespaceontologyIdPutOntologyResponse329EBDD4",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -5110,9 +4439,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "ApiRestApiRefontologyontologyNamespaceontologyIdPutOntologyRequest3B707AD1": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefontologyontologyNamespaceontologyIdGetOntologyResponse8CBF9915",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "Details about the new ontology",
@@ -5223,217 +4549,6 @@ Object {
             "aliases",
           ],
           "title": "PutOntologyRequest",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
-    "ApiRestApiRefontologyontologyNamespaceontologyIdPutOntologyResponse329EBDD4": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefontologyontologyNamespaceontologyIdPutOntologyRequest3B707AD1",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The created/updated ontology",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-            "Ontology": Object {
-              "description": "Uniquely identifies the ontology attribute.",
-              "properties": Object {
-                "aliases": Object {
-                  "description": "Alternate names for the ontology attribute, used for ontology suggestions",
-                  "items": Object {
-                    "$ref": "#/definitions/OntologyAlias",
-                  },
-                  "type": "array",
-                },
-                "defaultLens": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "description": Object {
-                  "description": "A description of the ontology attribute",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the ontology attribute",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "ontologyId": Object {
-                  "description": "Identifies the ontology attribute within the ontologyNamespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "ontologyNamespace": Object {
-                  "description": "The namespace the ontology attribute belongs to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "aliases",
-                "name",
-                "ontologyId",
-                "ontologyNamespace",
-              ],
-              "type": "object",
-            },
-            "OntologyAlias": Object {
-              "properties": Object {
-                "name": Object {
-                  "description": "The name of an alias for this ontology attribute",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "name",
-              ],
-              "type": "object",
-            },
-            "OntologyIdentifier": Object {
-              "description": "Uniquely identifies the ontology attribute.",
-              "properties": Object {
-                "ontologyId": Object {
-                  "description": "Identifies the ontology attribute within the ontologyNamespace",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "ontologyNamespace": Object {
-                  "description": "The namespace the ontology attribute belongs to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "ontologyId",
-                "ontologyNamespace",
-              ],
-              "type": "object",
-            },
-          },
-          "description": "Uniquely identifies the ontology attribute.",
-          "properties": Object {
-            "aliases": Object {
-              "description": "Alternate names for the ontology attribute, used for ontology suggestions",
-              "items": Object {
-                "$ref": "#/definitions/OntologyAlias",
-              },
-              "type": "array",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "defaultLens": Object {
-              "$ref": "#/definitions/LensEnum",
-              "description": "Lens value",
-            },
-            "description": Object {
-              "description": "A description of the ontology attribute",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "name": Object {
-              "description": "The name of the ontology attribute",
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "ontologyId": Object {
-              "description": "Identifies the ontology attribute within the ontologyNamespace",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "ontologyNamespace": Object {
-              "description": "The namespace the ontology attribute belongs to",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "aliases",
-            "name",
-            "ontologyId",
-            "ontologyNamespace",
-          ],
-          "title": "PutOntologyResponse",
           "type": "object",
         },
       },

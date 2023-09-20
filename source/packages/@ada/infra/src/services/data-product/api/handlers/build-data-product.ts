@@ -19,6 +19,7 @@ import {
   buildFlatDataType,
   previewSchemaToColumnMetadata,
 } from '@ada/microservice-common';
+import { InvocationType } from 'aws-cdk-lib/triggers';
 import { LockClient } from '../../../api/components/entity/locks/client';
 import { Logger } from '@ada/infra-common/constructs/lambda/lambda-logger';
 import { VError } from 'verror';
@@ -55,9 +56,10 @@ export const isRawSourceSupported = (dataProduct: DataProduct): boolean => {
 export const startBuildDataProductSchemaAndSource = async (input: BuildDataProductInput) => {
   // Invoke the lambda handler defined in this file
   await lambda
-    .invokeAsync({
+    .invoke({
       FunctionName: BUILD_DATA_PRODUCT_LAMBDA_ARN ?? '',
-      InvokeArgs: JSON.stringify(input),
+      Payload: JSON.stringify(input),
+      InvocationType: InvocationType.EVENT,
     })
     .promise();
 };

@@ -16,7 +16,7 @@
     "clean": "rm -rf node_modules"
   },
   "dependencies": {
-    "@aws-sdk/signature-v4": "^3.30.0",
+    "@aws-sdk/signature-v4": "^3.370.0",
     "mime-types": "^2.1.35"
   },
   "devDependencies": {

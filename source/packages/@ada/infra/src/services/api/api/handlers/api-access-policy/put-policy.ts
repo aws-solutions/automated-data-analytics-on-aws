@@ -1,6 +1,9 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import { ApiAccessPolicyStore } from '../../../components/ddb/api-access-policy';
+import {
+  ApiAccessPolicyStore,
+  ApiAccessPolicyWithCreateUpdateDetails,
+} from '../../../components/ddb/api-access-policy';
 import { ApiLambdaHandler, ApiResponse } from '@ada/api-gateway';
 import { DefaultUser } from '@ada/microservice-common';
 
@@ -14,15 +17,19 @@ export const handler = ApiLambdaHandler.for(
   async ({ requestParameters, body: policyToWrite }, { userId }) => {
     const { apiAccessPolicyId } = requestParameters;
 
-    // NB: Only the api access policy protects this api, and only admin has rights to call this api by default.
-    return ApiResponse.success(
-      // Allow the system user to overwrite an existing api access policy
-      await ApiAccessPolicyStore.getInstance().putApiAccessPolicy(
-        apiAccessPolicyId,
-        userId,
-        policyToWrite,
-        userId === DefaultUser.SYSTEM,
-      ),
+    const ret = await ApiAccessPolicyStore.getInstance().putApiAccessPolicy(
+      apiAccessPolicyId,
+      userId,
+      policyToWrite,
+      userId === DefaultUser.SYSTEM,
     );
+
+    if (userId !== DefaultUser.SYSTEM) {
+      return ApiResponse.success(ret);
+    } else {
+      return ApiResponse.success({
+        apiAccessPolicyId: ret.apiAccessPolicyId,
+      } as ApiAccessPolicyWithCreateUpdateDetails);
+    }
   },
 );

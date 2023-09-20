@@ -7,6 +7,7 @@ import { CfnDeliveryStream } from 'aws-cdk-lib/aws-kinesisfirehose';
 import {
   Choice,
   Condition,
+  DefinitionBody,
   IStateMachine,
   LogLevel,
   Pass,
@@ -40,6 +41,10 @@ export class KinesisSourceStack extends DynamicInfrastructureStackBase {
     // override this connector to always use APPEND update policy
     props.dataProduct.updateTrigger.updatePolicy = DataProductUpdatePolicy.APPEND;
     super(scope, id, props);
+  }
+
+  protected getDefaultTransformRequired(): boolean {
+    return false;
   }
 
   protected createExternalFacingRoleInlinePolicyStatements(props: DynamicInfraStackProps): {
@@ -265,7 +270,7 @@ export class KinesisSourceStack extends DynamicInfrastructureStackBase {
 
     return new StateMachine(this, 'StateMachine', {
       tracingEnabled: true,
-      definition,
+      definitionBody: DefinitionBody.fromChainable(definition),
       role: this.role,
       logs: {
         destination: new LogGroup(this, 'StateMachineLogs', {

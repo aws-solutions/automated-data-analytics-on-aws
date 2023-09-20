@@ -3,6 +3,7 @@ SPDX-License-Identifier: Apache-2.0 */
 import {
   Choice,
   Condition,
+  DefinitionBody,
   IStateMachine,
   IntegrationPattern,
   LogLevel,
@@ -15,11 +16,7 @@ import {
   DynamicInfraStackProps,
   DynamicInfrastructureStackBase,
 } from '@ada/dynamic-infra/stacks/dynamic-infrastructure-stack-base';
-import {
-  DynamoAttributeValue,
-  DynamoGetItem,
-  StepFunctionsStartExecution,
-} from 'aws-cdk-lib/aws-stepfunctions-tasks';
+import { DynamoAttributeValue, DynamoGetItem, StepFunctionsStartExecution } from 'aws-cdk-lib/aws-stepfunctions-tasks';
 import { LogGroup } from 'aws-cdk-lib/aws-logs';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { Rule } from 'aws-cdk-lib/aws-events';
@@ -51,6 +48,10 @@ export abstract class AmazonNativeConnectorSourceTask extends DynamicInfrastruct
     super(scope, id, props);
   }
 
+  protected getDefaultTransformRequired(): boolean {
+    return false;
+  }
+
   protected createDataSourceInfrastructureAndStateMachine({
     dataProduct,
     connectorId,
@@ -59,8 +60,7 @@ export abstract class AmazonNativeConnectorSourceTask extends DynamicInfrastruct
     stateMachineInput,
     importStepName,
   }: AmazonNativeConnectorSourceTaskProps): IStateMachine {
-    const { dataBucket, glueDatabase, glueSecurityConfigurationName } =
-      this.staticInfrastructureReferences;
+    const { dataBucket, glueDatabase, glueSecurityConfigurationName } = this.staticInfrastructureReferences;
 
     const tablePrefix = `${this.dataProductUniqueIdentifier}-aws-${connectorId}-`;
 
@@ -162,7 +162,7 @@ export abstract class AmazonNativeConnectorSourceTask extends DynamicInfrastruct
 
     return new StateMachine(this, 'StateMachine', {
       tracingEnabled: true,
-      definition,
+      definitionBody: DefinitionBody.fromChainable(definition),
       role: this.role,
       logs: {
         destination: new LogGroup(this, 'StateMachineLogs', {

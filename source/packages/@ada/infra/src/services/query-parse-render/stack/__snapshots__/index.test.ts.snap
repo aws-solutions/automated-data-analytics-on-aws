@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-QueryParseRenderService) - Automated Data Analytics on AWS. Version v1.2.0",
+  "Description": "(SO0190-QueryParseRenderService) - Automated Data Analytics on AWS. Version v1.3.0",
   "Outputs": Object {
     "AdaQueryParseRenderServiceApiGovernanceAthenaLensLambda2872E629Ref": Object {
       "Value": Object {
@@ -663,6 +663,7 @@ Object {
     },
     "ApiRestApiRefqueryparserenderOPTIONSE9866B73": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -728,6 +729,7 @@ Object {
     },
     "ApiRestApiRefqueryparserenderdiscoverOPTIONSDF9F17EA": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -851,11 +853,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefqueryparserenderdiscoverPostQueryParseRenderDiscoverResponse690C3A31",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -911,49 +909,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefqueryparserenderdiscoverPostQueryParseRenderDiscoverResponse690C3A31": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefqueryparserenderdiscoverPostQueryParseRenderDiscoverRequest91C73DE0",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The data products discovered from the query",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "properties": Object {
-            "tables": Object {
-              "items": Object {
-                "properties": Object {
-                  "identifierParts": Object {
-                    "description": "Each identifier part as referenced in the query",
-                    "items": Object {
-                      "type": "string",
-                    },
-                    "type": "array",
-                  },
-                },
-                "required": Array [
-                  "identifierParts",
-                ],
-                "type": "object",
-              },
-              "type": "array",
-            },
-          },
-          "required": Array [
-            "tables",
-          ],
-          "title": "PostQueryParseRenderDiscoverResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefqueryparserenderrewriteOPTIONS773ACF1C": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1077,11 +1035,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefqueryparserenderrewritePostQueryParseRenderRewriteResponseB5921FE4",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -1247,37 +1201,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefqueryparserenderrewritePostQueryParseRenderRewriteResponseB5921FE4": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefqueryparserenderrewritePostQueryParseRenderRewriteRequest6C18D652",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "A query ready to execute in Athena",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "properties": Object {
-            "query": Object {
-              "description": "An SQL query",
-              "maxLength": 262144,
-              "pattern": "^([\\\\s\\\\S]+)$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "query",
-          ],
-          "title": "PostQueryParseRenderRewriteResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefqueryparserendervalidateattributevaluepolicyOPTIONS77AF9B90": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1401,11 +1327,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefqueryparserendervalidateattributevaluepolicyPostQueryParseRenderValidateAttributeValuePolicyResponseFF680594",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -1459,25 +1381,6 @@ Object {
             "clause",
           ],
           "title": "PostQueryParseRenderValidateAttributeValuePolicyRequest",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
-    "ApiRestApiRefqueryparserendervalidateattributevaluepolicyPostQueryParseRenderValidateAttributeValuePolicyResponseFF680594": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefqueryparserendervalidateattributevaluepolicyPostQueryParseRenderValidateAttributeValuePolicyRequestE347C01A",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "An empty response if validation is successful",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "properties": Object {},
-          "title": "PostQueryParseRenderValidateAttributeValuePolicyResponse",
           "type": "object",
         },
       },

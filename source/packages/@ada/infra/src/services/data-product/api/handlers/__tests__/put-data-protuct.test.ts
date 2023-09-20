@@ -1,7 +1,7 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
 import 'jest-extended';
-import { MOCK_API_CLIENT as API, Api } from '@ada/api-client/mock';
+import { MOCK_API_CLIENT as API } from '@ada/api-client/mock';
 import { APIGatewayProxyResult } from 'aws-lambda';
 import { CallingUser, DataProductAccess, DataProductDataStatus, DataProductInfrastructureStatus } from '@ada/common';
 import {
@@ -20,7 +20,7 @@ import { noopMockRelationshipClient } from '../../../../api/components/entity/re
 jest.mock('@ada/api-client-lambda');
 const mockStartExecution = jest.fn();
 const mockCreateSecret = jest.fn();
-const mockInvokeAsync = jest.fn();
+const mockInvoke = jest.fn();
 
 jest.mock('@ada/aws-sdk', () => ({
   ...(jest.requireActual('@ada/aws-sdk') as any),
@@ -42,8 +42,8 @@ jest.mock('@ada/aws-sdk', () => ({
     }),
   })),
   AwsLambdaInstance: jest.fn().mockImplementation(() => ({
-    invokeAsync: (...args: any[]) => ({
-      promise: jest.fn(() => Promise.resolve(mockInvokeAsync(...args))),
+    invoke: (...args: any[]) => ({
+      promise: jest.fn(() => Promise.resolve(mockInvoke(...args))),
     }),
   })),
 }));
@@ -135,7 +135,7 @@ describe('put-data-product', () => {
 
     // Shouldn't have kicked off any infrastructure creation
     expect(mockStartExecution).not.toHaveBeenCalled();
-    expect(mockInvokeAsync).not.toHaveBeenCalled();
+    expect(mockInvoke).not.toHaveBeenCalled();
   });
 
   it('should update an existing data product event if updatedTimestamp does not match', async () => {
@@ -221,6 +221,6 @@ describe('put-data-product', () => {
 
     // Shouldn't have kicked off any infrastructure creation
     expect(mockStartExecution).not.toHaveBeenCalled();
-    expect(mockInvokeAsync).not.toHaveBeenCalled();
+    expect(mockInvoke).not.toHaveBeenCalled();
   });
 });

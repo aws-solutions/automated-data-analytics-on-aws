@@ -32,16 +32,19 @@ SOURCEDETAILS_BOOKMARK_FIELD_FIELD_NAME = 'bookmarkField'
 SOURCEDETAILS_BOOKMARK_FIELD_TYPE_FIELD_NAME = 'bookmarkFieldType'
 
 
-
 class CADownloaderException(Exception):
     pass
-
 
 class StringToFileException(Exception):
     pass
 
-
 class PullSampleExeption(Exception):
+    pass
+
+class SourceNotExistException(Exception):
+    pass
+
+class MissingParameterException(Exception):
     pass
 
 
@@ -226,15 +229,15 @@ def pull_samples(
             )
             query_params[_TLS_CERT_KEY_FILE] = _CLIENT_CERT
 
-    if SOURCEDETAILS_EXTRA_PARAMS_FIELD_NAME in source_details:
-        if (
-            source_details[SOURCEDETAILS_EXTRA_PARAMS_FIELD_NAME] is not None
-            and type(source_details[SOURCEDETAILS_EXTRA_PARAMS_FIELD_NAME]) is str
-            and source_details[SOURCEDETAILS_EXTRA_PARAMS_FIELD_NAME] != ""
-        ):
-            for param in source_details[SOURCEDETAILS_EXTRA_PARAMS_FIELD_NAME].split(","):
-                kv = param.split("=")
-                query_params[kv[0]] = kv[1]
+    if (
+        SOURCEDETAILS_EXTRA_PARAMS_FIELD_NAME in source_details
+        and source_details[SOURCEDETAILS_EXTRA_PARAMS_FIELD_NAME] is not None
+        and type(source_details[SOURCEDETAILS_EXTRA_PARAMS_FIELD_NAME]) is str
+        and source_details[SOURCEDETAILS_EXTRA_PARAMS_FIELD_NAME] != ""
+    ):
+        for param in source_details[SOURCEDETAILS_EXTRA_PARAMS_FIELD_NAME].split(","):
+            kv = param.split("=")
+            query_params[kv[0]] = kv[1]
 
     mongo_conn_uri = "mongodb://%s:%s@%s:%s" % (
         username,
@@ -258,15 +261,15 @@ def pull_samples(
 
             if SOURCEDETAILS_BOOKMARK_FIELD_FIELD_NAME in source_details:
                 if SOURCEDETAILS_BOOKMARK_FIELD_TYPE_FIELD_NAME not in source_details:
-                    raise Exception("Update Index Field Type not provided")
+                    raise MissingParameterException("Update Index Field Type not provided")
 
                 exists = collection.count_documents(
                     {source_details[SOURCEDETAILS_BOOKMARK_FIELD_FIELD_NAME]: {"$exists": True}}
                 )
 
                 if exists == 0:
-                    raise Exception(
-                        f"{source_details[SOURCEDETAILS_BOOKMARK_FIELD_FIELD_NAME]} does not exists in collection"
+                    raise SourceNotExistException(
+                        f"{source_details[SOURCEDETAILS_BOOKMARK_FIELD_FIELD_NAME]} does not exist in collection"
                     )
 
                 check_value_type = collection.find({}).limit(1)

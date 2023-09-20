@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-NotificationService) - Automated Data Analytics on AWS. Version v1.2.0",
+  "Description": "(SO0190-NotificationService) - Automated Data Analytics on AWS. Version v1.3.0",
   "Outputs": Object {
     "AdaNotificationServiceNotificationListenerLambda7FAAC5B2Arn": Object {
       "Value": Object {
@@ -97,7 +97,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -721,11 +721,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefnotificationListNotificationsResponseEF54BE37",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -822,285 +818,6 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefnotificationListNotificationsResponseEF54BE37": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The notifications for the calling user (optionally filtered by status)",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "Notification": Object {
-              "description": "A notification as sent throughout the system",
-              "properties": Object {
-                "payload": Object {
-                  "description": "Payload to send in the notification, can be any object",
-                },
-                "source": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "target": Object {
-                  "description": "Specified if the notification should target a particular recipient, for example a user id.",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "type": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "source",
-                "type",
-                "payload",
-              ],
-              "type": "object",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-            "PersistedNotification": Object {
-              "description": "An object containing a persisted notification status",
-              "properties": Object {
-                "notificationId": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "payload": Object {
-                  "description": "Payload to send in the notification, can be any object",
-                },
-                "source": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "status": Object {
-                  "enum": Array [
-                    "PENDING",
-                    "ACKNOWLEDGED",
-                    "DISMISSED",
-                  ],
-                  "type": "string",
-                },
-                "target": Object {
-                  "description": "The target of the notification, for example the userId",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "targetAndStatus": Object {
-                  "description": "Composite key for index of notification by target and status. Delimited by .",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "type": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "notificationId",
-                "payload",
-                "source",
-                "status",
-                "target",
-                "targetAndStatus",
-                "type",
-              ],
-              "type": "object",
-            },
-            "PersistedNotificationEntity": Object {
-              "description": "An object containing a persisted notification status",
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "notificationId": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "payload": Object {
-                  "description": "Payload to send in the notification, can be any object",
-                },
-                "source": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "status": Object {
-                  "enum": Array [
-                    "PENDING",
-                    "ACKNOWLEDGED",
-                    "DISMISSED",
-                  ],
-                  "type": "string",
-                },
-                "target": Object {
-                  "description": "The target of the notification, for example the userId",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "targetAndStatus": Object {
-                  "description": "Composite key for index of notification by target and status. Delimited by .",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "type": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "notificationId",
-                "payload",
-                "source",
-                "status",
-                "target",
-                "targetAndStatus",
-                "type",
-              ],
-              "type": "object",
-            },
-            "PersistedNotificationIdentifier": Object {
-              "properties": Object {
-                "notificationId": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "target": Object {
-                  "description": "The target of the notification, for example the userId",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "notificationId",
-                "target",
-              ],
-              "type": "object",
-            },
-            "PersistedNotificationStatus": Object {
-              "description": "An object containing a persisted notification status",
-              "properties": Object {
-                "status": Object {
-                  "enum": Array [
-                    "PENDING",
-                    "ACKNOWLEDGED",
-                    "DISMISSED",
-                  ],
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "status",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "nextToken": Object {
-              "type": "string",
-            },
-            "notifications": Object {
-              "items": Object {
-                "$ref": "#/definitions/PersistedNotificationEntity",
-                "description": "An object containing a persisted notification status",
-              },
-              "type": "array",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "notifications",
-          ],
-          "title": "ListNotificationsResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefnotificationNotificationIdC10C01FD": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -1115,6 +832,7 @@ Object {
     },
     "ApiRestApiRefnotificationOPTIONS3E3D0A7A": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1168,6 +886,7 @@ Object {
     },
     "ApiRestApiRefnotificationnotificationIdOPTIONS31868CA5": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1209,6 +928,7 @@ Object {
     },
     "ApiRestApiRefnotificationnotificationIdactionOPTIONSE9AB6D81": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1341,11 +1061,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefnotificationnotificationIdactionPutNotificationActionResponse359A8F63",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -1410,256 +1126,6 @@ Object {
             "status",
           ],
           "title": "PutNotificationActionRequest",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
-    "ApiRestApiRefnotificationnotificationIdactionPutNotificationActionResponse359A8F63": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefnotificationnotificationIdactionPutNotificationActionRequest1D2713B5",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The notification that was actioned",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "Notification": Object {
-              "description": "A notification as sent throughout the system",
-              "properties": Object {
-                "payload": Object {
-                  "description": "Payload to send in the notification, can be any object",
-                },
-                "source": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "target": Object {
-                  "description": "Specified if the notification should target a particular recipient, for example a user id.",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "type": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "source",
-                "type",
-                "payload",
-              ],
-              "type": "object",
-            },
-            "PersistedNotification": Object {
-              "description": "An object containing a persisted notification status",
-              "properties": Object {
-                "notificationId": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "payload": Object {
-                  "description": "Payload to send in the notification, can be any object",
-                },
-                "source": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "status": Object {
-                  "enum": Array [
-                    "PENDING",
-                    "ACKNOWLEDGED",
-                    "DISMISSED",
-                  ],
-                  "type": "string",
-                },
-                "target": Object {
-                  "description": "The target of the notification, for example the userId",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "targetAndStatus": Object {
-                  "description": "Composite key for index of notification by target and status. Delimited by .",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "type": Object {
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "notificationId",
-                "payload",
-                "source",
-                "status",
-                "target",
-                "targetAndStatus",
-                "type",
-              ],
-              "type": "object",
-            },
-            "PersistedNotificationIdentifier": Object {
-              "properties": Object {
-                "notificationId": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "target": Object {
-                  "description": "The target of the notification, for example the userId",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "notificationId",
-                "target",
-              ],
-              "type": "object",
-            },
-            "PersistedNotificationStatus": Object {
-              "description": "An object containing a persisted notification status",
-              "properties": Object {
-                "status": Object {
-                  "enum": Array [
-                    "PENDING",
-                    "ACKNOWLEDGED",
-                    "DISMISSED",
-                  ],
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "status",
-              ],
-              "type": "object",
-            },
-          },
-          "description": "An object containing a persisted notification status",
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "notificationId": Object {
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "payload": Object {
-              "description": "Payload to send in the notification, can be any object",
-            },
-            "source": Object {
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "status": Object {
-              "enum": Array [
-                "PENDING",
-                "ACKNOWLEDGED",
-                "DISMISSED",
-              ],
-              "type": "string",
-            },
-            "target": Object {
-              "description": "The target of the notification, for example the userId",
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "targetAndStatus": Object {
-              "description": "Composite key for index of notification by target and status. Delimited by .",
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "type": Object {
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "notificationId",
-            "payload",
-            "source",
-            "status",
-            "target",
-            "targetAndStatus",
-            "type",
-          ],
-          "title": "PutNotificationActionResponse",
           "type": "object",
         },
       },

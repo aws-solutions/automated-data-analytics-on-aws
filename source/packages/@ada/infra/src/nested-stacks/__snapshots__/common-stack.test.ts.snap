@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-CommonStack) - Automated Data Analytics on AWS. Version v1.2.0",
+  "Description": "(SO0190-CommonStack) - Automated Data Analytics on AWS. Version v1.3.0",
   "Outputs": Object {
     "AdaCommonStackAccessLogBucketB5B66FEDArn": Object {
       "Value": Object {
@@ -159,7 +159,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -728,7 +728,7 @@ Object {
             ],
           ],
         },
-        "Handler": "__entrypoint__.handler",
+        "Handler": "index.handler",
         "MemorySize": 128,
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -736,7 +736,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -961,7 +961,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1109,6 +1109,19 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
+    "InternalTokenSecrectRotationLambdaRotationHandlerPermissionC4C50E6D": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "InternalTokenSecrectRotationLambdaB773FD59",
+            "Arn",
+          ],
+        },
+        "Principal": "secretsmanager.amazonaws.com",
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
     "InternalTokenSecrectRotationLambdaServiceRole5FF40BED": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
@@ -1173,6 +1186,11 @@ Object {
               },
             },
             Object {
+              "Action": "secretsmanager:GetRandomPassword",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
               "Action": Array [
                 "xray:PutTraceSegments",
                 "xray:PutTelemetryRecords",
@@ -1191,11 +1209,6 @@ Object {
               "Resource": Object {
                 "Ref": "InternalTokenSecrectSecret3C76F640",
               },
-            },
-            Object {
-              "Action": "secretsmanager:GetRandomPassword",
-              "Effect": "Allow",
-              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",
@@ -1232,6 +1245,7 @@ Object {
     },
     "InternalTokenSecrectSecretAutoRotateSecret83D34BCD": Object {
       "Properties": Object {
+        "RotateImmediatelyOnUpdate": false,
         "RotationLambdaARN": Object {
           "Fn::GetAtt": Array [
             "InternalTokenSecrectRotationLambdaB773FD59",

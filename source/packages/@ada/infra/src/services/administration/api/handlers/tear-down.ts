@@ -9,6 +9,7 @@ import {
   AwsS3Instance,
 } from '@ada/aws-sdk';
 import { DataProductStore } from '../../../data-product/components/ddb/data-product';
+import { InvocationType } from 'aws-cdk-lib/triggers';
 import { Logger } from '@ada/infra-common/constructs/lambda/lambda-logger';
 import { TearDownDetails } from '@ada/api-client';
 import { TearDownLambdaEvent, TearDownMode, TeardownEnvironmentVars } from './types';
@@ -41,9 +42,10 @@ const DATA_PRODUCT_START_DESTROY_BATCH_SIZE = 10;
 export const startTearDown = async (event: TearDownLambdaEvent): Promise<ApiResponse<TearDownDetails>> => {
   // Trigger the tear down asynchronously
   await lambda
-    .invokeAsync({
+    .invoke({
       FunctionName: TEAR_DOWN_LAMBDA_ARN,
-      InvokeArgs: JSON.stringify(event),
+      Payload: JSON.stringify(event),
+      InvocationType: InvocationType.EVENT,
     })
     .promise();
 

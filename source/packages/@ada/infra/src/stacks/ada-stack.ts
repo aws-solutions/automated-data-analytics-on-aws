@@ -81,7 +81,7 @@ export class AdaStack extends ExtendedStack {
       sendAnonymousData: parameters.sendAnonymousData,
     });
 
-    // common props for anonymous operational data collection in services
+    // common props for anonymized operational data collection in services
     const operationalMetricsConfig: OperationalMetricsConfig = {
       awsSolutionId: solution.awsSolutionId,
       awsSolutionVersion: solution.awsSolutionVersion,
@@ -249,6 +249,7 @@ export class AdaStack extends ExtendedStack {
         userPoolClientId: identityService.userPoolClient.userPoolClientId,
         apiUrl: api.url,
         region: this.region,
+        accountId: this.account,
         oauthScopes: identityService.oauthScopes.map((q) => q.scopeName),
         oauthDomain: cognitoStack.cognitoDomain,
         ouathResponseType: 'code',

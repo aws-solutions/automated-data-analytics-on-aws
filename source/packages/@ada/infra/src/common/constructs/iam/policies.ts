@@ -118,6 +118,12 @@ export const ExternalSourceDataCloudWatchAccessPolicyStatement = new PolicyState
   resources: ['*'],
 });
 
+export const ExternalSourceRedshiftAccessPolicyStatement =  new PolicyStatement({
+  effect: Effect.ALLOW,
+  actions: ['redshift:GetClusterCredentials', 'redshift-serverless:GetCredentials'],
+  resources: ['*'],
+});
+
 /**
  * Grant access to Query and Receive results of DynamoDB Table records DynamoDB Tables.
  */

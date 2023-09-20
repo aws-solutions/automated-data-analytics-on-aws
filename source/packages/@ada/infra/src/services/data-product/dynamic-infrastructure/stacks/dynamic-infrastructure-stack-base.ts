@@ -45,6 +45,7 @@ export abstract class DynamicInfrastructureStackBase extends ExtendedStack imple
   public readonly putErrorEventOnEventBridge: EventBridgePutEvents;
   public readonly putNoUpdateEventOnEventBridge: EventBridgePutEvents;
   public readonly transformLoop: ArbitraryTransformLoop;
+  public readonly defaultTransformRequired: boolean;
   public readonly catchProps: CatchProps = {
     resultPath: '$.ErrorDetails',
   };
@@ -64,6 +65,15 @@ export abstract class DynamicInfrastructureStackBase extends ExtendedStack imple
    * error.
    */
   protected abstract createAutomaticDataUpdateTriggerRule(props: DynamicInfraStackProps): Rule;
+
+  /**
+   * Set the true to force a default transform (ada_parquet_data_type_map) to execute, if no transforms applied by the User.
+   * This will force copying data into s3, which will allow Athena to have visibiity on the created Glue tables.
+   * This is required for any data Glue Connection data sources that aren't supported by Athena.
+   * See: https://docs.aws.amazon.com/athena/latest/ug/supported-serdes.html
+   */
+
+  protected abstract getDefaultTransformRequired(): boolean;
 
   /**
    * Can be overridden to add additional policy statements to the external facing role
@@ -138,7 +148,7 @@ export abstract class DynamicInfrastructureStackBase extends ExtendedStack imple
     };
   }
 
-  // override this function if the connecto will need to specify connection to the glue transform
+  // override this function if the connector will need to specify connection to the glue transform
   protected getConnectionName(): string {
     return '';
   }
@@ -180,6 +190,8 @@ export abstract class DynamicInfrastructureStackBase extends ExtendedStack imple
 
     this.glueConnectionName = this.getConnectionName();
 
+    this.defaultTransformRequired = this.getDefaultTransformRequired();
+
     const { putSuccessEventOnEventBridge, putErrorEventOnEventBridge, putNoUpdateEventOnEventBridge } = new CommonTasks(
       this,
       'CommonTasks',
@@ -215,6 +227,7 @@ export abstract class DynamicInfrastructureStackBase extends ExtendedStack imple
       putErrorEventOnEventBridge,
       sourceAccessRole: this.role,
       glueConnectionNames: this.glueConnectionName ? [this.glueConnectionName] : undefined,
+      defaultTransformRequired: this.defaultTransformRequired,
       extraJobArgs: props.extraJobArgs,
     });
 

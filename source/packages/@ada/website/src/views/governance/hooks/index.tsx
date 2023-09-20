@@ -1,8 +1,8 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import { AttributePolicy, AttributeValuePolicy, LensEnum, OntologyIdentifier } from '@ada/api';
 import { DefaultGroupIds } from '@ada/common';
 import { GOVERNABLE_GROUPS } from '$common/entity/ontology';
-import { LensEnum, OntologyIdentifier } from '@ada/api';
 import { apiHooks } from '$api';
 import { isEmpty } from '@aws-amplify/core';
 import { useMemo } from 'react';
@@ -42,6 +42,68 @@ export const useOntologyGroupGovernance = (
     const isLoading = (column == null && isLoadingColumn) || (row == null && isLoadingRow);
     return [gov, { isLoading }];
   }, [groupId, column, isLoadingColumn, row, isLoadingRow]);
+};
+
+export const DEFAULT_RECORDS = {
+  [DefaultGroupIds.DEFAULT]: {
+    groupId: DefaultGroupIds.DEFAULT as string,
+  },
+  [DefaultGroupIds.POWER_USER]: {
+    groupId: DefaultGroupIds.POWER_USER as string,
+  },
+  [DefaultGroupIds.ADMIN]: {
+    groupId: DefaultGroupIds.ADMIN as string,
+  },
+};
+
+export const useOntologyGovernanceAttribute = (
+  id: OntologyIdentifier,
+): [Record<string, OntologyGovernanceGroup> | undefined, { isLoading: boolean }] => {
+  const [column, { isLoading: isLoadingColumn }] = apiHooks.useGovernancePolicyAttributesAttribute({
+    attributeId: id.ontologyId,
+    ontologyNamespace: id.ontologyNamespace,
+  });
+
+  const [row, { isLoading: isLoadingRow }] = apiHooks.useGovernancePolicyAttributeValuesAttribute({
+    attributeId: id.ontologyId,
+    ontologyNamespace: id.ontologyNamespace,
+  });
+
+  const isLoading = (isLoadingColumn || isLoadingRow);
+
+  return useMemo(() => {
+    if (isLoading) {
+      return [undefined, { isLoading }];
+    }
+
+    const columnAggregatedRecords: Record<string, OntologyGovernanceGroup> = 
+      column?.policies.reduce((agg: Record<string, OntologyGovernanceGroup>, c: AttributePolicy) => {
+          return {
+            ...agg,
+            [c.group]: {
+              ...agg[c.group],
+              groupId: c.group,
+              column: c.lensId,
+            },
+          }
+    }, {}) || {};
+
+    const records = row?.policies.reduce((agg: Record<string, OntologyGovernanceGroup>, r: AttributeValuePolicy) => {
+      return {
+        ...agg,
+        [r.group]: {
+          ...agg[r.group],
+          groupId: r.group,
+          row: r.sqlClause,
+        },
+      }
+    }, columnAggregatedRecords) || {};
+
+    return [
+      records,
+      { isLoading },
+    ];
+  }, [column, isLoading, row]);
 };
 
 export const useOntologyGovernance = (

@@ -25,9 +25,9 @@ describe('start-athena-query-execution', () => {
     jest.clearAllMocks();
     mockAssumeRole.mockReturnValue({
       Credentials: {
-        AccessKeyId: 'test-access-key',
-        SecretAccessKey: 'test-secret-access-key',
-        SessionToken: 'test-session-token',
+        AccessKeyId: 'testAccessKey',
+        SecretAccessKey: 'testSecretAccessKey',
+        SessionToken: 'testSessionToken',
       },
     });
   });

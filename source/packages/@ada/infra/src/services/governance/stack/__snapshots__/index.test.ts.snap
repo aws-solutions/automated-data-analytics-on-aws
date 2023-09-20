@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-GovernanceService) - Automated Data Analytics on AWS. Version v1.2.0",
+  "Description": "(SO0190-GovernanceService) - Automated Data Analytics on AWS. Version v1.3.0",
   "Outputs": Object {
     "AdaGovernanceServiceApiLambdaGetAttributePolicy49F83004Ref": Object {
       "Value": Object {
@@ -126,7 +126,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -432,9 +432,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -518,9 +520,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -790,7 +794,18 @@ Object {
                   ],
                 },
                 Object {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesPolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
@@ -1026,7 +1041,18 @@ Object {
                   ],
                 },
                 Object {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesPolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
@@ -1076,9 +1102,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -1127,6 +1155,341 @@ Object {
         },
       },
       "Type": "AWS::Lambda::Function",
+    },
+    "ApiLambdaDeleteAttributeValuePolicyBatchE30F0F90": Object {
+      "DependsOn": Array [
+        "ApiLambdaDeleteAttributeValuePolicyBatchServiceRoleDefaultPolicy1B30B901",
+        "ApiLambdaDeleteAttributeValuePolicyBatchServiceRole2CE50D00",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "TypescriptFunction Ada/GovernanceService/Api/LambdaDeleteAttributeValuePolicyBatch of delete-attribute-value-policy-batch.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "API_ENDPOINT": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "https://",
+                  Object {
+                    "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+                  },
+                  ".execute-api.ap-southeast-1.amazonaws.com/prod/",
+                ],
+              ],
+            },
+            "API_WAF_ALLOW_RULE_SECRET": Object {
+              "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+            },
+            "ATTRIBUTE_POLICY_TABLE_NAME": Object {
+              "Ref": "AttributesPolicyTable",
+            },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
+              "Ref": "AttributesValuePolicyTable",
+            },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "COUNTER_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+            },
+            "DATA_PRODUCT_POLICY_TABLE_NAME": Object {
+              "Ref": "DataProductPolicyTable",
+            },
+            "DEFAULT_LENS_POLICY_TABLE_NAME": Object {
+              "Ref": "DefaultLensPolicyTable",
+            },
+            "INTERNAL_TOKEN_KMS_KEY": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef",
+            },
+            "INTERNAL_TOKEN_SECRET_NAME": "sign-internal-token2855ghashx",
+            "LOCK_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            },
+            "RELATIONSHIP_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Layers": Array [
+          Object {
+            "Ref": "referencetoAdaLayer6FB4FEF4Ref",
+          },
+        ],
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaDeleteAttributeValuePolicyBatchServiceRole2CE50D00",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs16.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 30,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiLambdaDeleteAttributeValuePolicyBatchServiceRole2CE50D00": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiLambdaDeleteAttributeValuePolicyBatchServiceRoleDefaultPolicy1B30B901": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn",
+              },
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:ap-southeast-1:1111111111:secret:sign-internal-token2855ghashx*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAttributesValuePolicyTable0A88FC7CArn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "AttributesValuePolicyTable",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesValuePolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiLambdaDeleteAttributeValuePolicyBatchServiceRoleDefaultPolicy1B30B901",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiLambdaDeleteAttributeValuePolicyBatchServiceRole2CE50D00",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
     },
     "ApiLambdaDeleteAttributeValuePolicyServiceRole109B3B99": Object {
       "Properties": Object {
@@ -1348,7 +1711,18 @@ Object {
                   ],
                 },
                 Object {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesValuePolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
@@ -1398,9 +1772,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -1720,9 +2096,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -2042,6 +2420,334 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
+    "ApiLambdaGetAttributePoliciesForAttribute118A85C2": Object {
+      "DependsOn": Array [
+        "ApiLambdaGetAttributePoliciesForAttributeServiceRoleDefaultPolicy840E295B",
+        "ApiLambdaGetAttributePoliciesForAttributeServiceRole260C099E",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "TypescriptFunction Ada/GovernanceService/Api/LambdaGetAttributePoliciesForAttribute of get-attribute-policies-for-attribute.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "API_ENDPOINT": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "https://",
+                  Object {
+                    "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+                  },
+                  ".execute-api.ap-southeast-1.amazonaws.com/prod/",
+                ],
+              ],
+            },
+            "API_WAF_ALLOW_RULE_SECRET": Object {
+              "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+            },
+            "ATTRIBUTE_POLICY_TABLE_NAME": Object {
+              "Ref": "AttributesPolicyTable",
+            },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
+              "Ref": "AttributesValuePolicyTable",
+            },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "COUNTER_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+            },
+            "DATA_PRODUCT_POLICY_TABLE_NAME": Object {
+              "Ref": "DataProductPolicyTable",
+            },
+            "DEFAULT_LENS_POLICY_TABLE_NAME": Object {
+              "Ref": "DefaultLensPolicyTable",
+            },
+            "INTERNAL_TOKEN_KMS_KEY": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef",
+            },
+            "INTERNAL_TOKEN_SECRET_NAME": "sign-internal-token2855ghashx",
+            "LOCK_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            },
+            "RELATIONSHIP_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Layers": Array [
+          Object {
+            "Ref": "referencetoAdaLayer6FB4FEF4Ref",
+          },
+        ],
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaGetAttributePoliciesForAttributeServiceRole260C099E",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs16.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 30,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiLambdaGetAttributePoliciesForAttributeServiceRole260C099E": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiLambdaGetAttributePoliciesForAttributeServiceRoleDefaultPolicy840E295B": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn",
+              },
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:ap-southeast-1:1111111111:secret:sign-internal-token2855ghashx*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAttributesPolicyTable2BE20275Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "AttributesPolicyTable",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesPolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiLambdaGetAttributePoliciesForAttributeServiceRoleDefaultPolicy840E295B",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiLambdaGetAttributePoliciesForAttributeServiceRole260C099E",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
     "ApiLambdaGetAttributePoliciesForGroup83EB294E": Object {
       "DependsOn": Array [
         "ApiLambdaGetAttributePoliciesForGroupServiceRoleDefaultPolicy2E28E3BB",
@@ -2076,9 +2782,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -2341,7 +3049,18 @@ Object {
                   ],
                 },
                 Object {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesPolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
@@ -2391,9 +3110,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -2656,7 +3377,18 @@ Object {
                   ],
                 },
                 Object {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesPolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
@@ -2667,6 +3399,334 @@ Object {
         "Roles": Array [
           Object {
             "Ref": "ApiLambdaGetAttributePolicyServiceRoleB13667A6",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ApiLambdaGetAttributeValuePoliciesForAttributeCD3C9635": Object {
+      "DependsOn": Array [
+        "ApiLambdaGetAttributeValuePoliciesForAttributeServiceRoleDefaultPolicyFD503C51",
+        "ApiLambdaGetAttributeValuePoliciesForAttributeServiceRole96733041",
+      ],
+      "Properties": Object {
+        "Architectures": Array [
+          "x86_64",
+        ],
+        "Code": Object {
+          "S3Bucket": "cdk-#####",
+          "S3Key": "cdkhash######.zip",
+        },
+        "Description": "TypescriptFunction Ada/GovernanceService/Api/LambdaGetAttributeValuePoliciesForAttribute of get-attribute-value-policies-for-attribute.ts",
+        "Environment": Object {
+          "Variables": Object {
+            "API_ENDPOINT": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "https://",
+                  Object {
+                    "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+                  },
+                  ".execute-api.ap-southeast-1.amazonaws.com/prod/",
+                ],
+              ],
+            },
+            "API_WAF_ALLOW_RULE_SECRET": Object {
+              "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+            },
+            "ATTRIBUTE_POLICY_TABLE_NAME": Object {
+              "Ref": "AttributesPolicyTable",
+            },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
+              "Ref": "AttributesValuePolicyTable",
+            },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "COUNTER_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
+            },
+            "DATA_PRODUCT_POLICY_TABLE_NAME": Object {
+              "Ref": "DataProductPolicyTable",
+            },
+            "DEFAULT_LENS_POLICY_TABLE_NAME": Object {
+              "Ref": "DefaultLensPolicyTable",
+            },
+            "INTERNAL_TOKEN_KMS_KEY": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550ERef",
+            },
+            "INTERNAL_TOKEN_SECRET_NAME": "sign-internal-token2855ghashx",
+            "LOCK_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Ref",
+            },
+            "RELATIONSHIP_TABLE_NAME": Object {
+              "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Ref",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Layers": Array [
+          Object {
+            "Ref": "referencetoAdaLayer6FB4FEF4Ref",
+          },
+        ],
+        "MemorySize": 1024,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaGetAttributeValuePoliciesForAttributeServiceRole96733041",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs16.x",
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+        "Timeout": 30,
+        "TracingConfig": Object {
+          "Mode": "Active",
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ApiLambdaGetAttributeValuePoliciesForAttributeServiceRole96733041": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ApiLambdaGetAttributeValuePoliciesForAttributeServiceRoleDefaultPolicyFD503C51": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaApiWafDeploymentSecretCA25FA9ARef",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": "kms:Decrypt",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackKeyInternalTokenE7D6550EArn",
+              },
+            },
+            Object {
+              "Action": "secretsManager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":secretsmanager:ap-southeast-1:1111111111:secret:sign-internal-token2855ghashx*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableLocks696688D7Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesLocksC922FC29Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableRelationships0CDF4443Arn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackEntityManagementTablesRelationshipsAA870878Arn",
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyTableAttributesValuePolicyTable0A88FC7CArn",
+              },
+            },
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "AttributesValuePolicyTable",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesValuePolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ApiLambdaGetAttributeValuePoliciesForAttributeServiceRoleDefaultPolicyFD503C51",
+        "Roles": Array [
+          Object {
+            "Ref": "ApiLambdaGetAttributeValuePoliciesForAttributeServiceRole96733041",
           },
         ],
       },
@@ -2706,9 +3766,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -2971,7 +4033,18 @@ Object {
                   ],
                 },
                 Object {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesValuePolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
@@ -3021,9 +4094,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -3286,7 +4361,18 @@ Object {
                   ],
                 },
                 Object {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesValuePolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
@@ -3336,9 +4422,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -3422,9 +4510,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -3966,9 +5056,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -4315,9 +5407,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -4401,9 +5495,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -4673,7 +5769,18 @@ Object {
                   ],
                 },
                 Object {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesPolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
@@ -4909,7 +6016,18 @@ Object {
                   ],
                 },
                 Object {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesPolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
@@ -4959,9 +6077,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -5231,7 +6351,18 @@ Object {
                   ],
                 },
                 Object {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesValuePolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
@@ -5281,9 +6412,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -5553,7 +6686,18 @@ Object {
                   ],
                 },
                 Object {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "AttributesValuePolicyTable",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
@@ -5603,9 +6747,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -5925,9 +7071,11 @@ Object {
             "ATTRIBUTE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesPolicyTable",
             },
+            "ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
             "ATTRIBUTE_VALUE_POLICY_TABLE_NAME": Object {
               "Ref": "AttributesValuePolicyTable",
             },
+            "ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
@@ -6268,6 +7416,7 @@ Object {
     },
     "ApiRestApiRefgovernanceOPTIONSB8D89C55": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -6343,6 +7492,30 @@ Object {
       },
       "Type": "AWS::ApiGateway::Resource",
     },
+    "ApiRestApiRefgovernancepolicyAttributesontologyNamespaceAttributeIdAttributeD7967C66": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefgovernancepolicyattributesontologyNamespaceAttributeIdA14471C0",
+        },
+        "PathPart": "attribute",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiRestApiRefgovernancepolicyAttributevaluesontologyNamespaceAttributeIdAttributeB511D436": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceAttributeId31276EF1",
+        },
+        "PathPart": "attribute",
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
     "ApiRestApiRefgovernancepolicyDefaultLensAAFC7054": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -6369,6 +7542,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicyOPTIONS6CD05D13": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -6443,11 +7617,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicyattributesDeleteGovernancePolicyAttributesResponse96091EF1",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -6545,7 +7715,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicyattributesDeleteGovernancePolicyAttributesRequest0650B62E": Object {
       "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributesPutGovernancePolicyAttributesResponseC322986C",
+        "ApiRestApiRefgovernancepolicyattributesPutGovernancePolicyAttributesRequest5EA0F219",
       ],
       "Properties": Object {
         "ContentType": "application/json",
@@ -6595,94 +7765,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefgovernancepolicyattributesDeleteGovernancePolicyAttributesResponse96091EF1": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributesDeleteGovernancePolicyAttributesRequest0650B62E",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The deleted attribute policies",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AttributePolicy": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "lensId": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "group",
-                "lensId",
-                "namespaceAndAttributeId",
-              ],
-              "type": "object",
-            },
-            "AttributePolicyIdentifier": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespaceAndAttributeId",
-                "group",
-              ],
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "policies": Object {
-              "items": Object {
-                "$ref": "#/definitions/AttributePolicy",
-              },
-              "type": "array",
-            },
-          },
-          "required": Array [
-            "policies",
-          ],
-          "title": "DeleteGovernancePolicyAttributesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicyattributesGET322E4FC7": Object {
       "DependsOn": Array [
         "ApiRestApiRefgovernancepolicyattributesOPTIONS19FABCFB",
@@ -6718,11 +7800,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicyattributesGetGovernancePolicyAttributesResponseD3778B4F",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -6825,47 +7903,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefgovernancepolicyattributesGetGovernancePolicyAttributesResponseD3778B4F": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "A map of attribute id to the lens id that applies for the given group and attributes",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "attributeIdToLensId": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/LensEnum",
-                "description": "Lens value",
-              },
-              "type": "object",
-            },
-          },
-          "required": Array [
-            "attributeIdToLensId",
-          ],
-          "title": "GetGovernancePolicyAttributesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicyattributesOPTIONS19FABCFB": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -6952,11 +7992,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicyattributesPutGovernancePolicyAttributesResponseC322986C",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -7053,9 +8089,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "ApiRestApiRefgovernancepolicyattributesPutGovernancePolicyAttributesRequest5EA0F219": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributesGetGovernancePolicyAttributesResponseD3778B4F",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "List of attribute policies to write",
@@ -7140,94 +8173,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefgovernancepolicyattributesPutGovernancePolicyAttributesResponseC322986C": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributesPutGovernancePolicyAttributesRequest5EA0F219",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The written attribute policies",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AttributePolicy": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "lensId": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "group",
-                "lensId",
-                "namespaceAndAttributeId",
-              ],
-              "type": "object",
-            },
-            "AttributePolicyIdentifier": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespaceAndAttributeId",
-                "group",
-              ],
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "policies": Object {
-              "items": Object {
-                "$ref": "#/definitions/AttributePolicy",
-              },
-              "type": "array",
-            },
-          },
-          "required": Array [
-            "policies",
-          ],
-          "title": "PutGovernancePolicyAttributesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicyattributesontologyNamespaceAttributeIdA14471C0": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -7242,6 +8187,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicyattributesontologyNamespaceOPTIONS61BE92EC": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -7307,6 +8253,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdOPTIONS5A60D49E": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -7346,8 +8293,189 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
+    "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdattributeGET0C1C1070": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdattributeOPTIONSD04D109F",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ApiLambdaGetAttributePoliciesForAttribute118A85C2",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {},
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "404",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "403",
+          },
+        ],
+        "OperationName": "GetGovernancePolicyAttributesAttribute",
+        "RequestParameters": Object {
+          "method.request.path.attributeId": true,
+          "method.request.path.ontologyNamespace": true,
+        },
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefgovernancepolicyAttributesontologyNamespaceAttributeIdAttributeD7967C66",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdattributeGETApiPermissionAdaGovernanceServiceApiRestApiRefE62DB318GETGovernancePolicyAttributesOntologyNamespaceAttributeIdAttribute0CF69652": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaGetAttributePoliciesForAttribute118A85C2",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/GET/governance/policy/attributes/*/*/attribute",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdattributeGETApiPermissionTestAdaGovernanceServiceApiRestApiRefE62DB318GETGovernancePolicyAttributesOntologyNamespaceAttributeIdAttribute4365B3B1": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaGetAttributePoliciesForAttribute118A85C2",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/GET/governance/policy/attributes/*/*/attribute",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdattributeOPTIONSD04D109F": Object {
+      "Properties": Object {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefgovernancepolicyAttributesontologyNamespaceAttributeIdAttributeD7967C66",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
     "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupOPTIONS542A87CE": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -7480,11 +8608,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupDeleteGovernancePolicyAttributesGroupResponseBC35C5A1",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -7521,151 +8645,6 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Method",
-    },
-    "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupDeleteGovernancePolicyAttributesGroupResponseBC35C5A1": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupPutGovernancePolicyAttributesGroupResponseB4AE55AB",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The attribute policy that was deleted",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AttributePolicy": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "lensId": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "group",
-                "lensId",
-                "namespaceAndAttributeId",
-              ],
-              "type": "object",
-            },
-            "AttributePolicyIdentifier": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespaceAndAttributeId",
-                "group",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "group": Object {
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "lensId": Object {
-              "$ref": "#/definitions/LensEnum",
-              "description": "Lens value",
-            },
-            "namespaceAndAttributeId": Object {
-              "maxLength": 512,
-              "minLength": 5,
-              "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "group",
-            "lensId",
-            "namespaceAndAttributeId",
-          ],
-          "title": "DeleteGovernancePolicyAttributesGroupResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
     },
     "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupGETApiPermissionAdaGovernanceServiceApiRestApiRefE62DB318GETGovernancePolicyAttributesOntologyNamespaceAttributeIdGroupGroup35A72836": Object {
       "Properties": Object {
@@ -7760,11 +8739,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupGetGovernancePolicyAttributesGroupResponseF428638E",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -7802,150 +8777,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupGetGovernancePolicyAttributesGroupResponseF428638E": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The attribute policy for the given group and attribute id",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AttributePolicy": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "lensId": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "group",
-                "lensId",
-                "namespaceAndAttributeId",
-              ],
-              "type": "object",
-            },
-            "AttributePolicyIdentifier": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespaceAndAttributeId",
-                "group",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "group": Object {
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "lensId": Object {
-              "$ref": "#/definitions/LensEnum",
-              "description": "Lens value",
-            },
-            "namespaceAndAttributeId": Object {
-              "maxLength": 512,
-              "minLength": 5,
-              "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "group",
-            "lensId",
-            "namespaceAndAttributeId",
-          ],
-          "title": "GetGovernancePolicyAttributesGroupResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupOPTIONS290C4255": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -8020,11 +8854,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupPutGovernancePolicyAttributesGroupResponseB4AE55AB",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -8134,9 +8964,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupPutGovernancePolicyAttributesGroupRequest5DF031BC": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupGetGovernancePolicyAttributesGroupResponseF428638E",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "Details of new Attribute Policy",
@@ -8210,45 +9037,150 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupPutGovernancePolicyAttributesGroupResponseB4AE55AB": Object {
+    "ApiRestApiRefgovernancepolicyattributevaluesDELETEApiPermissionAdaGovernanceServiceApiRestApiRefE62DB318DELETEGovernancePolicyAttributeValues8805EB74": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaDeleteAttributeValuePolicyBatchE30F0F90",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/DELETE/governance/policy/attribute-values",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefgovernancepolicyattributevaluesDELETEApiPermissionTestAdaGovernanceServiceApiRestApiRefE62DB318DELETEGovernancePolicyAttributeValues05F458A6": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaDeleteAttributeValuePolicyBatchE30F0F90",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/DELETE/governance/policy/attribute-values",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefgovernancepolicyattributevaluesDELETEE49883C0": Object {
       "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributesontologyNamespaceattributeIdgroupgroupPutGovernancePolicyAttributesGroupRequest5DF031BC",
+        "ApiRestApiRefgovernancepolicyattributevaluesPUT6A83F14C",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "DELETE",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ApiLambdaDeleteAttributeValuePolicyBatchE30F0F90",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {},
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "403",
+          },
+        ],
+        "OperationName": "DeleteGovernancePolicyAttributeValues",
+        "RequestModels": Object {
+          "application/json": Object {
+            "Ref": "ApiRestApiRefgovernancepolicyattributevaluesDeleteGovernancePolicyAttributeValuesRequest5F717546",
+          },
+        },
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefgovernancepolicyAttributeValues7403B6B3",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefgovernancepolicyattributevaluesDeleteGovernancePolicyAttributeValuesRequest5F717546": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefgovernancepolicyattributevaluesPutGovernancePolicyAttributeValuesRequestBBD34FE4",
       ],
       "Properties": Object {
         "ContentType": "application/json",
-        "Description": "Create or update new attribute policy",
+        "Description": "List of attribute value policies to delete",
         "RestApiId": Object {
           "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
         },
         "Schema": Object {
           "$schema": "http://json-schema.org/draft-04/schema#",
           "definitions": Object {
-            "AttributePolicy": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "lensId": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "group",
-                "lensId",
-                "namespaceAndAttributeId",
-              ],
-              "type": "object",
-            },
             "AttributePolicyIdentifier": Object {
               "properties": Object {
                 "group": Object {
@@ -8270,86 +9202,19 @@ Object {
               ],
               "type": "object",
             },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
           },
           "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "group": Object {
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "lensId": Object {
-              "$ref": "#/definitions/LensEnum",
-              "description": "Lens value",
-            },
-            "namespaceAndAttributeId": Object {
-              "maxLength": 512,
-              "minLength": 5,
-              "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
+            "policies": Object {
+              "items": Object {
+                "$ref": "#/definitions/AttributePolicyIdentifier",
+              },
+              "type": "array",
             },
           },
           "required": Array [
-            "group",
-            "lensId",
-            "namespaceAndAttributeId",
+            "policies",
           ],
-          "title": "PutGovernancePolicyAttributesGroupResponse",
+          "title": "DeleteGovernancePolicyAttributeValuesRequest",
           "type": "object",
         },
       },
@@ -8448,11 +9313,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicyattributevaluesGetGovernancePolicyAttributeValuesResponse64245D8E",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -8497,35 +9358,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefgovernancepolicyattributevaluesGetGovernancePolicyAttributeValuesResponse64245D8E": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The attribute value policies discovered from the given attributesId and group",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "properties": Object {
-            "attributeIdToSqlClause": Object {
-              "additionalProperties": Object {
-                "description": "The sql clause to apply for the attribute",
-                "type": "string",
-              },
-              "type": "object",
-            },
-          },
-          "required": Array [
-            "attributeIdToSqlClause",
-          ],
-          "title": "GetGovernancePolicyAttributeValuesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicyattributevaluesOPTIONS2CD33AC5": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -8612,11 +9447,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicyattributevaluesPutGovernancePolicyAttributeValuesResponse6375A9BF",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -8713,9 +9544,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "ApiRestApiRefgovernancepolicyattributevaluesPutGovernancePolicyAttributeValuesRequestBBD34FE4": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributevaluesGetGovernancePolicyAttributeValuesResponse64245D8E",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "List of attribute value policies to write",
@@ -8797,91 +9625,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefgovernancepolicyattributevaluesPutGovernancePolicyAttributeValuesResponse6375A9BF": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributevaluesPutGovernancePolicyAttributeValuesRequestBBD34FE4",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The written attribute value policies",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AttributePolicyIdentifier": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespaceAndAttributeId",
-                "group",
-              ],
-              "type": "object",
-            },
-            "AttributeValuePolicy": Object {
-              "properties": Object {
-                "description": Object {
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "sqlClause": Object {
-                  "description": "An SQL WHERE clause for row level governance on the attribute",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "group",
-                "namespaceAndAttributeId",
-                "sqlClause",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "policies": Object {
-              "items": Object {
-                "$ref": "#/definitions/AttributeValuePolicy",
-              },
-              "type": "array",
-            },
-          },
-          "required": Array [
-            "policies",
-          ],
-          "title": "PutGovernancePolicyAttributeValuesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceAttributeId31276EF1": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -8896,6 +9639,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceOPTIONS9D2DEFFB": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -8961,6 +9705,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdOPTIONS99070B70": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -9000,8 +9745,189 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
+    "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdattributeGET0194A024": Object {
+      "DependsOn": Array [
+        "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdattributeOPTIONS7B4C1FE3",
+      ],
+      "Properties": Object {
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiCustomAuthorizerHandler80C96C55Ref",
+        },
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ApiLambdaGetAttributeValuePoliciesForAttributeCD3C9635",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseModels": Object {},
+            "StatusCode": "200",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "400",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "404",
+          },
+          Object {
+            "ResponseModels": Object {
+              "application/json": Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiErrorModelD8BFCFCERef",
+              },
+            },
+            "StatusCode": "403",
+          },
+        ],
+        "OperationName": "GetGovernancePolicyAttributeValuesAttribute",
+        "RequestParameters": Object {
+          "method.request.path.attributeId": true,
+          "method.request.path.ontologyNamespace": true,
+        },
+        "RequestValidatorId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApiFederatedRestApiValidator5117C971Ref",
+        },
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefgovernancepolicyAttributevaluesontologyNamespaceAttributeIdAttributeB511D436",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdattributeGETApiPermissionAdaGovernanceServiceApiRestApiRefE62DB318GETGovernancePolicyAttributeValuesOntologyNamespaceAttributeIdAttribute0705385E": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaGetAttributeValuePoliciesForAttributeCD3C9635",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/prod/GET/governance/policy/attribute-values/*/*/attribute",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdattributeGETApiPermissionTestAdaGovernanceServiceApiRestApiRefE62DB318GETGovernancePolicyAttributeValuesOntologyNamespaceAttributeIdAttributeB65DDC77": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "ApiLambdaGetAttributeValuePoliciesForAttributeCD3C9635",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:ap-southeast-1:1111111111:",
+              Object {
+                "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+              },
+              "/test-invoke-stage/GET/governance/policy/attribute-values/*/*/attribute",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdattributeOPTIONS7B4C1FE3": Object {
+      "Properties": Object {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Authorization,*'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Max-Age": "'600'",
+              },
+              "StatusCode": "200",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Max-Age": true,
+            },
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiRestApiRefgovernancepolicyAttributevaluesontologyNamespaceAttributeIdAttributeB511D436",
+        },
+        "RestApiId": Object {
+          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
     "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupOPTIONSA51F65D2": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -9134,11 +10060,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupDeleteGovernancePolicyAttributeValuesGroupResponse5A12D13A",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -9176,155 +10098,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupDeleteGovernancePolicyAttributeValuesGroupResponse5A12D13A": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupPutGovernancePolicyAttributeValuesGroupResponse1998B888",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The attribute policy that was deleted",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AttributePolicyIdentifier": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespaceAndAttributeId",
-                "group",
-              ],
-              "type": "object",
-            },
-            "AttributeValuePolicy": Object {
-              "properties": Object {
-                "description": Object {
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "sqlClause": Object {
-                  "description": "An SQL WHERE clause for row level governance on the attribute",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "group",
-                "namespaceAndAttributeId",
-                "sqlClause",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "group": Object {
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "namespaceAndAttributeId": Object {
-              "maxLength": 512,
-              "minLength": 5,
-              "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "sqlClause": Object {
-              "description": "An SQL WHERE clause for row level governance on the attribute",
-              "maxLength": 262144,
-              "pattern": "^([\\\\s\\\\S]+)$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "group",
-            "namespaceAndAttributeId",
-            "sqlClause",
-          ],
-          "title": "DeleteGovernancePolicyAttributeValuesGroupResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupGET36166C0A": Object {
       "DependsOn": Array [
         "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupOPTIONS81610F5D",
@@ -9360,11 +10133,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupGetGovernancePolicyAttributeValuesGroupResponse8B7CF1D5",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -9460,154 +10229,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupGetGovernancePolicyAttributeValuesGroupResponse8B7CF1D5": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The attribute value policy for the given attribute id and group",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AttributePolicyIdentifier": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespaceAndAttributeId",
-                "group",
-              ],
-              "type": "object",
-            },
-            "AttributeValuePolicy": Object {
-              "properties": Object {
-                "description": Object {
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "sqlClause": Object {
-                  "description": "An SQL WHERE clause for row level governance on the attribute",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "group",
-                "namespaceAndAttributeId",
-                "sqlClause",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "group": Object {
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "namespaceAndAttributeId": Object {
-              "maxLength": 512,
-              "minLength": 5,
-              "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "sqlClause": Object {
-              "description": "An SQL WHERE clause for row level governance on the attribute",
-              "maxLength": 262144,
-              "pattern": "^([\\\\s\\\\S]+)$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "group",
-            "namespaceAndAttributeId",
-            "sqlClause",
-          ],
-          "title": "GetGovernancePolicyAttributeValuesGroupResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupOPTIONS81610F5D": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -9682,11 +10306,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupPutGovernancePolicyAttributeValuesGroupResponse1998B888",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -9796,9 +10416,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupPutGovernancePolicyAttributeValuesGroupRequestC2FFBCF2": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupGetGovernancePolicyAttributeValuesGroupResponse8B7CF1D5",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "Details of new Attribute Value Policy",
@@ -9869,155 +10486,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupPutGovernancePolicyAttributeValuesGroupResponse1998B888": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicyattributevaluesontologyNamespaceattributeIdgroupgroupPutGovernancePolicyAttributeValuesGroupRequestC2FFBCF2",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Create or update new attribute value policy",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AttributePolicyIdentifier": Object {
-              "properties": Object {
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "namespaceAndAttributeId",
-                "group",
-              ],
-              "type": "object",
-            },
-            "AttributeValuePolicy": Object {
-              "properties": Object {
-                "description": Object {
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "group": Object {
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "namespaceAndAttributeId": Object {
-                  "maxLength": 512,
-                  "minLength": 5,
-                  "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "sqlClause": Object {
-                  "description": "An SQL WHERE clause for row level governance on the attribute",
-                  "maxLength": 262144,
-                  "pattern": "^([\\\\s\\\\S]+)$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "group",
-                "namespaceAndAttributeId",
-                "sqlClause",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "group": Object {
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "namespaceAndAttributeId": Object {
-              "maxLength": 512,
-              "minLength": 5,
-              "pattern": "^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "sqlClause": Object {
-              "description": "An SQL WHERE clause for row level governance on the attribute",
-              "maxLength": 262144,
-              "pattern": "^([\\\\s\\\\S]+)$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "group",
-            "namespaceAndAttributeId",
-            "sqlClause",
-          ],
-          "title": "PutGovernancePolicyAttributeValuesGroupResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicydefaultlensDomainD086C50C": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -10032,6 +10500,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicydefaultlensOPTIONS69B692E3": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -10085,6 +10554,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicydefaultlensdomainOPTIONS3811C253": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -10138,6 +10608,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIdOPTIONSBB32C8BC": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -10191,6 +10662,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductOPTIONS9A40B55F": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -10265,11 +10737,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdDeleteGovernancePolicyDefaultLensDomainDataProductResponse4D0150F1",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -10372,173 +10840,6 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdDeleteGovernancePolicyDefaultLensDomainDataProductResponse4D0150F1": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdPutGovernancePolicyDefaultLensDomainDataProductResponseF62200B0",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Delete default lens policy by data product id",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DefaultLensPolicy": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "defaultLensId": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "defaultLensOverrides": Object {
-                  "additionalProperties": Object {
-                    "$ref": "#/definitions/LensEnum",
-                    "description": "Lens value",
-                  },
-                  "type": "object",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "defaultLensId",
-                "defaultLensOverrides",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "dataProductId": Object {
-              "description": "The id of the data product",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "defaultLensId": Object {
-              "$ref": "#/definitions/LensEnum",
-              "description": "Lens value",
-            },
-            "defaultLensOverrides": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/LensEnum",
-                "description": "Lens value",
-              },
-              "type": "object",
-            },
-            "domainId": Object {
-              "description": "The id of the domain to which this data product belongs",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "dataProductId",
-            "defaultLensId",
-            "defaultLensOverrides",
-            "domainId",
-          ],
-          "title": "DeleteGovernancePolicyDefaultLensDomainDataProductResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdGETApiPermissionAdaGovernanceServiceApiRestApiRefE62DB318GETGovernancePolicyDefaultLensDomainDomainIdDataProductDataProductIdB95EE25B": Object {
       "Properties": Object {
         "Action": "lambda:InvokeFunction",
@@ -10632,11 +10933,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdGetGovernancePolicyDefaultLensDomainDataProductResponseD1DB350D",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -10681,172 +10978,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdGetGovernancePolicyDefaultLensDomainDataProductResponseD1DB350D": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Get default lens policy by data product id",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DefaultLensPolicy": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "defaultLensId": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "defaultLensOverrides": Object {
-                  "additionalProperties": Object {
-                    "$ref": "#/definitions/LensEnum",
-                    "description": "Lens value",
-                  },
-                  "type": "object",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "defaultLensId",
-                "defaultLensOverrides",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "dataProductId": Object {
-              "description": "The id of the data product",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "defaultLensId": Object {
-              "$ref": "#/definitions/LensEnum",
-              "description": "Lens value",
-            },
-            "defaultLensOverrides": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/LensEnum",
-                "description": "Lens value",
-              },
-              "type": "object",
-            },
-            "domainId": Object {
-              "description": "The id of the domain to which this data product belongs",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "dataProductId",
-            "defaultLensId",
-            "defaultLensOverrides",
-            "domainId",
-          ],
-          "title": "GetGovernancePolicyDefaultLensDomainDataProductResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdOPTIONS02528619": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -10921,11 +11055,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdPutGovernancePolicyDefaultLensDomainDataProductResponseF62200B0",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -11034,9 +11164,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdPutGovernancePolicyDefaultLensDomainDataProductRequest2B2140D1": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdGetGovernancePolicyDefaultLensDomainDataProductResponseD1DB350D",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "Details of new default lens policy",
@@ -11122,173 +11249,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdPutGovernancePolicyDefaultLensDomainDataProductResponseF62200B0": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicydefaultlensdomaindomainIddataproductdataProductIdPutGovernancePolicyDefaultLensDomainDataProductRequest2B2140D1",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Create or update new default lens policy by data product id",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DefaultLensPolicy": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "defaultLensId": Object {
-                  "$ref": "#/definitions/LensEnum",
-                  "description": "Lens value",
-                },
-                "defaultLensOverrides": Object {
-                  "additionalProperties": Object {
-                    "$ref": "#/definitions/LensEnum",
-                    "description": "Lens value",
-                  },
-                  "type": "object",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "defaultLensId",
-                "defaultLensOverrides",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "LensEnum": Object {
-              "description": "Lens value",
-              "enum": Array [
-                "clear",
-                "hidden",
-                "hashed",
-                "ada_detect_pii_types",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "dataProductId": Object {
-              "description": "The id of the data product",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "defaultLensId": Object {
-              "$ref": "#/definitions/LensEnum",
-              "description": "Lens value",
-            },
-            "defaultLensOverrides": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/LensEnum",
-                "description": "Lens value",
-              },
-              "type": "object",
-            },
-            "domainId": Object {
-              "description": "The id of the domain to which this data product belongs",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "dataProductId",
-            "defaultLensId",
-            "defaultLensOverrides",
-            "domainId",
-          ],
-          "title": "PutGovernancePolicyDefaultLensDomainDataProductResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicydomainDomainIdAF8AA2DD": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -11303,6 +11263,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicydomainOPTIONS7C71819F": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -11356,6 +11317,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicydomaindomainIdOPTIONS54F3CBD6": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -11409,6 +11371,7 @@ Object {
     },
     "ApiRestApiRefgovernancepolicydomaindomainIddataproductOPTIONS6218C1C3": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -11541,11 +11504,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdDeleteGovernancePolicyDomainDataProductResponse8E18CED1",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -11589,171 +11548,6 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Method",
-    },
-    "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdDeleteGovernancePolicyDomainDataProductResponse8E18CED1": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdPutGovernancePolicyDomainDataProductResponse9D1C89FD",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Delete data product policy",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AccessEnum": Object {
-              "description": "Access control value",
-              "enum": Array [
-                "READ_ONLY",
-                "FULL",
-              ],
-              "type": "string",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductAccessLevel": Object {
-              "properties": Object {
-                "access": Object {
-                  "$ref": "#/definitions/AccessEnum",
-                  "description": "Access control value",
-                },
-              },
-              "required": Array [
-                "access",
-              ],
-              "type": "object",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DataProductPermissions": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/DataProductAccessLevel",
-              },
-              "type": "object",
-            },
-            "DataProductPolicy": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "permissions": Object {
-                  "$ref": "#/definitions/DataProductPermissions",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-                "permissions",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "dataProductId": Object {
-              "description": "The id of the data product",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "domainId": Object {
-              "description": "The id of the domain to which this data product belongs",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "permissions": Object {
-              "$ref": "#/definitions/DataProductPermissions",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "dataProductId",
-            "domainId",
-            "permissions",
-          ],
-          "title": "DeleteGovernancePolicyDomainDataProductResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
     },
     "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdGETApiPermissionAdaGovernanceServiceApiRestApiRefE62DB318GETGovernancePolicyDomainDomainIdDataProductDataProductId36BA3E2C": Object {
       "Properties": Object {
@@ -11848,11 +11642,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdGetGovernancePolicyDomainDataProductResponse0A5A9209",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -11897,170 +11687,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdGetGovernancePolicyDomainDataProductResponse0A5A9209": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Get a policy for a data product",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AccessEnum": Object {
-              "description": "Access control value",
-              "enum": Array [
-                "READ_ONLY",
-                "FULL",
-              ],
-              "type": "string",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductAccessLevel": Object {
-              "properties": Object {
-                "access": Object {
-                  "$ref": "#/definitions/AccessEnum",
-                  "description": "Access control value",
-                },
-              },
-              "required": Array [
-                "access",
-              ],
-              "type": "object",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DataProductPermissions": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/DataProductAccessLevel",
-              },
-              "type": "object",
-            },
-            "DataProductPolicy": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "permissions": Object {
-                  "$ref": "#/definitions/DataProductPermissions",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-                "permissions",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "dataProductId": Object {
-              "description": "The id of the data product",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "domainId": Object {
-              "description": "The id of the domain to which this data product belongs",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "permissions": Object {
-              "$ref": "#/definitions/DataProductPermissions",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "dataProductId",
-            "domainId",
-            "permissions",
-          ],
-          "title": "GetGovernancePolicyDomainDataProductResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdOPTIONS88C31DBB": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -12193,11 +11822,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdPutGovernancePolicyDomainDataProductResponse9D1C89FD",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -12260,9 +11885,6 @@ Object {
       "Type": "AWS::ApiGateway::Resource",
     },
     "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdPutGovernancePolicyDomainDataProductRequest57C6EE94": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdGetGovernancePolicyDomainDataProductResponse0A5A9209",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "Details of new data product policy",
@@ -12355,171 +11977,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdPutGovernancePolicyDomainDataProductResponse9D1C89FD": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdPutGovernancePolicyDomainDataProductRequest57C6EE94",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Create or update new data product policy by dataProductId",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AccessEnum": Object {
-              "description": "Access control value",
-              "enum": Array [
-                "READ_ONLY",
-                "FULL",
-              ],
-              "type": "string",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductAccessLevel": Object {
-              "properties": Object {
-                "access": Object {
-                  "$ref": "#/definitions/AccessEnum",
-                  "description": "Access control value",
-                },
-              },
-              "required": Array [
-                "access",
-              ],
-              "type": "object",
-            },
-            "DataProductIdentifier": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-              ],
-              "type": "object",
-            },
-            "DataProductPermissions": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/DataProductAccessLevel",
-              },
-              "type": "object",
-            },
-            "DataProductPolicy": Object {
-              "properties": Object {
-                "dataProductId": Object {
-                  "description": "The id of the data product",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "domainId": Object {
-                  "description": "The id of the domain to which this data product belongs",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "permissions": Object {
-                  "$ref": "#/definitions/DataProductPermissions",
-                },
-              },
-              "required": Array [
-                "dataProductId",
-                "domainId",
-                "permissions",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "dataProductId": Object {
-              "description": "The id of the data product",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "domainId": Object {
-              "description": "The id of the domain to which this data product belongs",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "permissions": Object {
-              "$ref": "#/definitions/DataProductPermissions",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "dataProductId",
-            "domainId",
-            "permissions",
-          ],
-          "title": "PutGovernancePolicyDomainDataProductResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdpermissionsGET5989F890": Object {
       "DependsOn": Array [
         "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdpermissionsOPTIONSBCD9A405",
@@ -12555,11 +12012,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdpermissionsGetGovernancePolicyDomainDataProductPermissionsResponse3BA383B2",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -12663,101 +12116,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdpermissionsGetGovernancePolicyDomainDataProductPermissionsResponse3BA383B2": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Get permissions for a group and associated data product policy",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "additionalProperties": Object {
-            "$ref": "#/definitions/DataProductAccessLevel",
-          },
-          "definitions": Object {
-            "AccessEnum": Object {
-              "description": "Access control value",
-              "enum": Array [
-                "READ_ONLY",
-                "FULL",
-              ],
-              "type": "string",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "DataProductAccessLevel": Object {
-              "properties": Object {
-                "access": Object {
-                  "$ref": "#/definitions/AccessEnum",
-                  "description": "Access control value",
-                },
-              },
-              "required": Array [
-                "access",
-              ],
-              "type": "object",
-            },
-            "DataProductPermissions": Object {
-              "additionalProperties": Object {
-                "$ref": "#/definitions/DataProductAccessLevel",
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "title": "GetGovernancePolicyDomainDataProductPermissionsResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefgovernancepolicydomaindomainIddataproductdataProductIdpermissionsOPTIONSBCD9A405": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -12834,6 +12195,20 @@ Object {
           },
         ],
         "BillingMode": "PAY_PER_REQUEST",
+        "GlobalSecondaryIndexes": Array [
+          Object {
+            "IndexName": "AttributesPolicyTable-NamespaceAndAttributeId1863ghashx",
+            "KeySchema": Array [
+              Object {
+                "AttributeName": "namespaceAndAttributeId",
+                "KeyType": "HASH",
+              },
+            ],
+            "Projection": Object {
+              "ProjectionType": "ALL",
+            },
+          },
+        ],
         "KeySchema": Array [
           Object {
             "AttributeName": "group",
@@ -12878,6 +12253,20 @@ Object {
           },
         ],
         "BillingMode": "PAY_PER_REQUEST",
+        "GlobalSecondaryIndexes": Array [
+          Object {
+            "IndexName": "AttributeValuePolicyTable-NamespaceAndAttributeId1863ghashx",
+            "KeySchema": Array [
+              Object {
+                "AttributeName": "namespaceAndAttributeId",
+                "KeyType": "HASH",
+              },
+            ],
+            "Projection": Object {
+              "ProjectionType": "ALL",
+            },
+          },
+        ],
         "KeySchema": Array [
           Object {
             "AttributeName": "group",

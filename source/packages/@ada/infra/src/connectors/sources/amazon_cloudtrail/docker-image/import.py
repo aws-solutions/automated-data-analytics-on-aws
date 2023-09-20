@@ -248,7 +248,7 @@ class CloudTrailImport():
                     self._import_data(last_updated_date,
                                       date_to,
                                       self._cloudtrail_event_types)
-                except (TypeError, parser.ParserError) as error:
+                except (TypeError, parser.ParserError):
                     raise DateRangeException("Last Updated Timestamp error")
 
     def _import_data(self, date_from, date_to, event_types) -> None:

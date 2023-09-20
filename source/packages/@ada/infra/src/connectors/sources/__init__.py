@@ -10,8 +10,10 @@ from .amazon_cloudwatch.preview import CLOUDWATCH
 from .jdbc_mysql5.preview import MYSQL5
 from .jdbc_postgresql.preview import POSTGRESQL
 from .jdbc_sqlserver.preview import SQLSERVER
+from .jdbc_oracle.preview import ORACLE
 from .amazon_cloudtrail.preview import CLOUDTRAIL
 from .mongodb.preview import MONGODB
+from .amazon_redshift.preview import REDSHIFT
 
 CONNECTORS: IConnectorMapping = {
     'S3': S3,
@@ -24,6 +26,8 @@ CONNECTORS: IConnectorMapping = {
     "MYSQL5": MYSQL5,
     "POSTGRESQL": POSTGRESQL,
     "SQLSERVER": SQLSERVER,
+    "ORACLE": ORACLE,
     "CLOUDTRAIL": CLOUDTRAIL,
     "MONGODB": MONGODB,
+    'REDSHIFT': REDSHIFT,
 }

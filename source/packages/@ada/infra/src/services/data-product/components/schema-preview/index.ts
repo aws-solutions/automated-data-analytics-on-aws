@@ -2,26 +2,27 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { Bucket } from '../../../../common/constructs/s3/bucket';
 import { Construct } from 'constructs';
-import { DataProductSecretsPolicyStatement } from '../../../../common/constructs/iam/policies';
-import { DockerImageFunction } from 'aws-cdk-lib/aws-lambda';
-import { Duration, RemovalPolicy } from 'aws-cdk-lib';
-import { Effect, IRole, ManagedPolicy, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import {
+  DataProductSecretsPolicyStatement,
   ExternalSourceAssumeRolePolicyStatement,
   ExternalSourceDataCloudTrailAccessPolicyStatement,
   ExternalSourceDataCloudWatchAccessPolicyStatement,
   ExternalSourceDataKmsAccessPolicyStatement,
   ExternalSourceDataS3AccessPolicyStatement,
   ExternalSourceDynamoDBAccessPolicyStatement,
+  ExternalSourceRedshiftAccessPolicyStatement,
   SolutionContext,
   TypescriptFunction,
   getDockerImagePath,
   tryGetSolutionContext,
 } from '@ada/infra-common';
+import { DefinitionBody, LogLevel, Pass, StateMachine, TaskInput } from 'aws-cdk-lib/aws-stepfunctions';
+import { DockerImageFunction } from 'aws-cdk-lib/aws-lambda';
+import { Duration, RemovalPolicy } from 'aws-cdk-lib';
+import { Effect, IRole, ManagedPolicy, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { LambdaInvoke } from 'aws-cdk-lib/aws-stepfunctions-tasks';
 import { LogGroup } from '../../../../common/constructs/cloudwatch/log-group';
-import { LogLevel, Pass, StateMachine, TaskInput } from 'aws-cdk-lib/aws-stepfunctions';
 import { SubnetType } from 'aws-cdk-lib/aws-ec2';
 import { TarballImageAsset } from '../../../../common/constructs/ecr-assets/tarball-image-asset';
 import { addCfnNagSuppressionsToRolePolicy, getUniqueStateMachineLogGroupName } from '@ada/cdk-core';
@@ -103,6 +104,15 @@ export default class SchemaPreview extends Construct {
         resources: ['*'],
       }),
     );
+
+    pullDataSampleConnectorRole.addToPolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ['redshift:GetClusterCredentials', 'redshift-serverless:GetCredentials'],
+        resources: ['*'],
+      }),
+    );
+
     // Grant schemapreview lambda permissions to create, use and delete glue connection
     // so that glue connection can be used in the preview lambda for jdbc connector
     pullDataSampleConnectorRole.addToPolicy(
@@ -125,8 +135,8 @@ export default class SchemaPreview extends Construct {
     pullDataSampleConnectorRole.addToPolicy(ExternalSourceDataCloudTrailAccessPolicyStatement);
     // Grant access to Query DynamoDB Tables
     pullDataSampleConnectorRole.addToPolicy(ExternalSourceDynamoDBAccessPolicyStatement);
-    // Grant access to Assume external roles
-    pullDataSampleConnectorRole.addToPolicy(ExternalSourceAssumeRolePolicyStatement);
+    // Grant access to get Redshift/Redshift Serverless credentials
+    pullDataSampleConnectorRole.addToPolicy(ExternalSourceRedshiftAccessPolicyStatement);
 
     addCfnNagSuppressionsToRolePolicy(pullDataSampleConnectorRole, [
       {
@@ -262,7 +272,7 @@ export default class SchemaPreview extends Construct {
 
     this.stateMachine = new StateMachine(this, 'StateMachine', {
       tracingEnabled: true,
-      definition,
+      definitionBody: DefinitionBody.fromChainable(definition),
       logs: {
         destination: new LogGroup(this, 'StateMachineLogs', {
           logGroupName: getUniqueStateMachineLogGroupName(this, `${id}StateMachineLogs`),

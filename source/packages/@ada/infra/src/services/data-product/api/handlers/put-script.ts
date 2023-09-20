@@ -5,7 +5,7 @@ import { ApiLambdaHandler, ApiResponse } from '@ada/api-gateway';
 import { DefaultGroupIds, DefaultUser, ReservedDomains } from '@ada/common';
 import { EntityIdentifier, entityIdentifier } from '@ada/api-client/types';
 import { ScriptBucket } from '../../components/s3/script';
-import { ScriptIdentifier } from '@ada/api';
+import { ScriptEntity, ScriptIdentifier } from '@ada/api';
 import { ScriptStore } from '../../components/ddb/script';
 import { VError } from 'verror';
 
@@ -95,6 +95,11 @@ export const handler = ApiLambdaHandler.for(
 
     await lockClient.release(...domainLocks);
 
-    return ApiResponse.success(writtenScript);
+    if (callingUser.userId !== DefaultUser.SYSTEM) {
+      return ApiResponse.success(writtenScript);
+    } else {
+      // for system user, the call is made from CDK custom resource which has length limitation on response object.
+      return ApiResponse.success({ name: writtenScript.name } as ScriptEntity);
+    }
   },
 );

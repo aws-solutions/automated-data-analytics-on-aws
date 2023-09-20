@@ -10,7 +10,7 @@ import {
   DataProductPolicy,
   DefaultLensPolicy,
 } from './types';
-import { AttributeType, Table } from 'aws-cdk-lib/aws-dynamodb';
+import { AttributeType, ProjectionType, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 import { CountedTable } from '../../../common/constructs/dynamodb/counted-table';
 import { CounterTable } from '../../../common/constructs/dynamodb/counter-table';
@@ -21,6 +21,7 @@ import { LensProperty, asEntity, asInput } from '../../../common/constructs/api'
 import { MicroserviceApi, MicroserviceApiProps } from '../../../common/services';
 import { StatusCodes } from 'http-status-codes/build/cjs';
 import { TypescriptFunction } from '@ada/infra-common';
+import { getUniqueName } from '@ada/cdk-core';
 
 export interface GovernanceServiceApiProps extends MicroserviceApiProps {
   counterTable: CounterTable;
@@ -36,14 +37,17 @@ export interface BuiltLambdaFunctions {
   putAttributePolicyLambda: TypescriptFunction;
   batchPutAttributePolicyLambda: TypescriptFunction;
   getAttributePolicyLambda: TypescriptFunction;
+  getAttributePoliciesForAttribute: TypescriptFunction;
   getAttributePoliciesForGroup: TypescriptFunction;
   deleteAttributePolicyLambda: TypescriptFunction;
   batchDeleteAttributePolicyLambda: TypescriptFunction;
   putAttributeValuePolicyLambda: TypescriptFunction;
   batchPutAttributeValuePolicyLambda: TypescriptFunction;
   getAttributeValuePolicyLambda: TypescriptFunction;
+  getAttributeValuePoliciesForAttribute: TypescriptFunction;
   getAttributeValuePoliciesForGroup: TypescriptFunction;
   deleteAttributeValuePolicyLambda: TypescriptFunction;
+  batchDeleteAttributeValuePolicyLambda: TypescriptFunction;
   putDefaultLensPolicyLambda: TypescriptFunction;
   getDefaultLensPolicyLambda: TypescriptFunction;
   deleteDefaultLensPolicyLambda: TypescriptFunction;
@@ -59,6 +63,9 @@ export default class GovernanceApi extends MicroserviceApi {
   private readonly attributePolicyTable: Table;
   private readonly attributeValuePolicyTable: Table;
   private readonly defaultLensPolicyTable: Table;
+
+  private readonly attributePolicyTableNamespaceAndAttributeIdIndexName: string;
+  private readonly attributeValuePolicyTableNamespaceAndAttributeIdIndexName: string;
 
   constructor(scope: Construct, id: string, props: GovernanceServiceApiProps) {
     super(scope, id, props);
@@ -91,6 +98,14 @@ export default class GovernanceApi extends MicroserviceApi {
       counterTable,
     });
 
+    this.attributePolicyTableNamespaceAndAttributeIdIndexName = getUniqueName(this, 'AttributesPolicyTable-NamespaceAndAttributeId');
+
+    this.attributePolicyTable.addGlobalSecondaryIndex({
+      indexName: this.attributePolicyTableNamespaceAndAttributeIdIndexName,
+      partitionKey: { name: 'namespaceAndAttributeId', type: AttributeType.STRING },
+      projectionType: ProjectionType.ALL,
+    });
+
     this.attributeValuePolicyTable = new CountedTable(this, 'AttributesValuePolicyTable', {
       pointInTimeRecovery: true,
       partitionKey: {
@@ -102,6 +117,14 @@ export default class GovernanceApi extends MicroserviceApi {
         type: AttributeType.STRING,
       },
       counterTable,
+    });
+
+    this.attributeValuePolicyTableNamespaceAndAttributeIdIndexName = getUniqueName(this, 'AttributeValuePolicyTable-NamespaceAndAttributeId');
+
+    this.attributeValuePolicyTable.addGlobalSecondaryIndex({
+      indexName: this.attributeValuePolicyTableNamespaceAndAttributeIdIndexName,
+      partitionKey: { name: 'namespaceAndAttributeId', type: AttributeType.STRING },
+      projectionType: ProjectionType.ALL,
     });
 
     this.defaultLensPolicyTable = new CountedTable(this, 'DefaultLensPolicyTable', {
@@ -126,6 +149,10 @@ export default class GovernanceApi extends MicroserviceApi {
           ATTRIBUTE_POLICY_TABLE_NAME: this.attributePolicyTable.tableName,
           ATTRIBUTE_VALUE_POLICY_TABLE_NAME: this.attributeValuePolicyTable.tableName,
           DEFAULT_LENS_POLICY_TABLE_NAME: this.defaultLensPolicyTable.tableName,
+          ATTRIBUTE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME:
+            this.attributePolicyTableNamespaceAndAttributeIdIndexName,
+          ATTRIBUTE_VALUE_POLICY_TABLE_NAMESPACEANDATTRIBUTE_ID_INDEX_NAME:
+            this.attributeValuePolicyTableNamespaceAndAttributeIdIndexName,
         },
         apiLayer: {
           endpoint: federatedApi.url,
@@ -171,8 +198,14 @@ export default class GovernanceApi extends MicroserviceApi {
     this.attributeValuePolicyTable.grantReadData(getAttributeValuePolicyLambda);
     const getAttributeValuePoliciesForGroup = buildLambda('get-attribute-value-policies-for-group');
     this.attributeValuePolicyTable.grantReadData(getAttributeValuePoliciesForGroup);
+    const getAttributeValuePoliciesForAttribute = buildLambda('get-attribute-value-policies-for-attribute');
+    this.attributeValuePolicyTable.grantReadData(getAttributeValuePoliciesForAttribute);
+    const getAttributePoliciesForAttribute = buildLambda('get-attribute-policies-for-attribute');
+    this.attributePolicyTable.grantReadData(getAttributePoliciesForAttribute);
     const deleteAttributeValuePolicyLambda = buildLambda('delete-attribute-value-policy');
     this.attributeValuePolicyTable.grantReadWriteData(deleteAttributeValuePolicyLambda);
+    const batchDeleteAttributeValuePolicyLambda = buildLambda('delete-attribute-value-policy-batch');
+    this.attributeValuePolicyTable.grantReadWriteData(batchDeleteAttributeValuePolicyLambda);
 
     const putDefaultLensPolicyLambda = buildLambda('put-default-lens-policy');
     this.defaultLensPolicyTable.grantReadWriteData(putDefaultLensPolicyLambda);
@@ -193,13 +226,16 @@ export default class GovernanceApi extends MicroserviceApi {
       batchPutAttributePolicyLambda,
       getAttributePolicyLambda,
       getAttributePoliciesForGroup,
+      getAttributePoliciesForAttribute,
       deleteAttributePolicyLambda,
       batchDeleteAttributePolicyLambda,
       putAttributeValuePolicyLambda,
       batchPutAttributeValuePolicyLambda,
       getAttributeValuePolicyLambda,
+      getAttributeValuePoliciesForAttribute,
       getAttributeValuePoliciesForGroup,
       deleteAttributeValuePolicyLambda,
+      batchDeleteAttributeValuePolicyLambda,
       putDefaultLensPolicyLambda,
       getDefaultLensPolicyLambda,
       deleteDefaultLensPolicyLambda,
@@ -342,9 +378,21 @@ export default class GovernanceApi extends MicroserviceApi {
               paths: {
                 '/{ontologyNamespace}': {
                   paths: {
-                    // /governance/policy/attributes/{ontologyNamespace}/{attributeId}
                     '/{attributeId}': {
+                      // GET /governance/policy/attributes/{ontologyNamespace}/{attributeId}
                       paths: {
+                        // 
+                        'attribute': {
+                          GET: {
+                            integration: new LambdaIntegration(this.functions.getAttributePoliciesForAttribute),
+                            response: {
+                              name: 'AttributePoliciesForAttributeOutput',
+                              description: 'A list of attributes for the given attributes',
+                              schema: AttributePolicyList,
+                              errorStatusCodes: [StatusCodes.BAD_REQUEST, StatusCodes.NOT_FOUND, StatusCodes.FORBIDDEN],
+                            },
+                          },
+                        },
                         // /governance/policy/attributes/{ontologyNamespace}/{attributeId}/group
                         '/group': {
                           paths: {
@@ -448,12 +496,38 @@ export default class GovernanceApi extends MicroserviceApi {
                   errorStatusCodes: [StatusCodes.BAD_REQUEST, StatusCodes.FORBIDDEN],
                 },
               },
+              DELETE: {
+                integration: new LambdaIntegration(this.functions.batchDeleteAttributeValuePolicyLambda),
+                request: {
+                  name: 'BatchDeleteAttributeValuePolicyInput',
+                  description: 'List of attribute value policies to delete',
+                  schema: AttributePolicyIdentifierList,
+                },
+                response: {
+                  name: 'BatchDeleteAttributeValuePolicyOutput',
+                  description: 'The deleted attribute value policies',
+                  schema: AttributeValuePolicyList,
+                  errorStatusCodes: [StatusCodes.BAD_REQUEST, StatusCodes.FORBIDDEN],
+                },
+              },
               paths: {
                 '/{ontologyNamespace}': {
                   paths: {
                     // /governance/policy/attribute-values/{ontologyNamespace}/{attributeId}
                     '/{attributeId}': {
                       paths: {
+                        // /governance/policy/attribute-values/{ontologyNamespace}/{attributeId}/attribute
+                        'attribute': {
+                          GET: {
+                            integration: new LambdaIntegration(this.functions.getAttributeValuePoliciesForAttribute),
+                            response: {
+                              name: 'AttributeValuePoliciesForAttributeOutput',
+                              description: 'A list of attribute values for the given attribute',
+                              schema: AttributeValuePolicyList,
+                              errorStatusCodes: [StatusCodes.BAD_REQUEST, StatusCodes.NOT_FOUND, StatusCodes.FORBIDDEN],
+                            },
+                          },
+                        },
                         // /governance/policy/attribute-values/{ontologyNamespace}/{attributeId}/group
                         '/group': {
                           paths: {

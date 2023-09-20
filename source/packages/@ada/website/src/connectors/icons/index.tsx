@@ -19,7 +19,9 @@ import { ReactComponent as GOOGLE_STORAGE } from '../../vendor/google/cloud_stor
 import { ReactComponent as KINESIS } from './icon_kinesis.svg';
 import { ReactComponent as MONGODB } from '../../vendor/mongodb.svg';
 import { ReactComponent as MYSQL5 } from '../../vendor/mysql.svg';
+import { ReactComponent as ORACLE } from '../../vendor/oracle.svg';
 import { ReactComponent as POSTGRESQL } from '../../vendor/postgres.svg';
+import { ReactComponent as REDSHIFT } from './icon_redshift.svg';
 import { ReactComponent as S3 } from './icon_s3.svg';
 import { ReactComponent as SQLSERVER } from '../../vendor/sqlserver.svg';
 
@@ -37,10 +39,12 @@ export const ConnectorIcons: Record<Connectors.ID, IconComponent> = {
   GOOGLE_BIGQUERY,
   GOOGLE_STORAGE,
   DYNAMODB,
+  REDSHIFT,
   CLOUDWATCH,
   MYSQL5,
   POSTGRESQL,
   SQLSERVER,
+  ORACLE,
   CLOUDTRAIL,
   MONGODB,
 };

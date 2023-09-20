@@ -1,17 +1,18 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import { InvocationType } from 'aws-cdk-lib/triggers';
 import { DEFAULT_CALLER } from '../../../../../common/services/testing/default-entities';
 import { TearDownMode } from '../types';
 import { buildApiRequest } from '../../../../api/api-gateway';
 import { handler } from '../start-tear-down-retain-data';
 
-const mockInvokeAsync = jest.fn();
+const mockInvoke = jest.fn();
 
 jest.mock('@ada/aws-sdk', () => ({
   ...(jest.requireActual('@ada/aws-sdk') as any),
   AwsLambdaInstance: jest.fn().mockImplementation(() => ({
-    invokeAsync: (...args: any[]) => ({
-      promise: jest.fn(() => Promise.resolve(mockInvokeAsync(...args))),
+    invoke: (...args: any[]) => ({
+      promise: jest.fn(() => Promise.resolve(mockInvoke(...args))),
     }),
   })),
   SSM: jest.fn().mockImplementation(() => ({
@@ -39,9 +40,10 @@ describe('start-tear-down-retain-data', () => {
       }),
     );
 
-    expect(mockInvokeAsync).toHaveBeenCalledWith({
+    expect(mockInvoke).toHaveBeenCalledWith({
       FunctionName: 'tear-down-lambda-arn',
-      InvokeArgs: JSON.stringify({ mode: TearDownMode.RETAIN_DATA }),
+      Payload: JSON.stringify({ mode: TearDownMode.RETAIN_DATA }),
+      InvocationType: InvocationType.EVENT,
     });
   });
 });

@@ -216,7 +216,7 @@ export const QueryWorkbenchProvider: React.FC<{}> = ({ children }) => {
     return undefined;
   }, [polledQueryStatus]);
 
-  const context: IQueryWorkbenchContext = {
+  const context: IQueryWorkbenchContext = useMemo(() => ({
     isDrawerOpen,
     openDrawer,
     closeDrawer,
@@ -236,7 +236,11 @@ export const QueryWorkbenchProvider: React.FC<{}> = ({ children }) => {
 
     startQuery,
     cancelQuery,
-  };
+  }), [isDrawerOpen, openDrawer, closeDrawer, toggleDrawer, getQuery, setQuery, queryStatus,
+    isExecutingQuery, setIsExcutingQuery, executionInfo, setExecutionInfo, 
+    dataIntegrity, setDataIntegrity, editorRef, 
+    layout, setLayout, startQuery, cancelQuery
+  ]);
 
   return <QueryWorkbenchContext.Provider value={context}>{children}</QueryWorkbenchContext.Provider>;
 };

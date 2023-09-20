@@ -215,7 +215,7 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__CLOUDTRAIL, IFormD
           cloudTrailEventTypes: sourceDetails.cloudTrailEventTypes.join(' & ').toString(),
           cloudTrailDateFrom: normaliseDate(sourceDetails.cloudTrailDateFrom),
           cloudTrailDateTo: sourceDetails.cloudTrailDateTo && normaliseDate(sourceDetails.cloudTrailDateTo),
-          crossAccountRoleArn: sourceDetails.crossAccountRoleArn && sourceDetails.crossAccountRoleArn!,
+          crossAccountRoleArn: sourceDetails.crossAccountRoleArn,
         };
       },
     },

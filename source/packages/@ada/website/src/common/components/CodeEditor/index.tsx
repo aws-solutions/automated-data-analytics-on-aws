@@ -50,12 +50,6 @@ export const CodeEditor = React.forwardRef<IAceEditor | null, CodeEditorProps>(
     },
     ref,
   ) => {
-    if (defaultValue != null && value != null) {
-      throw new Error(
-        'CodeEditor props `defaultValue` and `value` are mutually exclusive - either uncontrolled or controlled respectively.',
-      );
-    }
-
     const [minLines] = useState<number>(() => {
       return Math.max(5, (defaultValue || '').split('\n').length);
     });
@@ -99,6 +93,12 @@ export const CodeEditor = React.forwardRef<IAceEditor | null, CodeEditorProps>(
         addCompleter(customCompleter);
       }
     }, [completions]);
+
+    if (defaultValue != null && value != null) {
+      throw new Error(
+        'CodeEditor props `defaultValue` and `value` are mutually exclusive - either uncontrolled or controlled respectively.',
+      );
+    }
 
     return (
       <AceEditor

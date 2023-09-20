@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-IdentityService) - Automated Data Analytics on AWS. Version v1.2.0",
+  "Description": "(SO0190-IdentityService) - Automated Data Analytics on AWS. Version v1.3.0",
   "Outputs": Object {
     "AdaIdentityServiceUserPoolClient300BB0C2Ref": Object {
       "Value": Object {
@@ -151,7 +151,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -9575,6 +9575,7 @@ Object {
     },
     "ApiRestApiRefidentityOPTIONS5DA96F0F": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -9743,11 +9744,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentityattributesGetIdentityAttributesResponse0632E278",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -9788,55 +9785,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefidentityattributesGetIdentityAttributesResponse0632E278": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Details about the identity attributes",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "IdentityAttribute": Object {
-              "properties": Object {
-                "name": Object {
-                  "description": "The name of the attribute",
-                  "type": "string",
-                },
-                "required": Object {
-                  "description": "Flag that determine if the attribute is required or not",
-                  "type": "boolean",
-                },
-                "type": Object {
-                  "description": "The data type of the attribute",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "name",
-                "type",
-                "required",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "attributes": Object {
-              "items": Object {
-                "$ref": "#/definitions/IdentityAttribute",
-              },
-              "type": "array",
-            },
-          },
-          "title": "GetIdentityAttributesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentityattributesOPTIONS771152C3": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -9911,11 +9862,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitygroupListIdentityGroupsResponseFB65B8A3",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -10015,238 +9962,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Resource",
     },
-    "ApiRestApiRefidentitygroupListIdentityGroupsResponseFB65B8A3": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The list of all groups",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "Group": Object {
-              "properties": Object {
-                "apiAccessPolicyIds": Object {
-                  "description": "The api access policies associated with the group. These policy ids map to sets of api paths to define what apis the group may call.",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "autoAssignUsers": Object {
-                  "description": "Flag to automatically add users to this group",
-                  "type": "boolean",
-                },
-                "claims": Object {
-                  "description": "The identity provider claims or machine ids associated with this group. If a user has one or more of these claims, they are considered part of the group",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "description": Object {
-                  "description": "A description of the group",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "groupId": Object {
-                  "description": "Identifier for the group",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "members": Object {
-                  "description": "The members that belong to this group, defined by values of preferred_username.",
-                  "items": Object {
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyIds",
-                "claims",
-                "groupId",
-                "members",
-              ],
-              "type": "object",
-            },
-            "GroupEntity": Object {
-              "properties": Object {
-                "apiAccessPolicyIds": Object {
-                  "description": "The api access policies associated with the group. These policy ids map to sets of api paths to define what apis the group may call.",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "autoAssignUsers": Object {
-                  "description": "Flag to automatically add users to this group",
-                  "type": "boolean",
-                },
-                "claims": Object {
-                  "description": "The identity provider claims or machine ids associated with this group. If a user has one or more of these claims, they are considered part of the group",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "A description of the group",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "groupId": Object {
-                  "description": "Identifier for the group",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "members": Object {
-                  "description": "The members that belong to this group, defined by values of preferred_username.",
-                  "items": Object {
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyIds",
-                "claims",
-                "groupId",
-                "members",
-              ],
-              "type": "object",
-            },
-            "GroupIdentifier": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "Identifier for the group",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-              ],
-              "type": "object",
-            },
-            "GroupMembers": Object {
-              "properties": Object {
-                "members": Object {
-                  "description": "The members that belong to this group, defined by values of preferred_username.",
-                  "items": Object {
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "members",
-              ],
-              "type": "object",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "groups": Object {
-              "items": Object {
-                "$ref": "#/definitions/GroupEntity",
-              },
-              "type": "array",
-            },
-            "nextToken": Object {
-              "type": "string",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "groups",
-          ],
-          "title": "ListIdentityGroupsResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentitygroupOPTIONSDB29DBC4": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -10321,11 +10039,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitygroupgroupIdDeleteIdentityGroupResponse6EAAFE35",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -10427,208 +10141,6 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefidentitygroupgroupIdDeleteIdentityGroupResponse6EAAFE35": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentitygroupgroupIdPutIdentityGroupResponse0B09002C",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The group that was deleted",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "Group": Object {
-              "properties": Object {
-                "apiAccessPolicyIds": Object {
-                  "description": "The api access policies associated with the group. These policy ids map to sets of api paths to define what apis the group may call.",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "autoAssignUsers": Object {
-                  "description": "Flag to automatically add users to this group",
-                  "type": "boolean",
-                },
-                "claims": Object {
-                  "description": "The identity provider claims or machine ids associated with this group. If a user has one or more of these claims, they are considered part of the group",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "description": Object {
-                  "description": "A description of the group",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "groupId": Object {
-                  "description": "Identifier for the group",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "members": Object {
-                  "description": "The members that belong to this group, defined by values of preferred_username.",
-                  "items": Object {
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyIds",
-                "claims",
-                "groupId",
-                "members",
-              ],
-              "type": "object",
-            },
-            "GroupIdentifier": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "Identifier for the group",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-              ],
-              "type": "object",
-            },
-            "GroupMembers": Object {
-              "properties": Object {
-                "members": Object {
-                  "description": "The members that belong to this group, defined by values of preferred_username.",
-                  "items": Object {
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "members",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "apiAccessPolicyIds": Object {
-              "description": "The api access policies associated with the group. These policy ids map to sets of api paths to define what apis the group may call.",
-              "items": Object {
-                "maxLength": 256,
-                "minLength": 2,
-                "pattern": "^[a-z][a-z_0-9]*$",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "autoAssignUsers": Object {
-              "description": "Flag to automatically add users to this group",
-              "type": "boolean",
-            },
-            "claims": Object {
-              "description": "The identity provider claims or machine ids associated with this group. If a user has one or more of these claims, they are considered part of the group",
-              "items": Object {
-                "maxLength": 256,
-                "minLength": 2,
-                "pattern": "^[a-z][a-z_0-9]*$",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "A description of the group",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "groupId": Object {
-              "description": "Identifier for the group",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "members": Object {
-              "description": "The members that belong to this group, defined by values of preferred_username.",
-              "items": Object {
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "apiAccessPolicyIds",
-            "claims",
-            "groupId",
-            "members",
-          ],
-          "title": "DeleteIdentityGroupResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentitygroupgroupIdGETApiPermissionAdaIdentityServiceApiRestApiRef3D1E5D88GETIdentityGroupGroupIdC3544299": Object {
       "Properties": Object {
         "Action": "lambda:InvokeFunction",
@@ -10722,11 +10234,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitygroupgroupIdGetIdentityGroupResponse2F7B6FFC",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -10762,205 +10270,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefidentitygroupgroupIdGetIdentityGroupResponse2F7B6FFC": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The group with the given id",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "Group": Object {
-              "properties": Object {
-                "apiAccessPolicyIds": Object {
-                  "description": "The api access policies associated with the group. These policy ids map to sets of api paths to define what apis the group may call.",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "autoAssignUsers": Object {
-                  "description": "Flag to automatically add users to this group",
-                  "type": "boolean",
-                },
-                "claims": Object {
-                  "description": "The identity provider claims or machine ids associated with this group. If a user has one or more of these claims, they are considered part of the group",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "description": Object {
-                  "description": "A description of the group",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "groupId": Object {
-                  "description": "Identifier for the group",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "members": Object {
-                  "description": "The members that belong to this group, defined by values of preferred_username.",
-                  "items": Object {
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyIds",
-                "claims",
-                "groupId",
-                "members",
-              ],
-              "type": "object",
-            },
-            "GroupIdentifier": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "Identifier for the group",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-              ],
-              "type": "object",
-            },
-            "GroupMembers": Object {
-              "properties": Object {
-                "members": Object {
-                  "description": "The members that belong to this group, defined by values of preferred_username.",
-                  "items": Object {
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "members",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "apiAccessPolicyIds": Object {
-              "description": "The api access policies associated with the group. These policy ids map to sets of api paths to define what apis the group may call.",
-              "items": Object {
-                "maxLength": 256,
-                "minLength": 2,
-                "pattern": "^[a-z][a-z_0-9]*$",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "autoAssignUsers": Object {
-              "description": "Flag to automatically add users to this group",
-              "type": "boolean",
-            },
-            "claims": Object {
-              "description": "The identity provider claims or machine ids associated with this group. If a user has one or more of these claims, they are considered part of the group",
-              "items": Object {
-                "maxLength": 256,
-                "minLength": 2,
-                "pattern": "^[a-z][a-z_0-9]*$",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "A description of the group",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "groupId": Object {
-              "description": "Identifier for the group",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "members": Object {
-              "description": "The members that belong to this group, defined by values of preferred_username.",
-              "items": Object {
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "apiAccessPolicyIds",
-            "claims",
-            "groupId",
-            "members",
-          ],
-          "title": "GetIdentityGroupResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentitygroupgroupIdMembers049DDFD4": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -10975,6 +10284,7 @@ Object {
     },
     "ApiRestApiRefidentitygroupgroupIdOPTIONS201BBC23": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -11049,11 +10359,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitygroupgroupIdPutIdentityGroupResponse0B09002C",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -11161,9 +10467,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "ApiRestApiRefidentitygroupgroupIdPutIdentityGroupRequestA672C9D0": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentitygroupgroupIdGetIdentityGroupResponse2F7B6FFC",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "Details about the new group",
@@ -11265,210 +10568,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefidentitygroupgroupIdPutIdentityGroupResponse0B09002C": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentitygroupgroupIdPutIdentityGroupRequestA672C9D0",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The created/updated group",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "Group": Object {
-              "properties": Object {
-                "apiAccessPolicyIds": Object {
-                  "description": "The api access policies associated with the group. These policy ids map to sets of api paths to define what apis the group may call.",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "autoAssignUsers": Object {
-                  "description": "Flag to automatically add users to this group",
-                  "type": "boolean",
-                },
-                "claims": Object {
-                  "description": "The identity provider claims or machine ids associated with this group. If a user has one or more of these claims, they are considered part of the group",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "description": Object {
-                  "description": "A description of the group",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "groupId": Object {
-                  "description": "Identifier for the group",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "members": Object {
-                  "description": "The members that belong to this group, defined by values of preferred_username.",
-                  "items": Object {
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyIds",
-                "claims",
-                "groupId",
-                "members",
-              ],
-              "type": "object",
-            },
-            "GroupIdentifier": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "Identifier for the group",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-              ],
-              "type": "object",
-            },
-            "GroupMembers": Object {
-              "properties": Object {
-                "members": Object {
-                  "description": "The members that belong to this group, defined by values of preferred_username.",
-                  "items": Object {
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "members",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "apiAccessPolicyIds": Object {
-              "description": "The api access policies associated with the group. These policy ids map to sets of api paths to define what apis the group may call.",
-              "items": Object {
-                "maxLength": 256,
-                "minLength": 2,
-                "pattern": "^[a-z][a-z_0-9]*$",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "autoAssignUsers": Object {
-              "description": "Flag to automatically add users to this group",
-              "type": "boolean",
-            },
-            "claims": Object {
-              "description": "The identity provider claims or machine ids associated with this group. If a user has one or more of these claims, they are considered part of the group",
-              "items": Object {
-                "maxLength": 256,
-                "minLength": 2,
-                "pattern": "^[a-z][a-z_0-9]*$",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "A description of the group",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "groupId": Object {
-              "description": "Identifier for the group",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "members": Object {
-              "description": "The members that belong to this group, defined by values of preferred_username.",
-              "items": Object {
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "apiAccessPolicyIds",
-            "claims",
-            "groupId",
-            "members",
-          ],
-          "title": "PutIdentityGroupResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentitygroupgroupIdmembersOPTIONS5464AD55": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -11543,11 +10645,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitygroupgroupIdmembersPutIdentityGroupMembersResponseD768D61A",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -11681,208 +10779,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefidentitygroupgroupIdmembersPutIdentityGroupMembersResponseD768D61A": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentitygroupgroupIdmembersPutIdentityGroupMembersRequest8761B07A",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The updated group",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "Group": Object {
-              "properties": Object {
-                "apiAccessPolicyIds": Object {
-                  "description": "The api access policies associated with the group. These policy ids map to sets of api paths to define what apis the group may call.",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "autoAssignUsers": Object {
-                  "description": "Flag to automatically add users to this group",
-                  "type": "boolean",
-                },
-                "claims": Object {
-                  "description": "The identity provider claims or machine ids associated with this group. If a user has one or more of these claims, they are considered part of the group",
-                  "items": Object {
-                    "maxLength": 256,
-                    "minLength": 2,
-                    "pattern": "^[a-z][a-z_0-9]*$",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "description": Object {
-                  "description": "A description of the group",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "groupId": Object {
-                  "description": "Identifier for the group",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "members": Object {
-                  "description": "The members that belong to this group, defined by values of preferred_username.",
-                  "items": Object {
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "apiAccessPolicyIds",
-                "claims",
-                "groupId",
-                "members",
-              ],
-              "type": "object",
-            },
-            "GroupIdentifier": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "Identifier for the group",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-              ],
-              "type": "object",
-            },
-            "GroupMembers": Object {
-              "properties": Object {
-                "members": Object {
-                  "description": "The members that belong to this group, defined by values of preferred_username.",
-                  "items": Object {
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-              },
-              "required": Array [
-                "members",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "apiAccessPolicyIds": Object {
-              "description": "The api access policies associated with the group. These policy ids map to sets of api paths to define what apis the group may call.",
-              "items": Object {
-                "maxLength": 256,
-                "minLength": 2,
-                "pattern": "^[a-z][a-z_0-9]*$",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "autoAssignUsers": Object {
-              "description": "Flag to automatically add users to this group",
-              "type": "boolean",
-            },
-            "claims": Object {
-              "description": "The identity provider claims or machine ids associated with this group. If a user has one or more of these claims, they are considered part of the group",
-              "items": Object {
-                "maxLength": 256,
-                "minLength": 2,
-                "pattern": "^[a-z][a-z_0-9]*$",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "A description of the group",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "groupId": Object {
-              "description": "Identifier for the group",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "members": Object {
-              "description": "The members that belong to this group, defined by values of preferred_username.",
-              "items": Object {
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "apiAccessPolicyIds",
-            "claims",
-            "groupId",
-            "members",
-          ],
-          "title": "PutIdentityGroupMembersResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentitymachineGET36805FE0": Object {
       "DependsOn": Array [
         "ApiRestApiRefidentitymachineOPTIONS4486C7C8",
@@ -11918,11 +10814,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitymachineListIdentityMachinesResponseD5A2FA1B",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -12010,153 +10902,6 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefidentitymachineListIdentityMachinesResponseD5A2FA1B": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The list of all machines",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "Machine": Object {
-              "properties": Object {
-                "description": Object {
-                  "description": "A description of the machine",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-            "MachineEntity": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "A description of the machine",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-            "MachineIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "machines": Object {
-              "items": Object {
-                "$ref": "#/definitions/MachineEntity",
-              },
-              "type": "array",
-            },
-            "nextToken": Object {
-              "type": "string",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "machines",
-          ],
-          "title": "ListIdentityMachinesResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentitymachineMachineId0C13A352": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -12171,6 +10916,7 @@ Object {
     },
     "ApiRestApiRefidentitymachineOPTIONS4486C7C8": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -12303,11 +11049,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitymachinemachineIdDeleteIdentityMachineResponseC12CCC74",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -12350,125 +11092,6 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Method",
-    },
-    "ApiRestApiRefidentitymachinemachineIdDeleteIdentityMachineResponseC12CCC74": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentitymachinemachineIdPutIdentityMachineResponseE0D5E80B",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The machine that was deleted",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "Machine": Object {
-              "properties": Object {
-                "description": Object {
-                  "description": "A description of the machine",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-            "MachineIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "A description of the machine",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "machineId": Object {
-              "description": "Identifier for the machine",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "machineId",
-          ],
-          "title": "DeleteIdentityMachineResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
     },
     "ApiRestApiRefidentitymachinemachineIdGETApiPermissionAdaIdentityServiceApiRestApiRef3D1E5D88GETIdentityMachineMachineIdAEE8BC05": Object {
       "Properties": Object {
@@ -12563,11 +11186,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitymachinemachineIdGetIdentityMachineResponseEB860E79",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -12603,124 +11222,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefidentitymachinemachineIdGetIdentityMachineResponseEB860E79": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The machine with the given id",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "Machine": Object {
-              "properties": Object {
-                "description": Object {
-                  "description": "A description of the machine",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-            "MachineIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "A description of the machine",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "machineId": Object {
-              "description": "Identifier for the machine",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "machineId",
-          ],
-          "title": "GetIdentityMachineResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentitymachinemachineIdOPTIONS871B53D3": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -12853,11 +11357,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitymachinemachineIdPutIdentityMachineResponseE0D5E80B",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -12907,9 +11407,6 @@ Object {
       "Type": "AWS::ApiGateway::Method",
     },
     "ApiRestApiRefidentitymachinemachineIdPutIdentityMachineRequestC4A421A1": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentitymachinemachineIdGetIdentityMachineResponseEB860E79",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "Details about the new machine",
@@ -12956,107 +11453,6 @@ Object {
             },
           },
           "title": "PutIdentityMachineRequest",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
-    "ApiRestApiRefidentitymachinemachineIdPutIdentityMachineResponseE0D5E80B": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentitymachinemachineIdPutIdentityMachineRequestC4A421A1",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The created/updated machine",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "Machine": Object {
-              "properties": Object {
-                "token": Object {
-                  "description": "The token to be used by the machine to do API calls",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-            "MachineIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "token": Object {
-              "description": "The token to be used by the machine to do API calls",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "machineId",
-          ],
-          "title": "PutIdentityMachineResponse",
           "type": "object",
         },
       },
@@ -13109,11 +11505,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitymachinemachineIdtokenListIdentityMachineTokensResponse37E46971",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -13210,250 +11602,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefidentitymachinemachineIdtokenListIdentityMachineTokensResponse37E46971": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The machine tokens with the given id",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "MachineIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-            "Token": Object {
-              "properties": Object {
-                "authToken": Object {
-                  "description": "The base64 encoded clientId and clientSecret, only available during initial create response.",
-                  "type": "string",
-                },
-                "authUrl": Object {
-                  "description": "The authentication url used to authorize the token",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The clientId of the token.",
-                  "type": "string",
-                },
-                "clientSecret": Object {
-                  "description": "The clientSecret of the token, only available during initial create response.",
-                  "type": "string",
-                },
-                "enabled": Object {
-                  "description": "Define whether the token is active or not",
-                  "type": "boolean",
-                },
-                "expiration": Object {
-                  "description": "The expiration date of the token",
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "tokenId": Object {
-                  "description": "Identifier of the token",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "username": Object {
-                  "description": "The username associated with the token.",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "clientId",
-                "enabled",
-                "expiration",
-                "machineId",
-                "tokenId",
-                "username",
-              ],
-              "type": "object",
-            },
-            "TokenEntity": Object {
-              "properties": Object {
-                "authToken": Object {
-                  "description": "The base64 encoded clientId and clientSecret, only available during initial create response.",
-                  "type": "string",
-                },
-                "authUrl": Object {
-                  "description": "The authentication url used to authorize the token",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The clientId of the token.",
-                  "type": "string",
-                },
-                "clientSecret": Object {
-                  "description": "The clientSecret of the token, only available during initial create response.",
-                  "type": "string",
-                },
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "enabled": Object {
-                  "description": "Define whether the token is active or not",
-                  "type": "boolean",
-                },
-                "expiration": Object {
-                  "description": "The expiration date of the token",
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "tokenId": Object {
-                  "description": "Identifier of the token",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "username": Object {
-                  "description": "The username associated with the token.",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "clientId",
-                "enabled",
-                "expiration",
-                "machineId",
-                "tokenId",
-                "username",
-              ],
-              "type": "object",
-            },
-            "TokenIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "tokenId": Object {
-                  "description": "Identifier of the token",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-                "tokenId",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "nextToken": Object {
-              "type": "string",
-            },
-            "tokens": Object {
-              "items": Object {
-                "$ref": "#/definitions/TokenEntity",
-              },
-              "type": "array",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "tokens",
-          ],
-          "title": "ListIdentityMachineTokensResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentitymachinemachineIdtokenOPTIONSAA03C9EB": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -13540,11 +11691,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitymachinemachineIdtokentokenIdDeleteIdentityMachineTokenResponse35F6730C",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -13647,220 +11794,6 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefidentitymachinemachineIdtokentokenIdDeleteIdentityMachineTokenResponse35F6730C": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentitymachinemachineIdtokentokenIdPutIdentityMachineTokenResponse5AF9CC09",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The machine token that was deleted",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "MachineIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-            "Token": Object {
-              "properties": Object {
-                "authToken": Object {
-                  "description": "The base64 encoded clientId and clientSecret, only available during initial create response.",
-                  "type": "string",
-                },
-                "authUrl": Object {
-                  "description": "The authentication url used to authorize the token",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The clientId of the token.",
-                  "type": "string",
-                },
-                "clientSecret": Object {
-                  "description": "The clientSecret of the token, only available during initial create response.",
-                  "type": "string",
-                },
-                "enabled": Object {
-                  "description": "Define whether the token is active or not",
-                  "type": "boolean",
-                },
-                "expiration": Object {
-                  "description": "The expiration date of the token",
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "tokenId": Object {
-                  "description": "Identifier of the token",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "username": Object {
-                  "description": "The username associated with the token.",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "clientId",
-                "enabled",
-                "expiration",
-                "machineId",
-                "tokenId",
-                "username",
-              ],
-              "type": "object",
-            },
-            "TokenIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "tokenId": Object {
-                  "description": "Identifier of the token",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-                "tokenId",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "authToken": Object {
-              "description": "The base64 encoded clientId and clientSecret, only available during initial create response.",
-              "type": "string",
-            },
-            "authUrl": Object {
-              "description": "The authentication url used to authorize the token",
-              "type": "string",
-            },
-            "clientId": Object {
-              "description": "The clientId of the token.",
-              "type": "string",
-            },
-            "clientSecret": Object {
-              "description": "The clientSecret of the token, only available during initial create response.",
-              "type": "string",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "enabled": Object {
-              "description": "Define whether the token is active or not",
-              "type": "boolean",
-            },
-            "expiration": Object {
-              "description": "The expiration date of the token",
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "machineId": Object {
-              "description": "Identifier for the machine",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "tokenId": Object {
-              "description": "Identifier of the token",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "username": Object {
-              "description": "The username associated with the token.",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "clientId",
-            "enabled",
-            "expiration",
-            "machineId",
-            "tokenId",
-            "username",
-          ],
-          "title": "DeleteIdentityMachineTokenResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentitymachinemachineIdtokentokenIdGETApiPermissionAdaIdentityServiceApiRestApiRef3D1E5D88GETIdentityMachineMachineIdTokenTokenId373907CE": Object {
       "Properties": Object {
         "Action": "lambda:InvokeFunction",
@@ -13954,11 +11887,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitymachinemachineIdtokentokenIdGetIdentityMachineTokenResponseB95DAE47",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -13995,219 +11924,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefidentitymachinemachineIdtokentokenIdGetIdentityMachineTokenResponseB95DAE47": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The machine token with the given id",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "MachineIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-            "Token": Object {
-              "properties": Object {
-                "authToken": Object {
-                  "description": "The base64 encoded clientId and clientSecret, only available during initial create response.",
-                  "type": "string",
-                },
-                "authUrl": Object {
-                  "description": "The authentication url used to authorize the token",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The clientId of the token.",
-                  "type": "string",
-                },
-                "clientSecret": Object {
-                  "description": "The clientSecret of the token, only available during initial create response.",
-                  "type": "string",
-                },
-                "enabled": Object {
-                  "description": "Define whether the token is active or not",
-                  "type": "boolean",
-                },
-                "expiration": Object {
-                  "description": "The expiration date of the token",
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "tokenId": Object {
-                  "description": "Identifier of the token",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "username": Object {
-                  "description": "The username associated with the token.",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "clientId",
-                "enabled",
-                "expiration",
-                "machineId",
-                "tokenId",
-                "username",
-              ],
-              "type": "object",
-            },
-            "TokenIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "tokenId": Object {
-                  "description": "Identifier of the token",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-                "tokenId",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "authToken": Object {
-              "description": "The base64 encoded clientId and clientSecret, only available during initial create response.",
-              "type": "string",
-            },
-            "authUrl": Object {
-              "description": "The authentication url used to authorize the token",
-              "type": "string",
-            },
-            "clientId": Object {
-              "description": "The clientId of the token.",
-              "type": "string",
-            },
-            "clientSecret": Object {
-              "description": "The clientSecret of the token, only available during initial create response.",
-              "type": "string",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "enabled": Object {
-              "description": "Define whether the token is active or not",
-              "type": "boolean",
-            },
-            "expiration": Object {
-              "description": "The expiration date of the token",
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "machineId": Object {
-              "description": "Identifier for the machine",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "tokenId": Object {
-              "description": "Identifier of the token",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "username": Object {
-              "description": "The username associated with the token.",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "clientId",
-            "enabled",
-            "expiration",
-            "machineId",
-            "tokenId",
-            "username",
-          ],
-          "title": "GetIdentityMachineTokenResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentitymachinemachineIdtokentokenIdOPTIONS812A5FED": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -14282,11 +12001,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentitymachinemachineIdtokentokenIdPutIdentityMachineTokenResponse5AF9CC09",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -14395,9 +12110,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "ApiRestApiRefidentitymachinemachineIdtokentokenIdPutIdentityMachineTokenRequest162231C7": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentitymachinemachineIdtokentokenIdGetIdentityMachineTokenResponseB95DAE47",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "Details about the new machine token",
@@ -14507,220 +12219,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefidentitymachinemachineIdtokentokenIdPutIdentityMachineTokenResponse5AF9CC09": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentitymachinemachineIdtokentokenIdPutIdentityMachineTokenRequest162231C7",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The created/updated machine token",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "MachineIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-              ],
-              "type": "object",
-            },
-            "Token": Object {
-              "properties": Object {
-                "authToken": Object {
-                  "description": "The base64 encoded clientId and clientSecret, only available during initial create response.",
-                  "type": "string",
-                },
-                "authUrl": Object {
-                  "description": "The authentication url used to authorize the token",
-                  "type": "string",
-                },
-                "clientId": Object {
-                  "description": "The clientId of the token.",
-                  "type": "string",
-                },
-                "clientSecret": Object {
-                  "description": "The clientSecret of the token, only available during initial create response.",
-                  "type": "string",
-                },
-                "enabled": Object {
-                  "description": "Define whether the token is active or not",
-                  "type": "boolean",
-                },
-                "expiration": Object {
-                  "description": "The expiration date of the token",
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "tokenId": Object {
-                  "description": "Identifier of the token",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "username": Object {
-                  "description": "The username associated with the token.",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "clientId",
-                "enabled",
-                "expiration",
-                "machineId",
-                "tokenId",
-                "username",
-              ],
-              "type": "object",
-            },
-            "TokenIdentifier": Object {
-              "properties": Object {
-                "machineId": Object {
-                  "description": "Identifier for the machine",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "tokenId": Object {
-                  "description": "Identifier of the token",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "machineId",
-                "tokenId",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "authToken": Object {
-              "description": "The base64 encoded clientId and clientSecret, only available during initial create response.",
-              "type": "string",
-            },
-            "authUrl": Object {
-              "description": "The authentication url used to authorize the token",
-              "type": "string",
-            },
-            "clientId": Object {
-              "description": "The clientId of the token.",
-              "type": "string",
-            },
-            "clientSecret": Object {
-              "description": "The clientSecret of the token, only available during initial create response.",
-              "type": "string",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "enabled": Object {
-              "description": "Define whether the token is active or not",
-              "type": "boolean",
-            },
-            "expiration": Object {
-              "description": "The expiration date of the token",
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "machineId": Object {
-              "description": "Identifier for the machine",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "tokenId": Object {
-              "description": "Identifier of the token",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "username": Object {
-              "description": "The username associated with the token.",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "clientId",
-            "enabled",
-            "expiration",
-            "machineId",
-            "tokenId",
-            "username",
-          ],
-          "title": "PutIdentityMachineTokenResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentityproviderGET4BA7693A": Object {
       "DependsOn": Array [
         "ApiRestApiRefidentityproviderOPTIONSBC900877",
@@ -14756,11 +12254,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentityproviderListIdentityProvidersResponseD3B3F9B0",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -14848,241 +12342,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefidentityproviderListIdentityProvidersResponseD3B3F9B0": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The list of all providers",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "IdentityProvider": Object {
-              "properties": Object {
-                "attributeMapping": Object {
-                  "additionalProperties": Object {
-                    "type": "string",
-                  },
-                  "description": "The identity provider attribute mapping",
-                  "type": "object",
-                },
-                "description": Object {
-                  "description": "A description of the identity provider",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "details": Object {
-                  "description": "Parameters to configure the identity provider",
-                },
-                "enabled": Object {
-                  "default": true,
-                  "description": "Specify if the identity provider is enabled or not",
-                  "type": "boolean",
-                },
-                "identifiers": Object {
-                  "description": "A list of identity provider identifiers",
-                  "items": Object {
-                    "maxLength": 256,
-                    "pattern": "[\\\\w\\\\s+=.@-]+",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "identityProviderId": Object {
-                  "description": "The id of identity provider",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the identity provider",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "type": Object {
-                  "$ref": "#/definitions/IdentityProviderTypeEnum",
-                  "description": "The type of identity provider, SAML, OIDC, etc",
-                },
-              },
-              "required": Array [
-                "details",
-                "identityProviderId",
-                "name",
-                "type",
-              ],
-              "type": "object",
-            },
-            "IdentityProviderEntity": Object {
-              "properties": Object {
-                "attributeMapping": Object {
-                  "additionalProperties": Object {
-                    "type": "string",
-                  },
-                  "description": "The identity provider attribute mapping",
-                  "type": "object",
-                },
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "description": Object {
-                  "description": "A description of the identity provider",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "details": Object {
-                  "description": "Parameters to configure the identity provider",
-                },
-                "enabled": Object {
-                  "default": true,
-                  "description": "Specify if the identity provider is enabled or not",
-                  "type": "boolean",
-                },
-                "identifiers": Object {
-                  "description": "A list of identity provider identifiers",
-                  "items": Object {
-                    "maxLength": 256,
-                    "pattern": "[\\\\w\\\\s+=.@-]+",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "identityProviderId": Object {
-                  "description": "The id of identity provider",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the identity provider",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "type": Object {
-                  "$ref": "#/definitions/IdentityProviderTypeEnum",
-                  "description": "The type of identity provider, SAML, OIDC, etc",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "details",
-                "identityProviderId",
-                "name",
-                "type",
-              ],
-              "type": "object",
-            },
-            "IdentityProviderIdentifier": Object {
-              "properties": Object {
-                "identityProviderId": Object {
-                  "description": "The id of identity provider",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "identityProviderId",
-              ],
-              "type": "object",
-            },
-            "IdentityProviderTypeEnum": Object {
-              "description": "The type of identity provider, SAML, OIDC, etc",
-              "enum": Array [
-                "SAML",
-                "OIDC",
-                "Google",
-                "LoginWithAmazon",
-              ],
-              "type": "string",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "nextToken": Object {
-              "type": "string",
-            },
-            "providers": Object {
-              "items": Object {
-                "$ref": "#/definitions/IdentityProviderEntity",
-              },
-              "type": "array",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "providers",
-          ],
-          "title": "ListIdentityProvidersResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentityproviderOPTIONSBC900877": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -15157,11 +12419,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentityprovideridentityProviderIdDeleteIdentityProviderResponse69246290",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -15263,211 +12521,6 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefidentityprovideridentityProviderIdDeleteIdentityProviderResponse69246290": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentityprovideridentityProviderIdPutIdentityProviderResponse28156E94",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Details about the deleted identity provider",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "IdentityProvider": Object {
-              "properties": Object {
-                "attributeMapping": Object {
-                  "additionalProperties": Object {
-                    "type": "string",
-                  },
-                  "description": "The identity provider attribute mapping",
-                  "type": "object",
-                },
-                "description": Object {
-                  "description": "A description of the identity provider",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "details": Object {
-                  "description": "Parameters to configure the identity provider",
-                },
-                "enabled": Object {
-                  "default": true,
-                  "description": "Specify if the identity provider is enabled or not",
-                  "type": "boolean",
-                },
-                "identifiers": Object {
-                  "description": "A list of identity provider identifiers",
-                  "items": Object {
-                    "maxLength": 256,
-                    "pattern": "[\\\\w\\\\s+=.@-]+",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "identityProviderId": Object {
-                  "description": "The id of identity provider",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the identity provider",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "type": Object {
-                  "$ref": "#/definitions/IdentityProviderTypeEnum",
-                  "description": "The type of identity provider, SAML, OIDC, etc",
-                },
-              },
-              "required": Array [
-                "details",
-                "identityProviderId",
-                "name",
-                "type",
-              ],
-              "type": "object",
-            },
-            "IdentityProviderIdentifier": Object {
-              "properties": Object {
-                "identityProviderId": Object {
-                  "description": "The id of identity provider",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "identityProviderId",
-              ],
-              "type": "object",
-            },
-            "IdentityProviderTypeEnum": Object {
-              "description": "The type of identity provider, SAML, OIDC, etc",
-              "enum": Array [
-                "SAML",
-                "OIDC",
-                "Google",
-                "LoginWithAmazon",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "attributeMapping": Object {
-              "additionalProperties": Object {
-                "type": "string",
-              },
-              "description": "The identity provider attribute mapping",
-              "type": "object",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "A description of the identity provider",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "details": Object {
-              "description": "Parameters to configure the identity provider",
-            },
-            "enabled": Object {
-              "default": true,
-              "description": "Specify if the identity provider is enabled or not",
-              "type": "boolean",
-            },
-            "identifiers": Object {
-              "description": "A list of identity provider identifiers",
-              "items": Object {
-                "maxLength": 256,
-                "pattern": "[\\\\w\\\\s+=.@-]+",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "identityProviderId": Object {
-              "description": "The id of identity provider",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "name": Object {
-              "description": "The name of the identity provider",
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "type": Object {
-              "$ref": "#/definitions/IdentityProviderTypeEnum",
-              "description": "The type of identity provider, SAML, OIDC, etc",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "details",
-            "identityProviderId",
-            "name",
-            "type",
-          ],
-          "title": "DeleteIdentityProviderResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentityprovideridentityProviderIdGETApiPermissionAdaIdentityServiceApiRestApiRef3D1E5D88GETIdentityProviderIdentityProviderId72A75919": Object {
       "Properties": Object {
         "Action": "lambda:InvokeFunction",
@@ -15561,11 +12614,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentityprovideridentityProviderIdGetIdentityProviderResponse09895174",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -15609,210 +12658,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefidentityprovideridentityProviderIdGetIdentityProviderResponse09895174": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Details about the connected identity provider",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "IdentityProvider": Object {
-              "properties": Object {
-                "attributeMapping": Object {
-                  "additionalProperties": Object {
-                    "type": "string",
-                  },
-                  "description": "The identity provider attribute mapping",
-                  "type": "object",
-                },
-                "description": Object {
-                  "description": "A description of the identity provider",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "details": Object {
-                  "description": "Parameters to configure the identity provider",
-                },
-                "enabled": Object {
-                  "default": true,
-                  "description": "Specify if the identity provider is enabled or not",
-                  "type": "boolean",
-                },
-                "identifiers": Object {
-                  "description": "A list of identity provider identifiers",
-                  "items": Object {
-                    "maxLength": 256,
-                    "pattern": "[\\\\w\\\\s+=.@-]+",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "identityProviderId": Object {
-                  "description": "The id of identity provider",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the identity provider",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "type": Object {
-                  "$ref": "#/definitions/IdentityProviderTypeEnum",
-                  "description": "The type of identity provider, SAML, OIDC, etc",
-                },
-              },
-              "required": Array [
-                "details",
-                "identityProviderId",
-                "name",
-                "type",
-              ],
-              "type": "object",
-            },
-            "IdentityProviderIdentifier": Object {
-              "properties": Object {
-                "identityProviderId": Object {
-                  "description": "The id of identity provider",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "identityProviderId",
-              ],
-              "type": "object",
-            },
-            "IdentityProviderTypeEnum": Object {
-              "description": "The type of identity provider, SAML, OIDC, etc",
-              "enum": Array [
-                "SAML",
-                "OIDC",
-                "Google",
-                "LoginWithAmazon",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "attributeMapping": Object {
-              "additionalProperties": Object {
-                "type": "string",
-              },
-              "description": "The identity provider attribute mapping",
-              "type": "object",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "A description of the identity provider",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "details": Object {
-              "description": "Parameters to configure the identity provider",
-            },
-            "enabled": Object {
-              "default": true,
-              "description": "Specify if the identity provider is enabled or not",
-              "type": "boolean",
-            },
-            "identifiers": Object {
-              "description": "A list of identity provider identifiers",
-              "items": Object {
-                "maxLength": 256,
-                "pattern": "[\\\\w\\\\s+=.@-]+",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "identityProviderId": Object {
-              "description": "The id of identity provider",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "name": Object {
-              "description": "The name of the identity provider",
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "type": Object {
-              "$ref": "#/definitions/IdentityProviderTypeEnum",
-              "description": "The type of identity provider, SAML, OIDC, etc",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "details",
-            "identityProviderId",
-            "name",
-            "type",
-          ],
-          "title": "GetIdentityProviderResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentityprovideridentityProviderIdOPTIONS705D1BF9": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -15887,11 +12735,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentityprovideridentityProviderIdPutIdentityProviderResponse28156E94",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -15999,9 +12843,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "ApiRestApiRefidentityprovideridentityProviderIdPutIdentityProviderRequestDE854E64": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentityprovideridentityProviderIdGetIdentityProviderResponse09895174",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "Details about the identity provider to connect",
@@ -16103,211 +12944,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefidentityprovideridentityProviderIdPutIdentityProviderResponse28156E94": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentityprovideridentityProviderIdPutIdentityProviderRequestDE854E64",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "Details about the connected provider",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "IdentityProvider": Object {
-              "properties": Object {
-                "attributeMapping": Object {
-                  "additionalProperties": Object {
-                    "type": "string",
-                  },
-                  "description": "The identity provider attribute mapping",
-                  "type": "object",
-                },
-                "description": Object {
-                  "description": "A description of the identity provider",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "details": Object {
-                  "description": "Parameters to configure the identity provider",
-                },
-                "enabled": Object {
-                  "default": true,
-                  "description": "Specify if the identity provider is enabled or not",
-                  "type": "boolean",
-                },
-                "identifiers": Object {
-                  "description": "A list of identity provider identifiers",
-                  "items": Object {
-                    "maxLength": 256,
-                    "pattern": "[\\\\w\\\\s+=.@-]+",
-                    "type": "string",
-                  },
-                  "type": "array",
-                },
-                "identityProviderId": Object {
-                  "description": "The id of identity provider",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the identity provider",
-                  "maxLength": 2048,
-                  "minLength": 2,
-                  "pattern": "^[\\\\w _-]*$",
-                  "type": "string",
-                },
-                "type": Object {
-                  "$ref": "#/definitions/IdentityProviderTypeEnum",
-                  "description": "The type of identity provider, SAML, OIDC, etc",
-                },
-              },
-              "required": Array [
-                "details",
-                "identityProviderId",
-                "name",
-                "type",
-              ],
-              "type": "object",
-            },
-            "IdentityProviderIdentifier": Object {
-              "properties": Object {
-                "identityProviderId": Object {
-                  "description": "The id of identity provider",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "identityProviderId",
-              ],
-              "type": "object",
-            },
-            "IdentityProviderTypeEnum": Object {
-              "description": "The type of identity provider, SAML, OIDC, etc",
-              "enum": Array [
-                "SAML",
-                "OIDC",
-                "Google",
-                "LoginWithAmazon",
-              ],
-              "type": "string",
-            },
-          },
-          "properties": Object {
-            "attributeMapping": Object {
-              "additionalProperties": Object {
-                "type": "string",
-              },
-              "description": "The identity provider attribute mapping",
-              "type": "object",
-            },
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "description": Object {
-              "description": "A description of the identity provider",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "details": Object {
-              "description": "Parameters to configure the identity provider",
-            },
-            "enabled": Object {
-              "default": true,
-              "description": "Specify if the identity provider is enabled or not",
-              "type": "boolean",
-            },
-            "identifiers": Object {
-              "description": "A list of identity provider identifiers",
-              "items": Object {
-                "maxLength": 256,
-                "pattern": "[\\\\w\\\\s+=.@-]+",
-                "type": "string",
-              },
-              "type": "array",
-            },
-            "identityProviderId": Object {
-              "description": "The id of identity provider",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "name": Object {
-              "description": "The name of the identity provider",
-              "maxLength": 2048,
-              "minLength": 2,
-              "pattern": "^[\\\\w _-]*$",
-              "type": "string",
-            },
-            "type": Object {
-              "$ref": "#/definitions/IdentityProviderTypeEnum",
-              "description": "The type of identity provider, SAML, OIDC, etc",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "details",
-            "identityProviderId",
-            "name",
-            "type",
-          ],
-          "title": "PutIdentityProviderResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentityrequestGET5FCEA4F3": Object {
       "DependsOn": Array [
         "ApiRestApiRefidentityrequestOPTIONS9C24B84E",
@@ -16343,11 +12979,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentityrequestListIdentityRequestsResponseA1F7B46F",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -16455,176 +13087,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Resource",
     },
-    "ApiRestApiRefidentityrequestListIdentityRequestsResponseA1F7B46F": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The access requests with the given id",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AccessRequest": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "The id of group the user wants access to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "message": Object {
-                  "description": "Access Request Notes",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "userId": Object {
-                  "description": "UserId of user requesting access",
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-                "userId",
-              ],
-              "type": "object",
-            },
-            "AccessRequestEntity": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "groupId": Object {
-                  "description": "The id of group the user wants access to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "message": Object {
-                  "description": "Access Request Notes",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "userId": Object {
-                  "description": "UserId of user requesting access",
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-                "userId",
-              ],
-              "type": "object",
-            },
-            "AccessRequestIdentifier": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "The id of group the user wants access to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "userId": Object {
-                  "description": "UserId of user requesting access",
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-                "userId",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "accessRequests": Object {
-              "items": Object {
-                "$ref": "#/definitions/AccessRequestEntity",
-              },
-              "type": "array",
-            },
-            "nextToken": Object {
-              "type": "string",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-          },
-          "required": Array [
-            "accessRequests",
-          ],
-          "title": "ListIdentityRequestsResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentityrequestOPTIONS9C24B84E": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -16666,6 +13131,7 @@ Object {
     },
     "ApiRestApiRefidentityrequestgroupIdOPTIONS7C49ED94": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -16822,11 +13288,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentityrequestgroupIduserIdDeleteIdentityRequestResponse9CC5FD93",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -16870,146 +13332,6 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Method",
-    },
-    "ApiRestApiRefidentityrequestgroupIduserIdDeleteIdentityRequestResponse9CC5FD93": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentityrequestgroupIduserIdPutIdentityRequestResponseBE893912",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The AccessRequest that was deleted",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AccessRequest": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "The id of group the user wants access to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "message": Object {
-                  "description": "Access Request Notes",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "userId": Object {
-                  "description": "UserId of user requesting access",
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-                "userId",
-              ],
-              "type": "object",
-            },
-            "AccessRequestIdentifier": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "The id of group the user wants access to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "userId": Object {
-                  "description": "UserId of user requesting access",
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-                "userId",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "groupId": Object {
-              "description": "The id of group the user wants access to",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "message": Object {
-              "description": "Access Request Notes",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "userId": Object {
-              "description": "UserId of user requesting access",
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "groupId",
-            "userId",
-          ],
-          "title": "DeleteIdentityRequestResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
     },
     "ApiRestApiRefidentityrequestgroupIduserIdGETApiPermissionAdaIdentityServiceApiRestApiRef3D1E5D88GETIdentityRequestGroupIdUserId97670459": Object {
       "Properties": Object {
@@ -17104,11 +13426,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentityrequestgroupIduserIdGetIdentityRequestResponseF356A52C",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -17145,145 +13463,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "ApiRestApiRefidentityrequestgroupIduserIdGetIdentityRequestResponseF356A52C": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The access request with the given ids",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AccessRequest": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "The id of group the user wants access to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "message": Object {
-                  "description": "Access Request Notes",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "userId": Object {
-                  "description": "UserId of user requesting access",
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-                "userId",
-              ],
-              "type": "object",
-            },
-            "AccessRequestIdentifier": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "The id of group the user wants access to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "userId": Object {
-                  "description": "UserId of user requesting access",
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-                "userId",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "groupId": Object {
-              "description": "The id of group the user wants access to",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "message": Object {
-              "description": "Access Request Notes",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "userId": Object {
-              "description": "UserId of user requesting access",
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "groupId",
-            "userId",
-          ],
-          "title": "GetIdentityRequestResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentityrequestgroupIduserIdOPTIONS86E7887C": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -17358,11 +13540,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentityrequestgroupIduserIdPutIdentityRequestResponseBE893912",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -17471,9 +13649,6 @@ Object {
       "Type": "AWS::Lambda::Permission",
     },
     "ApiRestApiRefidentityrequestgroupIduserIdPutIdentityRequestRequestD55F53E5": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentityrequestgroupIduserIdGetIdentityRequestResponseF356A52C",
-      ],
       "Properties": Object {
         "ContentType": "application/json",
         "Description": "Details about the new AccessRequest",
@@ -17538,148 +13713,9 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefidentityrequestgroupIduserIdPutIdentityRequestResponseBE893912": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentityrequestgroupIduserIdPutIdentityRequestRequestD55F53E5",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The created/updated AccessRequest",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "AccessRequest": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "The id of group the user wants access to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "message": Object {
-                  "description": "Access Request Notes",
-                  "maxLength": 2048,
-                  "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-                  "type": "string",
-                },
-                "userId": Object {
-                  "description": "UserId of user requesting access",
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-                "userId",
-              ],
-              "type": "object",
-            },
-            "AccessRequestIdentifier": Object {
-              "properties": Object {
-                "groupId": Object {
-                  "description": "The id of group the user wants access to",
-                  "maxLength": 256,
-                  "minLength": 2,
-                  "pattern": "^[a-z][a-z_0-9]*$",
-                  "type": "string",
-                },
-                "userId": Object {
-                  "description": "UserId of user requesting access",
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "groupId",
-                "userId",
-              ],
-              "type": "object",
-            },
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "createdBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "createdTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "groupId": Object {
-              "description": "The id of group the user wants access to",
-              "maxLength": 256,
-              "minLength": 2,
-              "pattern": "^[a-z][a-z_0-9]*$",
-              "type": "string",
-            },
-            "message": Object {
-              "description": "Access Request Notes",
-              "maxLength": 2048,
-              "pattern": "^[\\\\w+ _.:,\\\\/*&%$#=+-@?!|()\\"'\\\\]\\\\[]*$",
-              "type": "string",
-            },
-            "updatedBy": Object {
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-            "updatedTimestamp": Object {
-              "maxLength": 64,
-              "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-              "type": "string",
-            },
-            "userId": Object {
-              "description": "UserId of user requesting access",
-              "maxLength": 256,
-              "pattern": "[\\\\w\\\\s+=.@-]+",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "groupId",
-            "userId",
-          ],
-          "title": "PutIdentityRequestResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentityrequestgroupIduserIdactionOPTIONSD79E6E9A": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -17812,11 +13848,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentityrequestgroupIduserIdactionPutIdentityRequestActionResponse8839B05C",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -17892,32 +13924,6 @@ Object {
       },
       "Type": "AWS::ApiGateway::Model",
     },
-    "ApiRestApiRefidentityrequestgroupIduserIdactionPutIdentityRequestActionResponse8839B05C": Object {
-      "DependsOn": Array [
-        "ApiRestApiRefidentityrequestgroupIduserIdactionPutIdentityRequestActionRequest2D8565E8",
-      ],
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The new details of the AccessRequest",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "properties": Object {
-            "reason": Object {
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "reason",
-          ],
-          "title": "PutIdentityRequestActionResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentityuserGET3B342429": Object {
       "DependsOn": Array [
         "ApiRestApiRefidentityuserOPTIONSA312304F",
@@ -17953,11 +13959,7 @@ Object {
         },
         "MethodResponses": Array [
           Object {
-            "ResponseModels": Object {
-              "application/json": Object {
-                "Ref": "ApiRestApiRefidentityuserListIdentityUsersResponse5F4F3774",
-              },
-            },
+            "ResponseModels": Object {},
             "StatusCode": "200",
           },
           Object {
@@ -18046,222 +14048,9 @@ Object {
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ApiRestApiRefidentityuserListIdentityUsersResponse5F4F3774": Object {
-      "Properties": Object {
-        "ContentType": "application/json",
-        "Description": "The list of the users currently available in Cognito",
-        "RestApiId": Object {
-          "Ref": "referencetoAdaApiServiceNestedStackApiServiceNestedStackResourceBBF04FB4OutputsAdaApiServiceFederatedApiFederatedRestApi1FB0E4F5Ref",
-        },
-        "Schema": Object {
-          "$schema": "http://json-schema.org/draft-04/schema#",
-          "definitions": Object {
-            "CreateAndUpdateDetails": Object {
-              "properties": Object {
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-              },
-              "type": "object",
-            },
-            "PaginatedResponse": Object {
-              "properties": Object {
-                "nextToken": Object {
-                  "type": "string",
-                },
-                "totalItems": Object {
-                  "type": "number",
-                },
-              },
-              "type": "object",
-            },
-            "User": Object {
-              "properties": Object {
-                "address": Object {
-                  "description": "The address of the user",
-                  "type": "string",
-                },
-                "customGroups": Object {
-                  "description": "List of groups that the user belongs to, separated by comma",
-                  "type": "string",
-                },
-                "email": Object {
-                  "description": "The user's email address",
-                  "type": "string",
-                },
-                "familyName": Object {
-                  "description": "The family name of the user",
-                  "type": "string",
-                },
-                "givenName": Object {
-                  "description": "The given name of the user",
-                  "type": "string",
-                },
-                "middleName": Object {
-                  "description": "The middle name of the user",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the user",
-                  "type": "string",
-                },
-                "nickname": Object {
-                  "description": "The nickname of the user",
-                  "type": "string",
-                },
-                "phoneNumber": Object {
-                  "description": "The phone number of the user",
-                  "type": "string",
-                },
-                "preferredUsername": Object {
-                  "description": "The preferred_username attribute that is used to identity the user",
-                  "type": "string",
-                },
-                "sub": Object {
-                  "description": "The Cognito sub of the user, equivalent to the ID",
-                  "type": "string",
-                },
-                "username": Object {
-                  "description": "The username of the user",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "username",
-              ],
-              "type": "object",
-            },
-            "UserEntity": Object {
-              "properties": Object {
-                "address": Object {
-                  "description": "The address of the user",
-                  "type": "string",
-                },
-                "createdBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "createdTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "customGroups": Object {
-                  "description": "List of groups that the user belongs to, separated by comma",
-                  "type": "string",
-                },
-                "email": Object {
-                  "description": "The user's email address",
-                  "type": "string",
-                },
-                "familyName": Object {
-                  "description": "The family name of the user",
-                  "type": "string",
-                },
-                "givenName": Object {
-                  "description": "The given name of the user",
-                  "type": "string",
-                },
-                "middleName": Object {
-                  "description": "The middle name of the user",
-                  "type": "string",
-                },
-                "name": Object {
-                  "description": "The name of the user",
-                  "type": "string",
-                },
-                "nickname": Object {
-                  "description": "The nickname of the user",
-                  "type": "string",
-                },
-                "phoneNumber": Object {
-                  "description": "The phone number of the user",
-                  "type": "string",
-                },
-                "preferredUsername": Object {
-                  "description": "The preferred_username attribute that is used to identity the user",
-                  "type": "string",
-                },
-                "sub": Object {
-                  "description": "The Cognito sub of the user, equivalent to the ID",
-                  "type": "string",
-                },
-                "updatedBy": Object {
-                  "maxLength": 256,
-                  "pattern": "[\\\\w\\\\s+=.@-]+",
-                  "type": "string",
-                },
-                "updatedTimestamp": Object {
-                  "maxLength": 64,
-                  "pattern": "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})(?:T(\\\\d{2}):(\\\\d{2}):(\\\\d{2}(?:\\\\.\\\\d*)?)((-(\\\\d{2}):(\\\\d{2})|Z)?))?$",
-                  "type": "string",
-                },
-                "username": Object {
-                  "description": "The username of the user",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "username",
-              ],
-              "type": "object",
-            },
-            "UserIdentifier": Object {
-              "properties": Object {
-                "username": Object {
-                  "description": "The username of the user",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "username",
-              ],
-              "type": "object",
-            },
-          },
-          "properties": Object {
-            "nextToken": Object {
-              "type": "string",
-            },
-            "totalItems": Object {
-              "type": "number",
-            },
-            "users": Object {
-              "items": Object {
-                "$ref": "#/definitions/UserEntity",
-              },
-              "type": "array",
-            },
-          },
-          "required": Array [
-            "users",
-          ],
-          "title": "ListIdentityUsersResponse",
-          "type": "object",
-        },
-      },
-      "Type": "AWS::ApiGateway::Model",
-    },
     "ApiRestApiRefidentityuserOPTIONSA312304F": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {

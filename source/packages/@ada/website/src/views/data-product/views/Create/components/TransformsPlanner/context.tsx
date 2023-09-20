@@ -64,7 +64,7 @@ export const TransformPlannerContextProvider: React.FC<ProviderProps> = ({
     transformedSchema?.preview && addFields(interpolateFieldEntriesFromPreview(transformedSchema.preview));
   }, [transformedSchema]);
 
-  const context: ITransformPlannerContext = {
+  const context: ITransformPlannerContext = useMemo(() => ({
     emitter,
     sourceSchema,
     transformedSchema,
@@ -73,7 +73,16 @@ export const TransformPlannerContextProvider: React.FC<ProviderProps> = ({
     addFields,
     transformPlan,
     updateTransformPlan,
-  };
+  }), [
+    emitter,
+    sourceSchema,
+    transformedSchema,
+    fields,
+    addField,
+    addFields,
+    transformPlan,
+    updateTransformPlan,
+  ]);
 
   return <TransformPlannerContext.Provider value={context}>{children}</TransformPlannerContext.Provider>;
 };

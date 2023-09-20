@@ -15,12 +15,15 @@ import { localDynamoRelationshipClient } from '../../../../../api/components/ent
 
 const mockAddTags = jest.fn();
 
+const cfnSymbol = Symbol.for('@aws-cdk/cx-api.CloudFormationStackArtifact');
 // Mock cdk apps to ensure we don't synthesize any resources
 jest.mock('aws-cdk-lib', () => ({
   ...(jest.requireActual('aws-cdk-lib') as any),
   App: class MockApp {
     public synth = jest.fn().mockReturnValue({
       getStackByName: jest.fn().mockReturnValue({
+        [cfnSymbol]: 'CloudFormation',
+        dependencies: [],
         tags: {
           Application: 'Ada',
         },
@@ -61,10 +64,14 @@ jest.mock('aws-cdk/lib/api/aws-auth', () => ({
 }));
 
 const mockDeployStack = jest.fn();
+const mockBuildSingleAsset = jest.fn();
+const mockPublishSingleAsset = jest.fn();
 
-jest.mock('aws-cdk/lib/api/cloudformation-deployments', () => ({
-  CloudFormationDeployments: class MockCloudFormationDeployments {
+jest.mock('aws-cdk/lib/api/deployments', () => ({
+  Deployments: class MockDeployments {
     public deployStack = (...args: any[]) => Promise.resolve(mockDeployStack(...args));
+    public buildSingleAsset = (...args: any[]) => Promise.resolve(mockBuildSingleAsset(...args));
+    public publishSingleAsset = (...args: any[]) => Promise.resolve(mockPublishSingleAsset(...args));
   },
 }));
 

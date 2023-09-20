@@ -222,6 +222,13 @@ export const TEST_STATIC_INFRASTRUCTURE: StaticInfra.IStaticParams = {
       ecsTaskRole: 'arn:aws:iam::11111111111:role/test-role',
     },
   },
+  redshiftConnector: {
+    importDataStateMachineArn: 'arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachineImport',
+    lastUpdatedDetailTableName: 'DynamoDBTableName',
+    otherArns: {
+      ecsTaskRole: 'arn:aws:iam::11111111111:role/test-role',
+    },
+  },
   mongoDBConnector: {
     importDataStateMachineArn: 'arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachineImport',
     lastUpdatedDetailTableName: 'DynamoDBTableName',

@@ -6,6 +6,7 @@ export interface RuntimeConfig {
   readonly userPoolClientId: string;
   readonly apiUrl: string;
   readonly region: string;
+  readonly accountId: string;
   readonly oauthScopes: string[];
   readonly oauthDomain: string;
   readonly ouathResponseType: string;
@@ -27,6 +28,7 @@ if (ENV_TEST || ENV_STORYBOOK) {
     userPoolClientId: 'mockUserPoolClientId',
     apiUrl: 'https://test.api/',
     region: 'ap-southeast-1',
+    accountId: '123456789012',
     oauthScopes: ['phone', 'profile', 'openid', 'email', 'aws.cognito.signin.user.admin'],
     oauthDomain: 'test.auth.ap-southeast-1.amazoncognito.com',
     ouathResponseType: 'code',

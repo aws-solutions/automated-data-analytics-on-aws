@@ -1,0 +1,820 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stack/synthesizer/oracle snapshot 1`] = `
+Object {
+  "Outputs": Object {
+    "StateMachineArn": Object {
+      "Export": Object {
+        "Name": "DataImportStateMachineArn-test-d4688test-d45928737",
+      },
+      "Value": Object {
+        "Ref": "StateMachine2E01A3A5",
+      },
+    },
+  },
+  "Parameters": Object {},
+  "Resources": Object {
+    "ArbitraryTransformsTransformJobsAndCrawlersTransformJobglobaladajsonrelationalise0JobAB08D24E": Object {
+      "Properties": Object {
+        "Command": Object {
+          "Name": "glueetl",
+          "PythonVersion": "3",
+          "ScriptLocation": "s3://script-bucket/transform_wrapper/transform_wrapper.py",
+        },
+        "Connections": Object {
+          "Connections": Array [
+            "test-d4688test-d45928737-connection",
+          ],
+        },
+        "DefaultArguments": Object {
+          "--INPUT_ARGS": "{}",
+          "--additional-python-modules": "awswrangler",
+          "--extra-py-files": "s3://script-bucket/scripts/global/ada_json_relationalise/transform_script.py",
+        },
+        "ExecutionProperty": Object {
+          "MaxConcurrentRuns": 1000,
+        },
+        "GlueVersion": "3.0",
+        "Name": "test-d4688test-d45928737-transform-0--global-ada_json_relationalise-0",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SourceAccessRoleC447CA39",
+            "Arn",
+          ],
+        },
+        "SecurityConfiguration": "glueSecurityConfiguration",
+        "Tags": Object {
+          "Application": "Ada",
+          "DataProductId": "test-data-product",
+          "DomainId": "test-domain",
+        },
+      },
+      "Type": "AWS::Glue::Job",
+    },
+    "ArbitraryTransformsTransformJobsAndCrawlersTransformJobglobaladaparquetdatatypemap1Job4CA16839": Object {
+      "Properties": Object {
+        "Command": Object {
+          "Name": "glueetl",
+          "PythonVersion": "3",
+          "ScriptLocation": "s3://script-bucket/transform_wrapper/transform_wrapper.py",
+        },
+        "DefaultArguments": Object {
+          "--INPUT_ARGS": "{}",
+          "--additional-python-modules": "awswrangler",
+          "--extra-py-files": "s3://script-bucket/scripts/global/ada_parquet_data_type_map/transform_script.py",
+        },
+        "ExecutionProperty": Object {
+          "MaxConcurrentRuns": 1000,
+        },
+        "GlueVersion": "3.0",
+        "Name": "test-d4688test-d45928737-transform-1--global-ada_parquet_data_type_map-1",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SourceAccessRoleC447CA39",
+            "Arn",
+          ],
+        },
+        "SecurityConfiguration": "glueSecurityConfiguration",
+        "Tags": Object {
+          "Application": "Ada",
+          "DataProductId": "test-data-product",
+          "DomainId": "test-domain",
+        },
+      },
+      "Type": "AWS::Glue::Job",
+    },
+    "ArbitraryTransformsTransformJobsAndCrawlersTransformOutputCrawler0Crawler1DA2C7B0": Object {
+      "Properties": Object {
+        "Classifiers": Array [],
+        "CrawlerSecurityConfiguration": "glueSecurityConfiguration",
+        "DatabaseName": "rawDB",
+        "Name": "test-d4688test-d45928737-transform-0--crawler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SourceAccessRoleC447CA39",
+            "Arn",
+          ],
+        },
+        "SchemaChangePolicy": Object {
+          "DeleteBehavior": "DEPRECATE_IN_DATABASE",
+          "UpdateBehavior": "UPDATE_IN_DATABASE",
+        },
+        "TablePrefix": "test-d4688test-d45928737-transform-0-",
+        "Tags": Object {
+          "Application": "Ada",
+          "DataProductId": "test-data-product",
+          "DomainId": "test-domain",
+        },
+        "Targets": Object {
+          "S3Targets": Array [
+            Object {
+              "Path": "data-bucket/test-domain/test-data-product/test-stack/transform/global-ada_json_relationalise/0/ada_default_dataset/",
+            },
+          ],
+        },
+      },
+      "Type": "AWS::Glue::Crawler",
+    },
+    "ArbitraryTransformsTransformJobsAndCrawlersTransformOutputCrawler1CrawlerA6E4809D": Object {
+      "Properties": Object {
+        "Classifiers": Array [],
+        "CrawlerSecurityConfiguration": "glueSecurityConfiguration",
+        "DatabaseName": "rawDB",
+        "Name": "test-d4688test-d45928737-transform-1--crawler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SourceAccessRoleC447CA39",
+            "Arn",
+          ],
+        },
+        "SchemaChangePolicy": Object {
+          "DeleteBehavior": "DEPRECATE_IN_DATABASE",
+          "UpdateBehavior": "UPDATE_IN_DATABASE",
+        },
+        "TablePrefix": "test-d4688test-d45928737-transform-1-",
+        "Tags": Object {
+          "Application": "Ada",
+          "DataProductId": "test-data-product",
+          "DomainId": "test-domain",
+        },
+        "Targets": Object {
+          "S3Targets": Array [
+            Object {
+              "Path": "data-bucket/test-domain/test-data-product/test-stack/transform/global-ada_parquet_data_type_map/1/ada_default_dataset/",
+            },
+          ],
+        },
+      },
+      "Type": "AWS::Glue::Crawler",
+    },
+    "GlueConnection": Object {
+      "Properties": Object {
+        "CatalogId": Object {
+          "Ref": "AWS::AccountId",
+        },
+        "ConnectionInput": Object {
+          "ConnectionProperties": Object {
+            "JDBC_CONNECTION_URL": "jdbc:oracle:thin://@mydb.123456789012.ap-southeast-2.rds.amazonaws.com:undefined/undefined",
+            "JDBC_ENFORCE_SSL": "false",
+            "KAFKA_SSL_ENABLED": "false",
+            "PASSWORD": "{{resolve:secretsmanager:undefined}}",
+          },
+          "ConnectionType": "JDBC",
+          "Description": "Connect to database",
+          "Name": "test-d4688test-d45928737-connection",
+          "PhysicalConnectionRequirements": Object {
+            "AvailabilityZone": "ap-southeast-2a",
+            "SecurityGroupIdList": Array [
+              "sg-12345",
+              "sg-23456",
+            ],
+            "SubnetId": "subnet-123",
+          },
+        },
+      },
+      "Type": "AWS::Glue::Connection",
+    },
+    "SourceAccessRoleC447CA39": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "glue.amazonaws.com",
+              },
+            },
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "states.ap-southeast-1.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Policies": Array [
+          Object {
+            "PolicyDocument": Object {
+              "Statement": Array [
+                Object {
+                  "Action": Array [
+                    "logs:CreateLogGroup",
+                    "logs:PutLogEvents",
+                    "logs:CreateLogStream",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                Object {
+                  "Action": Array [
+                    "glue:CreateTable",
+                    "glue:CreateSchema",
+                    "glue:CreatePartition*",
+                    "glue:UpdateTable",
+                    "glue:UpdateSchema",
+                    "glue:UpdatePartition",
+                    "glue:Get*",
+                    "glue:BatchGet*",
+                    "glue:BatchCreatePartition",
+                    "glue:BatchUpdatePartition",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+                Object {
+                  "Action": Array [
+                    "ec2:CreateTags",
+                    "ec2:DeleteTags",
+                  ],
+                  "Condition": Object {
+                    "ForAllValues:StringEquals": Object {
+                      "aws:TagKeys": Array [
+                        "aws-glue-service-resource",
+                      ],
+                    },
+                  },
+                  "Effect": "Allow",
+                  "Resource": Array [
+                    "arn:aws:ec2:*:*:network-interface/*",
+                    "arn:aws:ec2:*:*:security-group/*",
+                    "arn:aws:ec2:*:*:instance/*",
+                  ],
+                },
+                Object {
+                  "Action": Array [
+                    "glue:*",
+                    "s3:GetBucketLocation",
+                    "s3:ListBucket",
+                    "s3:ListAllMyBuckets",
+                    "s3:GetBucketAcl",
+                    "ec2:DescribeVpcEndpoints",
+                    "ec2:DescribeRouteTables",
+                    "ec2:CreateNetworkInterface",
+                    "ec2:DeleteNetworkInterface",
+                    "ec2:DescribeNetworkInterfaces",
+                    "ec2:DescribeSecurityGroups",
+                    "ec2:DescribeSubnets",
+                    "ec2:DescribeVpcAttribute",
+                    "iam:ListRolePolicies",
+                    "iam:GetRole",
+                    "iam:GetRolePolicy",
+                    "cloudwatch:PutMetricData",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*",
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "glueTransformsPolicy",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "ada:groups",
+            "Value": ":admin:analyst:",
+          },
+          Object {
+            "Key": "ada:service",
+            "Value": "data-product",
+          },
+          Object {
+            "Key": "ada:user",
+            "Value": "test-user",
+          },
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "DataProductId",
+            "Value": "test-data-product",
+          },
+          Object {
+            "Key": "DomainId",
+            "Value": "test-domain",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "SourceAccessRoleDefaultPolicyADA23135": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject",
+                "s3:PutObjectLegalHold",
+                "s3:PutObjectRetention",
+                "s3:PutObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":s3:::data-bucket",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":s3:::data-bucket/test-domain/test-data-product/test-stack/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:GenerateDataKey",
+                "kms:Decrypt",
+                "kms:Encrypt",
+              ],
+              "Effect": "Allow",
+              "Resource": "arn:aws:kms:us-east-1:123456789012:key/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            },
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":s3:::script-bucket",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":s3:::script-bucket/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt*",
+                "kms:Encrypt*",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+                "kms:Describe*",
+                "kms:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "states:StartExecution",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":states:ap-southeast-1:1111111111:stateMachine:glueCrawlerStateMachine",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "states:DescribeExecution",
+                "states:StopExecution",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":states:ap-southeast-1:1111111111:execution:glueCrawlerStateMachine*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "events:PutTargets",
+                "events:PutRule",
+                "events:DescribeRule",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":events:ap-southeast-1:1111111111:rule/StepFunctionsGetEventsForStepFunctionsExecutionRule",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                "arn:aws:lambda:ap-southeast-1:1111111111:test",
+                "arn:aws:lambda:ap-southeast-1:1111111111:test:*",
+              ],
+            },
+            Object {
+              "Action": "events:PutEvents",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":events:ap-southeast-1:1111111111:event-bus/eventBus",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": "states:StartExecution",
+              "Effect": "Allow",
+              "Resource": "arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachine",
+            },
+            Object {
+              "Action": Array [
+                "states:DescribeExecution",
+                "states:StopExecution",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":states:ap-southeast-1:1111111111:execution:TestStateMachine*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "glue:StartJobRun",
+                "glue:GetJobRun",
+                "glue:GetJobRuns",
+                "glue:BatchStopJobRun",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":glue:ap-southeast-1:1111111111:job/$.glueJobName",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "glue:StartJobRun",
+                "glue:GetJobRun",
+                "glue:GetJobRuns",
+                "glue:BatchStopJobRun",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":glue:ap-southeast-1:1111111111:job/test-d4688test-d45928737-transform-0--global-ada_json_relationalise-0",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "glue:StartJobRun",
+                "glue:GetJobRun",
+                "glue:GetJobRuns",
+                "glue:BatchStopJobRun",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":glue:ap-southeast-1:1111111111:job/test-d4688test-d45928737-transform-1--global-ada_parquet_data_type_map-1",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "SourceAccessRoleDefaultPolicyADA23135",
+        "Roles": Array [
+          Object {
+            "Ref": "SourceAccessRoleC447CA39",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "StartCrawler29B459CE": Object {
+      "Properties": Object {
+        "Classifiers": Array [],
+        "CrawlerSecurityConfiguration": "glueSecurityConfiguration",
+        "DatabaseName": "rawDB",
+        "Name": "test-d4688test-d45928737-start-crawler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SourceAccessRoleC447CA39",
+            "Arn",
+          ],
+        },
+        "SchemaChangePolicy": Object {
+          "DeleteBehavior": "DEPRECATE_IN_DATABASE",
+          "UpdateBehavior": "UPDATE_IN_DATABASE",
+        },
+        "TablePrefix": "test-d4688test-d45928737-start",
+        "Tags": Object {
+          "Application": "Ada",
+          "DataProductId": "test-data-product",
+          "DomainId": "test-domain",
+        },
+        "Targets": Object {
+          "JdbcTargets": Array [
+            Object {
+              "ConnectionName": "test-d4688test-d45928737-connection",
+              "Path": "undefined/undefined",
+            },
+          ],
+        },
+      },
+      "Type": "AWS::Glue::Crawler",
+    },
+    "StateMachine2E01A3A5": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "SourceAccessRoleDefaultPolicyADA23135",
+        "SourceAccessRoleC447CA39",
+      ],
+      "Properties": Object {
+        "DefinitionString": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"StartAt\\":\\"ExecuteCrawlertest-d4688test-d45928737-start-crawler\\",\\"States\\":{\\"ExecuteCrawlertest-d4688test-d45928737-start-crawler\\":{\\"Next\\":\\"VerifyCrawlerStepFunctionOutput\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::states:startExecution.sync:2\\",\\"Parameters\\":{\\"Input\\":{\\"crawlerName\\":\\"test-d4688test-d45928737-start-crawler\\"},\\"StateMachineArn\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:ap-southeast-1:1111111111:stateMachine:glueCrawlerStateMachine\\"}},\\"VerifyCrawlerStepFunctionOutput\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.Output.Payload.status\\",\\"StringEquals\\":\\"FAILED\\",\\"Next\\":\\"DeconstructErrorFromStateMachineExecution\\"}],\\"Default\\":\\"GetCrawledTableDetailsFortest-d4688test-d45928737-start\\"},\\"GetCrawledTableDetailsFortest-d4688test-d45928737-start\\":{\\"Next\\":\\"PrepareTransformChain\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload\\":{\\"Payload\\":{\\"databaseName\\":\\"rawDB\\",\\"tablePrefix\\":\\"test-d4688test-d45928737-start\\"}}}},\\"PrepareTransformChain\\":{\\"Next\\":\\"StartTransformations\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload\\":{\\"Payload\\":{\\"databaseName\\":\\"rawDB\\",\\"tableDetails.$\\":\\"$.Payload.tableDetails\\",\\"tablePrefix.$\\":\\"$.Payload.tablePrefix\\",\\"ingestionTimestamp.$\\":\\"$.Payload.ingestionTimestamp\\",\\"transformJobs\\":[{\\"scriptId\\":\\"ada_json_relationalise\\",\\"namespace\\":\\"global\\",\\"applicableClassifications\\":[\\"json\\"],\\"glueJobName\\":\\"test-d4688test-d45928737-transform-0--global-ada_json_relationalise-0\\",\\"outputS3Target\\":{\\"bucket\\":\\"data-bucket\\",\\"key\\":\\"test-domain/test-data-product/test-stack/transform/global-ada_json_relationalise/0/ada_default_dataset/\\"},\\"outputS3TargetPath\\":\\"s3://data-bucket/test-domain/test-data-product/test-stack/transform/global-ada_json_relationalise/0/ada_default_dataset/\\",\\"tempS3Path\\":\\"s3://data-bucket/test-domain/test-data-product/test-stack/temp/test-d4688test-d45928737-transform-0--global-ada_json_relationalise-0/\\",\\"outputCrawlerName\\":\\"test-d4688test-d45928737-transform-0--crawler\\",\\"outputCrawlerTablePrefix\\":\\"test-d4688test-d45928737-transform-0-\\"},{\\"scriptId\\":\\"ada_parquet_data_type_map\\",\\"namespace\\":\\"global\\",\\"glueJobName\\":\\"test-d4688test-d45928737-transform-1--global-ada_parquet_data_type_map-1\\",\\"outputS3Target\\":{\\"bucket\\":\\"data-bucket\\",\\"key\\":\\"test-domain/test-data-product/test-stack/transform/global-ada_parquet_data_type_map/1/ada_default_dataset/\\"},\\"outputS3TargetPath\\":\\"s3://data-bucket/test-domain/test-data-product/test-stack/transform/global-ada_parquet_data_type_map/1/ada_default_dataset/\\",\\"tempS3Path\\":\\"s3://data-bucket/test-domain/test-data-product/test-stack/temp/test-d4688test-d45928737-transform-1--global-ada_parquet_data_type_map-1/\\",\\"outputCrawlerName\\":\\"test-d4688test-d45928737-transform-1--crawler\\",\\"outputCrawlerTablePrefix\\":\\"test-d4688test-d45928737-transform-1-\\"}],\\"dataProduct\\":{\\"dataProductId\\":\\"test-data-product\\",\\"domainId\\":\\"test-domain\\",\\"name\\":\\"Test\\",\\"infrastructureStatus\\":\\"PROVISIONING\\",\\"dataStatus\\":\\"NO_DATA\\",\\"dataSets\\":{},\\"tags\\":[],\\"enableAutomaticTransforms\\":true,\\"enableAutomaticPii\\":false,\\"transforms\\":[{\\"scriptId\\":\\"ada_parquet_data_type_map\\",\\"namespace\\":\\"global\\"}],\\"updateTrigger\\":{\\"triggerType\\":\\"ON_DEMAND\\"},\\"parentDataProducts\\":[],\\"childDataProducts\\":[],\\"sourceType\\":\\"ORACLE\\",\\"sourceDetails\\":{\\"databaseEndpoint\\":\\"mydb.123456789012.ap-southeast-2.rds.amazonaws.com\\"}}}}}},\\"StartTransformations\\":{\\"Type\\":\\"Pass\\",\\"Next\\":\\"IsTransformRemaining?\\"},\\"PrepareNextTransform\\":{\\"Next\\":\\"StartTransformations\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload.$\\":\\"$\\"}},\\"GetCrawledTransformOutputTableDetails\\":{\\"Next\\":\\"PrepareNextTransform\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload\\":{\\"Payload\\":{\\"databaseName\\":\\"rawDB\\",\\"tablePrefix.$\\":\\"$.Payload.currentTransformJob.outputCrawlerTablePrefix\\",\\"transformJobs.$\\":\\"$.Payload.transformJobs\\",\\"transformJobIndex.$\\":\\"$.Payload.transformJobIndex\\",\\"transformJobCount.$\\":\\"$.Payload.transformJobCount\\",\\"currentTransformJob.$\\":\\"$.Payload.currentTransformJob\\",\\"tableDetails.$\\":\\"$.Payload.tableDetails\\",\\"ingestionTimestamp.$\\":\\"$.Payload.ingestionTimestamp\\",\\"dataProduct\\":{\\"dataProductId\\":\\"test-data-product\\",\\"domainId\\":\\"test-domain\\",\\"name\\":\\"Test\\",\\"infrastructureStatus\\":\\"PROVISIONING\\",\\"dataStatus\\":\\"NO_DATA\\",\\"dataSets\\":{},\\"tags\\":[],\\"enableAutomaticTransforms\\":true,\\"enableAutomaticPii\\":false,\\"transforms\\":[{\\"scriptId\\":\\"ada_parquet_data_type_map\\",\\"namespace\\":\\"global\\"}],\\"updateTrigger\\":{\\"triggerType\\":\\"ON_DEMAND\\"},\\"parentDataProducts\\":[],\\"childDataProducts\\":[],\\"sourceType\\":\\"ORACLE\\",\\"sourceDetails\\":{\\"databaseEndpoint\\":\\"mydb.123456789012.ap-southeast-2.rds.amazonaws.com\\"}}}}}},\\"CrawlTransformOutput\\":{\\"Next\\":\\"GetCrawledTransformOutputTableDetails\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.Payload.currentTransformCrawlOutput\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::states:startExecution.sync:2\\",\\"Parameters\\":{\\"Input\\":{\\"crawlerName.$\\":\\"$.Payload.currentTransformJob.outputCrawlerName\\"},\\"StateMachineArn\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:ap-southeast-1:1111111111:stateMachine:glueCrawlerStateMachine\\"}},\\"RunTransformJobs\\":{\\"Type\\":\\"Map\\",\\"ResultPath\\":\\"$.Payload.currentTransformJobOutputs\\",\\"Next\\":\\"CrawlTransformOutput\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Iterator\\":{\\"StartAt\\":\\"RunTransformJob\\",\\"States\\":{\\"RunTransformJob\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.Payload.currentTransformJobOutput\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::glue:startJobRun.sync\\",\\"Parameters\\":{\\"JobName.$\\":\\"$.glueJobName\\",\\"Arguments\\":{\\"--INPUT_TABLE_NAME.$\\":\\"$.inputTableName\\",\\"--OUTPUT_S3_PATH.$\\":\\"$.outputS3TargetPath\\",\\"--DATABASE_NAME\\":\\"rawDB\\",\\"--DOMAIN_ID\\":\\"test-domain\\",\\"--DATA_PRODUCT_ID\\":\\"test-data-product\\",\\"--TEMP_S3_PATH.$\\":\\"$.tempS3Path\\"}}}}},\\"ItemsPath\\":\\"$.Payload.currentResolvedTransformJobs\\"},\\"IsTransformRemaining?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.Payload.transformJobIndex\\",\\"NumericLessThanPath\\":\\"$.Payload.transformJobCount\\",\\"Next\\":\\"RunTransformJobs\\"}],\\"Default\\":\\"IsAutomaticPiiEnabled?\\"},\\"IsAutomaticPiiEnabled?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.Payload.dataProduct.enableAutomaticPii\\",\\"BooleanEquals\\":true,\\"Next\\":\\"GeneratePiiQuery\\"}],\\"Default\\":\\"NotifyForSuccess\\"},\\"NotifyForSuccess\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::events:putEvents\\",\\"Parameters\\":{\\"Entries\\":[{\\"Detail\\":{\\"dataProduct\\":{\\"dataProductId\\":\\"test-data-product\\",\\"domainId\\":\\"test-domain\\",\\"name\\":\\"Test\\",\\"infrastructureStatus\\":\\"PROVISIONING\\",\\"dataStatus\\":\\"NO_DATA\\",\\"dataSets\\":{},\\"tags\\":[],\\"enableAutomaticTransforms\\":true,\\"enableAutomaticPii\\":false,\\"transforms\\":[{\\"scriptId\\":\\"ada_parquet_data_type_map\\",\\"namespace\\":\\"global\\"}],\\"updateTrigger\\":{\\"triggerType\\":\\"ON_DEMAND\\"},\\"parentDataProducts\\":[],\\"childDataProducts\\":[],\\"sourceType\\":\\"ORACLE\\",\\"sourceDetails\\":{\\"databaseEndpoint\\":\\"mydb.123456789012.ap-southeast-2.rds.amazonaws.com\\"}},\\"callingUser\\":{\\"userId\\":\\"test-user\\",\\"groups\\":[\\"admin\\",\\"analyst\\"],\\"username\\":\\"test-user@example.com\\"},\\"dataProductCompositeIdentifier\\":\\"test-domain.test-data-product\\",\\"tableDetails.$\\":\\"$.Payload.tableDetails\\"},\\"DetailType\\":\\"DataProductImportSuccess\\",\\"EventBusName\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":events:ap-southeast-1:1111111111:event-bus/eventBus\\",\\"Source\\":\\"ada.data-products\\"}]}},\\"GetPiiResultsFromAthena\\":{\\"Next\\":\\"NotifyForSuccess\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.Payload.tableDetails\\",\\"Resource\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Parameters\\":{\\"Payload\\":{\\"tableDetails.$\\":\\"$.Payload.tableDetails\\",\\"executePiiDetectionOutput.$\\":\\"$.Payload.executePiiDetectionOutput\\"}}},\\"ExecutePiiQueryForAllTables\\":{\\"Type\\":\\"Map\\",\\"ResultPath\\":\\"$.Payload.executePiiDetectionOutput\\",\\"Next\\":\\"GetPiiResultsFromAthena\\",\\"InputPath\\":\\"$.Payload.generatePiiQueryOutput.piiQuery\\",\\"Parameters\\":{\\"contextIndex.$\\":\\"$$.Map.Item.Index\\",\\"query.$\\":\\"$$.Map.Item.Value\\",\\"callingUser\\":{\\"userId\\":\\"test-user\\",\\"groups\\":[\\"admin\\",\\"analyst\\"],\\"username\\":\\"test-user@example.com\\"},\\"outputS3Path\\":\\"s3://data-bucket/test-domain/test-data-product/_pii-detection-output\\"},\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Iterator\\":{\\"StartAt\\":\\"IsQueryNotEmpty?\\",\\"States\\":{\\"IsQueryNotEmpty?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Not\\":{\\"Variable\\":\\"$.query\\",\\"StringEquals\\":\\"\\"},\\"Next\\":\\"ExecuteQueryForPIIDetection\\"}],\\"Default\\":\\"SkipPiiDetection\\"},\\"SkipPiiDetection\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"piiDetectionSkipped\\":true},\\"End\\":true},\\"ExecuteQueryForPIIDetection\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::states:startExecution.sync:2\\",\\"Parameters\\":{\\"Input.$\\":\\"$\\",\\"StateMachineArn\\":\\"arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachine\\"}}}}},\\"GeneratePiiQuery\\":{\\"Next\\":\\"ExecutePiiQueryForAllTables\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.Payload.generatePiiQueryOutput\\",\\"Resource\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Parameters\\":{\\"Payload\\":{\\"tableDetails.$\\":\\"$.Payload.tableDetails\\",\\"athenaUtilitiesLambdaName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"databaseName\\":\\"rawDB\\"}}},\\"NotifyForError\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":states:::events:putEvents\\",\\"Parameters\\":{\\"Entries\\":[{\\"Detail\\":{\\"dataProduct\\":{\\"dataProductId\\":\\"test-data-product\\",\\"domainId\\":\\"test-domain\\",\\"name\\":\\"Test\\",\\"infrastructureStatus\\":\\"PROVISIONING\\",\\"dataStatus\\":\\"NO_DATA\\",\\"dataSets\\":{},\\"tags\\":[],\\"enableAutomaticTransforms\\":true,\\"enableAutomaticPii\\":false,\\"transforms\\":[{\\"scriptId\\":\\"ada_parquet_data_type_map\\",\\"namespace\\":\\"global\\"}],\\"updateTrigger\\":{\\"triggerType\\":\\"ON_DEMAND\\"},\\"parentDataProducts\\":[],\\"childDataProducts\\":[],\\"sourceType\\":\\"ORACLE\\",\\"sourceDetails\\":{\\"databaseEndpoint\\":\\"mydb.123456789012.ap-southeast-2.rds.amazonaws.com\\"}},\\"callingUser\\":{\\"userId\\":\\"test-user\\",\\"groups\\":[\\"admin\\",\\"analyst\\"],\\"username\\":\\"test-user@example.com\\"},\\"executionId.$\\":\\"$$.Execution.Id\\",\\"errorDetails.$\\":\\"$.ErrorDetails\\",\\"currentPayload.$\\":\\"$\\"},\\"DetailType\\":\\"DataProductImportError\\",\\"EventBusName\\":\\"arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":events:ap-southeast-1:1111111111:event-bus/eventBus\\",\\"Source\\":\\"ada.data-products\\"}]}},\\"DeconstructErrorFromStateMachineExecution\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"ErrorDetails\\":{\\"Error.$\\":\\"$.Output.Payload.error\\"}},\\"Next\\":\\"NotifyForError\\"}}}",
+            ],
+          ],
+        },
+        "LoggingConfiguration": Object {
+          "Destinations": Array [
+            Object {
+              "CloudWatchLogsLogGroup": Object {
+                "LogGroupArn": Object {
+                  "Fn::GetAtt": Array [
+                    "StateMachineLogs3CB16D3C",
+                    "Arn",
+                  ],
+                },
+              },
+            },
+          ],
+          "Level": "ERROR",
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "SourceAccessRoleC447CA39",
+            "Arn",
+          ],
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "DataProductId",
+            "Value": "test-data-product",
+          },
+          Object {
+            "Key": "DomainId",
+            "Value": "test-domain",
+          },
+        ],
+        "TracingConfiguration": Object {
+          "Enabled": true,
+        },
+      },
+      "Type": "AWS::StepFunctions::StateMachine",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "StateMachineLogs3CB16D3C": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "LogGroupName": "/aws/vendedlogs/states/ada/dataproduct/test-d4688test-d45928737/StateMachineLogs/loggroup-######",
+        "RetentionInDays": 731,
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+          Object {
+            "Key": "DataProductId",
+            "Value": "test-data-product",
+          },
+          Object {
+            "Key": "DomainId",
+            "Value": "test-domain",
+          },
+        ],
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "StaticInfrastructureNotificationBusDataProductOnDemandUpdateRuleCBE74CDB": Object {
+      "Properties": Object {
+        "Description": "On demand updates for Test",
+        "EventBusName": "eventBus",
+        "EventPattern": Object {
+          "detail": Object {
+            "dataProductId": Array [
+              "test-data-product",
+            ],
+            "domainId": Array [
+              "test-domain",
+            ],
+          },
+          "detail-type": Array [
+            "DataProductOnDemandUpdate",
+          ],
+          "source": Array [
+            "ada.data-products",
+          ],
+        },
+        "State": "ENABLED",
+        "Targets": Array [
+          Object {
+            "Arn": "arn:aws:lambda:ap-southeast-1:1111111111:test",
+            "Id": "Target0",
+            "Input": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "{\\"stateMachineArn\\":\\"",
+                  Object {
+                    "Ref": "StateMachine2E01A3A5",
+                  },
+                  "\\",\\"dataProductIdentifier\\":{\\"domainId\\":\\"test-domain\\",\\"dataProductId\\":\\"test-data-product\\"},\\"callingUser\\":{\\"userId\\":\\"test-user\\",\\"groups\\":[\\"admin\\",\\"analyst\\"],\\"username\\":\\"test-user@example.com\\"}}",
+                ],
+              ],
+            },
+          },
+        ],
+      },
+      "Type": "AWS::Events::Rule",
+    },
+  },
+  "Rules": Object {},
+}
+`;
