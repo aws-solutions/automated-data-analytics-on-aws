@@ -119,6 +119,6 @@
     "promptly": "^3.2.0",
     "string-hash": "^1.1.3",
     "tsconfig-paths": "^4.1.0",
-    "ttypescript": "^1.5.12"
+    "ttypescript": "1.5.15"
   }
 }
