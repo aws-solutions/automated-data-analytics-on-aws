@@ -21,6 +21,6 @@
   "devDependencies": {
     "@rjsf/core": "^4.2.0",
     "@types/json-schema": "^7.0.9",
-    "ttypescript": "^1.5.12"
+    "ttypescript": "1.5.15"
   }
 }
