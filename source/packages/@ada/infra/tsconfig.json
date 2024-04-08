@@ -13,6 +13,7 @@
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "strictFunctionTypes": true,
     "outDir": "dist",
     "rootDir": "src",
     "noImplicitThis": true,
@@ -59,5 +60,5 @@
     ]
   },
   "include": ["src"],
-  "exclude": ["cdk.out", "dist", "node_modules", "tst", "**/jest.config.*"]
+  "exclude": ["cdk.out", "dist", "node_modules", "tst", "**/jest.config.*", "**/__tests__/**/*.test.ts"]
 }

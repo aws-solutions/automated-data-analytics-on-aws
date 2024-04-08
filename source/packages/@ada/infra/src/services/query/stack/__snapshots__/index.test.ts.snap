@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-QueryService) - Automated Data Analytics on AWS. Version v1.3.0",
+  "Description": "(SO0190-QueryService) - Automated Data Analytics on AWS. Version v1.4.0",
   "Outputs": Object {
     "AdaQueryServiceApiLambdaGetAthenaQueryResult40B42785Ref": Object {
       "Value": Object {
@@ -353,7 +353,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -734,7 +734,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1217,7 +1217,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1569,7 +1569,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -2052,7 +2052,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -2535,7 +2535,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -2902,7 +2902,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3278,7 +3278,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3664,7 +3664,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3997,7 +3997,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -4330,7 +4330,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -4697,7 +4697,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5186,7 +5186,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5533,7 +5533,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -9325,7 +9325,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -9875,7 +9875,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -10195,7 +10195,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -10510,7 +10510,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -10841,7 +10841,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -11159,7 +11159,7 @@ Object {
         "Role": Object {
           "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn",
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -11209,7 +11209,7 @@ Object {
               "Ref": "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID",
             },
             "AWS_SOLUTION_ID": "SO0190",
-            "AWS_SOLUTION_VERSION": "v1.3.0",
+            "AWS_SOLUTION_VERSION": "v1.4.0",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
             },
@@ -11244,7 +11244,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -11269,21 +11269,21 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "{\\"StartAt\\":\\"GenerateQuery\\",\\"States\\":{\\"GenerateQuery\\":{\\"Next\\":\\"GetCachedQuery\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"NotifyError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              "{\\"StartAt\\":\\"GenerateQuery\\",\\"States\\":{\\"GenerateQuery\\":{\\"Next\\":\\"GetCachedQuery\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"NotifyError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
               Object {
                 "Fn::GetAtt": Array [
                   "AthenaQueryExecutorStateMachineAthenaQueryExecutorInvokeGenerateQueryB2BEB6A8",
                   "Arn",
                 ],
               },
-              "\\",\\"Parameters\\":{\\"Payload.$\\":\\"$\\"}},\\"GetCachedQuery\\":{\\"Next\\":\\"IsItemInCache?\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              "\\",\\"Parameters\\":{\\"Payload.$\\":\\"$\\"}},\\"GetCachedQuery\\":{\\"Next\\":\\"IsItemInCache?\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
               Object {
                 "Fn::GetAtt": Array [
                   "AthenaQueryExecutorStateMachineAthenaQueryExecutorGetCachedQuery495881BA",
                   "Arn",
                 ],
               },
-              "\\",\\"Parameters\\":{\\"Payload.$\\":\\"$\\"}},\\"IsItemInCache?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.expired\\",\\"BooleanEquals\\":false,\\"Next\\":\\"NotifySuccess\\"}],\\"Default\\":\\"RunQueryOnAthena\\"},\\"RunQueryOnAthena\\":{\\"Next\\":\\"Wait1Second\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"NotifyError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              "\\",\\"Parameters\\":{\\"Payload.$\\":\\"$\\"}},\\"IsItemInCache?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.expired\\",\\"BooleanEquals\\":false,\\"Next\\":\\"NotifySuccess\\"}],\\"Default\\":\\"RunQueryOnAthena\\"},\\"RunQueryOnAthena\\":{\\"Next\\":\\"Wait1Second\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"NotifyError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
               Object {
                 "Fn::GetAtt": Array [
                   "AthenaQueryExecutorStateMachineAthenaQueryExecutorStartAthenaQueryExecution116B4F60",
@@ -11294,14 +11294,14 @@ Object {
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:::athena:getQueryExecution\\",\\"Parameters\\":{\\"QueryExecutionId.$\\":\\"$.queryExecutionId\\"}},\\"IsInFinalState?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"SUCCEEDED\\",\\"Next\\":\\"WriteInCache\\"},{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"FAILED\\",\\"Next\\":\\"NotifyError\\"},{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"CANCELLED\\",\\"Next\\":\\"NotifyError\\"}],\\"Default\\":\\"Wait1Second\\"},\\"WriteInCache\\":{\\"Next\\":\\"NotifySuccess\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              ":states:::athena:getQueryExecution\\",\\"Parameters\\":{\\"QueryExecutionId.$\\":\\"$.queryExecutionId\\"}},\\"IsInFinalState?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"SUCCEEDED\\",\\"Next\\":\\"WriteInCache\\"},{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"FAILED\\",\\"Next\\":\\"NotifyError\\"},{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"CANCELLED\\",\\"Next\\":\\"NotifyError\\"}],\\"Default\\":\\"Wait1Second\\"},\\"WriteInCache\\":{\\"Next\\":\\"NotifySuccess\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
               Object {
                 "Fn::GetAtt": Array [
                   "AthenaQueryExecutorStateMachineAthenaQueryExecutorPutCachedQuery44DA72AF",
                   "Arn",
                 ],
               },
-              "\\",\\"Parameters\\":{\\"Payload.$\\":\\"$\\"}},\\"NotifySuccess\\":{\\"Type\\":\\"Pass\\",\\"Next\\":\\"LogQueryExecution\\"},\\"LogQueryExecution\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              "\\",\\"Parameters\\":{\\"Payload.$\\":\\"$\\"}},\\"NotifySuccess\\":{\\"Type\\":\\"Pass\\",\\"Next\\":\\"LogQueryExecution\\"},\\"LogQueryExecution\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
               Object {
                 "Fn::GetAtt": Array [
                   "AthenaQueryExecutorStateMachineAthenaQueryLogQueryExecution7C18D0FA",
@@ -11869,30 +11869,6 @@ Object {
         "PolicyDocument": Object {
           "Statement": Array [
             Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
               "Action": "lambda:InvokeFunction",
               "Effect": "Allow",
               "Resource": Array [
@@ -12027,6 +12003,30 @@ Object {
                 },
               ],
             },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
           ],
           "Version": "2012-10-17",
         },
@@ -12102,7 +12102,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",

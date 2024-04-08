@@ -1,6 +1,7 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import { AmplifyAuthenticator, AmplifyToast } from '@aws-amplify/ui-react';
+import { AmplifyAuthenticator } from '@aws-amplify/ui-react/legacy';
+import { AmplifyToast } from './AmplifyToast';
 import { Auth, CognitoHostedUIIdentityProvider, CognitoUser } from '@aws-amplify/auth';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import {
@@ -146,7 +147,7 @@ export const AmplifyProvider = ({ children }: PropsWithChildren<{}>) => {
 
   return (
     <>
-      {hubError && <AmplifyToast handleClose={() => setHubError(undefined)}>{hubError}</AmplifyToast>}
+      {hubError && <AmplifyToast handleClose={() => setHubError(undefined)} message={hubError} />}
       <AmplifyAuthenticator>
         {/* Hide the sign-in form so we only have single federated sign-in experience */}
         <div slot="sign-in" />

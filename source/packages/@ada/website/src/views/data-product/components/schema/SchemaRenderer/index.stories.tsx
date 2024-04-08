@@ -32,12 +32,14 @@ const Template: ComponentStory<typeof SchemaRenderer> = (args) => {
   const refetchCount = useRef(0);
 
   useImmediateEffect(() => {
-    API.listOntologies.mockResolvedValue({ ontologies: fixtures.ONTOLOGIES });
-    API.listIdentityGroups.mockResolvedValue({ groups: fixtures.GROUPS });
+    API.listOntologies.mockResolvedValue({ ontologies: fixtures.ONTOLOGIES } as never);
+    API.listIdentityGroups.mockResolvedValue({ groups: fixtures.GROUPS } as never);
+    //@ts-ignore
     API.getDataProductDomainDataProduct.mockImplementation(() => {
       entityRef.current = fixtures.DATA_PRODUCT;
       return Promise.resolve(entityRef.current);
     });
+    //@ts-ignore
     API.putDataProductDomainDataProduct.mockImplementation(async ({ dataProductInput }) => {
       await delay(10);
 

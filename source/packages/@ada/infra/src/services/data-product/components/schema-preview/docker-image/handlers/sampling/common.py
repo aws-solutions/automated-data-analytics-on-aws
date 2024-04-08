@@ -19,6 +19,7 @@ import regex
 from typing import Tuple
 from google.oauth2 import service_account
 from apiclient.discovery import build as buildGoogleApiClient
+from google.analytics.data_v1beta import BetaAnalyticsDataClient
 
 from handlers.common import *  # NOSONAR
 
@@ -238,6 +239,10 @@ class SamplingUtils:
     @staticmethod
     def build_google_api_client(*args, **kwargs):
         return buildGoogleApiClient(*args, **kwargs)
+
+    @staticmethod
+    def build_google_analytics_client(cred):
+        return BetaAnalyticsDataClient(credentials=cred)
 
     @staticmethod
     def get_rows_from_stream(stream, size: int, remove_last_row: bool = True):

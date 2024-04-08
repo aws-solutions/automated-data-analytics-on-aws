@@ -1,7 +1,7 @@
 # Generate OpenAPI Spec
 
 Given that the @ada/infra package depends on @ada/api package to fully build, but the OpenAPI spec for
-the @ada/api pacakge is derived from definitions in @ada/infra package, we use jest mocking to
+the @ada/api package is derived from definitions in @ada/infra package, we use jest mocking to
 virtualize and circumvent this dependency when generating the OpenAPI spec for @ada/api package.
 
 ## Notes

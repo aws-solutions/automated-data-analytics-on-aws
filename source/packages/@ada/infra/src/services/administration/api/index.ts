@@ -1,9 +1,10 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import { Aws, Duration, Stack } from 'aws-cdk-lib';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
+import { Budget, BudgetDetails, BudgetResponse, SupersetDeployResponse, TearDownDetails } from './types';
 import { Construct } from 'constructs';
 import { CounterTable } from '../../../common/constructs/dynamodb/counter-table';
-import { Duration, Stack } from 'aws-cdk-lib';
 import {
   DynamicInfraDeploymentPermissionsBoundaryPolicyStatement,
   DynamicInfraDeploymentPolicyStatement,
@@ -11,6 +12,7 @@ import {
 } from '@ada/infra-common';
 import { Effect, ManagedPolicy, PermissionsBoundary, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { EntityManagementTables } from '../../api/components/entity/constructs/entity-management-tables';
+import { IAM_MODIFY_BUDGET, IAM_VIEW_BUDGET } from '../constant';
 import { InternalTokenKey } from '../../../common/constructs/kms/internal-token-key';
 import { LambdaIntegration } from 'aws-cdk-lib/aws-apigateway';
 import { MicroserviceApi, MicroserviceApiProps } from '../../../common/services';
@@ -24,8 +26,9 @@ import {
 import { ResponseProps } from '@ada/infra-common/constructs/api';
 import { StatusCodes } from 'http-status-codes/build/cjs';
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
-import { TearDownDetails } from './types';
 import { TeardownEnvironmentVars } from './handlers/types';
+import { asInput } from '../../../common/constructs/api';
+import { getBudgetName } from '../constant';
 import DataProductCreationStateMachine from '../../data-product/components/creation-state-machine';
 
 export interface AdministrationApiProps extends MicroserviceApiProps {
@@ -37,6 +40,7 @@ export interface AdministrationApiProps extends MicroserviceApiProps {
   dataBuckets: Bucket[];
   notificationBus: NotificationBus;
   coreStack: Stack;
+  visualisationDeploymentCodeBuildProjectName: string;
 }
 
 /**
@@ -46,11 +50,23 @@ export default class AdministrationApi extends MicroserviceApi {
   readonly startTearDownRetainDataLambda: TypescriptFunction;
   readonly startTearDownDestroyDataLambda: TypescriptFunction;
   readonly tearDownLambda: TypescriptFunction;
+  readonly getBudgetLambda: TypescriptFunction;
+  readonly postBudgetLambda: TypescriptFunction;
+  readonly deleteBudgetLambda: TypescriptFunction;
+  readonly deploySupersetLambda: TypescriptFunction;
 
   constructor(scope: Construct, id: string, props: AdministrationApiProps) {
     super(scope, id, props);
 
-    const { coreStack, counterTable, internalTokenKey, entityManagementTables, federatedApi, notificationBus } = props;
+    const {
+      coreStack,
+      counterTable,
+      internalTokenKey,
+      entityManagementTables,
+      federatedApi,
+      notificationBus,
+      visualisationDeploymentCodeBuildProjectName,
+    } = props;
 
     // Utility method for lambda handlers
     const buildLambda = (handlerFile: string, timeout?: Duration) => {
@@ -120,6 +136,51 @@ export default class AdministrationApi extends MicroserviceApi {
       lambda.addEnvironment('TEAR_DOWN_LAMBDA_ARN', this.tearDownLambda.functionArn);
     });
 
+    const budgetName = getBudgetName(Stack.of(this).region);
+    const budgetArn = `arn:${Stack.of(this).partition}:budgets::${Stack.of(this).account}:budget/${budgetName}`;
+
+    this.getBudgetLambda = buildLambda('get-budget');
+    this.getBudgetLambda.addToRolePolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: [IAM_VIEW_BUDGET],
+        resources: [budgetArn],
+      }),
+    );
+
+    this.postBudgetLambda = buildLambda('post-budget');
+    this.postBudgetLambda.addToRolePolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: [IAM_VIEW_BUDGET, IAM_MODIFY_BUDGET],
+        resources: [budgetArn],
+      }),
+    );
+
+    this.deleteBudgetLambda = buildLambda('delete-budget');
+    this.deleteBudgetLambda.addToRolePolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: [IAM_VIEW_BUDGET, IAM_MODIFY_BUDGET],
+        resources: [budgetArn],
+      }),
+    );
+
+    this.deploySupersetLambda = buildLambda('deploy-superset');
+    this.deploySupersetLambda.addToRolePolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ['codebuild:StartBuild', 'codebuild:RetryBuild', 'codebuild:ListBuilds'],
+        resources: [
+          `arn:${Aws.PARTITION}:codebuild:${Aws.REGION}:${Aws.ACCOUNT_ID}:project/${visualisationDeploymentCodeBuildProjectName}`,
+        ],
+      }),
+    );
+    this.deploySupersetLambda.addEnvironment(
+      'DEPLOYMENT_CODEBUILD_PROJECT_NAME',
+      visualisationDeploymentCodeBuildProjectName,
+    );
+
     this.addRoutes();
   }
 
@@ -133,6 +194,17 @@ export default class AdministrationApi extends MicroserviceApi {
 
     this.api.addRoutes({
       paths: {
+        'deploy-superset': {
+          POST: {
+            integration: new LambdaIntegration(this.deploySupersetLambda),
+            response: {
+              name: 'PostDeploySupersetOutput',
+              description: 'Information about the Apache Superset deployment action',
+              schema: SupersetDeployResponse,
+              errorStatusCodes: [StatusCodes.BAD_REQUEST, StatusCodes.NOT_FOUND, StatusCodes.FORBIDDEN],
+            },
+          },
+        },
         'start-tear-down': {
           paths: {
             'retain-data': {
@@ -146,6 +218,40 @@ export default class AdministrationApi extends MicroserviceApi {
                 integration: new LambdaIntegration(this.startTearDownDestroyDataLambda),
                 response: tearDownResponse('StartTearDownDestroyDataOutput'),
               },
+            },
+          },
+        },
+        budgets: {
+          GET: {
+            integration: new LambdaIntegration(this.getBudgetLambda),
+            response: {
+              name: 'GetBudgetOutput',
+              description: 'Information about the Budget action',
+              schema: BudgetDetails,
+              errorStatusCodes: [StatusCodes.BAD_REQUEST, StatusCodes.NOT_FOUND, StatusCodes.FORBIDDEN],
+            },
+          },
+          POST: {
+            integration: new LambdaIntegration(this.postBudgetLambda),
+            request: {
+              name: 'PostBudgetInput',
+              description: 'Create new/Update existing budget with notification and subscribers',
+              schema: asInput(Budget, ['budgetLimit', 'subscriberList', 'softNotifications']),
+            },
+            response: {
+              name: 'PostBudgetOutput',
+              description: 'Information about the Budget creation/update action',
+              schema: BudgetResponse,
+              errorStatusCodes: [StatusCodes.BAD_REQUEST, StatusCodes.NOT_FOUND, StatusCodes.FORBIDDEN],
+            },
+          },
+          DELETE: {
+            integration: new LambdaIntegration(this.deleteBudgetLambda),
+            response: {
+              name: 'DeleteBudgetOutput',
+              description: 'Information about the Budget deletion action',
+              schema: BudgetResponse,
+              errorStatusCodes: [StatusCodes.BAD_REQUEST, StatusCodes.NOT_FOUND, StatusCodes.FORBIDDEN],
             },
           },
         },

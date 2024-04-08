@@ -45,7 +45,7 @@ describe('prepare-external-imports', () => {
             ...DEFAULT_S3_SOURCE_DATA_PRODUCT,
             sourceType: Connectors.Id.GOOGLE_ANALYTICS,
             sourceDetails: {
-              viewId: '12345678',
+              propertyId: '12345678',
               since: '',
               until: '',
               dimensions: 'ga:country,ga:users',

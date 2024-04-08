@@ -2,7 +2,7 @@
 
 This package provides strongly typed string dictionary with i18n localization support.
 
-Utlizeds the [typesafe-i18n](https://typesafe-i18n.pages.dev/) generator for ensuring strict typing.
+Utilized the [typesafe-i18n](https://typesafe-i18n.pages.dev/) generator for ensuring strict typing.
 
 ## Usage
 
@@ -10,7 +10,7 @@ Utlizeds the [typesafe-i18n](https://typesafe-i18n.pages.dev/) generator for ens
 
 Entities are core types used in the solution, such as `DataProduct`, `Domain`, and `Ontology`.
 The entity name used in the solution may differ from the name exposed to end users, such as we may rename `DataSet` to `Table`,
-but the entity type in the system must be maintained througout.
+but the entity type in the system must be maintained throughout.
 
 All entities have several forms that can be used as string values as follows.
 
@@ -38,14 +38,14 @@ LL.ENTITY.data_product(); // => "data product"
 LL.ENTITY.data_products(); // => "data products"
 ```
 
-#### **`$` Infered Plural Entity(s)** - `LL.ENTITY.{EntityName$}()`
+#### **`$` Inferred Plural Entity(s)** - `LL.ENTITY.{EntityName$}()`
 
 ```js
 LL.ENTITY.DataProducts$(1); // => "Data Product"
 LL.ENTITY.DataProducts$(3); // => "Data Products"
 ```
 
-#### **`$` Infrered plural entity(s)** - `LL.ENTITY.{entity_name$}()`
+#### **`$` Inferred plural entity(s)** - `LL.ENTITY.{entity_name$}()`
 
 ```js
 LL.ENTITY.data_products$(1); // => "data product"
@@ -128,7 +128,7 @@ LL.ENTITY.DataProducts__CREATED('with message'); // => 'Created data products "w
 
 ### Entities
 
-Entities are core types defines within the solution and folow a common "string" definition pattern.
+Entities are core types defines within the solution and follow a common "string" definition pattern.
 
 ```js
 // StringEntityDefinition

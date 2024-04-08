@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",
+  "description": "Ada api-client-layer",
   "dependencies": {
     "isomorphic-fetch": "^3.0.0",
     "lodash": "^4.17.21",

@@ -95,7 +95,7 @@ export class TypescriptFunction extends NodejsFunction {
       handler: props.handlerFunction || 'handler',
       timeout: props.timeout || Duration.seconds(30),
       memorySize: props.memorySize || 1024,
-      runtime: Runtime.NODEJS_16_X,
+      runtime: Runtime.NODEJS_18_X,
       environment: props.environment,
       layers: props.layers,
       role: props.role,

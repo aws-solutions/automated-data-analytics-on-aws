@@ -114,16 +114,16 @@ export const handler = async (event: APIGatewayProxyEvent, _context?: Context): 
   return {
     statusCode: 200,
     body: responseBody ? JSON.stringify(responseBody) : '',
-  } as APIGatewayProxyResult
+  } as APIGatewayProxyResult;
 };
 
 export const extractAPIKey = (authToken: string) => {
-  const pattern = new RegExp(/AWS4-HMAC-SHA256\sCredential=api-key\s(.*?)\//, 'ig');
+  const pattern = new RegExp(/AWS4-HMAC-SHA256\sCredential=api-key(.*?)\//, 'ig');
   const matched = pattern.exec(authToken);
   if (!matched || matched.length < 2) {
     throw new VError({ name: 'MissingApiKeyError' }, 'Unauthorized - missing api-key');
   }
-  return matched[1];
+  return matched[1].trim();
 };
 
 /**
@@ -361,6 +361,8 @@ const getQueryExecution = async (
   const getQueryExecStatusRes = await api.getQueryStatus({ executionId: request.QueryExecutionId });
   return {
     QueryExecution: {
+      Query: 'select * from table',
+      QueryExecutionId: request.QueryExecutionId,
       Status: {
         State: getQueryExecStatusRes.status,
       },

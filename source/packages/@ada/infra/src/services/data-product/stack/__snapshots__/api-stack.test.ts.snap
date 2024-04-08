@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-ApiStack) - Automated Data Analytics on AWS. Version v1.3.0",
+  "Description": "(SO0190-ApiStack) - Automated Data Analytics on AWS. Version v1.4.0",
   "Outputs": Object {
     "AdaDataProductServiceApiStackApiLambdaEventBridgeUpdateDataProductE054F2A1Arn": Object {
       "Value": Object {
@@ -260,7 +260,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -634,7 +634,7 @@ Object {
               "Ref": "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID",
             },
             "AWS_SOLUTION_ID": "SO0190",
-            "AWS_SOLUTION_VERSION": "v1.3.0",
+            "AWS_SOLUTION_VERSION": "v1.4.0",
             "COUNTER_TABLE_NAME": Object {
               "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Ref",
             },
@@ -705,7 +705,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1191,7 +1191,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1574,7 +1574,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -2006,7 +2006,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -2389,7 +2389,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -2780,7 +2780,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3156,7 +3156,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3566,7 +3566,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3933,7 +3933,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -4283,7 +4283,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -4659,7 +4659,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5035,7 +5035,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5348,7 +5348,7 @@ Object {
               "Ref": "referencetoAdaOpMetricsCustomResource0DFDFE51anonymousDataUUID",
             },
             "AWS_SOLUTION_ID": "SO0190",
-            "AWS_SOLUTION_VERSION": "v1.3.0",
+            "AWS_SOLUTION_VERSION": "v1.4.0",
             "BUILD_DATA_PRODUCT_LAMBDA_ARN": Object {
               "Fn::GetAtt": Array [
                 "ApiLambdaBuildDataProductEDA86792",
@@ -5425,7 +5425,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5857,7 +5857,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -6224,7 +6224,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -6607,7 +6607,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -6990,7 +6990,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -7357,7 +7357,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -7774,7 +7774,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",

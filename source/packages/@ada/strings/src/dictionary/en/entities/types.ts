@@ -26,6 +26,7 @@ export enum EntityKey {
 	UserProfile = 'UserProfile',
 	Query = 'Query',
 	SavedQuery = 'SavedQuery',
+	Budget = 'Budget'
 }
 
 export function toPluralKey(key: EntityKeys): string {

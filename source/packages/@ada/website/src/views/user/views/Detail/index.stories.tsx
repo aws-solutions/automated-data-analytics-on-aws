@@ -49,13 +49,14 @@ const Template: ComponentStory<typeof UserDetailView> = (args) => {
     ]
     API.getIdentityMachine.mockResolvedValue({
       machineId: TEST_USER.id,
-    });
+    } as never);
     API.listIdentityUsers.mockResolvedValue({
       users: [USER_ENTITY],
-    });
+    } as never);
     API.listIdentityMachineTokens.mockResolvedValue({
       tokens,
-    });
+    } as never);
+    //@ts-ignore
     API.putIdentityMachineToken.mockImplementation(async ({ tokenInput }) => {
       tokens.push(tokenInput);
       return {

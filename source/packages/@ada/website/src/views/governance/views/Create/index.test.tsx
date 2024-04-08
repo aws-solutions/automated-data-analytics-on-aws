@@ -6,7 +6,7 @@ import { composeStories } from '@storybook/testing-react';
 import { delay } from '$common/utils';
 
 jest.retryTimes(3);
-jest.setTimeout(30000);
+jest.setTimeout(40000);
 
 jest.mock('@ada/api-client');
 

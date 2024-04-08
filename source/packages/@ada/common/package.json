@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",
+  "description": "Ada common",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
+  "type": "commonjs",
   "scripts": {
     "build": "yarn run compile",
     "compile": "tsc",
@@ -16,7 +18,7 @@
     "clean": "rm -rf node_modules"
   },
   "dependencies": {
-    "@aws-sdk/signature-v4": "^3.370.0",
+    "@aws-sdk/signature-v4": "3.370.0",
     "mime-types": "^2.1.35"
   },
   "devDependencies": {

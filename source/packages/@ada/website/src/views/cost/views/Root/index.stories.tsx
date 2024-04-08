@@ -22,7 +22,7 @@ const Template: ComponentStory<typeof CostRootView> = (args, context) => {
   useImmediateEffect(() => {
     switch (context.parameters.variant) {
       case 'errorState': {
-        API.listCosts.mockRejectedValue(new Error('Failed to fetch const'));
+        API.listCosts.mockRejectedValue(new Error('Failed to fetch const')  as never);
         break;
       }
       case 'zeroState': {
@@ -30,11 +30,11 @@ const Template: ComponentStory<typeof CostRootView> = (args, context) => {
           dimensionValueAttributes: [],
           groupDefinitions: [],
           resultsByTime: [],
-        });
+        } as never);
         break;
       }
       default: {
-        API.listCosts.mockResolvedValue(MOCK_COSTS);
+        API.listCosts.mockResolvedValue(MOCK_COSTS as never);
       }
     }
   });

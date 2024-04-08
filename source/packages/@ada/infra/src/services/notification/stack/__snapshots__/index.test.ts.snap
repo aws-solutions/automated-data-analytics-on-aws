@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-NotificationService) - Automated Data Analytics on AWS. Version v1.3.0",
+  "Description": "(SO0190-NotificationService) - Automated Data Analytics on AWS. Version v1.4.0",
   "Outputs": Object {
     "AdaNotificationServiceNotificationListenerLambda7FAAC5B2Arn": Object {
       "Value": Object {
@@ -185,7 +185,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -453,7 +453,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1201,7 +1201,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",

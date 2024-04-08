@@ -4,7 +4,7 @@ import { JsonSchema } from './json-schema';
 
 export interface JsonSchemaValidation extends Pick<JsonSchema,
   'pattern' | 'minLength' | 'maxLength' | 'enum'
-> {}
+> { }
 
 export const ID_VALIDATION: JsonSchemaValidation = {
   pattern: '^[a-z][a-z_0-9]*$',
@@ -141,7 +141,7 @@ export const GOOGLE_STORAGE_PATH_VALIDATION: JsonSchemaValidation = {
 };
 
 // https://regexr.com/6f5bu
-export const GA_KV_REGEX = /^(ga:[a-zA-Z0-9]+,?)+$/;
+export const GA_KV_REGEX = /^([a-zA-Z0-9]+,?)+$/;
 
 export const GA_KV_VALIDATION: JsonSchemaValidation = {
   pattern: GA_KV_REGEX.source,

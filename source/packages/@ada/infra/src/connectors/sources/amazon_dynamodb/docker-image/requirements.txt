@@ -1,1 +1,1 @@
-awswrangler==2.17.0
+awswrangler==3.7.1

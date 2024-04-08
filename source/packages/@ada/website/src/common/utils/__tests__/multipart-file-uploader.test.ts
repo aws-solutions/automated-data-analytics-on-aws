@@ -22,21 +22,21 @@ describe('multipart-file-uploader', () => {
       bucket: 'a-bucket',
       key: VALID_FILENAME,
       uploadId: 'an-upload-id',
-    });
+    } as never);
     API.putDataProductDomainDataProductFileUpload.mockResolvedValue({
       bucket: 'a-bucket',
       key: VALID_FILENAME,
-    });
+    } as never);
     API.getDataProductDomainDataProductFileUpload.mockResolvedValueOnce({
       bucket: 'a-bucket',
       key: VALID_FILENAME,
       signedUrl: 'signed-url-1',
-    });
+    } as never);
     API.getDataProductDomainDataProductFileUpload.mockResolvedValueOnce({
       bucket: 'a-bucket',
       key: VALID_FILENAME,
       signedUrl: 'signed-url-2',
-    });
+    } as never);
     mockAxios.put.mockResolvedValueOnce({
       status: 200,
       headers: {
@@ -122,19 +122,19 @@ describe('multipart-file-uploader', () => {
       bucket: 'a-bucket',
       key: VALID_FILENAME,
       uploadId: 'an-upload-id',
-    });
+    } as never);
     API.putDataProductDomainDataProductFileUpload.mockResolvedValue({
       bucket: 'a-bucket',
       key: VALID_FILENAME,
-    });
+    } as never);
     API.getDataProductDomainDataProductFileUpload.mockResolvedValueOnce({
       bucket: 'a-bucket',
       key: VALID_FILENAME,
       signedUrl: 'signed-url-1',
-    });
+    } as never);
     API.getDataProductDomainDataProductFileUpload.mockRejectedValueOnce({
       any: 'error',
-    });
+    } as never);
     mockAxios.put.mockResolvedValueOnce({
       status: 403,
     });

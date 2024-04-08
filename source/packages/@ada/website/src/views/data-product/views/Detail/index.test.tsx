@@ -49,8 +49,8 @@ describe('DataProductDetailView', () => {
 
   // TODO: Re-enable when default lenses are added back
   it.skip('should edit and save default lenses', async () => {
-    API.putDataProductDomainDataProduct.mockResolvedValue(fixtures.DATA_PRODUCT_WITH_ONE_DATASET);
-    API.getDataProductDomainDataProduct.mockResolvedValue(fixtures.DATA_PRODUCT_WITH_ONE_DATASET);
+    API.putDataProductDomainDataProduct.mockResolvedValue(fixtures.DATA_PRODUCT_WITH_ONE_DATASET as never);
+    API.getDataProductDomainDataProduct.mockResolvedValue(fixtures.DATA_PRODUCT_WITH_ONE_DATASET as never);
 
     const { findAllByText, findByText } = render(
       <MockMetaProvider

@@ -11,6 +11,11 @@ process.env = {
   AWS_REGION: TEST_REGION,
 };
 
+// Fix mem heap issues - https://stackoverflow.com/a/76730397
+afterAll(() => {
+  if (global.gc) global.gc()
+})
+
 jest.mock('@aws-cdk/aws-lambda-python-alpha/lib/bundling', () => ({
   Bundling: {
     bundle: () => {

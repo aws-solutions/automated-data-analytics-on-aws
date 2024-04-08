@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/nodejs:16 AS builder
+FROM public.ecr.aws/lambda/nodejs:18 AS builder
 WORKDIR /usr/app
 COPY node_modules/ ./node_modules
 COPY dist/ ./
@@ -9,7 +9,8 @@ RUN ls
 RUN node -e "console.log(typeof require('./index.js').handler === 'function');"
 
 
-FROM public.ecr.aws/lambda/nodejs:16
+FROM public.ecr.aws/lambda/nodejs:18
+RUN yum update -y
 WORKDIR ${LAMBDA_TASK_ROOT}
 COPY --from=builder /usr/app/* ./
 CMD ["index.handler"]

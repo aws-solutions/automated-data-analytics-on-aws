@@ -4,4 +4,4 @@ export * from './assets';
 
 export * from './tags';
 
-export * from './metrics';
+export * from './operational-metrics-config'

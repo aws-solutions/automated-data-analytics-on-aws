@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",
+  "description": "Ada validate-script",
   "scripts": {
     "preinstall": "pip3 install poetry==1.*",
     "install": "poetry install",
-    "test": "LOG_LEVEL=DEBUG poetry run pytest --cov=../../../../../../.. --cov-report=xml --cov-report=term --log-level=DEBUG"
+    "test": "LOG_LEVEL=DEBUG poetry run pytest --cov=../../../../../../../.. --cov-report=xml --cov-report=term --log-level=DEBUG"
   }
 }

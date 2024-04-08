@@ -4,7 +4,7 @@
 
 This package contains the Web UI for the deployed solution and is accessible via secured CloudFront domain endpoint once the solution has fully deployed.
 
-The website is built using the open-source [Northstar](https://northstar.aws-prototyping.cloud/#/About%20NorthStar) project developed and mainatained by AWS.
+The website is built using the open-source [Northstar](https://northstar.aws-prototyping.cloud/#/About%20NorthStar) project developed and maintained by AWS.
 
 ## Local Development
 

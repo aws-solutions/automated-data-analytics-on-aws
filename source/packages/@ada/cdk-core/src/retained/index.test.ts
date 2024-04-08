@@ -83,7 +83,7 @@ describe('retained', () => {
       const lambdaFunction = new lambda.Function(stack, 'Lambda', {
         code: lambda.AssetCode.fromInline('foo'),
         handler: 'handler',
-        runtime: lambda.Runtime.NODEJS_16_X,
+        runtime: lambda.Runtime.NODEJS_18_X,
       });
 
       aspect.bindLambda(lambdaFunction);

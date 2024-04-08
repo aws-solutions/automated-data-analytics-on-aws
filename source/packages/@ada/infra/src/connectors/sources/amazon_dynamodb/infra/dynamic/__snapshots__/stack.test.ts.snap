@@ -306,30 +306,6 @@ Object {
               "Resource": "*",
             },
             Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
               "Action": "lambda:InvokeFunction",
               "Effect": "Allow",
               "Resource": Array [
@@ -495,6 +471,30 @@ Object {
             },
             Object {
               "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
                 "glue:StartJobRun",
                 "glue:GetJobRun",
                 "glue:GetJobRuns",
@@ -569,7 +569,7 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "{\\"StartAt\\":\\"PrepareImportExternal\\",\\"States\\":{\\"PrepareImportExternal\\":{\\"Next\\":\\"ImportDynamoDBData\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              "{\\"StartAt\\":\\"PrepareImportExternal\\",\\"States\\":{\\"PrepareImportExternal\\":{\\"Next\\":\\"ImportDynamoDBData\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -589,19 +589,19 @@ Object {
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:ap-southeast-1:1111111111:stateMachine:glueCrawlerStateMachine\\"}},\\"VerifyCrawlerStepFunctionOutput\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.CrawlerOutput.Output.Payload.status\\",\\"StringEquals\\":\\"FAILED\\",\\"Next\\":\\"DeconstructErrorFromCrawlerOutput\\"}],\\"Default\\":\\"GetCrawledTableDetailsForTableDetails\\"},\\"GetCrawledTableDetailsForTableDetails\\":{\\"Next\\":\\"PrepareTransformChain\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              ":states:ap-southeast-1:1111111111:stateMachine:glueCrawlerStateMachine\\"}},\\"VerifyCrawlerStepFunctionOutput\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.CrawlerOutput.Output.Payload.status\\",\\"StringEquals\\":\\"FAILED\\",\\"Next\\":\\"DeconstructErrorFromCrawlerOutput\\"}],\\"Default\\":\\"GetCrawledTableDetailsForTableDetails\\"},\\"GetCrawledTableDetailsForTableDetails\\":{\\"Next\\":\\"PrepareTransformChain\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload\\":{\\"Payload\\":{\\"databaseName\\":\\"rawDB\\",\\"tablePrefix.$\\":\\"$.Payload.tablePrefix\\",\\"ingestionTimestamp.$\\":\\"$.Payload.ingestionTimestamp\\"}}}},\\"PrepareTransformChain\\":{\\"Next\\":\\"StartTransformations\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload\\":{\\"Payload\\":{\\"databaseName\\":\\"rawDB\\",\\"tablePrefix.$\\":\\"$.Payload.tablePrefix\\",\\"ingestionTimestamp.$\\":\\"$.Payload.ingestionTimestamp\\"}}}},\\"PrepareTransformChain\\":{\\"Next\\":\\"StartTransformations\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload\\":{\\"Payload\\":{\\"databaseName\\":\\"rawDB\\",\\"tableDetails.$\\":\\"$.Payload.tableDetails\\",\\"tablePrefix.$\\":\\"$.Payload.tablePrefix\\",\\"ingestionTimestamp.$\\":\\"$.Payload.ingestionTimestamp\\",\\"transformJobs\\":[{\\"scriptId\\":\\"ada_json_relationalise\\",\\"namespace\\":\\"global\\",\\"applicableClassifications\\":[\\"json\\"],\\"glueJobName\\":\\"test-d4688test-d45928737-transform-0--global-ada_json_relationalise-0\\",\\"outputS3Target\\":{\\"bucket\\":\\"data-bucket\\",\\"key\\":\\"test-domain/test-data-product/test-stack/transform/global-ada_json_relationalise/0/ada_default_dataset/\\"},\\"outputS3TargetPath\\":\\"s3://data-bucket/test-domain/test-data-product/test-stack/transform/global-ada_json_relationalise/0/ada_default_dataset/\\",\\"tempS3Path\\":\\"s3://data-bucket/test-domain/test-data-product/test-stack/temp/test-d4688test-d45928737-transform-0--global-ada_json_relationalise-0/\\",\\"outputCrawlerName\\":\\"test-d4688test-d45928737-transform-0--crawler\\",\\"outputCrawlerTablePrefix\\":\\"test-d4688test-d45928737-transform-0-\\"}],\\"dataProduct\\":{\\"dataProductId\\":\\"test-data-product\\",\\"domainId\\":\\"test-domain\\",\\"name\\":\\"Test\\",\\"infrastructureStatus\\":\\"PROVISIONING\\",\\"dataStatus\\":\\"NO_DATA\\",\\"dataSets\\":{},\\"tags\\":[],\\"enableAutomaticTransforms\\":true,\\"enableAutomaticPii\\":false,\\"transforms\\":[],\\"updateTrigger\\":{\\"triggerType\\":\\"ON_DEMAND\\"},\\"parentDataProducts\\":[],\\"childDataProducts\\":[],\\"sourceType\\":\\"DYNAMODB\\",\\"sourceDetails\\":{\\"dynamoDbTableArn\\":\\"arn:aws:dynamodb:us-west-2:11111111111:table/1-test-data\\",\\"crossAccountRoleArn\\":\\"arn:aws:iam::11111111111:role/DynamoDB-FullAccess-For-Account\\"}}}}}},\\"StartTransformations\\":{\\"Type\\":\\"Pass\\",\\"Next\\":\\"IsTransformRemaining?\\"},\\"PrepareNextTransform\\":{\\"Next\\":\\"StartTransformations\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload\\":{\\"Payload\\":{\\"databaseName\\":\\"rawDB\\",\\"tableDetails.$\\":\\"$.Payload.tableDetails\\",\\"tablePrefix.$\\":\\"$.Payload.tablePrefix\\",\\"ingestionTimestamp.$\\":\\"$.Payload.ingestionTimestamp\\",\\"transformJobs\\":[{\\"scriptId\\":\\"ada_json_relationalise\\",\\"namespace\\":\\"global\\",\\"applicableClassifications\\":[\\"json\\"],\\"glueJobName\\":\\"test-d4688test-d45928737-transform-0--global-ada_json_relationalise-0\\",\\"outputS3Target\\":{\\"bucket\\":\\"data-bucket\\",\\"key\\":\\"test-domain/test-data-product/test-stack/transform/global-ada_json_relationalise/0/ada_default_dataset/\\"},\\"outputS3TargetPath\\":\\"s3://data-bucket/test-domain/test-data-product/test-stack/transform/global-ada_json_relationalise/0/ada_default_dataset/\\",\\"tempS3Path\\":\\"s3://data-bucket/test-domain/test-data-product/test-stack/temp/test-d4688test-d45928737-transform-0--global-ada_json_relationalise-0/\\",\\"outputCrawlerName\\":\\"test-d4688test-d45928737-transform-0--crawler\\",\\"outputCrawlerTablePrefix\\":\\"test-d4688test-d45928737-transform-0-\\"}],\\"dataProduct\\":{\\"dataProductId\\":\\"test-data-product\\",\\"domainId\\":\\"test-domain\\",\\"name\\":\\"Test\\",\\"infrastructureStatus\\":\\"PROVISIONING\\",\\"dataStatus\\":\\"NO_DATA\\",\\"dataSets\\":{},\\"tags\\":[],\\"enableAutomaticTransforms\\":true,\\"enableAutomaticPii\\":false,\\"transforms\\":[],\\"updateTrigger\\":{\\"triggerType\\":\\"ON_DEMAND\\"},\\"parentDataProducts\\":[],\\"childDataProducts\\":[],\\"sourceType\\":\\"DYNAMODB\\",\\"sourceDetails\\":{\\"dynamoDbTableArn\\":\\"arn:aws:dynamodb:us-west-2:11111111111:table/1-test-data\\",\\"crossAccountRoleArn\\":\\"arn:aws:iam::11111111111:role/DynamoDB-FullAccess-For-Account\\"}}}}}},\\"StartTransformations\\":{\\"Type\\":\\"Pass\\",\\"Next\\":\\"IsTransformRemaining?\\"},\\"PrepareNextTransform\\":{\\"Next\\":\\"StartTransformations\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload.$\\":\\"$\\"}},\\"GetCrawledTransformOutputTableDetails\\":{\\"Next\\":\\"PrepareNextTransform\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              ":states:::lambda:invoke\\",\\"Parameters\\":{\\"FunctionName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Payload.$\\":\\"$\\"}},\\"GetCrawledTransformOutputTableDetails\\":{\\"Next\\":\\"PrepareNextTransform\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -613,11 +613,11 @@ Object {
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:ap-southeast-1:1111111111:stateMachine:glueCrawlerStateMachine\\"}},\\"RunTransformJobs\\":{\\"Type\\":\\"Map\\",\\"ResultPath\\":\\"$.Payload.currentTransformJobOutputs\\",\\"Next\\":\\"CrawlTransformOutput\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Iterator\\":{\\"StartAt\\":\\"RunTransformJob\\",\\"States\\":{\\"RunTransformJob\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.Payload.currentTransformJobOutput\\",\\"Resource\\":\\"arn:",
+              ":states:ap-southeast-1:1111111111:stateMachine:glueCrawlerStateMachine\\"}},\\"RunTransformJobs\\":{\\"Type\\":\\"Map\\",\\"ResultPath\\":\\"$.Payload.currentTransformJobOutputs\\",\\"Next\\":\\"CrawlTransformOutput\\",\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"ItemsPath\\":\\"$.Payload.currentResolvedTransformJobs\\",\\"Iterator\\":{\\"StartAt\\":\\"RunTransformJob\\",\\"States\\":{\\"RunTransformJob\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.Payload.currentTransformJobOutput\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:::glue:startJobRun.sync\\",\\"Parameters\\":{\\"JobName.$\\":\\"$.glueJobName\\",\\"Arguments\\":{\\"--INPUT_TABLE_NAME.$\\":\\"$.inputTableName\\",\\"--OUTPUT_S3_PATH.$\\":\\"$.outputS3TargetPath\\",\\"--DATABASE_NAME\\":\\"rawDB\\",\\"--DOMAIN_ID\\":\\"test-domain\\",\\"--DATA_PRODUCT_ID\\":\\"test-data-product\\",\\"--TEMP_S3_PATH.$\\":\\"$.tempS3Path\\"}}}}},\\"ItemsPath\\":\\"$.Payload.currentResolvedTransformJobs\\"},\\"IsTransformRemaining?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.Payload.transformJobIndex\\",\\"NumericLessThanPath\\":\\"$.Payload.transformJobCount\\",\\"Next\\":\\"RunTransformJobs\\"}],\\"Default\\":\\"IsAutomaticPiiEnabled?\\"},\\"IsAutomaticPiiEnabled?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.Payload.dataProduct.enableAutomaticPii\\",\\"BooleanEquals\\":true,\\"Next\\":\\"GeneratePiiQuery\\"}],\\"Default\\":\\"NotifyForSuccess\\"},\\"NotifyForSuccess\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              ":states:::glue:startJobRun.sync\\",\\"Parameters\\":{\\"JobName.$\\":\\"$.glueJobName\\",\\"Arguments\\":{\\"--INPUT_TABLE_NAME.$\\":\\"$.inputTableName\\",\\"--OUTPUT_S3_PATH.$\\":\\"$.outputS3TargetPath\\",\\"--DATABASE_NAME\\":\\"rawDB\\",\\"--DOMAIN_ID\\":\\"test-domain\\",\\"--DATA_PRODUCT_ID\\":\\"test-data-product\\",\\"--TEMP_S3_PATH.$\\":\\"$.tempS3Path\\"}}}}}},\\"IsTransformRemaining?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.Payload.transformJobIndex\\",\\"NumericLessThanPath\\":\\"$.Payload.transformJobCount\\",\\"Next\\":\\"RunTransformJobs\\"}],\\"Default\\":\\"IsAutomaticPiiEnabled?\\"},\\"IsAutomaticPiiEnabled?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.Payload.dataProduct.enableAutomaticPii\\",\\"BooleanEquals\\":true,\\"Next\\":\\"GeneratePiiQuery\\"}],\\"Default\\":\\"NotifyForSuccess\\"},\\"NotifyForSuccess\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -625,11 +625,11 @@ Object {
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":events:ap-southeast-1:1111111111:event-bus/eventBus\\",\\"Source\\":\\"ada.data-products\\"}]}},\\"GetPiiResultsFromAthena\\":{\\"Next\\":\\"NotifyForSuccess\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.Payload.tableDetails\\",\\"Resource\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Parameters\\":{\\"Payload\\":{\\"tableDetails.$\\":\\"$.Payload.tableDetails\\",\\"executePiiDetectionOutput.$\\":\\"$.Payload.executePiiDetectionOutput\\"}}},\\"ExecutePiiQueryForAllTables\\":{\\"Type\\":\\"Map\\",\\"ResultPath\\":\\"$.Payload.executePiiDetectionOutput\\",\\"Next\\":\\"GetPiiResultsFromAthena\\",\\"InputPath\\":\\"$.Payload.generatePiiQueryOutput.piiQuery\\",\\"Parameters\\":{\\"contextIndex.$\\":\\"$$.Map.Item.Index\\",\\"query.$\\":\\"$$.Map.Item.Value\\",\\"callingUser\\":{\\"userId\\":\\"test-user\\",\\"groups\\":[\\"admin\\",\\"analyst\\"],\\"username\\":\\"test-user@example.com\\"},\\"outputS3Path\\":\\"s3://data-bucket/test-domain/test-data-product/_pii-detection-output\\"},\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Iterator\\":{\\"StartAt\\":\\"IsQueryNotEmpty?\\",\\"States\\":{\\"IsQueryNotEmpty?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Not\\":{\\"Variable\\":\\"$.query\\",\\"StringEquals\\":\\"\\"},\\"Next\\":\\"ExecuteQueryForPIIDetection\\"}],\\"Default\\":\\"SkipPiiDetection\\"},\\"SkipPiiDetection\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"piiDetectionSkipped\\":true},\\"End\\":true},\\"ExecuteQueryForPIIDetection\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              ":events:ap-southeast-1:1111111111:event-bus/eventBus\\",\\"Source\\":\\"ada.data-products\\"}]}},\\"GetPiiResultsFromAthena\\":{\\"Next\\":\\"NotifyForSuccess\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.Payload.tableDetails\\",\\"Resource\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Parameters\\":{\\"Payload\\":{\\"tableDetails.$\\":\\"$.Payload.tableDetails\\",\\"executePiiDetectionOutput.$\\":\\"$.Payload.executePiiDetectionOutput\\"}}},\\"ExecutePiiQueryForAllTables\\":{\\"Type\\":\\"Map\\",\\"ResultPath\\":\\"$.Payload.executePiiDetectionOutput\\",\\"Next\\":\\"GetPiiResultsFromAthena\\",\\"InputPath\\":\\"$.Payload.generatePiiQueryOutput.piiQuery\\",\\"Parameters\\":{\\"contextIndex.$\\":\\"$$.Map.Item.Index\\",\\"query.$\\":\\"$$.Map.Item.Value\\",\\"callingUser\\":{\\"userId\\":\\"test-user\\",\\"groups\\":[\\"admin\\",\\"analyst\\"],\\"username\\":\\"test-user@example.com\\"},\\"outputS3Path\\":\\"s3://data-bucket/test-domain/test-data-product/_pii-detection-output\\"},\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Iterator\\":{\\"StartAt\\":\\"IsQueryNotEmpty?\\",\\"States\\":{\\"IsQueryNotEmpty?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Not\\":{\\"Variable\\":\\"$.query\\",\\"StringEquals\\":\\"\\"},\\"Next\\":\\"ExecuteQueryForPIIDetection\\"}],\\"Default\\":\\"SkipPiiDetection\\"},\\"SkipPiiDetection\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"piiDetectionSkipped\\":true},\\"End\\":true},\\"ExecuteQueryForPIIDetection\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:::states:startExecution.sync:2\\",\\"Parameters\\":{\\"Input.$\\":\\"$\\",\\"StateMachineArn\\":\\"arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachine\\"}}}}},\\"GeneratePiiQuery\\":{\\"Next\\":\\"ExecutePiiQueryForAllTables\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.Payload.generatePiiQueryOutput\\",\\"Resource\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Parameters\\":{\\"Payload\\":{\\"tableDetails.$\\":\\"$.Payload.tableDetails\\",\\"athenaUtilitiesLambdaName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"databaseName\\":\\"rawDB\\"}}},\\"NotifyForError\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              ":states:::states:startExecution.sync:2\\",\\"Parameters\\":{\\"Input.$\\":\\"$\\",\\"StateMachineArn\\":\\"arn:aws:states:us-east-1:123456789012:stateMachine:TestStateMachine\\"}}}}},\\"GeneratePiiQuery\\":{\\"Next\\":\\"ExecutePiiQueryForAllTables\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"NotifyForError\\"}],\\"Type\\":\\"Task\\",\\"ResultPath\\":\\"$.Payload.generatePiiQueryOutput\\",\\"Resource\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"Parameters\\":{\\"Payload\\":{\\"tableDetails.$\\":\\"$.Payload.tableDetails\\",\\"athenaUtilitiesLambdaName\\":\\"arn:aws:lambda:ap-southeast-1:1111111111:test\\",\\"databaseName\\":\\"rawDB\\"}}},\\"NotifyForError\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },

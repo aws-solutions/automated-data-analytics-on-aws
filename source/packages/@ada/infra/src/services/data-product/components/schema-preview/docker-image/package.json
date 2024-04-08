@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",
+  "description": "Ada schema-preview-docker-image",
   "scripts": {
     "prebuild": "rm -rf ./handlers/connectors",
     "build": "copyfiles --verbose --up 6 \"../../../../../connectors/**/*.py\" handlers/connectors"

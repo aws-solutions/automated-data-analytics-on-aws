@@ -7,6 +7,13 @@ import { handler } from '../check-data-product-infra-deployment-status';
 
 const mockDescribeStacks = jest.fn();
 
+jest.mock('@aws-cdk/aws-service-spec', ()=>({
+  loadAwsServiceSpec: (...args: any[]) => ({
+    promise: jest.fn(() => Promise.resolve(mockDescribeStacks(...args))),
+  }),
+  loadAwsServiceSpecSync: jest.fn()
+}))
+
 jest.mock('@ada/aws-sdk', () => ({
   ...(jest.requireActual('@ada/aws-sdk') as any),
   AwsCloudFormationInstance: jest.fn().mockImplementation(() => ({

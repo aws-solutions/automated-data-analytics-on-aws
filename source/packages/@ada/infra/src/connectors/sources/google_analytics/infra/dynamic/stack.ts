@@ -25,7 +25,7 @@ export class GoogleAnalyticsSourceTask extends GoogleConnectorSourceTask {
         privateKeyId: details.privateKeyId,
         privateKeySecretName: details.privateKeySecretName,
         projectId: details.projectId,
-        viewId: details.viewId,
+        propertyId: details.propertyId,
         since: details.since || '',
         until: details.until || '',
         dimensions: details.dimensions,
@@ -34,7 +34,7 @@ export class GoogleAnalyticsSourceTask extends GoogleConnectorSourceTask {
         scheduleRate: updateTrigger.scheduleRate || '',
       },
       additionalNotificationPayload: {
-        viewId: details.viewId,
+        propertyId: details.propertyId,
         since: details.since,
         until: details.until,
       },

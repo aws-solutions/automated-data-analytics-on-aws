@@ -39,4 +39,11 @@ jest.mock('@ada/strings/node_modules/typesafe-i18n/runtime/cjs/runtime/src/core.
   }
 })
 
+jest.mock('maplibre-gl/dist/maplibre-gl', () => ({
+  Map: () => ({}),
+}));
+
+// @ts-ignore
+window.URL.createObjectURL = function () {};
+
 export {};

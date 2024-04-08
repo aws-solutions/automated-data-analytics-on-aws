@@ -17,7 +17,7 @@ describe('QueryWorkBench', () => {
   it('primary', async () => {
     API.listApiAccessPolicies.mockResolvedValue({
       policies: [{ apiAccessPolicyId: 'read-only', name: 'Read Only', resources: ['read*'] }],
-    });
+    } as never);
 
     const { findAllByText, container } = render(<Primary {...(Primary.args as any)} />);
     expect(container).toBeDefined();

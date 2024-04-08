@@ -21,7 +21,7 @@ export const ID = 'GOOGLE_ANALYTICS' as const;
  * @required
  */
 export interface ISourceDetails__GOOGLE_ANALYTICS extends IGoogleServiceAccountAuth {
-  viewId: string;
+  propertyId: string;
   dimensions: string;
   metrics: string;
   since?: string;
@@ -40,6 +40,8 @@ export type IFormData__GOOGLE_ANALYTICS = Connectors.IFormData<
     metrics: { value: string }[];
   }
 >;
+
+const PROPERTY_ID = "Property Id"
 
 export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_ANALYTICS, IFormData__GOOGLE_ANALYTICS> = {
   ID,
@@ -96,9 +98,9 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_ANALYTICS, 
     id: `Connector_${ID}`,
     type: 'object',
     properties: {
-      viewId: {
+      propertyId: {
         type: 'string',
-        title: 'View Id',
+        title: PROPERTY_ID,
         pattern: /^\d+$/.source,
       },
       dimensions: {
@@ -122,7 +124,7 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_ANALYTICS, 
         title: 'Until',
       },
     },
-    required: ['viewId', 'dimensions', 'metrics'],
+    required: ['propertyId', 'dimensions', 'metrics'],
   }),
 
   VIEW: {
@@ -130,8 +132,8 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_ANALYTICS, 
       fields: [
         {
           component: 'text-field',
-          name: 'sourceDetails.viewId',
-          label: 'View Id',
+          name: 'sourceDetails.propertyId',
+          label: PROPERTY_ID,
           description: '',
           placeholder: '12345678',
           validate: [
@@ -218,17 +220,17 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_ANALYTICS, 
       sourceDetailsFormDataToInputData: ({ sourceDetails, updateTrigger }) => {
         return {
           ...googleAuthFormDataToInputData({ sourceDetails, updateTrigger }),
-          viewId: sourceDetails.viewId,
+          propertyId: sourceDetails.propertyId,
           dimensions: sourceDetails.dimensions.map((d: { value: string }) => d.value).join(','),
           metrics: sourceDetails.metrics.map((m: { value: string }) => m.value).join(','),
           ...(updateTrigger.triggerType === DataProductUpdateTriggerType.ON_DEMAND
             ? {
-                // convert the data format from iso to yyyy-MM-DD based on local date as ga does not take time stamps
-                // en-ca formats the data as yyyy-MM-DD
-                // scheduled import does not support start and end date form
-                since: new Date(sourceDetails.since!).toLocaleDateString('en-CA'),
-                until: new Date(sourceDetails.until!).toLocaleDateString('en-CA'),
-              }
+              // convert the data format from iso to yyyy-MM-DD based on local date as ga does not take time stamps
+              // en-ca formats the data as yyyy-MM-DD
+              // scheduled import does not support start and end date form
+              since: new Date(sourceDetails.since!).toLocaleDateString('en-CA'),
+              until: new Date(sourceDetails.until!).toLocaleDateString('en-CA'),
+            }
             : {}),
         };
       },
@@ -236,7 +238,7 @@ export const CONNECTOR: Connectors.IConnector<ISourceDetails__GOOGLE_ANALYTICS, 
 
     Summary: {
       properties: [
-        { key: 'viewId', label: 'View Id' },
+        { key: 'propertyId', label: PROPERTY_ID },
         { key: 'dimensions', label: 'Dimensions', valueRenderer: (value: string) => (value || '').split(',') },
         { key: 'metrics', label: 'Metrics', valueRenderer: (value: string) => (value || '').split(',') },
         { key: 'since', label: 'Since' },

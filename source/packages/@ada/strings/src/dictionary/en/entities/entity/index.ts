@@ -41,3 +41,5 @@ export { Transform } from './Transform'
 export { User } from './User'
 
 export { UserProfile } from './UserProfile'
+
+export { Budget } from './Budget';

@@ -32,8 +32,6 @@ export class AppRegistry extends Construct implements cdk.IAspect {
 
     this.createAttributeGroup(this.application);
     this.addTagsforApplication(this.application);
-    const waiter = this.waitForResourceGroupCreated(this.application);
-    this.createAppForAppInsights(this.application, waiter);
 
     this.application.associateApplicationWithStack(scope);
   }
@@ -109,7 +107,7 @@ export class AppRegistry extends Construct implements cdk.IAspect {
       handler: 'handler',
       description: 'Lambda for checking the state of AppRegistry Application Resource Group state',
       initialPolicy: [lambdaPolicyStatement],
-      runtime: lambda.Runtime.NODEJS_16_X,
+      runtime: lambda.Runtime.NODEJS_18_X,
     });
 
     const provider = new cr.Provider(this, 'Provider', {

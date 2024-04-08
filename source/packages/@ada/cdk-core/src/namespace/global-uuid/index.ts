@@ -7,6 +7,7 @@ import { Construct } from 'constructs';
 import { CustomResource, Lazy, Stack } from 'aws-cdk-lib';
 import { Data, Properties } from './common';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Runtime } from 'aws-cdk-lib/aws-lambda'
 import { getRootStack } from '../../utils';
 
 const UUID = 'NamespaceGlobalUUID';
@@ -103,6 +104,7 @@ export class NamespaceGlobalUUID extends Construct {
       entry: getHandlerFile(),
       handler: 'handler',
       description: 'Cloudformation deployment helper generated unique short uuid',
+      runtime: Runtime.NODEJS_18_X
     });
 
     const provider = new cr.Provider(this, 'Provider', {

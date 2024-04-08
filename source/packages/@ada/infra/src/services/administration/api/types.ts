@@ -29,3 +29,112 @@ export const TearDownDetails: JsonSchema = {
   },
   required: ['coreStackId', 'mode', 'message', 'retainedResources'],
 };
+
+/**
+ * Schema for an Budget attribute
+ */
+export const Budget: JsonSchema = {
+  id: `${__filename}/Budget`,
+  type: JsonSchemaType.OBJECT,
+  properties: {
+    budgetLimit: {
+      type: JsonSchemaType.INTEGER,
+    },
+    subscriberList: {
+      type: JsonSchemaType.ARRAY,
+      description: 'Subscribers to recieve notifications',
+      items: {
+        type: JsonSchemaType.STRING,
+      },
+    },
+    softNotifications: {
+      type: JsonSchemaType.ARRAY,
+      description: 'Soft notifications',
+      items: {
+        type: JsonSchemaType.INTEGER,
+      },
+    },
+  },
+  required: ['budgetLimit', 'subscriberList', 'softNotifications'],
+};
+
+export const Notification: JsonSchema = {
+  id: `${__filename}/Notification`,
+  type: JsonSchemaType.OBJECT,
+  properties: {
+    threshold: {
+      type: JsonSchemaType.INTEGER,
+    },
+    state: {
+      type: JsonSchemaType.STRING,
+    },
+  },
+};
+
+export const BudgetDetails: JsonSchema = {
+  id: `${__filename}/BudgetDetails`,
+  type: JsonSchemaType.OBJECT,
+  properties: {
+    budgetLimit: {
+      type: JsonSchemaType.INTEGER,
+    },
+    actualSpend: {
+      type: JsonSchemaType.INTEGER,
+    },
+    forecastedSpend: {
+      type: JsonSchemaType.INTEGER,
+    },
+    subscriberList: {
+      type: JsonSchemaType.ARRAY,
+      description: 'Subscribers to recieve notifications',
+      items: {
+        type: JsonSchemaType.STRING,
+      },
+    },
+    softNotifications: {
+      type: JsonSchemaType.ARRAY,
+      description: 'Soft notifications',
+      items: {
+        type: JsonSchemaType.OBJECT,
+        properties: {
+          threshold: {
+            type: JsonSchemaType.INTEGER,
+          },
+          state: {
+            type: JsonSchemaType.STRING,
+          },
+        },
+        required: ['threshold', 'state'],
+      },
+    },
+  },
+  required: ['budgetLimit', 'actualSpend', 'forecastedSpend', 'subscriberList', 'softNotifications'],
+};
+
+export const BudgetResponse: JsonSchema = {
+  id: `${__filename}/BudgetResponse`,
+  type: JsonSchemaType.OBJECT,
+  properties: {
+    budgetName: {
+      type: JsonSchemaType.STRING,
+      description: 'The budget name',
+    },
+    message: {
+      type: JsonSchemaType.STRING,
+      description: 'Response message',
+    },
+  },
+  required: ['budgetName'],
+};
+
+export const SupersetDeployResponse: JsonSchema = {
+  id: `${__filename}/SupersetDeployResponse`,
+  type: JsonSchemaType.OBJECT,
+  properties: {
+    message: {
+      type: JsonSchemaType.STRING,
+      description: 'Response message',
+    },
+  },
+  required: ['message'],
+};

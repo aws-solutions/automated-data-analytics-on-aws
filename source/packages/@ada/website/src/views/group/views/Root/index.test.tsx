@@ -26,10 +26,10 @@ API.listIdentityGroups.mockResolvedValue({
       createdBy: 'user-a',
     },
   ],
-});
+} as never);
 API.listIdentityRequests.mockRejectedValue({
   accessRequests: [],
-});
+} as never);
 
 describe('GroupRootView', () => {
   it('should list all groups', async () => {

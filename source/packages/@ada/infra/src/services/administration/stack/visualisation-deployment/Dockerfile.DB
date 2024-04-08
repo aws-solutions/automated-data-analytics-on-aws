@@ -1,0 +1,5 @@
+FROM docker.io/library/postgres:15
+RUN set -e
+
+# replacement for volume config "- ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d" in original docker-compose file
+COPY ./docker/docker-entrypoint-initdb.d /docker-entrypoint-initdb.d

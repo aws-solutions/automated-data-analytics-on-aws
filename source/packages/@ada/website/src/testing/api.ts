@@ -14,14 +14,14 @@ import { delay, getOntologyIdString } from '$common/utils';
  */
 export function applyDefaultApiOperationMocks() {
   // Identity (users, groups, machines, tokens)
-  API.listIdentityUsers.mockResolvedValue({ users: fixtures.USERS });
-  API.listIdentityGroups.mockResolvedValue({ groups: fixtures.GROUPS });
-  API.getIdentityMachine.mockResolvedValue({ machineId: TEST_USER.id });
-  API.listIdentityMachineTokens.mockResolvedValue({ tokens: [] });
+  API.listIdentityUsers.mockResolvedValue({ users: fixtures.USERS } as never);
+  API.listIdentityGroups.mockResolvedValue({ groups: fixtures.GROUPS } as never);
+  API.getIdentityMachine.mockResolvedValue({ machineId: TEST_USER.id } as never);
+  API.listIdentityMachineTokens.mockResolvedValue({ tokens: [] } as never);
 
   // Domains
-  API.getDataProductDomain.mockResolvedValue(fixtures.DOMAIN);
-  API.listDataProductDomains.mockResolvedValue({ domains: fixtures.DOMAINS });
+  API.getDataProductDomain.mockResolvedValue(fixtures.DOMAIN as never);
+  API.listDataProductDomains.mockResolvedValue({ domains: fixtures.DOMAINS } as never);
 
   applyDataProductApiMocks();
 
@@ -35,8 +35,9 @@ export function applyDefaultApiOperationMocks() {
 }
 
 export function applyDataProductApiMocks() {
-  API.listDataProductDomainDataProducts.mockResolvedValue({ dataProducts: fixtures.DATA_PRODUCTS });
+  API.listDataProductDomainDataProducts.mockResolvedValue({ dataProducts: fixtures.DATA_PRODUCTS } as never);
 
+  //@ts-ignore
   API.getDataProductDomainDataProduct.mockImplementation(async ({ domainId, dataProductId }) => {
     const entity = fixtures.DATA_PRODUCTS.find((fixture) => {
       return fixture.domainId === domainId && fixture.dataProductId === dataProductId;
@@ -45,6 +46,7 @@ export function applyDataProductApiMocks() {
     throw new Error('Data Product not found!');
   });
 
+  //@ts-ignore
   API.getGovernancePolicyDomainDataProduct.mockImplementation(async ({ domainId, dataProductId }) => {
     return (
       fixtures.DATA_PRODUCT_POLICIES.find((fixture) => {
@@ -53,25 +55,28 @@ export function applyDataProductApiMocks() {
     );
   });
 
-  API.postDataProductScriptsValidate.mockResolvedValue({ report: { errors: [], passed: true } });
+  //@ts-ignore
+  API.postDataProductScriptsValidate.mockResolvedValue({ report: { errors: [], passed: true } } as never);
 
-  API.postDataProductPreviewDomainDataProduct.mockResolvedValue({ previewId: DATAPRODUCT_PREVIEW_ID });
-  API.getDataProductPreviewDomainDataProduct.mockResolvedValue(DATAPRODUCT_PREVIEW);
+  API.postDataProductPreviewDomainDataProduct.mockResolvedValue({ previewId: DATAPRODUCT_PREVIEW_ID } as never);
+  API.getDataProductPreviewDomainDataProduct.mockResolvedValue(DATAPRODUCT_PREVIEW as never);
 }
 
 export function applyGovernanceApiMocks() {
-  API.listOntologies.mockResolvedValue({ ontologies: fixtures.ONTOLOGIES });
+  API.listOntologies.mockResolvedValue({ ontologies: fixtures.ONTOLOGIES } as never);
 
+  //@ts-ignore
   API.getOntology.mockImplementation(async ({ ontologyNamespace, ontologyId }): Promise<any> => {
     return fixtures.ONTOLOGIES.find(
       (fixture) => getOntologyIdString(fixture) === getOntologyIdString({ ontologyId, ontologyNamespace }),
     );
   });
 
-  API.getGovernancePolicyAttributes.mockResolvedValue({ attributeIdToLensId: {} });
+  API.getGovernancePolicyAttributes.mockResolvedValue({ attributeIdToLensId: {} } as never);
 
-  API.getGovernancePolicyAttributes.mockResolvedValue({ attributeIdToLensId: {} });
+  API.getGovernancePolicyAttributes.mockResolvedValue({ attributeIdToLensId: {} } as never);
 
+  //@ts-ignore
   API.getGovernancePolicyAttributesGroup.mockImplementation(async ({ group, attributeId, ontologyNamespace }) => {
     const namespaceAndAttributeId = getOntologyIdString({ ontologyId: attributeId, ontologyNamespace });
     const crud: CreateAndUpdateDetails =
@@ -108,6 +113,8 @@ export function applyGovernanceApiMocks() {
       namespaceAndAttributeId,
     };
   });
+
+  //@ts-ignore
   API.getGovernancePolicyAttributeValuesGroup.mockImplementation(async ({ group, attributeId, ontologyNamespace }) => {
     const namespaceAndAttributeId = getOntologyIdString({ ontologyId: attributeId, ontologyNamespace });
     const crud: CreateAndUpdateDetails =
@@ -146,8 +153,9 @@ export function applyGovernanceApiMocks() {
 }
 
 export function applyIdentityProviderApiMocks() {
-  API.listIdentityProviders.mockResolvedValue({ providers: fixtures.IDENTITY_PROVIDERS });
+  API.listIdentityProviders.mockResolvedValue({ providers: fixtures.IDENTITY_PROVIDERS } as never);
 
+  //@ts-ignore
   API.getIdentityProvider.mockImplementation(async ({ identityProviderId }): Promise<any> => {
     const entity = fixtures.IDENTITY_PROVIDERS.find((fixture) => fixture.identityProviderId === identityProviderId);
     if (entity) return entity;
@@ -158,19 +166,21 @@ export function applyIdentityProviderApiMocks() {
 export function applyQueryExecutionApiMocks(variant?: 'delayed') {
   switch (variant) {
     case 'delayed': {
+      //@ts-ignore
       API.postQuery.mockImplementation(async () => {
         await delay(100);
         return fixtures.QUERY_EXECUTION;
       });
 
       [QueryExecutionStatus.QUEUED, QueryExecutionStatus.RUNNING, QueryExecutionStatus.SUCCEEDED].forEach((status) => {
-        API.getQueryStatus.mockResolvedValueOnce({ status });
+        API.getQueryStatus.mockResolvedValueOnce({ status } as never);
       });
 
       API.getQueryStatus.mockResolvedValue({
         status: QueryExecutionStatus.SUCCEEDED,
-      });
+      } as never);
 
+      //@ts-ignore
       API.listQueryResults.mockImplementation(async () => {
         await delay(100);
         return fixtures.QUERY_EXECUTION_RESULT;
@@ -178,26 +188,27 @@ export function applyQueryExecutionApiMocks(variant?: 'delayed') {
       break;
     }
     default: {
-      API.postQuery.mockResolvedValue(fixtures.QUERY_EXECUTION);
+      API.postQuery.mockResolvedValue(fixtures.QUERY_EXECUTION as never);
 
       API.getQueryStatus.mockResolvedValue({
         status: QueryExecutionStatus.SUCCEEDED,
-      });
+      } as never);
 
       API.listQueryResults.mockResolvedValue({
         ...fixtures.QUERY_EXECUTION_RESULT,
-      });
+      } as never);
     }
   }
 }
 
 export function applyNotificationApiMocks() {
-  API.listNotifications.mockResolvedValue({ notifications: fixtures.NOTIFICATIONS });
+  API.listNotifications.mockResolvedValue({ notifications: fixtures.NOTIFICATIONS } as never);
 }
 
 export function applyApiAccessPolicyMocks() {
-  API.listApiAccessPolicies.mockResolvedValue({ policies: fixtures.API_ACCESS_POLICIES });
+  API.listApiAccessPolicies.mockResolvedValue({ policies: fixtures.API_ACCESS_POLICIES } as never);
 
+  //@ts-ignore
   API.getApiAccessPolicy.mockImplementation((params) => {
     const policy = fixtures.API_ACCESS_POLICIES.find((policy) => policy.apiAccessPolicyId === params.apiAccessPolicyId);
     if (policy) return Promise.resolve(policy);

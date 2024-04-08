@@ -1,0 +1,14 @@
+FROM node:16
+RUN set -e
+
+# workaround for host volume not support in fargate
+RUN mkdir -p /app/superset-frontend
+
+# replacement for volume config "- ./superset-frontend:/app/superset-frontend" in original docker-compose file
+COPY ./superset-frontend /app/superset-frontend
+
+# replacement for volume config "- ./superset:/app/superset" in original docker-compose file
+COPY ./superset /app/superset
+
+# replacement for volume config "- ./docker:/app/docker" in original docker-compose file
+COPY ./docker /app/docker

@@ -175,6 +175,8 @@ export class AdaStack extends ExtendedStack {
       dataProductCreationStateMachine: dataProductService.dataProductCreationStateMachine,
       dataProductTable: dataProductService.dataProductTable,
       coreStack: this,
+      accessLogsBucket,
+      athenaProxyDomainName: queryService.proxyDistributionDomain,
     });
 
     const web = new StaticWebsiteStack(this, 'Website', {

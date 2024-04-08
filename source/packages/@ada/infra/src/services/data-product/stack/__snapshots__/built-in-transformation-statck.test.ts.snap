@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-BuiltInTransformationStack) - Automated Data Analytics on AWS. Version v1.3.0",
+  "Description": "(SO0190-BuiltInTransformationStack) - Automated Data Analytics on AWS. Version v1.4.0",
   "Parameters": Object {
     "referencetoAdaDataProductServiceApiStackNestedStackApiStackNestedStackResourceC3A35847OutputsAdaDataProductServiceApiStackApiLambdaPutScript8681009BArn": Object {
       "Type": "String",

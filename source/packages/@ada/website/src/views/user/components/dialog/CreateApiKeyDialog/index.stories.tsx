@@ -24,7 +24,7 @@ const Template: ComponentStory<typeof CreateApiKeyDialog> = (args) => {
   useImmediateEffect(() => {
     API.getIdentityMachine.mockResolvedValue({
       machineId: TEST_USER.id,
-    });
+    } as never);
     API.putIdentityMachineToken.mockResolvedValue({
       machineId: TEST_USER.id,
       tokenId: 'mock-token',
@@ -33,7 +33,8 @@ const Template: ComponentStory<typeof CreateApiKeyDialog> = (args) => {
       clientSecret: 'mock-client-secret',
       authToken: 'mock-auth-token',
       authUrl: 'mock-auth-url',
-    });
+    } as never);
+    //@ts-ignore
     API.putQuerySavedQuery.mockImplementation(({ namespace, queryId, savedQueryInput }) => {
       return Promise.resolve({
         queryId,

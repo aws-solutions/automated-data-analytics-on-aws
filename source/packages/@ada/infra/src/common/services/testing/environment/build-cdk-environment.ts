@@ -157,7 +157,7 @@ export interface CdkEnvironmentForTests {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface MicroserviceType<T, P> extends LambdaFunction {
-  new (scope: Construct, id: string, props: P): T;
+  new(scope: Construct, id: string, props: P): T;
 }
 
 type TMockableMicroserviceProps<P extends Partial<MicroserviceProps>> = Omit<
@@ -187,19 +187,19 @@ export const buildCdkEnvironmentForTests = <T extends Microservice, P extends Mi
     const federatedApi = props.federatedApi
       ? props.federatedApi
       : new FederatedRestApi(stack, 'MockFederatedApi', {
-          customAuthorizer: new RequestAuthorizer(stack, 'auth', {
-            handler: new LambdaFunction(stack, 'MyFunction', {
-              runtime: Runtime.NODEJS_16_X,
-              handler: 'index.handler',
-              code: Code.fromInline('console.log(1)'),
-            }) as IFunction,
-            identitySources: [IdentitySource.header('Authorization')],
-          }),
-          accessLogsBucket: new Bucket(stack, 'logsBucket', {
-            // SSE-S3 is the only supported default bucket encryption for Server Access Logging target buckets
-            encryption: BucketEncryption.S3_MANAGED,
-          }),
-        });
+        customAuthorizer: new RequestAuthorizer(stack, 'auth', {
+          handler: new LambdaFunction(stack, 'MyFunction', {
+            runtime: Runtime.NODEJS_18_X,
+            handler: 'index.handler',
+            code: Code.fromInline('console.log(1)'),
+          }) as IFunction,
+          identitySources: [IdentitySource.header('Authorization')],
+        }),
+        accessLogsBucket: new Bucket(stack, 'logsBucket', {
+          // SSE-S3 is the only supported default bucket encryption for Server Access Logging target buckets
+          encryption: BucketEncryption.S3_MANAGED,
+        }),
+      });
     const serviceNestedStack: NestedStack = new ServiceNestedStack(stack, 'Stack', {
       ...props,
       federatedApi,

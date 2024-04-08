@@ -1,0 +1,14 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: '3.10'
+    commands:
+      - pip3 install cfn-flip
+  build:
+    commands:
+      - chmod +x deploy.sh
+      - ./deploy.sh
+  post_build:
+    commands:
+      - echo Build completed

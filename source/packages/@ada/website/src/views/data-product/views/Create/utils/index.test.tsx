@@ -107,16 +107,16 @@ describe('data-product/create/utils', () => {
         Connectors.Id.GOOGLE_ANALYTICS,
         {
           ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
-          viewId: '1234567891',
+          propertyId: '1234567891',
           since: '2020-12-31T10:29:28.094Z',
           until: '2021-11-26T10:29:28.094Z',
           dimensions: [
-            { label: 'ga:country', value: 'ga:country' },
-            { label: 'ga:userType', value: 'ga:userType' },
+            { label: 'year', value: 'year' },
+            { label: 'city', value: 'city' },
           ],
           metrics: [
-            { label: 'ga:sessions', value: 'ga:sessions' },
-            { label: 'ga:users', value: 'ga:users' },
+            { label: 'engagedSessions', value: 'engagedSessions' },
+            { label: 'totalUsers', value: 'totalUsers' },
           ],
         },
         {
@@ -125,11 +125,11 @@ describe('data-product/create/utils', () => {
       );
       expect(sourceDetails).toMatchObject({
         ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
-        viewId: '1234567891',
+        propertyId: '1234567891',
         since: '2020-12-31',
         until: '2021-11-26',
-        dimensions: 'ga:country,ga:userType',
-        metrics: 'ga:sessions,ga:users',
+        dimensions: 'year,city',
+        metrics: 'engagedSessions,totalUsers',
       });
       // validate output matches schema so will be accepable to api validation
       expect(Connectors.Schema.validate(Connectors.Id.GOOGLE_STORAGE, sourceDetails).errors).toEqual([]);
@@ -578,14 +578,14 @@ describe('data-product/create/utils', () => {
           enableAutomaticPii: false,
           sourceDetails: {
             ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
-            viewId: '1234567891',
+            propertyId: '1234567891',
             dimensions: [
-              { label: 'ga:country', value: 'ga:country' },
-              { label: 'ga:userType', value: 'ga:userType' },
+              { label: 'year', value: 'year' },
+              { label: 'city', value: 'city' },
             ],
             metrics: [
-              { label: 'ga:sessions', value: 'ga:sessions' },
-              { label: 'ga:users', value: 'ga:users' },
+              { label: 'engagedSessions', value: 'engagedSessions' },
+              { label: 'totalUsers', value: 'totalUsers' },
             ],
           },
           updateTrigger: {
@@ -603,9 +603,9 @@ describe('data-product/create/utils', () => {
         sourceType: Connectors.Id.GOOGLE_ANALYTICS,
         sourceDetails: {
           ...MOCK_GOOGLE_SERVICE_ACCOUNT_INPUT,
-          viewId: '1234567891',
-          dimensions: 'ga:country,ga:userType',
-          metrics: 'ga:sessions,ga:users',
+          propertyId: '1234567891',
+          dimensions: 'year,city',
+          metrics: 'engagedSessions,totalUsers',
         },
         updateTrigger: {
           scheduleRate: 'rate(7 days)',

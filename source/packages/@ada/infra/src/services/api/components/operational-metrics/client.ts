@@ -2,7 +2,8 @@
 SPDX-License-Identifier: Apache-2.0 */
 import { Function as LambdaFunction } from 'aws-cdk-lib/aws-lambda';
 import { Logger } from '@ada/infra-common/constructs/lambda/lambda-logger';
-import { MetricsPayload, OperationalMetricsConfig, sendAnonymousMetric } from '@ada/infra-common/utils/metrics';
+import { MetricsPayload, sendAnonymousMetric } from '@ada/infra-common/utils/metrics';
+import { OperationalMetricsConfig } from '@ada/infra-common/utils/operational-metrics-config'
 import moment from 'moment';
 
 export const SEND_ANONYMOUS_DATA = 'SEND_ANONYMOUS_DATA';

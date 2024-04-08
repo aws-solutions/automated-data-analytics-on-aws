@@ -25,8 +25,8 @@ export default class GoogleAnalyticsImportDataStateMachine extends BaseEcsRunner
       taskEnv: TaskInput.fromObject([
         ...GOOGLE_BASE_TASK_INPUT,
         {
-          name: 'VIEW_ID',
-          value: TaskInput.fromJsonPathAt('$.viewId').value,
+          name: 'PROPERTY_ID',
+          value: TaskInput.fromJsonPathAt('$.propertyId').value,
         },
         {
           name: 'SINCE',

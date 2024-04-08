@@ -3,6 +3,14 @@
 # SPDX-License-Identifier: Apache-2.0
 ###################################################################
 import pandas as pd
+from google.analytics.data_v1beta import BetaAnalyticsDataClient
+from google.analytics.data_v1beta.types import (
+    DateRange,
+    Dimension,
+    Metric,
+    MetricType,
+    RunReportRequest,
+)
 
 from handlers.common import * # NOSONAR
 from handlers.sampling import SamplingUtils
@@ -11,16 +19,15 @@ GS_AVG_ROW_SIZE = 1024
 
 def pull_samples(input: IPullSamplesInput) -> IPullSamplesReturn: # NOSONAR (python:S3776) - false positive
     """
-    Query data from Goolge Analytics
-    https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet
+    Query data from Goolge Analytics 4
+    https://googleapis.dev/python/analyticsdata/latest/data_v1beta/beta_analytics_data.html 
     request body:
     {
-        'viewId': '123456',
+        'propertyId': '123456',
         'dateRanges': [{'startDate': '2021-01-01', 'endDate': '2021-12-01'}],
-        'samplingLevel': 'Default|LARGE',
         'metrics': [],
         'dimensions': [],
-        'pageSize': 10,
+        'limit': 10,
     }
     """
     print('Reading sample data from Google Analytics')
@@ -30,7 +37,8 @@ def pull_samples(input: IPullSamplesInput) -> IPullSamplesReturn: # NOSONAR (pyt
 
     cred = SamplingUtils.get_google_cloud_credentials(source_details)
     cred.with_scopes(["https://www.googleapis.com/auth/analytics.readonly"])
-    analytics = SamplingUtils.build_google_api_client("analyticsreporting", "v4", credentials=cred, cache_discovery=False)
+
+    ga_client = SamplingUtils.build_google_analytics_client(cred)
 
     trigger_type = update_trigger.get("triggerType", "ON_DEMAND")
     schedule_rate = update_trigger.get("scheduleRate", "")
@@ -45,108 +53,65 @@ def pull_samples(input: IPullSamplesInput) -> IPullSamplesReturn: # NOSONAR (pyt
     print("Preview ga data with date ranges: ", date_range)
 
     since_formatted = date_range[0].strftime('%Y-%m-%d')
-
     until_formatted = date_range[1].strftime('%Y-%m-%d')
 
-    """
-    # input:
-    # "ga:sessions, ga:users"
-    # output:
-    # [{"name": "ga:sessions"}, {"name": "ga:users"}]
-    """
     source_dimenions = source_details.get("dimensions", {})
     if type(source_dimenions) is str:
-        dimensions = []
-        for dimension in source_dimenions.split(","):
-            dimensions.append({"name": dimension})
+        dimensions = [Dimension(name=dim) for dim in source_dimenions.split(",")]
     else:
-        dimensions = source_dimenions
+        dimensions = map(lambda dim: Dimension(name=dim), source_dimenions)
 
-    """
-    # input
-    # "ga:country, ga:userType"
-    # output
-    # [{"expression": "ga:country"}, {"expression": "ga:userType"}]
-    """
     source_metrics = source_details.get("metrics", {})
-
     if type(source_metrics) is str:
-        metrics = []
-        for metric in source_metrics.split(","):
-            metrics.append({"expression": metric})
+        metrics = [Metric(name=metric) for metric in source_metrics.split(",")]
     else:
-        metrics = source_metrics
+        metrics = map(lambda metric: Metric(name=metric), source_metrics) 
 
-    print("Calling anlytics - should be mocked", analytics)
-    print("#reports()", analytics.reports())
-    body = {
-        'reportRequests': [
-            {
-                'viewId': source_details.get("viewId"),
-                'dateRanges': [{'startDate': since_formatted, 'endDate': until_formatted}],
-                'metrics': metrics,
-                'dimensions': dimensions,
-                'pageSize': input.sample_size
-            }]
-    }
-    print("body=", body)
-    response = analytics.reports().batchGet(body=body).execute()
-    print("response:", response)
+    try: 
+        request = RunReportRequest(
+                property=f"properties/{source_details.get('propertyId')}",
+                dimensions=dimensions,
+                metrics=metrics,
+                date_ranges=[DateRange(start_date=since_formatted, end_date=until_formatted)],
+                limit = input.sample_size,
+        )
+        print(request)
 
-    print("Retrieved ga report for preview ...")
+        response = ga_client.run_report(request)
+        print("response:", response)
 
-    if response.get('reports'):
-        report = response['reports'][0]
-        rows = report.get('data', {}).get('rows', [])
+        print("Retrieved ga report for preview ...")
+        # dimension headers are lower case all the time
+        dimension_headers = [ dim.name.lower() for dim in response.dimension_headers ]
+        print("Response Dimension Headers")
+        print (dimension_headers)
 
-        column_header = report.get('columnHeader', {})
-        dimension_headers = [
-            {'name': header.replace('ga:', ''), 'type': VARCHAR_255}
-            for header
-            in column_header.get('dimensions', [])
-        ]
-        metric_map = {
-            'METRIC_TYPE_UNSPECIFIED': VARCHAR_255,
-            'CURRENCY': DECIMAL_20_5,
-            'INTEGER': 'int(11)',
-            'FLOAT': DECIMAL_20_5,
-            'PERCENT': DECIMAL_20_5,
-            'TIME': 'time'
-        }
-        metric_headers = [
-            {'name': entry.get('name').replace('ga:', ''),
-                'type': metric_map.get(entry.get('type'), VARCHAR_255)}
-            for entry
-            in column_header.get('metricHeader', {}).get('metricHeaderEntries', [])
-        ]
+        # metric headers are lower case all the time
+        metric_headers = [ metric.name.lower() for metric in response.metric_headers]
+        print("Response Metric headers")
+        print(metric_headers)
 
-        normalize_rows = []
+        normalized_rows = []
+        rows = response.rows
+        for row in rows:
+            row_data = dict()
+            # retrieve dimensions
+            for index, dimension_value in enumerate(row.dimension_values):
+                row_data[dimension_headers[index]] = dimension_value.value
+            # retrieve metrics
+            for index, metric_value in enumerate(row.metric_values):
+                row_data[metric_headers[index]] = metric_value.value
+            # add common columns
+            row_data['propertyid'] = source_details.get('propertyId')
+            row_data['timestamp'] = until_formatted
+            normalized_rows.append(row_data)
 
-        for row_counter, row in enumerate(rows):
-            root_data_obj = {}
-            dimensions = row.get('dimensions', [])
-            metrics = row.get('metrics', [])
-
-            for index, dimension in enumerate(dimensions):
-                header = dimension_headers[index].get('name').lower()
-                root_data_obj[header] = dimension
-
-            for metric in metrics:
-                data = {}
-                data.update(root_data_obj)
-                for index, value in enumerate(metric.get('values', [])):
-                    header = metric_headers[index].get('name').lower()
-                    data[header] = value
-                data['viewid'] = source_details["viewId"]
-                data['timestamp'] = until_formatted
-                normalize_rows.append(data)
-        print("normalized length: ", len(normalize_rows))
-        if len(normalize_rows):
-            dataframe = pd.DataFrame(normalize_rows)
+        if len(normalized_rows):
+            dataframe = pd.DataFrame(normalized_rows)
             return [Sample(DEFAULT_DATASET_ID, dataframe, 'parquet')]
         else:
             raise NoSourceDataFoundException(
                 "Unable to load preview: empty data")
-    else:
+    except:
         raise NoSourceDataFoundException(
             "Unable to load preview: bad responses from google analytics")

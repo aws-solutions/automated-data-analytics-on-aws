@@ -32,6 +32,7 @@ const Template: ComponentStory<typeof DataProductDetailView> = (args, context) =
   const entityRef = useRef<DataProductEntity>();
 
   useImmediateEffect(() => {
+    //@ts-ignore
     API.getDataProductDomainDataProduct.mockImplementation(() => {
       if (notFound) {
         return Promise.reject(new Error('Data Product not found!'));
@@ -39,6 +40,7 @@ const Template: ComponentStory<typeof DataProductDetailView> = (args, context) =
       entityRef.current = fixtures.DATA_PRODUCT;
       return Promise.resolve(entityRef.current);
     });
+    //@ts-ignore
     API.putDataProductDomainDataProduct.mockImplementation(async ({ dataProductInput }) => {
       await delay(10);
 
@@ -55,7 +57,7 @@ const Template: ComponentStory<typeof DataProductDetailView> = (args, context) =
         [DefaultGroupIds.DEFAULT]: { access: DataProductAccess.READ_ONLY },
         [DefaultGroupIds.POWER_USER]: { access: DataProductAccess.FULL },
       }
-    })
+    } as never)
   });
 
   return (

@@ -64,6 +64,39 @@ export const DynamicInfraDeploymentPermissionsBoundaryPolicyStatement = new Poli
   resources: ['*'],
 });
 
+export const VisualisationSolutionCodeBuildPolicyStatement = new PolicyStatement({
+  effect: Effect.ALLOW,
+  actions: [
+    ...dynamicInfrastructureDeploymentActions,
+    'ecr:GetAuthorizationToken',
+    'ecr:DescribeRepositories',
+    'ecr:CreateRepository',
+    'ecr:BatchCheckLayerAvailability',
+    'ecr:GetDownloadUrlForLayer',
+    'ecr:GetRepositoryPolicy',
+    'ecr:DescribeRepositories',
+    'ecr:ListImages',
+    'ecr:DescribeImages',
+    'ecr:BatchGetImage',
+    'ecr:InitiateLayerUpload',
+    'ecr:UploadLayerPart',
+    'ecr:CompleteLayerUpload',
+    'ecr:PutImage',
+    'ec2:*',
+    'elasticfilesystem:*',
+    'servicediscovery:*',
+    'elasticloadbalancing:*',
+    'secretsmanager:*',
+    'route53:*',
+    'cloudformation:DescribeStacks',
+    'cloudformation:ExecuteChangeSet',
+    'cloudformation:DescribeChangeSet',
+    'cloudformation:CreateChangeSet',
+    'cloudformation:GetTemplateSummary',
+  ],
+  resources: ['*'],
+});
+
 /**
  * Permission for preview lambda and importing cluster to read data source credentials
  */
@@ -118,7 +151,7 @@ export const ExternalSourceDataCloudWatchAccessPolicyStatement = new PolicyState
   resources: ['*'],
 });
 
-export const ExternalSourceRedshiftAccessPolicyStatement =  new PolicyStatement({
+export const ExternalSourceRedshiftAccessPolicyStatement = new PolicyStatement({
   effect: Effect.ALLOW,
   actions: ['redshift:GetClusterCredentials', 'redshift-serverless:GetCredentials'],
   resources: ['*'],

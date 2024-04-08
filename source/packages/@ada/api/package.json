@@ -6,6 +6,7 @@
   "license": "Apache-2.0",
   "main": "./client/index.js",
   "types": "./client/index.d.ts",
+  "type": "commonjs",
   "scripts": {
     "prebuild": "yarn clean && yarn generate",
     "build": "yarn run compile",
@@ -28,8 +29,8 @@
     "@types/node": "*",
     "@types/node-fetch": "^2.5.7",
     "@types/pluralize": "^0.0.29",
-    "aws-cdk": "2.88.0",
-    "aws-cdk-lib": "2.88.0",
+    "aws-cdk": "2.130.0",
+    "aws-cdk-lib": "2.130.0",
     "constructs": "^10.1.181",
     "btoa": "^1.2.1",
     "es6-promise": "^4.2.4",

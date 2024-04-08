@@ -32,7 +32,7 @@ describe('OntologyDetailView', () => {
   beforeEach(() => {
     jest.resetAllMocks();
 
-    API.getOntology.mockResolvedValue(mockOntology);
+    API.getOntology.mockResolvedValue(mockOntology as never);
 
     API.listIdentityGroups.mockResolvedValue({
       groups: [
@@ -40,20 +40,20 @@ describe('OntologyDetailView', () => {
         { groupId: DefaultGroupIds.POWER_USER, claims: [], members: [], apiAccessPolicyIds: [] },
         { groupId: DefaultGroupIds.DEFAULT, claims: [], members: [], apiAccessPolicyIds: [] },
       ],
-    });
+    } as never);
     API.getGovernancePolicyAttributeValues.mockResolvedValueOnce({
       attributeIdToSqlClause: {
         'ontologyNamespace.ontologyId': '"ontologyNamespace.ontologyId" LIKE "% Vader"',
       },
-    });
+    } as never);
     API.getGovernancePolicyAttributeValues.mockResolvedValueOnce({
       attributeIdToSqlClause: {
         'ontologyNamespace.ontologyId': '"ontologyNamespace.ontologyId" LIKE "Luke %"',
       },
-    });
+    } as never);
     API.getGovernancePolicyAttributeValues.mockResolvedValueOnce({
       attributeIdToSqlClause: {},
-    });
+    } as never);
   });
 
   it('should show the ontology details', async () => {

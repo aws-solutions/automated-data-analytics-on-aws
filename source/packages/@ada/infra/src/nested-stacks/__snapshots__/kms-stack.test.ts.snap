@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-KMSStack) - Automated Data Analytics on AWS. Version v1.3.0",
+  "Description": "(SO0190-KMSStack) - Automated Data Analytics on AWS. Version v1.4.0",
   "Outputs": Object {
     "AdaKMSStackKeyBucketKeyAthenaOutputBucket0D9D1563Arn": Object {
       "Value": Object {
@@ -16,6 +16,14 @@ Object {
       "Value": Object {
         "Fn::GetAtt": Array [
           "KeyBucketKeyDataBucket924A0C93",
+          "Arn",
+        ],
+      },
+    },
+    "AdaKMSStackKeyBucketKeyDeploymentScriptBucket915B124DArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "KeyBucketKeyDeploymentScriptBucket6F2C2BAC",
           "Arn",
         ],
       },
@@ -361,6 +369,67 @@ Object {
         "TargetKeyId": Object {
           "Fn::GetAtt": Array [
             "KeyBucketKeyDataBucket924A0C93",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+    },
+    "KeyBucketKeyDeploymentScriptBucket6F2C2BAC": Object {
+      "DeletionPolicy": "Delete",
+      "Metadata": Object {
+        "cfn_nag": Object {
+          "rules_to_suppress": Array [
+            Object {
+              "id": "W12",
+              "reason": "kms:* and account principal required to prevent cirucular dependencies and to prevent unmanageable keys - recommended https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/aws-kms#key-policies",
+            },
+          ],
+        },
+      },
+      "Properties": Object {
+        "Description": "Key for bucket DeploymentScriptBucket",
+        "EnableKeyRotation": true,
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::1111111111:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Application",
+            "Value": "Ada",
+          },
+        ],
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "KeyBucketKeyDeploymentScriptBucketAlias65D31DCD": Object {
+      "Properties": Object {
+        "AliasName": "alias/ada/BucketKey-DeploymentScriptBucket/ghashx",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "KeyBucketKeyDeploymentScriptBucket6F2C2BAC",
             "Arn",
           ],
         },

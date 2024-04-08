@@ -37,7 +37,11 @@ const APPROVED_PKG_LIST: string[] = [
   'dreamopt', // The MIT License (MIT)
   'es5-ext', // ISC License
   'heap', // The MIT License,
-  "pako", // (MIT AND Zlib) from @aws-amplify
+  "pako", // (MIT AND Zlib) from @aws-amplify,
+  "victory-vendor", //"MIT AND ISC",
+  "@mapbox/jsonlint-lines-primitives", // From @aws-amplify
+  "mapbox-gl", // From @aws-amplify
+  "rw" // From @aws-amplify
 ]
 
 const UNKNOWN = 'Unknown'

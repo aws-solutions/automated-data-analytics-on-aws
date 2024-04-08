@@ -4,25 +4,25 @@
     "build": "npx esbuild --bundle ./index.ts --target=node16 --platform=node --outfile=dist/index.js --external:aws-sdk --external:aws-cdk --external:cdk-assets --external:promptly --external:proxy-agent --external:punycode --external:aws-cdk-lib --external:@aws-cdk/*"
   },
   "private": true,
+  "description": "Ada start-data-product-infra-deployment",
   "dependencies": {
-    "@aws-cdk/aws-apigatewayv2-alpha": "2.88.0-alpha.0",
-    "@aws-cdk/aws-apigatewayv2-authorizers-alpha": "2.88.0-alpha.0",
-    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.88.0-alpha.0",
-    "@aws-cdk/aws-glue-alpha": "2.88.0-alpha.0",
-    "@aws-cdk/aws-kinesisfirehose-alpha": "2.88.0-alpha.0",
-    "@aws-cdk/aws-kinesisfirehose-destinations-alpha": "2.88.0-alpha.0",
-    "@aws-cdk/aws-lambda-python-alpha": "2.88.0-alpha.0",
-    "@aws-cdk/cloudformation-diff": "2.88.0",
-    "aws-cdk-lib": "2.88.0",
+    "@aws-cdk/aws-glue-alpha": "2.130.0-alpha.0",
+    "@aws-cdk/aws-kinesisfirehose-alpha": "2.130.0-alpha.0",
+    "@aws-cdk/aws-kinesisfirehose-destinations-alpha": "2.130.0-alpha.0",
+    "@aws-cdk/aws-lambda-python-alpha": "2.130.0-alpha.0",
+    "@aws-cdk/cloudformation-diff": "2.130.0",
+    "aws-cdk-lib": "2.130.0",
     "constructs": "^10.1.181",
-    "aws-cdk": "2.88.0",
-    "cdk-assets": "2.88.0",
+    "aws-cdk": "2.130.0",
+    "cdk-assets": "2.130.0",
     "chalk": "^4",
     "promptly": "^3.2.0",
     "proxy-agent": "^6.3.0"
   },
   "resolutions": {
-    "xml2js": "^0.5.0"
+    "xml2js": "^0.5.0",
+    "ip":"^2.0.1",
+    "semver":"^7.5.2"
   },
   "workspaces": {
     "nohoist": [

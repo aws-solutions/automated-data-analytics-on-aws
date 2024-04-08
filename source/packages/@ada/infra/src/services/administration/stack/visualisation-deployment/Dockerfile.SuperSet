@@ -1,0 +1,17 @@
+FROM apachesuperset.docker.scarf.sh/apache/superset:3.0.0
+ARG ADA_ATHENA_ENDPOINT_URL
+USER root
+# install Athena driver
+RUN pip install "boto3>=1.28.84"
+RUN pip install "PyAthenaJDBC>1.0.9"
+RUN pip install "PyAthena>1.2.0"
+
+# override Athena Endpoint URL to connecto to Ada
+COPY ./docker /app/docker/
+RUN echo "AWS_ENDPOINT_URL_ATHENA=${ADA_ATHENA_ENDPOINT_URL}" >> /app/docker/.env-non-dev 
+
+COPY ./superset/examples/helpers.py /app/superset/examples/helpers.py
+COPY ./superset/examples/configs/datasets/examples /app/superset/examples/configs/datasets/
+COPY ./superset/config.py /app/superset/config.py
+
+USER superset

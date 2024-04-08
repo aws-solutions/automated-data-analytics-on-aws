@@ -317,6 +317,7 @@ Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "AppRegistryRegistrySetup9C75F927",
+        "KMSStack7F65AEC0",
         "OntologyServiceStackD2BEF838",
       ],
       "Properties": Object {
@@ -356,6 +357,12 @@ Object {
           },
           "referencetoAdaApiWafDeploymentSecretCA25FA9ARef": Object {
             "Ref": "ApiWafDeploymentSecret5FECB872",
+          },
+          "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackAccessLogBucketB5B66FEDRef": Object {
+            "Fn::GetAtt": Array [
+              "CommonStackA8F9EE77",
+              "Outputs.AdaCommonStackAccessLogBucketB5B66FEDRef",
+            ],
           },
           "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackCounterTable5D6ADA16Arn": Object {
             "Fn::GetAtt": Array [
@@ -441,6 +448,12 @@ Object {
               "Outputs.AdaKMSStackKeyBucketKeyDataBucket51FCC54DArn",
             ],
           },
+          "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyDeploymentScriptBucket915B124DArn": Object {
+            "Fn::GetAtt": Array [
+              "KMSStack7F65AEC0",
+              "Outputs.AdaKMSStackKeyBucketKeyDeploymentScriptBucket915B124DArn",
+            ],
+          },
           "referencetoAdaKMSStackNestedStackKMSStackNestedStackResourceA6F3CE60OutputsAdaKMSStackKeyBucketKeyScriptsBucketC9CECD84Arn": Object {
             "Fn::GetAtt": Array [
               "KMSStack7F65AEC0",
@@ -468,6 +481,12 @@ Object {
           "referencetoAdaLayer6FB4FEF4Ref": Object {
             "Ref": "LayerB20D2F06",
           },
+          "referencetoAdaQueryServiceNestedStackQueryServiceNestedStackResourceB637DA5COutputsAdaQueryServiceAthenaProxyDistribution31E1FEE1DomainName": Object {
+            "Fn::GetAtt": Array [
+              "QueryServiceStack09226509",
+              "Outputs.AdaQueryServiceAthenaProxyDistribution31E1FEE1DomainName",
+            ],
+          },
           "referencetoAdaSharedEvntBus3C45F515Arn": Object {
             "Fn::GetAtt": Array [
               "SharedEvntBusF5797523",
@@ -482,7 +501,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -640,7 +659,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -789,7 +808,7 @@ Object {
           "applicationType": "AWS-Solutions",
           "solutionID": "SO0190",
           "solutionName": "Automated Data Analytics on AWS",
-          "version": "v1.3.0",
+          "version": "v1.4.0",
         },
         "Description": "Attributes for Solutions Metadata",
         "Name": Object {
@@ -800,37 +819,6 @@ Object {
         },
       },
       "Type": "AWS::ServiceCatalogAppRegistry::AttributeGroup",
-    },
-    "AppRegistryAppInsightsSetupAD820752": Object {
-      "DependsOn": Array [
-        "AppRegistryCustomResource3F7EBBE3",
-      ],
-      "Properties": Object {
-        "AutoConfigurationEnabled": true,
-        "CWEMonitorEnabled": true,
-        "OpsCenterEnabled": true,
-        "ResourceGroupName": Object {
-          "Fn::Join": Array [
-            "-",
-            Array [
-              "AWS_AppRegistry_Application-Automated-Data-Analysis-on-AWS",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-            ],
-          ],
-        },
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-      },
-      "Type": "AWS::ApplicationInsights::Application",
     },
     "AppRegistryAssociation": Object {
       "Properties": Object {
@@ -846,659 +834,6 @@ Object {
         "ResourceType": "CFN_STACK",
       },
       "Type": "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
-    },
-    "AppRegistryCustomResource3F7EBBE3": Object {
-      "DeletionPolicy": "Delete",
-      "Properties": Object {
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "AppRegistryProviderFrameworkOnEvent1C8F1CA3",
-            "Arn",
-          ],
-        },
-        "applicationId": Object {
-          "Fn::GetAtt": Array [
-            "AppRegistryRegistrySetup9C75F927",
-            "Id",
-          ],
-        },
-        "applicationName": Object {
-          "Fn::Join": Array [
-            "-",
-            Array [
-              "Automated-Data-Analysis-on-AWS",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-            ],
-          ],
-        },
-      },
-      "Type": "AWS::CloudFormation::CustomResource",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "AppRegistryEventHandlerLambda7CE393E5": Object {
-      "DependsOn": Array [
-        "AppRegistryEventHandlerLambdaServiceRoleDefaultPolicyEDEAC460",
-        "AppRegistryEventHandlerLambdaServiceRole941F5CAF",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": "cdk-#####",
-          "S3Key": "cdkhash######.zip",
-        },
-        "Description": "Lambda for checking the state of AppRegistry Application Resource Group state",
-        "Environment": Object {
-          "Variables": Object {
-            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
-          },
-        },
-        "Handler": "index.handler",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "AppRegistryEventHandlerLambdaServiceRole941F5CAF",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs16.x",
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "AppRegistryEventHandlerLambdaServiceRole941F5CAF": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "AppRegistryEventHandlerLambdaServiceRoleDefaultPolicyEDEAC460": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "servicecatalog:GetApplication",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "arn:",
-                      Object {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":servicecatalog:ap-southeast-1:1111111111:application/*",
-                    ],
-                  ],
-                },
-                Object {
-                  "Fn::GetAtt": Array [
-                    "AppRegistryRegistrySetup9C75F927",
-                    "Arn",
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "AppRegistryEventHandlerLambdaServiceRoleDefaultPolicyEDEAC460",
-        "Roles": Array [
-          Object {
-            "Ref": "AppRegistryEventHandlerLambdaServiceRole941F5CAF",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "AppRegistryProviderFrameworkIsComplete4D522877": Object {
-      "DependsOn": Array [
-        "AppRegistryProviderframeworkisCompleteServiceRoleDefaultPolicy65B9F077",
-        "AppRegistryProviderframeworkisCompleteServiceRoleA45F6FBA",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": "cdk-#####",
-          "S3Key": "cdkhash######.zip",
-        },
-        "Description": "AWS CDK resource provider framework - isComplete (Ada/AppRegistry/Provider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "AppRegistryEventHandlerLambda7CE393E5",
-                "Arn",
-              ],
-            },
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "AppRegistryEventHandlerLambda7CE393E5",
-                "Arn",
-              ],
-            },
-          },
-        },
-        "Handler": "framework.isComplete",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "AppRegistryProviderframeworkisCompleteServiceRoleA45F6FBA",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs18.x",
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-        "Timeout": 900,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "AppRegistryProviderFrameworkOnEvent1C8F1CA3": Object {
-      "DependsOn": Array [
-        "AppRegistryProviderframeworkonEventServiceRoleDefaultPolicyE169F133",
-        "AppRegistryProviderframeworkonEventServiceRoleD5B6D5CC",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": "cdk-#####",
-          "S3Key": "cdkhash######.zip",
-        },
-        "Description": "AWS CDK resource provider framework - onEvent (Ada/AppRegistry/Provider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "AppRegistryEventHandlerLambda7CE393E5",
-                "Arn",
-              ],
-            },
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "AppRegistryEventHandlerLambda7CE393E5",
-                "Arn",
-              ],
-            },
-            "WAITER_STATE_MACHINE_ARN": Object {
-              "Ref": "AppRegistryProviderWaiterStateMachineCCA7F73D",
-            },
-          },
-        },
-        "Handler": "framework.onEvent",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "AppRegistryProviderframeworkonEventServiceRoleD5B6D5CC",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs18.x",
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-        "Timeout": 900,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "AppRegistryProviderFrameworkOnTimeoutE87CF662": Object {
-      "DependsOn": Array [
-        "AppRegistryProviderframeworkonTimeoutServiceRoleDefaultPolicyA0F7BFE4",
-        "AppRegistryProviderframeworkonTimeoutServiceRoleE550CD2F",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": "cdk-#####",
-          "S3Key": "cdkhash######.zip",
-        },
-        "Description": "AWS CDK resource provider framework - onTimeout (Ada/AppRegistry/Provider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "AppRegistryEventHandlerLambda7CE393E5",
-                "Arn",
-              ],
-            },
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "AppRegistryEventHandlerLambda7CE393E5",
-                "Arn",
-              ],
-            },
-          },
-        },
-        "Handler": "framework.onTimeout",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "AppRegistryProviderframeworkonTimeoutServiceRoleE550CD2F",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs18.x",
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-        "Timeout": 900,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "AppRegistryProviderWaiterStateMachineCCA7F73D": Object {
-      "DependsOn": Array [
-        "AppRegistryProviderwaiterstatemachineRoleDefaultPolicy03CF399C",
-        "AppRegistryProviderwaiterstatemachineRole2C9BFCE4",
-      ],
-      "Properties": Object {
-        "DefinitionString": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "{\\"StartAt\\":\\"framework-isComplete-task\\",\\"States\\":{\\"framework-isComplete-task\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"IntervalSeconds\\":1,\\"MaxAttempts\\":300,\\"BackoffRate\\":1}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"framework-onTimeout-task\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "AppRegistryProviderFrameworkIsComplete4D522877",
-                  "Arn",
-                ],
-              },
-              "\\"},\\"framework-onTimeout-task\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "AppRegistryProviderFrameworkOnTimeoutE87CF662",
-                  "Arn",
-                ],
-              },
-              "\\"}}}",
-            ],
-          ],
-        },
-        "RoleArn": Object {
-          "Fn::GetAtt": Array [
-            "AppRegistryProviderwaiterstatemachineRole2C9BFCE4",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::StepFunctions::StateMachine",
-    },
-    "AppRegistryProviderframeworkisCompleteServiceRoleA45F6FBA": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "AppRegistryProviderframeworkisCompleteServiceRoleDefaultPolicy65B9F077": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "AppRegistryEventHandlerLambda7CE393E5",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "AppRegistryEventHandlerLambda7CE393E5",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "AppRegistryProviderframeworkisCompleteServiceRoleDefaultPolicy65B9F077",
-        "Roles": Array [
-          Object {
-            "Ref": "AppRegistryProviderframeworkisCompleteServiceRoleA45F6FBA",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "AppRegistryProviderframeworkonEventServiceRoleD5B6D5CC": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "AppRegistryProviderframeworkonEventServiceRoleDefaultPolicyE169F133": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "AppRegistryEventHandlerLambda7CE393E5",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "AppRegistryEventHandlerLambda7CE393E5",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-            Object {
-              "Action": "states:StartExecution",
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "AppRegistryProviderWaiterStateMachineCCA7F73D",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "AppRegistryProviderframeworkonEventServiceRoleDefaultPolicyE169F133",
-        "Roles": Array [
-          Object {
-            "Ref": "AppRegistryProviderframeworkonEventServiceRoleD5B6D5CC",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "AppRegistryProviderframeworkonTimeoutServiceRoleDefaultPolicyA0F7BFE4": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "AppRegistryEventHandlerLambda7CE393E5",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "AppRegistryEventHandlerLambda7CE393E5",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "AppRegistryProviderframeworkonTimeoutServiceRoleDefaultPolicyA0F7BFE4",
-        "Roles": Array [
-          Object {
-            "Ref": "AppRegistryProviderframeworkonTimeoutServiceRoleE550CD2F",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "AppRegistryProviderframeworkonTimeoutServiceRoleE550CD2F": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "AppRegistryProviderwaiterstatemachineRole2C9BFCE4": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "states.ap-southeast-1.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "Tags": Array [
-          Object {
-            "Key": "Application",
-            "Value": "Ada",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "AppRegistryProviderwaiterstatemachineRoleDefaultPolicy03CF399C": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "AppRegistryProviderFrameworkIsComplete4D522877",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "AppRegistryProviderFrameworkIsComplete4D522877",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "AppRegistryProviderFrameworkOnTimeoutE87CF662",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "AppRegistryProviderFrameworkOnTimeoutE87CF662",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "AppRegistryProviderwaiterstatemachineRoleDefaultPolicy03CF399C",
-        "Roles": Array [
-          Object {
-            "Ref": "AppRegistryProviderwaiterstatemachineRole2C9BFCE4",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
     },
     "AppRegistryRegistrySetup9C75F927": Object {
       "Properties": Object {
@@ -1522,7 +857,7 @@ Object {
           "Solutions:ApplicationType": "AWS-Solutions",
           "Solutions:SolutionID": "SO0190",
           "Solutions:SolutionName": "Automated Data Analytics on AWS",
-          "Solutions:SolutionVersion": "v1.3.0",
+          "Solutions:SolutionVersion": "v1.4.0",
         },
       },
       "Type": "AWS::ServiceCatalogAppRegistry::Application",
@@ -1571,7 +906,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -1630,7 +965,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -1852,7 +1187,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -1913,7 +1248,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -2069,7 +1404,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -2314,7 +1649,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -2346,7 +1681,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -2368,7 +1703,7 @@ Object {
     "LayerB20D2F06": Object {
       "Properties": Object {
         "CompatibleRuntimes": Array [
-          "nodejs16.x",
+          "nodejs18.x",
         ],
         "Content": Object {
           "S3Bucket": "cdk-#####",
@@ -2791,7 +2126,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -2935,7 +2270,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -2967,7 +2302,7 @@ Object {
           "Ref": "AWS::Region",
         },
         "awsSolutionId": "SO0190",
-        "awsSolutionVersion": "v1.3.0",
+        "awsSolutionVersion": "v1.4.0",
         "sendAnonymousData": Object {
           "Ref": "sendAnonymousData",
         },
@@ -3004,6 +2339,7 @@ Object {
             "Value": "Ada",
           },
         ],
+        "Timeout": 30,
       },
       "Type": "AWS::Lambda::Function",
     },
@@ -3214,7 +2550,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -3438,7 +2774,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {
@@ -3903,7 +3239,7 @@ Object {
           },
           Object {
             "Key": "ApplicationVersion",
-            "Value": "ada@1.3.0",
+            "Value": "ada@1.4.0",
           },
         ],
         "TemplateURL": Object {

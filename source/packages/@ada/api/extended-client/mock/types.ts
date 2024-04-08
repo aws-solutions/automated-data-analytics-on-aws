@@ -11,7 +11,7 @@ export type MockApiClient = {
   [I in ApiOperationName]: I extends ApiOperationName
     ? API[I] extends (...args: infer P) => infer R
       ? R extends Promise<infer U>
-        ? jest.Mock<Promise<DeepPartial<U>>, P>
+      ? jest.Mock<(...args: P) => Promise<DeepPartial<U>>>
         : never
       : never
     : never;

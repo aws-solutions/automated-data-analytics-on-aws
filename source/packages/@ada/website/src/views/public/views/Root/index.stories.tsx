@@ -30,6 +30,7 @@ export default {
 
 const Template: ComponentStory<typeof PublicRootView> = (args) => {
   useImmediateEffect(() => {
+    //@ts-ignore
     API.putIdentityRequest.mockImplementation(async (input) => {
       return input;
     })

@@ -8,7 +8,7 @@ Ingress connectors consist of both back-end CDK infrastructure and scripts, and 
 
 > The _interface_ defined here is considered temporary and expected to drastically change in future releases.
 
-> In a future release, the solution will refactor this connector _interface_ to completely decouple connectors and support third-party connector integration in a more pluggable way. To get to this future state, we first need to consolidate, co-locate, and decouple the indvidual connector code/resources from the rest of the solution as much as possible and provide _**an** interface_ to baseline against.
+> In a future release, the solution will refactor this connector _interface_ to completely decouple connectors and support third-party connector integration in a more pluggable way. To get to this future state, we first need to consolidate, co-locate, and decouple the individual connector code/resources from the rest of the solution as much as possible and provide _**an** interface_ to baseline against.
 
 ### Goals of current interface
 
@@ -62,7 +62,7 @@ Ingress connectors consist of both back-end CDK infrastructure and scripts, and 
 
 The `Connectors` namespace defines the connector contract (`Connectors.IConnector` interface), handles connector registration (`Connectors.register(...)`) which binds the connector into the solution, and provides common utility functionality to both defining and using connectors.
 
-Connectors must register both their **type** declarations and **implementation** values with the connector interface, and this must be done for both the _core defintion_ (environment agnostic) and _infra_ (CDK specific). The connector interface declares `CONNECTOR_REGISTRY` and `CONNECTOR_INFRA_REGISTRY` _typescript interfaces_ to abstract this process and enable _static typing_ of connectors throughout, which is made possible by [Typescript extending interface](https://www.typescriptlang.org/docs/handbook/interfaces.html#extending-interfaces) feature.
+Connectors must register both their **type** declarations and **implementation** values with the connector interface, and this must be done for both the _core definition_ (environment agnostic) and _infra_ (CDK specific). The connector interface declares `CONNECTOR_REGISTRY` and `CONNECTOR_INFRA_REGISTRY` _typescript interfaces_ to abstract this process and enable _static typing_ of connectors throughout, which is made possible by [Typescript extending interface](https://www.typescriptlang.org/docs/handbook/interfaces.html#extending-interfaces) feature.
 
 The [connector/interface.ts](./interface.ts) modules declares empty _interfaces_ for both these registration points that each connector must extends to provide static typings and integration.
 
@@ -70,7 +70,7 @@ The [connector/interface.ts](./interface.ts) modules declares empty _interfaces_
 
 Connectors are registered by extending the `CONNECTOR_REGISTRY` interface of the `@ada/connectors/interface` module with `ID => Connectors.IConnector` mapping for the connector and registering the connector via `Connector.register()` method.
 
-Additionally, each connector **MUST** be added to [connectors/sources/index.ts](./sources/index.ts) file to ensure it is automatatically registered at the appropriate time.
+Additionally, each connector **MUST** be added to [connectors/sources/index.ts](./sources/index.ts) file to ensure it is automatically registered at the appropriate time.
 
 ```ts
 export const ID = 'MY_CONNECTOR';
@@ -100,7 +100,7 @@ Connectors.register<typeof ID>(CONNECTOR);
 
 Connector **infra** is registered by extending the `CONNECTOR_INFRA_REGISTRY` interface of the `@ada/connectors/interface` module with `ID => Connectors.IConnectorInfra` mapping for the connector and registering the connector infra via `Connectors.Infra.register()` method which registers both the _static_ and _dynamic_ infrastructure for the connector.
 
-Additionally, each connector **MUST** be added to [connectors/sources/register-infra.ts](./sources/register-infra.ts) file to ensure it is automatatically registered at the appropriate time.
+Additionally, each connector **MUST** be added to [connectors/sources/register-infra.ts](./sources/register-infra.ts) file to ensure it is automatically registered at the appropriate time.
 
 ```ts
 // {connector-folder}/infra/register.ts
@@ -142,7 +142,7 @@ Connectors.Infra.register(ID, {
 
 ### Connector Preview (Python)
 
-Schema preview functionality available during the creation of a data product is handled by a custom docker image lambda that mimicks the glue/spark environment.
+Schema preview functionality available during the creation of a data product is handled by a custom docker image lambda that mimics the glue/spark environment.
 This core functionality for this is located in [schema-preview/docker-image](../services/data-product/components/schema-preview/docker-image).
 To enable co-location during development of connectors, all \*.py files located in the `@ada/infra/src/connectors` folder are copied under the `handlers` folder of the docker image.
 To assist with development, the connectors folder contains a `pyproject.toml` file that maps to the docker image directory and support creating a venv using poetry for intellisense support.

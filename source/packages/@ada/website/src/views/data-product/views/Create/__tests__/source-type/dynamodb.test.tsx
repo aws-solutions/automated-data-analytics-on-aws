@@ -23,7 +23,7 @@ describe(`CreateDataProductView/${Connectors.AmazonDynamoDB.ID}`, () => {
         tableStreamArn: tableStreamARN,
         streamEnabled: true,
         streamViewType: 'NEW_AND_OLD_IMAGES',
-      });
+      } as never);
     });
 
     it(`happy path - ${Connectors.AmazonDynamoDB.ID}`, async () => {
@@ -39,7 +39,7 @@ describe(`CreateDataProductView/${Connectors.AmazonDynamoDB.ID}`, () => {
     beforeEach(() => {
       API.getDataProductDynamoDBTableStream.mockResolvedValue({
         crossAccount: true,
-      });
+      } as never);
     });
 
     it(`happy path - ${Connectors.AmazonDynamoDB.ID}`, async () => {

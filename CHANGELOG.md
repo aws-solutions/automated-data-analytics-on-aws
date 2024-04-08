@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2024-04-04
+
+### Added
+
+- New added Custom budget and alert feature
+- New added Visualization platform (Apache Superset On AWS) deployment feature
+- New added documentation for new released The AppFlow Extension for ADA
+
+### Changed
+
+- Upgrade ADA Google Analytics Connector to support Google Analytics 4
+- Upgrade CDK to 2.130.0, Node to 18.19, Python to 3.12.2
+- Fix security vulnerabilities found by yarn audit and Dependabot
+
 ## [1.3.0] - 2023-09-15
 
 ### Added

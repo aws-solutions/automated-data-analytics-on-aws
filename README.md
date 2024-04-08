@@ -30,28 +30,28 @@ For more information on the solution’s architecture, refer to the [implementat
   - https://docs.aws.amazon.com/cdk/latest/guide/bootstrapping.html
 
 - Sufficient AWS Lambda Concurrent executions limit
-  - Please use AWS Service Quotas to verify AWS Lambda Concurrent exeuctions `Applied quota value` in your account is greater or equal to the `AWS default quota value` (which is 1000). Click this [link](https://console.aws.amazon.com/servicequotas/home/services/lambda/quotas/L-B99A9384) to check it in your AWS Console. If `Applied quota value` is less than 1000, please use `Request quota increase` button to make a request to increase it to at least 1000 before deploying the solution. For more details, please refer to [AWS Lambda Developer Guide](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html).
+  - Please use AWS Service Quotas to verify AWS Lambda Concurrent executions `Applied quota value` in your account is greater or equal to the `AWS default quota value` (which is 1000). Click this [link](https://console.aws.amazon.com/servicequotas/home/services/lambda/quotas/L-B99A9384) to check it in your AWS Console. If `Applied quota value` is less than 1000, please use `Request quota increase` button to make a request to increase it to at least 1000 before deploying the solution. For more details, please refer to [AWS Lambda Developer Guide](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html).
 
 ### Tools
 
 - The latest version of the AWS CLI, installed and configured.
   - https://aws.amazon.com/cli/ .
-- node.js version 16.
+- node.js version 18.19.
   - https://docs.npmjs.com/getting-started
-  - Below are the example commands for installing nvm and node 16, please make sure those commands fit your build environment before using them.
+  - Below are the example commands for installing nvm and node 18, please make sure those commands fit your build environment before using them.
     ```
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
     exec $SHELL -l
-    nvm install 16
+    nvm install 18.19
     ```
 - install yarn
   ```
   npm install --global yarn
   ```
-- Python 3.9
+- Python 3.12.2
 
   - We recommend creating a python virtual env using `pipenv` to avoid version conflicts
-  - Below are the example commands for installing python 3.9 on Amazon Linux 2 and configure the virtual env, please make sure those commands fit your build environment before using them.
+  - Below are the example commands for installing python 3.12 on Amazon Linux 2 and configure the virtual env, please make sure those commands fit your build environment before using them.
 
     ```
     pip3 install --user pipenv
@@ -59,11 +59,11 @@ For more information on the solution’s architecture, refer to the [implementat
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
     export PATH="/home/<YOUR_USERNAME>/.pyenv/bin:$PATH"
     sudo yum-builddep python3
-    pipenv --python 3.9
+    pipenv --python 3.12.2
 
     # after clone the Ada repository, navigate to the Ada directory and run the following commands
     cd <Ada directory>
-    pyenv local 3.9
+    pyenv local 3.12.2
     eval "$(pyenv init -)"
     ```
 

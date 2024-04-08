@@ -2,15 +2,6 @@
 SPDX-License-Identifier: Apache-2.0 */
 import axios, { AxiosRequestConfig } from 'axios';
 
-const METRICS_ENDPOINT = 'https://metrics.awssolutionsbuilder.com/generic';
-
-export interface OperationalMetricsConfig {
-  awsSolutionId: string;
-  awsSolutionVersion: string;
-  anonymousDataUUID: string;
-  sendAnonymousData: string;
-}
-
 export interface MetricsPayload {
   awsSolutionId: string;
   awsSolutionVersion: string;
@@ -18,6 +9,8 @@ export interface MetricsPayload {
   timestamp: string;
   data: unknown;
 }
+
+const METRICS_ENDPOINT = 'https://metrics.awssolutionsbuilder.com/generic';
 
 export enum SEND_ANONYMOUS_METRICS_RESULT {
   Succeeded = 'Succeeded',

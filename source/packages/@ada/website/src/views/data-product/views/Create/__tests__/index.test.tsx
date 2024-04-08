@@ -26,13 +26,13 @@ describe('CreateDataProductView', () => {
         { namespace: 'global', scriptId: 'script-1', name: 'First Script', source: 'scriptContents' } as any,
         { namespace: 'global', scriptId: 'script-2', name: 'Second Script', source: 'scriptContents' } as any,
       ],
-    });
+    } as never);
     API.listIdentityGroups.mockResolvedValue({
       groups: [{ groupId: 'group-1' }, { groupId: 'group-2' }],
-    });
+    } as never);
     API.listDataProductDomains.mockResolvedValue({
       domains: [{ domainId: 'domain-1', name: 'Domain One' }],
-    });
+    } as never);
   });
 
   describe('storybook', () => {
@@ -48,7 +48,7 @@ describe('CreateDataProductView', () => {
   it('should show an error when we fail to fetch groups', async () => {
     API.listIdentityGroups.mockRejectedValue({
       message: 'Groups not found!',
-    } as ApiError);
+    } as ApiError  as never);
 
     const { findByText } = render(
       <MockMetaProvider appLayout router={{ initialEntries: ['data-product/domain1/new'] }}>
@@ -64,7 +64,7 @@ describe('CreateDataProductView', () => {
   it('should show an error when we fail to fetch scripts', async () => {
     API.listDataProductScripts.mockRejectedValue({
       message: 'Scripts not found!',
-    } as ApiError);
+    } as ApiError  as never);
 
     const { findByText } = render(
       <MockMetaProvider appLayout router={{ initialEntries: ['data-product/domain1/new'] }}>

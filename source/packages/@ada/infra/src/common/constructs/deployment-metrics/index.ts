@@ -4,6 +4,7 @@ import * as cdk from 'aws-cdk-lib';
 import * as cr from 'aws-cdk-lib/custom-resources';
 import { Construct } from 'constructs';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Runtime } from 'aws-cdk-lib/aws-lambda'
 import { solutionInfo } from '@ada/common';
 
 export interface DeploymentMetricsCollectionProps {
@@ -23,6 +24,8 @@ export class DeploymentMetricsCollection extends Construct {
       entry: require.resolve('./handler'),
       handler: 'handler',
       description: 'Lambda for Deployment Metrics collection',
+      runtime: Runtime.NODEJS_18_X,
+      timeout: cdk.Duration.seconds(30)
     });
 
     const provider = new cr.Provider(this, 'Provider', {

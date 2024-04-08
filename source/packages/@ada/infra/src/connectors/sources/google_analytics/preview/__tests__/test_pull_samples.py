@@ -7,22 +7,29 @@ import json
 from unittest.mock import patch
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from collections import namedtuple
 
 from handlers.common import * # NOSONAR
 from handlers.sampling import * # NOSONAR
 from handlers.__tests__.sampling_helpers import SamplingTestHelpers
 
+Header = namedtuple('Header', ['name'])
+Value = namedtuple('Value', ['value'])
+ReportRow = namedtuple('ReportRow', ['dimension_values', 'metric_values'])
+ReportData = namedtuple('ReportData', ['dimension_headers', 'metric_headers', 'rows'])
+
 @pytest.mark.parametrize("source_type", ["GOOGLE_ANALYTICS"])
-@patch("handlers.sampling.common.SamplingUtils.build_google_api_client")
 @patch("handlers.sampling.common.SamplingUtils.get_google_cloud_credentials")
+@patch("handlers.sampling.common.SamplingUtils.build_google_analytics_client")
+@patch("google.analytics.data_v1beta.BetaAnalyticsDataClient.run_report")
 @patch("botocore.client.BaseClient._make_api_call")
-def test_google_analytics_pull_samples(boto_client, mock_ga_cred, mock_build, source_type):
+def test_google_analytics_pull_samples(boto_client, mock_run_report, mock_ga_client, mock_ga_cred, source_type):
     source_details = {
-            "viewId": "12345678",
+            "propertyId": "12345678",
             "since": "2020-12-31T13:00:00.000Z",
             "until": "2021-11-16T13:00:00.000Z",
-            "dimensions": "ga:userType,ga:country",
-            "metrics": "ga:users",
+            "dimensions": "userType,country",
+            "metrics": "users",
             "projectId": "lt-demo-330100",
             "clientId": "114452300742793677110",
             "clientEmail": "sample@test.iam.gserviceaccount.example.com",
@@ -41,64 +48,19 @@ def test_google_analytics_pull_samples(boto_client, mock_ga_cred, mock_build, so
         "Contents": [{"Key": "some_file"}]
     }]
 
-    mock_build.return_value.reports.return_value.batchGet.return_value.execute.return_value = {
-        "reports": [
-            {
-                "columnHeader": {
-                    "dimensions": [
-                        "ga:userType"
-                    ],
-                    "metricHeader": {
-                        "metricHeaderEntries": [
-                            {
-                                "name": "ga:sessions",
-                                "type": "INTEGER"
-                            }
-                        ]
-                    }
-                },
-                "data": {
-                    "rows": [
-                        {
-                            "dimensions": [
-                                "New Visitor"
-                            ],
-                            "metrics": [
-                                {
-                                    "values": [
-                                        "12872"
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
-                    "totals": [
-                        {
-                            "values": [
-                                "12872"
-                            ]
-                        }
-                    ],
-                    "rowCount": 1,
-                    "minimums": [
-                        {
-                            "values": [
-                                "12872"
-                            ]
-                        }
-                    ],
-                    "maximums": [
-                        {
-                            "values": [
-                                "12872"
-                            ]
-                        }
-                    ],
-                    "isDataGolden": True
-                }
-            }
-        ]
-    }
+    data_row = ReportRow([
+        Value("New Visitor"),
+        Value("USA")
+    ],
+    [
+        Value("12872")
+    ])
+
+    mock_ga_client.return_value.run_report.return_value  = ReportData(
+        [Header('userType'), Header('country')],
+        [Header('users')],
+        [data_row]
+    )
 
     table_details = SamplingTestHelpers.pull_data_sample(source_type, source_details)['tableDetails']
     assert len(table_details) == 1
@@ -108,16 +70,17 @@ def test_google_analytics_pull_samples(boto_client, mock_ga_cred, mock_build, so
 
 
 @pytest.mark.parametrize("source_type", ["GOOGLE_ANALYTICS"])
-@patch("handlers.sampling.common.SamplingUtils.build_google_api_client")
 @patch("handlers.sampling.common.SamplingUtils.get_google_cloud_credentials")
+@patch("handlers.sampling.common.SamplingUtils.build_google_analytics_client")
+@patch("google.analytics.data_v1beta.BetaAnalyticsDataClient.run_report")
 @patch("botocore.client.BaseClient._make_api_call")
-def test_google_analytics_pull_samples_schedule(boto_client, mock_ga_cred, mock_build, source_type):
+def test_google_analytics_pull_samples_schedule(boto_client, mock_run_report, mock_ga_client, mock_ga_cred, source_type):
     source_details = {
-            "viewId": "12345678",
+            "propertyId": "12345678",
             "since": "",
             "until": "",
-            "dimensions": "ga:userType,ga:country",
-            "metrics": "ga:users",
+            "dimensions": "userType,country",
+            "metrics": "users",
             "projectId": "lt-demo-330100",
             "clientId": "114452300742793677110",
             "clientEmail": "sample@test.iam.gserviceaccount.example.com",
@@ -136,64 +99,19 @@ def test_google_analytics_pull_samples_schedule(boto_client, mock_ga_cred, mock_
         "Contents": [{"Key": "some_file"}]
     }]
 
-    mock_build.return_value.reports.return_value.batchGet.return_value.execute.return_value = {
-        "reports": [
-            {
-                "columnHeader": {
-                    "dimensions": [
-                        "ga:userType"
-                    ],
-                    "metricHeader": {
-                        "metricHeaderEntries": [
-                            {
-                                "name": "ga:sessions",
-                                "type": "INTEGER"
-                            }
-                        ]
-                    }
-                },
-                "data": {
-                    "rows": [
-                        {
-                            "dimensions": [
-                                "New Visitor"
-                            ],
-                            "metrics": [
-                                {
-                                    "values": [
-                                        "12872"
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
-                    "totals": [
-                        {
-                            "values": [
-                                "12872"
-                            ]
-                        }
-                    ],
-                    "rowCount": 1,
-                    "minimums": [
-                        {
-                            "values": [
-                                "12872"
-                            ]
-                        }
-                    ],
-                    "maximums": [
-                        {
-                            "values": [
-                                "12872"
-                            ]
-                        }
-                    ],
-                    "isDataGolden": True
-                }
-            }
-        ]
-    }
+    data_row = ReportRow([
+        Value("New Visitor"),
+        Value("USA")
+    ],
+    [
+        Value("12872")
+    ])
+
+    mock_ga_client.return_value.run_report.return_value  = ReportData(
+        [Header('userType'), Header('country')],
+        [Header('users')],
+        [data_row]
+    )
 
     table_details = SamplingTestHelpers.pull_scheduled_data_sample(source_type, source_details)['tableDetails']
     assert len(table_details) == 1

@@ -22,11 +22,12 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof QueryWorkbench> = (args) => {
   useImmediateEffect(() => {
-    API.listQueryNamespaceSavedQueries.mockResolvedValue({ queries: [SAVED_PRIVATE_QUERY] });
+    API.listQueryNamespaceSavedQueries.mockResolvedValue({ queries: [SAVED_PRIVATE_QUERY] } as never);
     API.listQuerySavedQueries.mockResolvedValue({
       queries: [],
-    });
+    } as never);
 
+    //@ts-ignore
     API.putQuerySavedQuery.mockImplementation(({ queryId, savedQueryInput, namespace }) => {
       return Promise.resolve({ queryId, ...savedQueryInput, namespace });
     });
@@ -40,19 +41,21 @@ const Template: ComponentStory<typeof QueryWorkbench> = (args) => {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const DeleteQueryTemplate: ComponentStory<typeof QueryWorkbench> = (args) => {
   useImmediateEffect(() => {
-    API.listQueryNamespaceSavedQueries.mockResolvedValue({ queries: [SAVED_PRIVATE_QUERY] });
+    API.listQueryNamespaceSavedQueries.mockResolvedValue({ queries: [SAVED_PRIVATE_QUERY] } as never);
     API.listQuerySavedQueries.mockResolvedValue({
       queries: [],
-    });
+    } as never);
 
+    //@ts-ignore
     API.deleteQuerySavedQuery.mockImplementation(() => {
       API.listQuerySavedQueries.mockResolvedValue({
         queries: [],
-      });
-      API.listQueryNamespaceSavedQueries.mockResolvedValue({ queries: [] });
+      } as never);
+      API.listQueryNamespaceSavedQueries.mockResolvedValue({ queries: [] } as never);
       return Promise.resolve({} as SavedQuery);
     });
 
+    //@ts-ignore
     API.putQuerySavedQuery.mockImplementation(({ queryId, savedQueryInput, namespace }) => {
       return Promise.resolve({ queryId, ...savedQueryInput, namespace });
     });

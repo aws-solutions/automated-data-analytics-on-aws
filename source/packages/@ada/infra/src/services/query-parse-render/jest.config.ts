@@ -2,15 +2,11 @@
 SPDX-License-Identifier: Apache-2.0 */
 /* eslint-disable: sort-imports */
 // must be imported before any aliases
-import baseConfig from '../../../jest.config.base';
+import createConfig from '../../../jest.config.base';
 /* eslint-enable: sort-imports */
-import * as path from 'path';
-import type { Config } from '@jest/types';
 
-export const config: Config.InitialOptions = {
-  ...baseConfig(),
+export const config = createConfig({
   rootDir: __dirname,
-  displayName: path.basename(__dirname),
-};
+});
 
 export default config;

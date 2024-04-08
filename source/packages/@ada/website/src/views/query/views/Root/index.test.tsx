@@ -15,10 +15,10 @@ describe('QueryRootView', () => {
   it('should execute a query', async () => {
     API.postQuery.mockResolvedValue({
       executionId: EXECUTION_ID,
-    });
+    } as never);
     API.getQueryStatus.mockResolvedValue({
       status: QueryExecutionStatus.SUCCEEDED,
-    });
+    } as never);
     API.listQueryResults.mockResolvedValue({
       columns: [
         {
@@ -34,7 +34,7 @@ describe('QueryRootView', () => {
         { name: 'Darth Vader', lightsaber: 'red' },
         { name: 'Obi Wan Kenobi', lightsaber: 'blue' },
       ],
-    });
+    } as never);
 
     const { findByText, findByTestId } = render(
       <MockMetaProvider>
@@ -62,13 +62,13 @@ describe('QueryRootView', () => {
   it('should show an error when we fail to execute a query', async () => {
     API.postQuery.mockResolvedValue({
       executionId: EXECUTION_ID,
-    });
+    } as never);
     API.getQueryStatus.mockResolvedValue({
       status: QueryExecutionStatus.FAILED,
-    });
+    } as never);
     API.listQueryResults.mockRejectedValue({
       message: 'Mock error message',
-    });
+    } as never);
 
     const { findByText, findAllByText } = render(
       <MockMetaProvider appLayout>

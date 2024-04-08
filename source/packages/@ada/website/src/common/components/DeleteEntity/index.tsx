@@ -169,6 +169,7 @@ export interface DeleteEntityButtonProps extends DeleteEntityConfirmationDialogP
   buttonSize?: ButtonProps['size'];
   /** Delete button text @default "Delete" */
   deleteButtonText?: string;
+  DeleteEntityConfirmationDialogComponentType?: React.ComponentType<DeleteEntityConfirmationDialogProps>;
 }
 
 export type ScopedDeleteEntityButtonProps<T, TK extends string> = Omit<
@@ -182,6 +183,7 @@ export const DeleteEntityButton: React.FC<DeleteEntityButtonProps> = ({
   buttonVariant,
   buttonSize,
   onClose,
+  DeleteEntityConfirmationDialogComponentType = DeleteEntityConfirmationDialog,
   ...props
 }) => {
   const { LL } = useI18nContext();
@@ -212,7 +214,7 @@ export const DeleteEntityButton: React.FC<DeleteEntityButtonProps> = ({
 
       {allowDelete && isConfirming && (
         <Portal container={modalRoot}>
-          <DeleteEntityConfirmationDialog {...props} onClose={closeHandler} />
+          <DeleteEntityConfirmationDialogComponentType {...props} onClose={closeHandler} />
         </Portal>
       )}
     </>

@@ -18,4 +18,6 @@ export * from './Tag';
 export * from './Badge';
 export * from './SummaryRenderer';
 export * from './KeyValuePair';
+export * from './PercentagesSelector';
 export * from './skeletons';
+

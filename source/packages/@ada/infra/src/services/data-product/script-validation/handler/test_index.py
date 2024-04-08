@@ -45,7 +45,7 @@ def test_should_report_bad_script():
     'lineNumber': 3,
     'lineRange': [3],
     'issueText': 'Function call with shell=True parameter identified, possible security issue.',
-    'moreInfo': 'https://bandit.readthedocs.io/en/1.7.4/plugins/b604_any_other_function_with_shell_equals_true.html',
+    'moreInfo': 'https://bandit.readthedocs.io/en/1.7.7/plugins/b604_any_other_function_with_shell_equals_true.html',
     'testId': 'B604',
     'testName': 'any_other_function_with_shell_equals_true',
   }

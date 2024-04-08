@@ -2,12 +2,11 @@
 SPDX-License-Identifier: Apache-2.0 */
 /* eslint-disable: sort-imports */
 // must be imported before any aliases
-import createBaseConfig from '../../../../jest.config.base';
+import createConfig from '../../../../jest.config.base';
 /* eslint-enable: sort-imports */
 import * as path from 'path';
 import { TEST_ENVIRONMENT } from '@ada/cdk-core';
 import { generateEnvironmentForTests } from '../jest-dynamodb-config';
-import type { Config } from '@jest/types';
 
 const cdkEnvironment = generateEnvironmentForTests();
 const { tables, port } = cdkEnvironment;
@@ -23,18 +22,13 @@ process.env = {
   CDK_DEPLOY_REGION: TEST_ENVIRONMENT.region,
 };
 
-const baseConfig = createBaseConfig();
-
-export const config: Config.InitialOptions = {
-  ...baseConfig,
+export const config = createConfig({
   ...require('@shelf/jest-dynamodb/jest-preset'),
   globals: {
-    ...(baseConfig.globals || {}),
     __JEST_DYNAMODB_TABLES: tables,
   },
-  setupFilesAfterEnv: [...(baseConfig.setupFilesAfterEnv || []), path.resolve(__dirname, '../jest.setup.ts')],
+  setupFilesAfterEnv: [path.resolve(__dirname, '../jest.setup.ts')],
   rootDir: __dirname,
-  displayName: path.basename(__dirname),
-};
+});
 
 export default config;

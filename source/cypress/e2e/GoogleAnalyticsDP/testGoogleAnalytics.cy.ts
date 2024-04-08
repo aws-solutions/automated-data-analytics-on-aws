@@ -59,15 +59,16 @@ describe('complete e2e creation of a domain, google analytics product, query wit
       cy.contains('.MuiTypography-root', 'Google Analytics').click();
       cy.contains('.MuiButton-label', 'Next').click();
 
-      cy.get('input[name="sourceDetails.viewId"]').type('173381731');
-      cy.get('input[name="sourceDetails.dimensions"]').type('ga:year{enter}');
-      cy.get('input[name="sourceDetails.dimensions"]').type('ga:month{enter}');
-      cy.get('input[name="sourceDetails.dimensions"]').type('ga:day{enter}');
-      cy.get('input[name="sourceDetails.metrics"]').type('ga:visitors{enter}');
-      cy.get('input[name="sourceDetails.metrics"]').type('ga:newVisits{enter}');
+      cy.get('input[name="sourceDetails.propertyId"]').type('430446865');
+      cy.get('input[name="sourceDetails.dimensions"]').type('year{downArrow}{downArrow}{downArrow}{enter}');
+      cy.get('input[name="sourceDetails.dimensions"]').type('month{downArrow}{enter}');
+      cy.get('input[name="sourceDetails.dimensions"]').type('day{downArrow}{enter}');
+      cy.get('input[name="sourceDetails.dimensions"]').type('city{enter}');
+      cy.get('input[name="sourceDetails.metrics"]').type('engagedSessions{enter}');
+      cy.get('input[name="sourceDetails.metrics"]').type('totalUsers{downArrow}{enter}');
 
       cy.contains('.MuiTypography-root', 'From JSON file').click();
-      cy.get('input[type="file"]').attachFile('ga-credentials.json');
+      cy.get('input[type="file"]').attachFile('credentials.json');
       cy.wait(2000);
 
       cy.contains('.MuiTypography-root', 'Schedule').click();

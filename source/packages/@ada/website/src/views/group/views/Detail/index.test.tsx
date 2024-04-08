@@ -30,22 +30,22 @@ describe('GroupDetailView', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    API.getIdentityGroup.mockResolvedValue(GROUP);
+    API.getIdentityGroup.mockResolvedValue(GROUP as never);
 
     API.listIdentityGroups.mockResolvedValue({
       groups: [GROUP],
-    });
+    } as never);
 
     API.listIdentityUsers.mockResolvedValue({
       users: [
         { username: 'user-1', preferredUsername: 'user-1', name: 'User 1' },
         { username: 'user-2', preferredUsername: 'user-2', name: 'User 2' },
       ],
-    });
+    } as never);
 
     API.listIdentityRequests.mockRejectedValue({
       accessRequests: [],
-    });
+    } as never);
   });
   it('should show group details', async () => {
     const { findByText } = render(
@@ -91,7 +91,7 @@ describe('GroupDetailView', () => {
   it('should show an error when the group does not exist', async () => {
     API.getIdentityGroup.mockRejectedValue({
       message: 'Group not found!',
-    } as ApiError);
+    } as ApiError  as never);
 
     const { findByText } = render(
       <MockMetaProvider amplify router={{ initialEntries: ['groups/not-a-group'] }}>

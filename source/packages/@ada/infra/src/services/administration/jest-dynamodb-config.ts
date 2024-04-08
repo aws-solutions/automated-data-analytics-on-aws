@@ -14,6 +14,7 @@ export const generateEnvironmentForTests = () => {
   const stack = new TestStackWithMockedApiService(new TestApp());
   new RetainedAspect(stack); //NOSONAR (S1848) - cdk construct is used
   const {
+    accessLogsBucket,
     federatedApi,
     counterTable,
     notificationBus,
@@ -52,6 +53,8 @@ export const generateEnvironmentForTests = () => {
           },
           counterTable,
         }),
+        accessLogsBucket,
+        athenaProxyDomainName: 'https://test-athena-proxy',
         notificationBus,
         internalTokenKey,
         entityManagementTables,

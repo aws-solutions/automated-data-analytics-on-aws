@@ -1,5 +1,6 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
+import 'aws-sdk-client-mock-jest';
 import * as path from 'path';
 import { TEST_ENVIRONMENT } from '@ada/cdk-core';
 

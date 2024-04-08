@@ -49,6 +49,12 @@ jest.mock('@aws-cdk/aws-lambda-python-alpha/lib/bundling', () => ({
   },
 }));
 
+jest.mock('axios', () => ({
+  axios: {
+    post: () => {},
+  },
+}));
+
 test('generate openapi spec file', async () => {
   console.log('generating openapi spec...');
   const outputFile = process.env.OPENAPI_SPEC_FILE;

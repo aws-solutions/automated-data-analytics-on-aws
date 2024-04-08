@@ -25,9 +25,9 @@ import * as Connectors from '@ada/connectors';
 
 const SOURCE_DETAILS: Connectors.GoogleAnalytics.ISourceDetails = {
   ...GOOGLE_SOURCE_DETAILS,
-  viewId: '12345678',
-  dimensions: 'ga:userType,ga:visitCount',
-  metrics: 'ga:visitors,ga:visits',
+  propertyId: '12345678',
+  dimensions: 'year,city',
+  metrics: 'engagedSessions,totalUsers',
   since: '2022-01-01',
   until: '2022-02-01',
 }
@@ -51,8 +51,8 @@ Primary.play = async ({ canvasElement }) => {
   const { getByLabelText } = within(canvasElement);
 
   await act(async () => {
-    const input = getByLabelText('View Id');
-    await userEvent.type(input, SOURCE_DETAILS.viewId, { delay: DELAY.TYPING });
+    const input = getByLabelText('Property Id');
+    await userEvent.type(input, SOURCE_DETAILS.propertyId, { delay: DELAY.TYPING });
   });
 
   for (const dimension of SOURCE_DETAILS.dimensions.split(',')) {

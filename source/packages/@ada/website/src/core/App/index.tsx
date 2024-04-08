@@ -82,17 +82,27 @@ export const App: React.FC = () => {
             text: LL.VIEW.COST.nav(),
             href: '/admin/cost',
           },
+          {
+            type: SideNavigationItemType.LINK,
+            text: LL.VIEW.BUDGET.nav(),
+            href: '/admin/budget',
+          },
           ...(isRootAdmin
             ? [
-              {
-                type: SideNavigationItemType.DIVIDER,
-              },
-              {
-                type: SideNavigationItemType.LINK,
-                text: LL.VIEW.ADMIN.Teardown.nav(),
-                href: '/admin/teardown',
-              },
-            ]
+                {
+                  type: SideNavigationItemType.DIVIDER,
+                },
+                {
+                  type: SideNavigationItemType.LINK,
+                  text: LL.VIEW.VISUALISATION.nav(),
+                  href: '/admin/visualization',
+                },
+                {
+                  type: SideNavigationItemType.LINK,
+                  text: LL.VIEW.ADMIN.Teardown.nav(),
+                  href: '/admin/teardown',
+                },
+              ]
             : []),
         ],
       });
@@ -121,11 +131,7 @@ export const App: React.FC = () => {
         <SideNavigation header={{ href: '/', text: <HomeIcon /> }} items={navItems} />
       }
     >
-      <ManagedHelpPanel
-        header="Help"
-      >
-        {import('@ada/strings/markdown/view/help.md')}
-      </ManagedHelpPanel>
+      <ManagedHelpPanel header="Help">{import('@ada/strings/markdown/view/help.md')}</ManagedHelpPanel>
       <Switch>
         {/* Force users that don't belong to any default groups to public landing page */}
         {hasNoAccess && <Route component={Public.Router} />}

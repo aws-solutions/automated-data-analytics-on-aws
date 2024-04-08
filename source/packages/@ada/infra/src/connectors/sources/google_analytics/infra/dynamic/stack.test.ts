@@ -23,7 +23,7 @@ describe('google-analytics-source', () => {
           privateKeyId: 'private-key-id',
           privateKeySecretName: 'private-key-secret',
           projectId: 'project',
-          viewId: '173381731',
+          propertyId: '173381731',
           since: '2020-12-31',
           until: '2021-11-16',
           dimensions: 'ga:country,ga:users',
@@ -53,7 +53,7 @@ describe('stack/synthesizer/google-analytics', () => {
         dimensions: ['ga:dimension1', 'ga:dimension2'].join(','),
         metrics: ['ga:metric1', 'ga:metric2'].join(','),
         projectId: 'mock-project-id',
-        viewId: 'mock-view-id',
+        propertyId: 'mock-property-id',
         // common
         clientEmail: 'mock@example.com',
         clientId: 'mock-client-id',

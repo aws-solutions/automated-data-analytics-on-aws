@@ -1,6 +1,6 @@
 # Solution Context
 
-The solution utilizes [CDK Runtime Context](https://docs.aws.amazon.com/cdk/v2/guide/context.html) to configure additional functionaly and override defaults.
+The solution utilizes [CDK Runtime Context](https://docs.aws.amazon.com/cdk/v2/guide/context.html) to configure additional functionally and override defaults.
 
 ## List of support context properties
 
@@ -44,7 +44,7 @@ Disables `CLOUDFRONT` base WAF WebACLs, which require deployment to `us-east-1` 
 
 ### `@ada/waf:ipSet`
 
-Provides list of CIDR IP address ranges to apply to WAF WebACLs rules to support restricting access to an explict allow-list.
+Provides list of CIDR IP address ranges to apply to WAF WebACLs rules to support restricting access to an explicit allow-list.
 
 This accept either partial [IPSet Configuration](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-wafv2-ipset.html)
 which requires `IPAddressVersion` and `Addresses` properties, or ARN values for both CLOUDFRONT and REGIONAL existing IPSets.

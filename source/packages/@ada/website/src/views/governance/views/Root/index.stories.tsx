@@ -62,7 +62,8 @@ const Template: ComponentStory<typeof OntologyRootView> = (args) => {
           createdBy: TEST_USER.id,
         },
       ],
-    });
+    } as never);
+    //@ts-ignore
     API.getGovernancePolicyAttributes.mockImplementation(({ group }) => {
       switch (group) {
         case DefaultGroupIds.DEFAULT: {
@@ -94,9 +95,11 @@ const Template: ComponentStory<typeof OntologyRootView> = (args) => {
     });
 
     // introduce slight delay in mutations
+    //@ts-ignore
     API.putGovernancePolicyAttributes.mockImplementation(async (): Promise<any> => {
       await delay(10);
     });
+    //@ts-ignore
     API.deleteGovernancePolicyAttributes.mockImplementation(async (): Promise<any> => {
       await delay(10);
     });
@@ -140,6 +143,7 @@ Coverage.play = async ({ canvasElement }) => {
   }
 
   // handle invalidation to refetch updated values
+  //@ts-ignore
   API.getGovernancePolicyAttributes.mockImplementation(({ group }) => {
     return Promise.resolve({
       attributeIdToLensId: {

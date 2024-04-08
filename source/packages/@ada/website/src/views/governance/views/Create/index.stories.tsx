@@ -35,7 +35,7 @@ export default {
 
 const Template: ComponentStory<typeof CreateOntologyView> = (args) => {
   useImmediateEffect(() => {
-    API.putOntology.mockResolvedValue(NEW_ONTOLOGY);
+    API.putOntology.mockResolvedValue(NEW_ONTOLOGY as never);
   })
 
   return (

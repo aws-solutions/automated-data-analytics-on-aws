@@ -2,6 +2,8 @@
 SPDX-License-Identifier: Apache-2.0 */
 export * from './admin';
 
+export * from './budget';
+
 export * from './core';
 
 export * from './cost';
@@ -19,3 +21,5 @@ export * from './public';
 export * from './query';
 
 export * from './user';
+
+export * from './visualisation';

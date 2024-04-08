@@ -37,7 +37,7 @@ const Template: ComponentStory<typeof UserRootView> = (args) => {
           customGroups: [DefaultGroupIds.ADMIN].join(','),
         }
       ]
-    })
+    } as never)
   })
 
   return (

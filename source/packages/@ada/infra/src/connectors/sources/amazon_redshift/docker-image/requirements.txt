@@ -1,2 +1,2 @@
-awswrangler==2.17.0
-redshift_connector==2.0.905
+awswrangler==3.7.1
+redshift_connector==2.1.0

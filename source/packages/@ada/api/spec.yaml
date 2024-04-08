@@ -4,7 +4,7 @@ info:
     of data, providing an end-to-end platform used for ingesting, transforming, governing,
     and querying datasets through a standalone user interface
   title: Automated Data Analytics on AWS API
-  version: 1.3.0
+  version: 1.4.0
 servers:
 - url: https://{apigId}.execute-api.{region}.amazonaws.com/{stage}
   variables:
@@ -18,6 +18,130 @@ servers:
       default: prod
       description: AWS API Gateway Stage
 paths:
+  /administration/budgets:
+    delete:
+      description: Delete administration budgets
+      operationId: DeleteAdministrationBudgets
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetResponse'
+          description: 200 response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 400 response
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 403 response
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 404 response
+    get:
+      description: Get administration budgets
+      operationId: GetAdministrationBudgets
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetDetails'
+          description: 200 response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 400 response
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 403 response
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 404 response
+    post:
+      description: Post administration budgets
+      operationId: PostAdministrationBudgets
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BudgetInput'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetResponse'
+          description: 200 response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 400 response
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 403 response
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 404 response
+  /administration/deploy-superset:
+    post:
+      description: Post administration deploy superset
+      operationId: PostAdministrationDeploySuperset
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupersetDeployResponse'
+          description: 200 response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 400 response
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 403 response
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: 404 response
   /administration/start-tear-down/destroy-data:
     delete:
       description: Delete administration start tear down destroy data
@@ -4739,6 +4863,95 @@ components:
       required:
       - sqlClause
       title: AttributeValuePolicyInput
+      type: object
+    BudgetDetails:
+      description: Information about the Budget action
+      example:
+        softNotifications:
+        - threshold: 5
+          state: state
+        - threshold: 5
+          state: state
+        forecastedSpend: 1
+        subscriberList:
+        - subscriberList
+        - subscriberList
+        actualSpend: 0
+        budgetLimit: 6
+      properties:
+        actualSpend:
+          type: integer
+        budgetLimit:
+          type: integer
+        forecastedSpend:
+          type: integer
+        softNotifications:
+          description: Soft notifications
+          items:
+            $ref: '#/components/schemas/BudgetDetails_softNotifications'
+          type: array
+        subscriberList:
+          description: Subscribers to recieve notifications
+          items:
+            type: string
+          type: array
+      required:
+      - actualSpend
+      - budgetLimit
+      - forecastedSpend
+      - softNotifications
+      - subscriberList
+      title: BudgetDetails
+      type: object
+    BudgetInput:
+      description: Create new/Update existing budget with notification and subscribers
+      example:
+        softNotifications:
+        - 6
+        - 6
+        subscriberList:
+        - subscriberList
+        - subscriberList
+        updatedTimestamp: updatedTimestamp
+        budgetLimit: 0
+      properties:
+        budgetLimit:
+          type: integer
+        softNotifications:
+          description: Soft notifications
+          items:
+            type: integer
+          type: array
+        subscriberList:
+          description: Subscribers to recieve notifications
+          items:
+            type: string
+          type: array
+        updatedTimestamp:
+          maxLength: 64
+          pattern: ^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?))?$
+          type: string
+      required:
+      - budgetLimit
+      - softNotifications
+      - subscriberList
+      title: BudgetInput
+      type: object
+    BudgetResponse:
+      description: Information about the Budget creation/update action
+      example:
+        budgetName: budgetName
+        message: message
+      properties:
+        budgetName:
+          description: The budget name
+          type: string
+        message:
+          description: Response message
+          type: string
+      required:
+      - budgetName
+      title: BudgetResponse
       type: object
     ColumnMetadata:
       properties:
@@ -9704,6 +9917,18 @@ components:
       - CLOUDTRAIL
       - MONGODB
       type: string
+    SupersetDeployResponse:
+      description: Information about the Apache Superset deployment action
+      example:
+        message: message
+      properties:
+        message:
+          description: Response message
+          type: string
+      required:
+      - message
+      title: SupersetDeployResponse
+      type: object
     TableStream:
       properties:
         crossAccount:
@@ -10170,6 +10395,19 @@ components:
       additionalProperties:
         $ref: '#/components/schemas/Permission'
       description: Map of route by name
+      type: object
+    BudgetDetails_softNotifications:
+      example:
+        threshold: 5
+        state: state
+      properties:
+        state:
+          type: string
+        threshold:
+          type: integer
+      required:
+      - state
+      - threshold
       type: object
     FileUploadInput_parts:
       example:

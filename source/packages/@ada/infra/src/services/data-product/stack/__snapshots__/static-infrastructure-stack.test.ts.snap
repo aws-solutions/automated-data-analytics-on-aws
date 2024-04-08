@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-StaticInfrastructure) - Automated Data Analytics on AWS. Version v1.3.0",
+  "Description": "(SO0190-StaticInfrastructure) - Automated Data Analytics on AWS. Version v1.4.0",
   "Outputs": Object {
     "AdaDataProductServiceStaticInfrastructureDataBucketD9C0AD53Arn": Object {
       "Value": Object {
@@ -364,143 +364,233 @@ Object {
         "PolicyDocument": Object {
           "Statement": Array [
             Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
               "Action": "ecs:RunTask",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
-                  "",
-                  Array [
-                    "arn:",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        2,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        3,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        4,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        0,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    "/",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   ],
-                ],
-              },
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersCloudTrailECSTaskDefinitionCloudtrail8490FC3E",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
             },
             Object {
               "Action": Array [
@@ -547,6 +637,30 @@ Object {
                   ],
                 ],
               },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",
@@ -684,143 +798,233 @@ Object {
         "PolicyDocument": Object {
           "Statement": Array [
             Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
               "Action": "ecs:RunTask",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
-                  "",
-                  Array [
-                    "arn:",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        2,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        3,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        4,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        0,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    "/",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   ],
-                ],
-              },
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersCloudWatchECSTaskDefinitionCloudwatch18382EB4",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
             },
             Object {
               "Action": Array [
@@ -867,6 +1071,30 @@ Object {
                   ],
                 ],
               },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",
@@ -928,7 +1156,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1049,7 +1277,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1170,7 +1398,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1275,7 +1503,7 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "{\\"StartAt\\":\\"SubmitCrawl\\",\\"States\\":{\\"SubmitCrawl\\":{\\"Next\\":\\"Wait5Seconds\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.Payload.error\\",\\"Next\\":\\"CrawlFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              "{\\"StartAt\\":\\"SubmitCrawl\\",\\"States\\":{\\"SubmitCrawl\\":{\\"Next\\":\\"Wait5Seconds\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.Payload.error\\",\\"Next\\":\\"CrawlFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -1286,7 +1514,7 @@ Object {
                   "Arn",
                 ],
               },
-              "\\",\\"Payload\\":{\\"Payload\\":{\\"crawlerName.$\\":\\"$.crawlerName\\"}}}},\\"Wait5Seconds\\":{\\"Type\\":\\"Wait\\",\\"Seconds\\":5,\\"Next\\":\\"GetCrawlStatus\\"},\\"GetCrawlStatus\\":{\\"Next\\":\\"CrawlComplete?\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              "\\",\\"Payload\\":{\\"Payload\\":{\\"crawlerName.$\\":\\"$.crawlerName\\"}}}},\\"Wait5Seconds\\":{\\"Type\\":\\"Wait\\",\\"Seconds\\":5,\\"Next\\":\\"GetCrawlStatus\\"},\\"GetCrawlStatus\\":{\\"Next\\":\\"CrawlComplete?\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -1297,7 +1525,7 @@ Object {
                   "Arn",
                 ],
               },
-              "\\",\\"Payload.$\\":\\"$\\"}},\\"CrawlComplete?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.Payload.status\\",\\"StringEquals\\":\\"FAILED\\",\\"Next\\":\\"CrawlFailed\\"},{\\"Variable\\":\\"$.Payload.status\\",\\"StringEquals\\":\\"SUCCEEDED\\",\\"Next\\":\\"GetFinalCrawlStatus\\"}],\\"Default\\":\\"Wait5Seconds\\"},\\"CrawlFailed\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"Payload\\":{\\"crawlerName.$\\":\\"$.Payload.crawlerName\\",\\"error.$\\":\\"$.Payload.error\\",\\"status\\":\\"FAILED\\"}},\\"End\\":true},\\"GetFinalCrawlStatus\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              "\\",\\"Payload.$\\":\\"$\\"}},\\"CrawlComplete?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.Payload.status\\",\\"StringEquals\\":\\"FAILED\\",\\"Next\\":\\"CrawlFailed\\"},{\\"Variable\\":\\"$.Payload.status\\",\\"StringEquals\\":\\"SUCCEEDED\\",\\"Next\\":\\"GetFinalCrawlStatus\\"}],\\"Default\\":\\"Wait5Seconds\\"},\\"CrawlFailed\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"Payload\\":{\\"crawlerName.$\\":\\"$.Payload.crawlerName\\",\\"error.$\\":\\"$.Payload.error\\",\\"status\\":\\"FAILED\\"}},\\"End\\":true},\\"GetFinalCrawlStatus\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -1371,30 +1599,6 @@ Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
-            Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
             Object {
               "Action": "lambda:InvokeFunction",
               "Effect": "Allow",
@@ -1472,6 +1676,30 @@ Object {
                   ],
                 },
               ],
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",
@@ -2788,6 +3016,10 @@ Object {
             "Key": "Application",
             "Value": "Ada",
           },
+          Object {
+            "Key": "Name",
+            "Value": "Ada/DataProductService/StaticInfrastructure/DataIngressVpc/VPCFlowLogs",
+          },
         ],
         "TrafficType": "ALL",
       },
@@ -2824,7 +3056,7 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "{\\"StartAt\\":\\"StartDataProductInfraDeployment\\",\\"States\\":{\\"StartDataProductInfraDeployment\\":{\\"Next\\":\\"CheckDataProductInfraDeploymentStatus\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"DataProductInfraDeploymentFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              "{\\"StartAt\\":\\"StartDataProductInfraDeployment\\",\\"States\\":{\\"StartDataProductInfraDeployment\\":{\\"Next\\":\\"CheckDataProductInfraDeploymentStatus\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"DataProductInfraDeploymentFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -2835,7 +3067,7 @@ Object {
                   "Arn",
                 ],
               },
-              "\\",\\"Payload.$\\":\\"$\\"}},\\"CheckDataProductInfraDeploymentStatus\\":{\\"Next\\":\\"IsDataProductInfraDeploymentComplete?\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"DataProductInfraDeploymentFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              "\\",\\"Payload.$\\":\\"$\\"}},\\"CheckDataProductInfraDeploymentStatus\\":{\\"Next\\":\\"IsDataProductInfraDeploymentComplete?\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"DataProductInfraDeploymentFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -2846,7 +3078,7 @@ Object {
                   "Arn",
                 ],
               },
-              "\\",\\"Payload.$\\":\\"$\\"}},\\"Wait5Seconds\\":{\\"Type\\":\\"Wait\\",\\"Seconds\\":5,\\"Next\\":\\"CheckDataProductInfraDeploymentStatus\\"},\\"IsDataProductInfraDeploymentComplete?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.Payload.isDeploymentComplete\\",\\"BooleanEquals\\":true,\\"Next\\":\\"DataProductInfraDeploymentComplete\\"}],\\"Default\\":\\"Wait5Seconds\\"},\\"DataProductInfraDeploymentComplete\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"DataProductInfraDeploymentFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              "\\",\\"Payload.$\\":\\"$\\"}},\\"Wait5Seconds\\":{\\"Type\\":\\"Wait\\",\\"Seconds\\":5,\\"Next\\":\\"CheckDataProductInfraDeploymentStatus\\"},\\"IsDataProductInfraDeploymentComplete?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.Payload.isDeploymentComplete\\",\\"BooleanEquals\\":true,\\"Next\\":\\"DataProductInfraDeploymentComplete\\"}],\\"Default\\":\\"Wait5Seconds\\"},\\"DataProductInfraDeploymentComplete\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"ResultPath\\":\\"$.ErrorDetails\\",\\"Next\\":\\"DataProductInfraDeploymentFailed\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -2857,7 +3089,7 @@ Object {
                   "Arn",
                 ],
               },
-              "\\",\\"Payload.$\\":\\"$\\"}},\\"DataProductInfraDeploymentFailed\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
+              "\\",\\"Payload.$\\":\\"$\\"}},\\"DataProductInfraDeploymentFailed\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"arn:",
               Object {
                 "Ref": "AWS::Partition",
               },
@@ -2975,7 +3207,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3355,7 +3587,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -3735,7 +3967,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -4595,30 +4827,6 @@ Object {
         "PolicyDocument": Object {
           "Statement": Array [
             Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
               "Action": "lambda:InvokeFunction",
               "Effect": "Allow",
               "Resource": Array [
@@ -4721,6 +4929,30 @@ Object {
                   ],
                 },
               ],
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",
@@ -5010,7 +5242,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5284,7 +5516,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5542,7 +5774,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -5800,7 +6032,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -6125,7 +6357,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -6383,7 +6615,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -6660,7 +6892,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -6987,7 +7219,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -7395,143 +7627,233 @@ Object {
         "PolicyDocument": Object {
           "Statement": Array [
             Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
               "Action": "ecs:RunTask",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
-                  "",
-                  Array [
-                    "arn:",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        2,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        3,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        4,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        0,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    "/",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   ],
-                ],
-              },
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersDynamoDBECSTaskDefinitionDynamoDBD701A1A9",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
             },
             Object {
               "Action": Array [
@@ -7578,6 +7900,30 @@ Object {
                   ],
                 ],
               },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",
@@ -10375,7 +10721,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -10705,7 +11051,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -11017,7 +11363,7 @@ Object {
         "Role": Object {
           "Ref": "referencetoAdaCommonStackNestedStackCommonStackNestedStackResourceD51B693FOutputsAdaCommonStackExecuteAthenaQueryLambdaRole106600ADArn",
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -11042,14 +11388,14 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "{\\"StartAt\\":\\"GetCachedQuery\\",\\"States\\":{\\"GetCachedQuery\\":{\\"Next\\":\\"IsItemInCache?\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              "{\\"StartAt\\":\\"GetCachedQuery\\",\\"States\\":{\\"GetCachedQuery\\":{\\"Next\\":\\"IsItemInCache?\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
               Object {
                 "Fn::GetAtt": Array [
                   "ExecuteGovernedQueryStateMachineAthenaQueryExecutorGetCachedQuery41A955B3",
                   "Arn",
                 ],
               },
-              "\\",\\"Parameters\\":{\\"Payload.$\\":\\"$\\"}},\\"IsItemInCache?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.expired\\",\\"BooleanEquals\\":false,\\"Next\\":\\"NotifySuccess\\"}],\\"Default\\":\\"RunQueryOnAthena\\"},\\"RunQueryOnAthena\\":{\\"Next\\":\\"Wait1Second\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"NotifyError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              "\\",\\"Parameters\\":{\\"Payload.$\\":\\"$\\"}},\\"IsItemInCache?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.expired\\",\\"BooleanEquals\\":false,\\"Next\\":\\"NotifySuccess\\"}],\\"Default\\":\\"RunQueryOnAthena\\"},\\"RunQueryOnAthena\\":{\\"Next\\":\\"Wait1Second\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"NotifyError\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
               Object {
                 "Fn::GetAtt": Array [
                   "ExecuteGovernedQueryStateMachineAthenaQueryExecutorStartAthenaQueryExecutionEA0E790E",
@@ -11060,7 +11406,7 @@ Object {
               Object {
                 "Ref": "AWS::Partition",
               },
-              ":states:::athena:getQueryExecution\\",\\"Parameters\\":{\\"QueryExecutionId.$\\":\\"$.queryExecutionId\\"}},\\"IsInFinalState?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"SUCCEEDED\\",\\"Next\\":\\"WriteInCache\\"},{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"FAILED\\",\\"Next\\":\\"NotifyError\\"},{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"CANCELLED\\",\\"Next\\":\\"NotifyError\\"}],\\"Default\\":\\"Wait1Second\\"},\\"WriteInCache\\":{\\"Next\\":\\"NotifySuccess\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              ":states:::athena:getQueryExecution\\",\\"Parameters\\":{\\"QueryExecutionId.$\\":\\"$.queryExecutionId\\"}},\\"IsInFinalState?\\":{\\"Type\\":\\"Choice\\",\\"Choices\\":[{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"SUCCEEDED\\",\\"Next\\":\\"WriteInCache\\"},{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"FAILED\\",\\"Next\\":\\"NotifyError\\"},{\\"Variable\\":\\"$.athenaStatus.QueryExecution.Status.State\\",\\"StringEquals\\":\\"CANCELLED\\",\\"Next\\":\\"NotifyError\\"}],\\"Default\\":\\"Wait1Second\\"},\\"WriteInCache\\":{\\"Next\\":\\"NotifySuccess\\",\\"Retry\\":[{\\"ErrorEquals\\":[\\"Lambda.ClientExecutionTimeoutException\\",\\"Lambda.ServiceException\\",\\"Lambda.AWSLambdaException\\",\\"Lambda.SdkClientException\\"],\\"IntervalSeconds\\":2,\\"MaxAttempts\\":6,\\"BackoffRate\\":2}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
               Object {
                 "Fn::GetAtt": Array [
                   "ExecuteGovernedQueryStateMachineAthenaQueryExecutorPutCachedQuery58B2E330",
@@ -11109,30 +11455,6 @@ Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
-            Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
             Object {
               "Action": "lambda:InvokeFunction",
               "Effect": "Allow",
@@ -11215,6 +11537,30 @@ Object {
                   ],
                 },
               ],
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",
@@ -11547,7 +11893,7 @@ Object {
                   "GroupId",
                 ],
               },
-              "\\"]}},\\"Overrides\\":{\\"ContainerOverrides\\":[{\\"Name\\":\\"ECSContainerDef-google-analytics\\",\\"Environment\\":[{\\"Name\\":\\"CLIENT_EMAIL\\",\\"Value.$\\":\\"$.clientEmail\\"},{\\"Name\\":\\"CLIENT_ID\\",\\"Value.$\\":\\"$.clientId\\"},{\\"Name\\":\\"PRIVATE_KEY_ID\\",\\"Value.$\\":\\"$.privateKeyId\\"},{\\"Name\\":\\"PRIVATE_KEY_SECRET\\",\\"Value.$\\":\\"$.privateKeySecretName\\"},{\\"Name\\":\\"PROJECT_ID\\",\\"Value.$\\":\\"$.projectId\\"},{\\"Name\\":\\"S3_OUTPUT_BUCKET_URI\\",\\"Value.$\\":\\"$.s3OutputPath\\"},{\\"Name\\":\\"VIEW_ID\\",\\"Value.$\\":\\"$.viewId\\"},{\\"Name\\":\\"SINCE\\",\\"Value.$\\":\\"$.since\\"},{\\"Name\\":\\"UNTIL\\",\\"Value.$\\":\\"$.until\\"},{\\"Name\\":\\"DIMENSIONS\\",\\"Value.$\\":\\"$.dimensions\\"},{\\"Name\\":\\"METRICS\\",\\"Value.$\\":\\"$.metrics\\"},{\\"Name\\":\\"TRIGGER_TYPE\\",\\"Value.$\\":\\"$.triggerType\\"},{\\"Name\\":\\"SCHEDULE_RATE\\",\\"Value.$\\":\\"$.scheduleRate\\"}]}]},\\"LaunchType\\":\\"FARGATE\\",\\"PlatformVersion\\":\\"LATEST\\"}},\\"ECSTaskSucceeded\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"status\\":\\"SUCCEEDED\\"},\\"End\\":true},\\"ECSTaskFailed\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"details.$\\":\\"$\\",\\"error\\":\\"Import failed in the ECS container, verify the logs\\",\\"status\\":\\"FAILED\\"},\\"End\\":true}},\\"TimeoutSeconds\\":172800}",
+              "\\"]}},\\"Overrides\\":{\\"ContainerOverrides\\":[{\\"Name\\":\\"ECSContainerDef-google-analytics\\",\\"Environment\\":[{\\"Name\\":\\"CLIENT_EMAIL\\",\\"Value.$\\":\\"$.clientEmail\\"},{\\"Name\\":\\"CLIENT_ID\\",\\"Value.$\\":\\"$.clientId\\"},{\\"Name\\":\\"PRIVATE_KEY_ID\\",\\"Value.$\\":\\"$.privateKeyId\\"},{\\"Name\\":\\"PRIVATE_KEY_SECRET\\",\\"Value.$\\":\\"$.privateKeySecretName\\"},{\\"Name\\":\\"PROJECT_ID\\",\\"Value.$\\":\\"$.projectId\\"},{\\"Name\\":\\"S3_OUTPUT_BUCKET_URI\\",\\"Value.$\\":\\"$.s3OutputPath\\"},{\\"Name\\":\\"PROPERTY_ID\\",\\"Value.$\\":\\"$.propertyId\\"},{\\"Name\\":\\"SINCE\\",\\"Value.$\\":\\"$.since\\"},{\\"Name\\":\\"UNTIL\\",\\"Value.$\\":\\"$.until\\"},{\\"Name\\":\\"DIMENSIONS\\",\\"Value.$\\":\\"$.dimensions\\"},{\\"Name\\":\\"METRICS\\",\\"Value.$\\":\\"$.metrics\\"},{\\"Name\\":\\"TRIGGER_TYPE\\",\\"Value.$\\":\\"$.triggerType\\"},{\\"Name\\":\\"SCHEDULE_RATE\\",\\"Value.$\\":\\"$.scheduleRate\\"}]}]},\\"LaunchType\\":\\"FARGATE\\",\\"PlatformVersion\\":\\"LATEST\\"}},\\"ECSTaskSucceeded\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"status\\":\\"SUCCEEDED\\"},\\"End\\":true},\\"ECSTaskFailed\\":{\\"Type\\":\\"Pass\\",\\"Parameters\\":{\\"details.$\\":\\"$\\",\\"error\\":\\"Import failed in the ECS container, verify the logs\\",\\"status\\":\\"FAILED\\"},\\"End\\":true}},\\"TimeoutSeconds\\":172800}",
             ],
           ],
         },
@@ -11613,143 +11959,233 @@ Object {
         "PolicyDocument": Object {
           "Statement": Array [
             Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
               "Action": "ecs:RunTask",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
-                  "",
-                  Array [
-                    "arn:",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        2,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        3,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        4,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        0,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    "/",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   ],
-                ],
-              },
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGoogleAnalyticsECSTaskDefinitionGoogleAnalytics92B07651",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
             },
             Object {
               "Action": Array [
@@ -11796,6 +12232,30 @@ Object {
                   ],
                 ],
               },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",
@@ -11933,143 +12393,233 @@ Object {
         "PolicyDocument": Object {
           "Statement": Array [
             Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
               "Action": "ecs:RunTask",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
-                  "",
-                  Array [
-                    "arn:",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        2,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        3,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        4,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        0,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    "/",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   ],
-                ],
-              },
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGCPBigQueryECSTaskDefinitionGcpBigQuery1AB7422F",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
             },
             Object {
               "Action": Array [
@@ -12116,6 +12666,30 @@ Object {
                   ],
                 ],
               },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",
@@ -12230,143 +12804,233 @@ Object {
         "PolicyDocument": Object {
           "Statement": Array [
             Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
               "Action": "ecs:RunTask",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
-                  "",
-                  Array [
-                    "arn:",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        2,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        3,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        4,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        0,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    "/",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   ],
-                ],
-              },
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersGCPStorageECSTaskDefinitionGcpStorageC48FDC5D",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
             },
             Object {
               "Action": Array [
@@ -12413,6 +13077,30 @@ Object {
                   ],
                 ],
               },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",
@@ -12719,143 +13407,233 @@ Object {
         "PolicyDocument": Object {
           "Statement": Array [
             Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
               "Action": "ecs:RunTask",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
-                  "",
-                  Array [
-                    "arn:",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        2,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        3,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        4,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        0,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    "/",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   ],
-                ],
-              },
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersMongoDBECSTaskDefinitionMongoDB36D2EB5D",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
             },
             Object {
               "Action": Array [
@@ -12902,6 +13680,30 @@ Object {
                   ],
                 ],
               },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",
@@ -13039,143 +13841,233 @@ Object {
         "PolicyDocument": Object {
           "Statement": Array [
             Object {
-              "Action": Array [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": Array [
-                "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords",
-                "xray:GetSamplingRules",
-                "xray:GetSamplingTargets",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
               "Action": "ecs:RunTask",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
-                  "",
-                  Array [
-                    "arn:",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        2,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        3,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        4,
-                        Object {
-                          "Fn::Split": Array [
-                            ":",
-                            Object {
-                              "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    ":",
-                    Object {
-                      "Fn::Select": Array [
-                        0,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    "/",
-                    Object {
-                      "Fn::Select": Array [
-                        1,
-                        Object {
-                          "Fn::Split": Array [
-                            "/",
-                            Object {
-                              "Fn::Select": Array [
-                                5,
-                                Object {
-                                  "Fn::Split": Array [
-                                    ":",
-                                    Object {
-                                      "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   ],
-                ],
-              },
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          2,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          3,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          4,
+                          Object {
+                            "Fn::Split": Array [
+                              ":",
+                              Object {
+                                "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":",
+                      Object {
+                        "Fn::Select": Array [
+                          0,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "/",
+                      Object {
+                        "Fn::Select": Array [
+                          1,
+                          Object {
+                            "Fn::Split": Array [
+                              "/",
+                              Object {
+                                "Fn::Select": Array [
+                                  5,
+                                  Object {
+                                    "Fn::Split": Array [
+                                      ":",
+                                      Object {
+                                        "Ref": "ECSContainersRedshiftECSTaskDefinitionRedshiftDD79CD45",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
             },
             Object {
               "Action": Array [
@@ -13222,6 +14114,30 @@ Object {
                   ],
                 ],
               },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
             },
           ],
           "Version": "2012-10-17",

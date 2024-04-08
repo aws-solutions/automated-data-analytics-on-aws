@@ -3,13 +3,12 @@ SPDX-License-Identifier: Apache-2.0 */
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as fs from 'fs-extra';
 import { Bucket } from '../../../../common/constructs/s3/bucket';
-import { CfnStage } from 'aws-cdk-lib/aws-apigatewayv2';
+import { CfnStage, HttpApi, HttpMethod } from 'aws-cdk-lib/aws-apigatewayv2';
 import { Construct } from 'constructs';
 import { Duration, RemovalPolicy, Stack } from 'aws-cdk-lib';
 import { Effect, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { FederatedRestApi } from '@ada/infra-common/constructs/api';
-import { HttpApi, HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha';
-import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
+import { HttpLambdaIntegration } from 'aws-cdk-lib/aws-apigatewayv2-integrations';
 import { HttpOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { LogGroup } from '../../../../common/constructs/cloudwatch/log-group';
 import { SolutionContext, TypescriptFunction, tryGetSolutionContext } from '@ada/infra-common';

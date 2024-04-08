@@ -1,12 +1,12 @@
 /*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0 */
-import baseConfig from '../../jest.config.base';
-import type { Config } from '@jest/types';
+/* eslint-disable: sort-imports */
+// must be imported before any aliases
+import createConfig from '../../jest.config.base';
+/* eslint-enable: sort-imports */
 
-export const config: Config.InitialOptions = {
-  ...baseConfig(),
+export const config = createConfig({
   rootDir: __dirname,
-  displayName: 'connectors',
-};
+});
 
 export default config;

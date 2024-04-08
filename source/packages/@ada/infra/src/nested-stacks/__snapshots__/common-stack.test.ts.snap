@@ -2,7 +2,7 @@
 
 exports[`stack snapshots 1`] = `
 Object {
-  "Description": "(SO0190-CommonStack) - Automated Data Analytics on AWS. Version v1.3.0",
+  "Description": "(SO0190-CommonStack) - Automated Data Analytics on AWS. Version v1.4.0",
   "Outputs": Object {
     "AdaCommonStackAccessLogBucketB5B66FEDArn": Object {
       "Value": Object {
@@ -322,6 +322,7 @@ Object {
             },
             Object {
               "Action": Array [
+                "s3:PutBucketPolicy",
                 "s3:GetBucket*",
                 "s3:List*",
                 "s3:DeleteObject*",
@@ -493,6 +494,7 @@ Object {
             },
             Object {
               "Action": Array [
+                "s3:PutBucketPolicy",
                 "s3:GetBucket*",
                 "s3:List*",
                 "s3:DeleteObject*",
@@ -1082,7 +1084,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",
@@ -1244,6 +1246,9 @@ Object {
       "UpdateReplacePolicy": "Delete",
     },
     "InternalTokenSecrectSecretAutoRotateSecret83D34BCD": Object {
+      "DependsOn": Array [
+        "InternalTokenSecrectRotationLambdaInvokeN0A2GKfZP0JmDqDEVhhu6A0TUv3NyNbk4YMFKNc83FC692A",
+      ],
       "Properties": Object {
         "RotateImmediatelyOnUpdate": false,
         "RotationLambdaARN": Object {
@@ -1253,7 +1258,7 @@ Object {
           ],
         },
         "RotationRules": Object {
-          "AutomaticallyAfterDays": 90,
+          "ScheduleExpression": "rate(90 days)",
         },
         "SecretId": Object {
           "Ref": "InternalTokenSecrectSecret3C76F640",
@@ -1324,7 +1329,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Tags": Array [
           Object {
             "Key": "Application",

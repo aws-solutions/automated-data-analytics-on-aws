@@ -137,7 +137,7 @@ export function useSourceTypeTestApiMocks() {
     API.postDataProductDomainDataProduct.mockResolvedValue({
       domainId: fixtures.DATA_PRODUCT.domainId,
       dataProductId: fixtures.DATA_PRODUCT.dataProductId,
-    });
+    }  as never);
     return () => {
       jest.clearAllMocks();
     };

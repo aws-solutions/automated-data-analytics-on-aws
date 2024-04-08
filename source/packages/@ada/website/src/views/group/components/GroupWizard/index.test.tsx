@@ -12,7 +12,7 @@ describe('CreateGroupView', () => {
   it('should render', async () => {
     API.listApiAccessPolicies.mockResolvedValue({
       policies: [{ apiAccessPolicyId: 'read-only', name: 'Read Only', resources: ['read*'] }],
-    });
+    } as never);
 
     await act(async () => {
       const { findAllByText } = render(

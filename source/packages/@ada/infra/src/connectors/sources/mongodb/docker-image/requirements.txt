@@ -1,2 +1,2 @@
 pymongo==4.3.3
-awswrangler==2.20.0
+awswrangler==3.7.1

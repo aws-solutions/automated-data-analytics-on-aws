@@ -7,7 +7,14 @@ import os
 from datetime import datetime
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
-from google_analytics import GoogleAnalytics
+from google.analytics.data_v1beta import BetaAnalyticsDataClient
+from google.analytics.data_v1beta.types import (
+    DateRange,
+    Dimension,
+    Metric,
+    MetricType,
+    RunReportRequest,
+)
 import pandas as pd
 import smart_open
 import tempfile
@@ -21,21 +28,21 @@ TB = 1024 ** 4
 VARCHAR_255 = 'varchar(255)'
 DECIMAL_20_5 = 'decimal(20,5)'
 
-VIEW_ID = os.environ.get('VIEW_ID')
+PROPERTY_ID = os.environ.get('PROPERTY_ID')
 SINCE = os.environ.get('SINCE')
 UNTIL = os.environ.get("UNTIL")
 DIMENSIONS = os.environ.get('DIMENSIONS')
 METRICS = os.environ.get('METRICS')
 PAGE_SIZE = os.environ.get('PAGE_SIZE')
-SAMPLING_LEVEL = os.environ.get('SAMPLING_LEVEL')
 INCLUDE_EMPTY_ROWS = os.environ.get('INCLUDE_EMPTY_ROWS')
 S3_OUTPUT_BUCKET_URI = os.environ.get('S3_OUTPUT_BUCKET_URI')
-MAX_REQUEST_SIZE = 100000
+MAX_REQUEST_SIZE = 250000
+DEFAULT_REQUEST_SIZE = 10000
 TRIGGER_TYPE = os.environ.get("TRIGGER_TYPE")
 SCHEDULE_RATE = os.environ.get("SCHEDULE_RATE")
 
-if VIEW_ID is None:
-    raise Exception("ga::missing view id")
+if PROPERTY_ID is None:
+    raise Exception("ga::missing property id")
 
 if DIMENSIONS is None:
     raise Exception("ga::missing dimensions")
@@ -59,20 +66,22 @@ class UnsupportedDataFormatException(Exception):
 class GoogleAnalyticsImport():
     """
     required parameters:
-    :param view_id:                     The view id for associated report.
-    :type view_id:                      string/array
-    :param dimensions:                  comma separated GA dimensions, e.g. ga:year,ga:month,ga:day
-                                        or array, e.g. [{name:"ga:year"},{name:"ga:month"}]
-    :type dimensions:                   string/array
-    :param metrics                      comma separated GA dimensions, e.g. ga:users,ga:visitors
-                                        or array e.g. [{expression:"ga:users"},{expression:"ga:visitors"}]
-    :type metrics:                      string/array
+    :param property_id:                 The property id.
+    :type property_id:                  string
+    
+    :param dimensions:                  comma separated GA dimensions, e.g. year,month,day
+    :type dimensions:                   string
+
+    :param metrics                      comma separated GA dimensions, e.g. engagedSessions,totalUsers
+    :type metrics:                      string
+
     :param since:                       The date up from which to pull GA data.
                                         This can either be a string in the format
                                         of '%Y-%m-%d %H:%M:%S' or ISO format '%Y-%m-%dT%H:%M:%SZ'
                                         but in either case it will be
                                         passed to GA as '%Y-%m-%d'.
     :type since:                        string
+
     :param until:                       The date up to which to pull GA data.
                                         This can either be a string in the format
                                         of '%Y-%m-%d %H:%M:%S' or or ISO format '%Y-%m-%dT%H:%M:%SZ'
@@ -82,42 +91,26 @@ class GoogleAnalyticsImport():
     """
 
     def __init__(self,
-                 view_id,
+                 property_id,
                  since,
                  until,
                  dimensions,
                  metrics,
-                 page_size=10000,
-                 include_empty_rows=True,
-                 sampling_level=None):
-        self.view_id = view_id
+                 page_size=DEFAULT_REQUEST_SIZE,
+                 include_empty_rows=True):
+        self.property_id = property_id
         self.since = since
         self.until = until
-        self.sampling_level = sampling_level or 'LARGE'
         self.dimensions = self.get_dimensions(dimensions)
         self.metrics = self.get_metrics(metrics)
-        self.page_size = page_size or 10000
+        self.page_size = min(int(page_size or DEFAULT_REQUEST_SIZE), MAX_REQUEST_SIZE)
         self.include_empty_rows = include_empty_rows
-        self.metric_map = {
-            'METRIC_TYPE_UNSPECIFIED': VARCHAR_255,
-            'CURRENCY': DECIMAL_20_5,
-            'INTEGER': 'int(11)',
-            'FLOAT': DECIMAL_20_5,
-            'PERCENT': DECIMAL_20_5,
-            'TIME': 'time'
-        }
-
-        if self.page_size > MAX_REQUEST_SIZE:
-            self.page_size = MAX_REQUEST_SIZE
 
     def execute(self):
+        # get formattted data range
         date_range = self.get_data_range()
-
         if date_range is None:
             return
-        
-        ga_conn = GoogleAnalytics()
-
         try:
             since_formatted = date_range[0].strftime('%Y-%m-%d')
         except Exception as _:
@@ -127,46 +120,57 @@ class GoogleAnalyticsImport():
             until_formatted = date_range[1].strftime('%Y-%m-%d')
         except Exception as _:
             until_formatted = str(self.until)
-
         print("Start date: ", since_formatted,
               ", End date: ", until_formatted)
         
-        report = ga_conn.get_analytics_report(self.view_id,
-                                              since_formatted,
-                                              until_formatted,
-                                              self.sampling_level,
-                                              self.dimensions,
-                                              self.metrics,
-                                              self.page_size,
-                                              self.include_empty_rows)
+        ga_client = BetaAnalyticsDataClient()
 
-        column_header = report.get('columnHeader', {})
-        # Right now all dimensions are hardcoded to varchar(255), will need a map if any non-varchar dimensions are used in the future
-        # Unfortunately the API does not send back types for Dimensions like it does for Metrics (yet..)
-        dimension_headers = [
-            {'name': header.replace('ga:', ''), 'type': VARCHAR_255}
-            for header
-            in column_header.get('dimensions', [])
-        ]
-        metric_headers = [
-            {'name': entry.get('name').replace('ga:', ''),
-             'type': self.metric_map.get(entry.get('type'), VARCHAR_255)}
-            for entry
-            in column_header.get('metricHeader', {}).get('metricHeaderEntries', [])
-        ]
-        report_data = report.get('data', {});
-        # might use this for antisampling
-        has_sampling = report_data.get('samplesReadCounts', None)
-        print('Has data been sampled by google: ', has_sampling != None)
+        # pagination offset
+        offset = 0
 
-        total_row_count = report_data.get('rowCount', 0)
-        
+        # first the initial request
+        response = ga_client.run_report(self.get_request(since_formatted, until_formatted, offset))
+
+        # dimension headers are lower case all the time
+        dimension_headers = [ dim.name.lower() for dim in response.dimension_headers ]
+        print("Response Dimension Headers")
+        print (dimension_headers)
+
+        # metric headers are lower case all the time
+        metric_headers = [ metric.name.lower() for metric in response.metric_headers]
+        print("Response Metric headers")
+        print(metric_headers)
+
+        total_row_count = response.row_count
         if total_row_count <= 0:
             raise Exception("Nothing to import, throw exception to avoid crawler")
 
-        rows = report_data.get('rows', [])
-        filename = str(uuid.uuid4())
+        # getting all rows
+        normalized_rows = []
+        # processing current page
+        while (offset < total_row_count):
+            rows = response.rows
+            for row in rows:
+                row_data = dict()
+                # retrieve dimensions
+                for index, dimension_value in enumerate(row.dimension_values):
+                    row_data[dimension_headers[index]] = dimension_value.value
+                # retrieve metrics
+                for index, metric_value in enumerate(row.metric_values):
+                    row_data[metric_headers[index]] = metric_value.value
+                # add common columns
+                row_data['propertyid'] = self.property_id
+                row_data['timestamp'] = until_formatted
+                normalized_rows.append(row_data)
 
+            print(offset, len(rows))
+            # getting next page
+            offset += len(rows)
+            if offset < total_row_count:
+                response = ga_client.run_report(self.get_requset(since_formatted, until_formatted, offset))
+
+        # there are data to process, so open output file
+        filename = str(uuid.uuid4())
         with (tempfile.NamedTemporaryFile()) as tmp:
             if (tmp is not None):
                 part_size = 1 * GB
@@ -186,33 +190,10 @@ class GoogleAnalyticsImport():
                 transport_params={
                     'min_part_size': part_size, 'writebuffer': tmp}
             ) as fout:
-                #dataframe.to_parquet(fout, engine='pyarrow', index=True)
-                normalize_rows = []
-
-                for row_counter, row in enumerate(rows):
-                    root_data_obj = {}
-                    dimensions = row.get('dimensions', [])
-                    metrics = row.get('metrics', [])
-
-                    for index, dimension in enumerate(dimensions):
-                        header = dimension_headers[index].get(
-                            'name').lower()
-                        root_data_obj[header] = dimension
-
-                    for metric in metrics:
-                        data = {}
-                        data.update(root_data_obj)
-
-                        for index, value in enumerate(metric.get('values', [])):
-                            header = metric_headers[index].get(
-                                'name').lower()
-                            data[header] = value
-                        data['viewid'] = self.view_id
-                        data['timestamp'] = until_formatted
-                        normalize_rows.append(data)
-                df = pd.DataFrame(normalize_rows)
+                # write all rows to file
+                df = pd.DataFrame(normalized_rows)
                 df.to_parquet(fout, engine='pyarrow', index=False)
-        print("Import completed. ", total_row_count, " row(s) imported")
+                print("Import completed. ", len(normalized_rows), " row(s) imported")
             
 
     """
@@ -276,21 +257,25 @@ class GoogleAnalyticsImport():
     # handle string inputs for metrics and dimensions
     def get_dimensions(self, dimensions):
         if type(dimensions) is str:
-            results = []
-            for dimension in dimensions.split(","):
-                results.append({"name": dimension})
-            return results
+            return [Dimension(name=dim) for dim in dimensions.split(",")]
         return dimensions
 
     def get_metrics(self, metrics):
         if type(metrics) is str:
-            results = []
-            for metric in metrics.split(","):
-                results.append({"expression": metric})
-            return results
+              return [Metric(name=metric) for metric in metrics.split(",")]
         return metrics
 
+    def get_request(self, since_formatted, until_formatted, offset):
+        return RunReportRequest(
+            property=f"properties/{self.property_id}",
+            dimensions=self.dimensions,
+            metrics=self.metrics,
+            date_ranges=[DateRange(start_date=since_formatted, end_date=until_formatted)],
+            keep_empty_rows = self.include_empty_rows,
+            limit = self.page_size,
+            offset = offset
+        )
 
 con = GoogleAnalyticsImport(
-    VIEW_ID, SINCE, UNTIL,  DIMENSIONS, METRICS, PAGE_SIZE, False, SAMPLING_LEVEL)
+    PROPERTY_ID, SINCE, UNTIL,  DIMENSIONS, METRICS, PAGE_SIZE, False)
 con.execute()

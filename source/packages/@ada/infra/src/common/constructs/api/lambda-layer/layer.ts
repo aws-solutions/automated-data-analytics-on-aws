@@ -111,7 +111,7 @@ export class ApiLambdaLayer extends Construct {
     this.layer = new lambda.LayerVersion(scope, 'Layer', {
       description: 'Api layer modules - provides @ada/api-client',
       code: lambda.Code.fromAsset(CODE_DIR), // make sure to zip folder containing "nodejs" directory
-      compatibleRuntimes: [lambda.Runtime.NODEJS_16_X],
+      compatibleRuntimes: [lambda.Runtime.NODEJS_18_X],
     });
 
     this.secret = new DeploymentSecret(scope, 'ApiWafDeploymentSecret', {
