@@ -12,7 +12,7 @@ google-resumable-media==2.7.0
 googleapis-common-protos==1.63.0
 grpcio==1.62.1
 grpcio-status==1.62.1
-idna==3.6
+idna==3.7
 jmespath==1.0.1
 numpy==1.26.4
 packaging==24.0
