@@ -53,7 +53,7 @@ subprocess32==3.5.4
 sympy==1.10.1
 tbats==1.1.0
 threadpoolctl==3.1.0
-tqdm==4.64.0
+tqdm==4.66.3
 typing-extensions==4.2.0
 urllib3==1.26.9
 wheel==0.38.1
