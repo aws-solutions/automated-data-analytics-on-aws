@@ -1,3 +1,7 @@
+# Deprecation Notice
+
+As of 09/24/2024, The Automated Data Analytics on AWS solution has been deprecated and will not be receiving any additional features nor updates. You can explore [Guidance for Accelerating Analytics on AWS](https://aws.amazon.com/solutions/guidance/accelerating-analytics-on-aws/), or discover other relevant Solutions in the [AWS Solutions Library](https://aws.amazon.com/solutions/).
+
 # Automated Data Analytics on AWS
 
 The Automated Data Analytics on AWS solution provides an end-to-end data platform for ingesting, transforming, managing and querying datasets. This helps analysts and business users manage and gain insights from data without deep technical experience using Amazon Web Services (AWS). It has an open-sourced architecture with connectors to commonly used AWS services, along with third-party data sources and services. This solution also provides an user interface (UI) to search, share, manage, and query datasets using standard SQL commands.
